@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>LotteWong</title>
+<title>&lt;Configuration&gt; GitHub Pages + Hexo从0到1搭建个人博客 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="&lt;Configuration&gt; GitHub Pages + Hexo从0到1搭建个人博客" height="28">
             
             </a>
         </div>
@@ -87,7 +87,7 @@
             
             <div class="navbar-start">
                 
-                <a class="navbar-item is-active" href="/">Home</a>
+                <a class="navbar-item" href="/">Home</a>
                 
                 <a class="navbar-item" href="/archives">Archives</a>
                 
@@ -115,13 +115,12 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-    <div class="card">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     
     <div class="card-image">
-        <a href="/2019/07/10/GitHub Pages + Hexo从0到1搭建个人博客/" class="image is-7by1">
+        <span class="image is-7by1">
             <img class="thumbnail" src="/./_images/github_hexo_blog.png" alt="&lt;Configuration&gt; GitHub Pages + Hexo从0到1搭建个人博客">
-        </a>
+        </span>
     </div>
     
     <div class="card-content article ">
@@ -147,84 +146,127 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/10/GitHub Pages + Hexo从0到1搭建个人博客/">&lt;Configuration&gt; GitHub Pages + Hexo从0到1搭建个人博客</a>
+                &lt;Configuration&gt; GitHub Pages + Hexo从0到1搭建个人博客
             
         </h1>
         <div class="content">
             <p>……</p>
+<a id="more"></a>
+
+
+
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a><strong>环境准备</strong></h2><h3 id="安装Git-Github"><a href="#安装Git-Github" class="headerlink" title="安装Git + Github"></a><strong>安装Git + Github</strong></h3><ul>
+<li><p><strong>安装Git部署插件:</strong> </p>
+<figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a><strong>安装Node.js</strong></h3><ul>
+<li><p><strong>**安装Node.js:</strong> </p>
+<p><a href="https://link.zhihu.com/?target=https%3A//nodejs.org/en/download/" target="_blank" rel="noopener">Download | Node.js</a></p>
+</li>
+<li><p><strong>检查是否安装成功:</strong></p>
+<figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br><span class="line">$ npm -v</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a><strong>安装Hexo</strong></h3><ul>
+<li><p><strong>安装Hexo:</strong></p>
+<figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>检查是否安装成功:</strong></p>
+<figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo -v</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>初始化:</strong></p>
+<figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="文件配置"><a href="#文件配置" class="headerlink" title="文件配置"></a><strong>文件配置</strong></h2><h3 id="本地运行"><a href="#本地运行" class="headerlink" title="本地运行"></a><strong>本地运行</strong></h3><figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean <span class="hljs-comment"># 删除缓存</span></span><br><span class="line">$ hexo g <span class="hljs-comment"># 生成Hexo页面</span></span><br><span class="line">$ hexo s <span class="hljs-comment"># 本地部署Hexo页面</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="远程运行"><a href="#远程运行" class="headerlink" title="远程运行"></a><strong>远程运行</strong></h3><figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean <span class="hljs-comment"># 删除缓存</span></span><br><span class="line">$ hexo g <span class="hljs-comment"># 生成Hexo页面</span></span><br><span class="line">$ hexo d <span class="hljs-comment"># 远程部署Hexo页面</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a><strong>基本配置</strong></h3><p><strong>_config.yml</strong></p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Hexo Configuration</span></span><br><span class="line"><span class="hljs-comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="hljs-comment">## Source: https://github.com/hexojs/hexo/</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Site</span></span><br><span class="line"><span class="hljs-attr">title:</span> <span class="hljs-string">LotteWong</span> <span class="hljs-comment"># 个人博客显示名称</span></span><br><span class="line"><span class="hljs-attr">subtitle:</span> <span class="hljs-string">在代码符号表象中避难。</span> <span class="hljs-comment"># 个人博客副标题</span></span><br><span class="line"><span class="hljs-attr">description:</span> <span class="hljs-comment"># 搜索引擎描述信息</span></span><br><span class="line"><span class="hljs-attr">keywords:</span> <span class="hljs-comment"># 搜索引擎关键词</span></span><br><span class="line"><span class="hljs-attr">author:</span> <span class="hljs-string">LotteWong</span> <span class="hljs-comment"># 网站作者</span></span><br><span class="line"><span class="hljs-attr">avatar:</span> <span class="hljs-string">./themes/icarus\source\images</span></span><br><span class="line"><span class="hljs-attr">language:</span> <span class="hljs-string">en</span> <span class="hljs-comment"># 网站语言</span></span><br><span class="line"><span class="hljs-attr">timezone:</span> <span class="hljs-string">Asia/HongKong</span> <span class="hljs-comment"># 网站时区</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># URL</span></span><br><span class="line"><span class="hljs-comment">## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'</span></span><br><span class="line"><span class="hljs-attr">url:</span> <span class="hljs-attr">http://yoursite.com</span></span><br><span class="line"><span class="hljs-attr">root:</span> <span class="hljs-string">/</span></span><br><span class="line"><span class="hljs-attr">permalink:</span> <span class="hljs-string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="hljs-attr">permalink_defaults:</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Directory</span></span><br><span class="line"><span class="hljs-attr">source_dir:</span> <span class="hljs-string">source</span></span><br><span class="line"><span class="hljs-attr">public_dir:</span> <span class="hljs-string">public</span></span><br><span class="line"><span class="hljs-attr">tag_dir:</span> <span class="hljs-string">tags</span></span><br><span class="line"><span class="hljs-attr">archive_dir:</span> <span class="hljs-string">archives</span></span><br><span class="line"><span class="hljs-attr">category_dir:</span> <span class="hljs-string">categories</span></span><br><span class="line"><span class="hljs-attr">code_dir:</span> <span class="hljs-string">downloads/code</span></span><br><span class="line"><span class="hljs-attr">i18n_dir:</span> <span class="hljs-string">:lang</span></span><br><span class="line"><span class="hljs-attr">skip_render:</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Writing</span></span><br><span class="line"><span class="hljs-attr">new_post_name:</span> <span class="hljs-string">:title.md</span> <span class="hljs-comment"># File name of new posts</span></span><br><span class="line"><span class="hljs-attr">default_layout:</span> <span class="hljs-string">post</span></span><br><span class="line"><span class="hljs-attr">titlecase:</span> <span class="hljs-literal">false</span> <span class="hljs-comment"># Transform title into titlecase</span></span><br><span class="line"><span class="hljs-attr">external_link:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># Open external links in new tab</span></span><br><span class="line"><span class="hljs-attr">filename_case:</span> <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-attr">render_drafts:</span> <span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">post_asset_folder:</span> <span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">relative_link:</span> <span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">future:</span> <span class="hljs-literal">true</span></span><br><span class="line"><span class="hljs-attr">highlight:</span></span><br><span class="line"><span class="hljs-attr">  enable:</span> <span class="hljs-literal">true</span></span><br><span class="line"><span class="hljs-attr">  line_number:</span> <span class="hljs-literal">true</span></span><br><span class="line"><span class="hljs-attr">  auto_detect:</span> <span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">  tab_replace:</span></span><br><span class="line">  </span><br><span class="line"><span class="hljs-comment"># Home page setting</span></span><br><span class="line"><span class="hljs-comment"># path: Root path for your blogs index page. (default = '')</span></span><br><span class="line"><span class="hljs-comment"># per_page: Posts displayed per page. (0 = disable pagination)</span></span><br><span class="line"><span class="hljs-comment"># order_by: Posts order. (Order by date descending by default)</span></span><br><span class="line"><span class="hljs-attr">index_generator:</span></span><br><span class="line"><span class="hljs-attr">  path:</span> <span class="hljs-string">''</span></span><br><span class="line"><span class="hljs-attr">  per_page:</span> <span class="hljs-number">10</span></span><br><span class="line"><span class="hljs-attr">  order_by:</span> <span class="hljs-bullet">-date</span></span><br><span class="line">  </span><br><span class="line"><span class="hljs-comment"># Category &amp; Tag</span></span><br><span class="line"><span class="hljs-attr">default_category:</span> <span class="hljs-string">uncategorized</span></span><br><span class="line"><span class="hljs-attr">category_map:</span></span><br><span class="line"><span class="hljs-attr">tag_map:</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Date / Time format</span></span><br><span class="line"><span class="hljs-comment">## Hexo uses Moment.js to parse and display date</span></span><br><span class="line"><span class="hljs-comment">## You can customize the date format as defined in</span></span><br><span class="line"><span class="hljs-comment">## http://momentjs.com/docs/#/displaying/format/</span></span><br><span class="line"><span class="hljs-attr">date_format:</span> <span class="hljs-string">YYYY-MM-DD</span></span><br><span class="line"><span class="hljs-attr">time_format:</span> <span class="hljs-attr">HH:mm:ss</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Pagination</span></span><br><span class="line"><span class="hljs-comment">## Set per_page to 0 to disable pagination</span></span><br><span class="line"><span class="hljs-attr">per_page:</span> <span class="hljs-number">10</span></span><br><span class="line"><span class="hljs-attr">pagination_dir:</span> <span class="hljs-string">page</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Extensions</span></span><br><span class="line"><span class="hljs-comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="hljs-comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="hljs-attr">plugins:</span> <span class="hljs-comment"># 设置个人博客插件</span></span><br><span class="line"><span class="hljs-attr">theme:</span> <span class="hljs-string">icarus</span> <span class="hljs-comment"># 设置个人博客主题</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Deployment</span></span><br><span class="line"><span class="hljs-comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="hljs-attr">deploy:</span> </span><br><span class="line"><span class="hljs-attr">  type:</span> <span class="hljs-string">git</span> <span class="hljs-comment"># 部署类型</span></span><br><span class="line"><span class="hljs-attr">  repo:</span> <span class="hljs-string">git@github.com:LotteWong/lottewong.github.io.git</span> <span class="hljs-comment"># 部署仓库</span></span><br><span class="line"><span class="hljs-attr">  branch:</span> <span class="hljs-string">master</span> <span class="hljs-comment"># 部署分支</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="个性化"><a href="#个性化" class="headerlink" title="个性化"></a><strong>个性化</strong></h2><h2 id="博客写作"><a href="#博客写作" class="headerlink" title="博客写作"></a><strong>博客写作</strong></h2><h2 id="双备份"><a href="#双备份" class="headerlink" title="双备份"></a>双备份</h2>
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/07/10/GitHub Pages + Hexo从0到1搭建个人博客/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/GitHub-Pages/">GitHub Pages</a>, <a class="has-link-grey -link" href="/tags/Hexo/">Hexo</a>
                 </div>
             </div>
         </div>
         
         
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-06-09T02:50:54.262Z">2019-06-09</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 121 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/06/09/hello-world/">Hello World</a>
-            
-        </h1>
-        <div class="content">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="hljs-string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-        </div>
-        
-        
         
     </div>
 </div>
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/image/alipay.png" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/image/wechat.png" alt="Wechat"></div>
+</a>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
+    <span class="icon is-small">
+        <i class="fab fa-paypal"></i>
+    </span>
+    <span>Paypal</span>
+</a>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="SuperGsama@outlook.com">
+    <input type="hidden" name="currency_code" value="USD">
+</form>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/06/09/hello-world/">
+                <span class="level-item">Hello World</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -648,7 +690,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="&lt;Configuration&gt; GitHub Pages + Hexo从0到1搭建个人博客" height="28">
                 
                 </a>
                 <p class="is-size-7">
