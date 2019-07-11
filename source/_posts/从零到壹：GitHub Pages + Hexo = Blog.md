@@ -9,8 +9,6 @@ thumbnail: /images/hexo-github.png
 
 
 
-
-
 利用**GitHub Pages+Hexo**打造一个个人博客，主要分为以下**五个部分**：
 
 - 环境准备 Environment
