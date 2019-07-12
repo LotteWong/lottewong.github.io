@@ -163,7 +163,7 @@
 
 <h2 id="Platform-as-a-Service-PaaS"><a href="#Platform-as-a-Service-PaaS" class="headerlink" title="Platform as a Service (PaaS)"></a>Platform as a Service (PaaS)</h2><h3 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h3><p>*”Platform as a Service (PaaS) is a class of cloud computing services which allows its users to develop, run, and manage applications without worrying about the underlying infrastructure. With PaaS, users can simply focus on building their applications, which is a great help to developers. We can either use PaaS services offered by different cloud computing providers like Amazon, Google, Azure, etc., or deploy it on-premise, using software like OpenShift Origin. PaaS can be deployed on top of IaaS, or, independently on VMs, bare metal, and containers”.*</p>
 <h3 id="Cloud-Foudry"><a href="#Cloud-Foudry" class="headerlink" title="Cloud Foudry"></a>Cloud Foudry</h3><h4 id="Concept-1"><a href="#Concept-1" class="headerlink" title="Concept"></a>Concept</h4><p>*”<a href="https://www.cloudfoundry.org/" target="_blank" rel="noopener">Cloud Foundry</a> CF) is an open source Platform as a Service (PaaS) that provides a choice of clouds, developer frameworks, and application services. It can be deployed on-premise or on IaaS, like AWS, vSphere, or OpenStack. There are many commercial <a href="https://www.cloudfoundry.org/learn/certified-providers/" target="_blank" rel="noopener">CF cloud providers</a> as well, like IBM Cloud Foundry, SAP Cloud Platform, Pivotal Cloud Foundry, etc”.*</p>
-<h4 id="Feature"><a href="#Feature" class="headerlink" title="Feature"></a>Feature</h4><p>Among the characteristics employed by Cloud Foundry are the following:</p>
+<h4 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h4><p>Among the characteristics employed by Cloud Foundry are the following:</p>
 <ul>
 <li><p>Application portability</p>
 </li>
@@ -187,7 +187,7 @@
 </li>
 </ul>
 <h4 id="CF-Application-Runtime"><a href="#CF-Application-Runtime" class="headerlink" title="CF Application Runtime"></a>CF Application Runtime</h4><h5 id="Concept-2"><a href="#Concept-2" class="headerlink" title="Concept"></a>Concept</h5><p>*”<a href="https://www.cloudfoundry.org/application-runtime/" target="_blank" rel="noopener">CF Application Runtime</a>, previously known as Elastic Runtime, is used by developers to run applications written in any language or framework on the cloud of their choice”.*</p>
-<h5 id="Feature-1"><a href="#Feature-1" class="headerlink" title="Feature"></a>Feature</h5><ul>
+<h5 id="Features-1"><a href="#Features-1" class="headerlink" title="Features"></a>Features</h5><ul>
 <li><p>CF Application Runtime uses <a href="https://docs.cloudfoundry.org/buildpacks/" target="_blank" rel="noopener">buildpacks</a>, which provide the framework and runtime support for the applications. They are programming language-specific and have information about how to download dependencies and configure specific applications. Developers can build new buildpacks or customize the existing ones.</p>
 </li>
 <li><p>In addition, by using the Open Service Broker API, we can connect our application to external services like databases or third-party SaaS providers.</p>
@@ -197,7 +197,7 @@
 </li>
 </ul>
 <h4 id="CF-Container-Runtime"><a href="#CF-Container-Runtime" class="headerlink" title="CF Container Runtime"></a>CF Container Runtime</h4><h5 id="Concept-3"><a href="#Concept-3" class="headerlink" title="Concept"></a>Concept</h5><p>*”<a href="https://www.cloudfoundry.org/container-runtime/" target="_blank" rel="noopener">CF Container Runtime</a> gives Cloud Foundry the flexibility to deploy developer-built, pre-packaged applications using containers”.*</p>
-<h5 id="Feature-2"><a href="#Feature-2" class="headerlink" title="Feature"></a>Feature</h5><ul>
+<h5 id="Features-2"><a href="#Features-2" class="headerlink" title="Features"></a>Features</h5><ul>
 <li><p><a href="https://www.cloudfoundry.org/bosh/" target="_blank" rel="noopener">BOSH</a> is a cloud-agnostic open source tool for release engineering, deployment, and lifecycle management of complex distributed systems.</p>
 </li>
 <li><p>Kubernetes is a container orchestrator which allows us to deploy containers.</p>
@@ -207,7 +207,7 @@
 </li>
 </ul>
 <h3 id="OpenShift"><a href="#OpenShift" class="headerlink" title="OpenShift"></a>OpenShift</h3><h4 id="Concept-4"><a href="#Concept-4" class="headerlink" title="Concept"></a>Concept</h4><p>*”<a href="https://www.openshift.com/" target="_blank" rel="noopener">OpenShift</a> is an open source PaaS solution provided by Red Hat. It is built on top of the container technology, which uses Kubernetes underneath. OpenShift can be deployed on top of a full-fledged Linux OS or on a Micro OS which is specifically designed to run containers and Kubernetes”.*</p>
-<h4 id="Feature-3"><a href="#Feature-3" class="headerlink" title="Feature"></a>Feature</h4><ul>
+<h4 id="Features-3"><a href="#Features-3" class="headerlink" title="Features"></a>Features</h4><ul>
 <li>With OpenShift, we can deploy containerized applications. With application images and QuickStart application templates, applications can be deployed with one click.</li>
 <li>As OpenShift uses Kubernetes, we get all the features offered by Kubernetes, like adding or removing nodes at runtime, persistent storage, auto-scaling, etc.</li>
 <li>OpenShift has a framework called <em>Source to Image</em> (<em>S2I</em>), which enables us to create container images from the source code repository to deploy applications easily.</li>
@@ -226,7 +226,7 @@
 <li>Depending on the process-type declaration in the <strong>Procfile</strong>, a virtualized UNIX container is created to serve the process in an isolated environment, which can be scaled up or down, based on the requirements. Each virtualized UNIX container is referred to as a dyno. Each dyno gets its own ephemeral storage.</li>
 <li>Dyno Manager manages dynos across all applications running on Heroku.</li>
 </ul>
-<h4 id="Feature-4"><a href="#Feature-4" class="headerlink" title="Feature"></a>Feature</h4><ul>
+<h4 id="Features-4"><a href="#Features-4" class="headerlink" title="Features"></a>Features</h4><ul>
 <li>Individual components of an application can be scaled up or down using dynos.</li>
 <li>It is a very rich ecosystem, and it allows us to extend the functionality of an application with <a href="https://elements.heroku.com/addons" target="_blank" rel="noopener">add-ons</a>. Add-ons allow us to easily integrate our applications with other fully-managed cloud services like database, logging, email, etc.</li>
 <li>Applications can be easily integrated with Salesforce.</li>
@@ -240,7 +240,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Cloud-Foudry/">Cloud Foudry</a>, <a class="has-link-grey -link" href="/tags/Heroku/">Heroku</a>, <a class="has-link-grey -link" href="/tags/OpenShift/">OpenShift</a>, <a class="has-link-grey -link" href="/tags/PaaS/">PaaS</a>
+                    <a class="has-link-grey -link" href="/tags/PaaS/">PaaS</a>
                 </div>
             </div>
         </div>
@@ -376,7 +376,7 @@
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        17
+                        6
                     </p>
                 </div>
             </div>
@@ -489,7 +489,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/AWS/" style="font-size: 10px;">AWS</a> <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/Cloud-Foudry/" style="font-size: 10px;">Cloud Foudry</a> <a href="/tags/DigitalOcean/" style="font-size: 10px;">DigitalOcean</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Google-Cloud/" style="font-size: 10px;">Google Cloud</a> <a href="/tags/Heroku/" style="font-size: 10px;">Heroku</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IaaS/" style="font-size: 10px;">IaaS</a> <a href="/tags/Introduction/" style="font-size: 10px;">Introduction</a> <a href="/tags/KVM/" style="font-size: 10px;">KVM</a> <a href="/tags/OpenShift/" style="font-size: 10px;">OpenShift</a> <a href="/tags/OpenStack/" style="font-size: 10px;">OpenStack</a> <a href="/tags/PaaS/" style="font-size: 10px;">PaaS</a> <a href="/tags/Vagrant/" style="font-size: 10px;">Vagrant</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/Virtualization/" style="font-size: 10px;">Virtualization</a>
+        <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IaaS/" style="font-size: 10px;">IaaS</a> <a href="/tags/Introduction/" style="font-size: 10px;">Introduction</a> <a href="/tags/PaaS/" style="font-size: 10px;">PaaS</a> <a href="/tags/Virtualization/" style="font-size: 10px;">Virtualization</a>
     </div>
 </div>
 
@@ -636,50 +636,8 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/AWS/">
-                        <span class="tag">AWS</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Azure/">
-                        <span class="tag">Azure</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Cloud-Foudry/">
-                        <span class="tag">Cloud Foudry</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/DigitalOcean/">
-                        <span class="tag">DigitalOcean</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/GitHub-Pages/">
                         <span class="tag">GitHub Pages</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Google-Cloud/">
-                        <span class="tag">Google Cloud</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Heroku/">
-                        <span class="tag">Heroku</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -706,43 +664,8 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/KVM/">
-                        <span class="tag">KVM</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/OpenShift/">
-                        <span class="tag">OpenShift</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/OpenStack/">
-                        <span class="tag">OpenStack</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/PaaS/">
                         <span class="tag">PaaS</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Vagrant/">
-                        <span class="tag">Vagrant</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/VirtualBox/">
-                        <span class="tag">VirtualBox</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -909,50 +832,8 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/AWS/">
-                        <span class="tag">AWS</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Azure/">
-                        <span class="tag">Azure</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Cloud-Foudry/">
-                        <span class="tag">Cloud Foudry</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/DigitalOcean/">
-                        <span class="tag">DigitalOcean</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/GitHub-Pages/">
                         <span class="tag">GitHub Pages</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Google-Cloud/">
-                        <span class="tag">Google Cloud</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Heroku/">
-                        <span class="tag">Heroku</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -979,43 +860,8 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/KVM/">
-                        <span class="tag">KVM</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/OpenShift/">
-                        <span class="tag">OpenShift</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/OpenStack/">
-                        <span class="tag">OpenStack</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/PaaS/">
                         <span class="tag">PaaS</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Vagrant/">
-                        <span class="tag">Vagrant</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/VirtualBox/">
-                        <span class="tag">VirtualBox</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
