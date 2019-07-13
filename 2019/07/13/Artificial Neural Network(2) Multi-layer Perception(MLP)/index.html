@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Tag: IaaS - LotteWong</title>
+<title>\#Machine Learning\# Artificial Neural Network(2) Multi-layer Perception(MLP) - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="\#Machine Learning\# Artificial Neural Network(2) Multi-layer Perception(MLP)" height="28">
             
             </a>
         </div>
@@ -116,39 +116,28 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">IaaS</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-image">
-        <a href="/2019/07/12/Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)/" class="image is-7by1">
-            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/Artificial Neural Network.png" alt="\#Machine Learning\# Artificial Neural Network(2) Multi-layer Perception(MLP)">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-12T02:17:06.101Z">2019-07-12</time>
+                <time class="level-item has-text-grey" datetime="2019-07-13T03:13:21.000Z">2019-07-13</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
+                <a class="has-link-grey -link" href="/categories/Machine-Learning/">Machine Learning</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    7 minutes read (About 1014 words)
+                    9 minutes read (About 1394 words)
                 </span>
                 
                 
@@ -157,27 +146,84 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/12/Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)/">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)</a>
+                \#Machine Learning\# Artificial Neural Network(2) Multi-layer Perception(MLP)
             
         </h1>
         <div class="content">
-            <p><strong>Welcome to LFS151x: Introduction to Cloud Infrastructure Technologies</strong></p>
-<p>By the end of this chapter, you should be able to:</p>
+            <p>本文主要讨论<strong>多层感知机</strong>的概念和应用，包括以下<strong>七个部分</strong>：</p>
 <ul>
-<li>Explain the concept of Infrastructure as a Service (IaaS).</li>
-<li>Distinguish between different IaaS providers.</li>
-<li>Provision a virtual machine on top of different IaaS providers.</li>
+<li>神经网络结构</li>
+<li>神经网络流程</li>
+<li><strong>神经网络原理</strong></li>
+<li><strong>神经网络问题</strong></li>
+<li><strong>阐述多层感知机例子</strong></li>
+<li><strong>实现多层感知机源码</strong></li>
+<li>本文参考链接</li>
 </ul>
+<a id="more"></a>
+
+
+
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><h3 id="输入层"><a href="#输入层" class="headerlink" title="输入层"></a>输入层</h3><h3 id="隐含层"><a href="#隐含层" class="headerlink" title="隐含层"></a>隐含层</h3><ul>
+<li><p>只要隐含的节点足够多，就可以拟合任意函数。</p>
+</li>
+<li><p>隐含层越多，越容易拟合更复杂的函数。</p>
+</li>
+<li><p>隐含层的两个属性：每个隐含层的节点数、隐含层的层数。层数越多，每一层需要的节点数就会越少。</p>
+</li>
+<li><p>![multi-layer perception](/images/multi-layer perception.png)</p>
+</li>
+</ul>
+<h3 id="输出层"><a href="#输出层" class="headerlink" title="输出层"></a>输出层</h3><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p><em>我们的任务就是找到权值和偏置这些参数的值，使得输出的东西让我们满意，达到我们的要求。</em></p>
+<h3 id="前向过程-gt-预测"><a href="#前向过程-gt-预测" class="headerlink" title="前向过程 -&gt; 预测"></a>前向过程 -&gt; 预测</h3><h3 id="反向过程-gt-训练"><a href="#反向过程-gt-训练" class="headerlink" title="反向过程 -&gt; 训练"></a>反向过程 -&gt; 训练</h3><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p><em>通过合理地改变权值和偏置一点点的方式来让这个神经网络最后的结果向我们预期的结果进军，激活函数的选择对于神经网络的训练来说，也是很重要的。</em></p>
+<p>![delta change](/images/delta change.webp)</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h3><ul>
+<li>Q：模型拟合训练数据，泛化性较差，测试数据效果不好。</li>
+<li>A：<strong>Dropout</strong>，在神经网络的层中，随机丢弃一些点，并且加强剩余的点，学习含有噪声的数据，增强模型的泛化性。</li>
+</ul>
+<h3 id="局部最优"><a href="#局部最优" class="headerlink" title="局部最优"></a>局部最优</h3><ul>
+<li>Q：神经网络不是一个凸优化问题，存在大量的局部最优点，然而，神经网络的局部最优正好可以达到比较好的效果，全局最优反而容易拟合。</li>
+<li>A：<strong>Adagrad</strong>，减少计算参数的复杂度，学习速率先快后慢，恰好达到局部最优。</li>
+</ul>
+<h3 id="梯度弥散"><a href="#梯度弥散" class="headerlink" title="梯度弥散"></a>梯度弥散</h3><ul>
+<li>Q：神经网络的的激活函数，将信息上一层传递至下一层的变换，使模型学习到更加高阶的特征。<a href="https://www.jianshu.com/p/4528da002c43" target="_blank" rel="noopener">Sigmoid函数</a>，在反向传播中，梯度会急剧减少；Softplus是单侧抑制，即负值转换为正值，但没有稀疏激活性，即没有0状态。真正的神经元具有稀疏性，根据输入信号，选择响应或是屏蔽。</li>
+<li>A：<strong>ReLU</strong>，y=max(0,x)，将负值抑制为0，即非激活状态，正值反馈。</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p><strong>以MNIST手写体为例子：</strong></p>
+<ul>
+<li>读取数据集（28×28的灰度图）</li>
+<li>展开为一维（含有784个单元）</li>
+<li>对于输入层而言，我们可以“设定”784个单元，分别接受每一个像素的值</li>
+<li>对于输出层而言，我们可以只设定一个神经元，用来输出这个数字是几，我们也可以设定10个神经元，分别代表0到9，然后输出这个那个数字更加有可能</li>
+<li>从上面看，设计输入层和输出层还是比较轻松的，但是设计隐藏层是比较难的，后面再讨论</li>
+<li>训练神经网络<ul>
+<li>确定损失函数</li>
+<li>随机梯度下降</li>
+</ul>
+</li>
+<li>测试神经网络</li>
+</ul>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><p><strong>以MNIST手写体为例子：</strong></p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf</span><br><span class="line"><span class="hljs-keyword">from</span> tensorflow.examples.tutorials.mnist <span class="hljs-keyword">import</span> input_data</span><br><span class="line"></span><br><span class="line"><span class="hljs-string">"""读取数据"""</span></span><br><span class="line"></span><br><span class="line">mnist = input_data.read_data_sets(<span class="hljs-string">"MNIST_data"</span>, one_hot=<span class="hljs-literal">True</span>)  <span class="hljs-comment"># 读取数据集</span></span><br><span class="line">sess = tf.InteractiveSession()  <span class="hljs-comment"># 创建交互会话</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-string">"""创建模型"""</span></span><br><span class="line"></span><br><span class="line">in_units = <span class="hljs-number">28</span> * <span class="hljs-number">28</span>  <span class="hljs-comment"># 输入层有784个单元</span></span><br><span class="line">h1_units = <span class="hljs-number">300</span>  <span class="hljs-comment"># 隐含层1有300个单元</span></span><br><span class="line">out_units = <span class="hljs-number">10</span>  <span class="hljs-comment"># 输出层有10个单元</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 初始化隐藏层W1</span></span><br><span class="line"><span class="hljs-comment"># 使用truncated_normal加噪，防止正态分布的完全对称</span></span><br><span class="line">W1 = tf.Variable(tf.truncated_normal([in_units, h1_units], stddev=<span class="hljs-number">0.1</span>))</span><br><span class="line"><span class="hljs-comment"># 初始化隐藏层b1</span></span><br><span class="line"><span class="hljs-comment"># 矩阵用大写字母，向量用小写字母</span></span><br><span class="line">b1 = tf.Variable(tf.zeros[h1_units])</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 初始化输出层W2</span></span><br><span class="line">W2 = tf.Variable(tf.zeros([h1_units, out_units]))</span><br><span class="line"><span class="hljs-comment"># 初始化输出层b2</span></span><br><span class="line">b2 = tf.Variable(tf.zeros([out_units]))</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 回归函数：y = wx + b</span></span><br><span class="line"><span class="hljs-comment"># 激活函数：ReLU</span></span><br><span class="line">x = tf.placeholder(tf.float32, [<span class="hljs-literal">None</span>, in_units])  <span class="hljs-comment"># 输入层</span></span><br><span class="line">h1 = tf.nn.relu(tf.matmul(x, W1) + b1)  <span class="hljs-comment"># 隐藏层</span></span><br><span class="line">keep_prob = tf.placeholder(tf.float32)  <span class="hljs-comment"># dropout的保留比率</span></span><br><span class="line">h1_dropout = tf.nn.dropout(h1, keep_prob)  <span class="hljs-comment"># 隐藏层的dropout</span></span><br><span class="line">y = tf.nn.softmax(tf.matmul(h1, W2) + b2)  <span class="hljs-comment"># 输出层</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 损失函数：标准的交叉熵</span></span><br><span class="line">y_ = tf.placeholder(tf.float32, [<span class="hljs-literal">None</span>, out_units])  <span class="hljs-comment"># 待训标签</span></span><br><span class="line">cross_entroy = tf.reduce_mean(tf.reduce_sum(y_ * tf.log(y), reduction_indices=[<span class="hljs-number">1</span>]))  <span class="hljs-comment"># 交叉熵</span></span><br><span class="line">train_step = tf.train.AdagradDAOptimizer(<span class="hljs-number">0.3</span>)  <span class="hljs-comment"># 训练步长</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 初始化全部变量</span></span><br><span class="line">tf.global_variables_initializer().run()</span><br><span class="line"></span><br><span class="line"><span class="hljs-string">"""训练模型"""</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 循环训练模型3000次，每次随机采样100个数据</span></span><br><span class="line"><span class="hljs-comment"># Feed三类数据：数据x，标签y_，dropout的保留比率keep_prob</span></span><br><span class="line"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">3000</span>):</span><br><span class="line">    batch_xs, batch_ys = mnist.train.next_batch(<span class="hljs-number">100</span>)  <span class="hljs-comment"># 随机采样</span></span><br><span class="line">    train_step.run(&#123;x: batch_xs, y_: batch_ys, keep_prob: <span class="hljs-number">0.75</span>&#125;)  <span class="hljs-comment"># 训练数据</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-string">"""测试模型"""</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># argmax选择最大数的索引，全部数据求平均</span></span><br><span class="line"><span class="hljs-comment"># keep_prob设置为1，不丢弃任何信息</span></span><br><span class="line">correct_pred = tf.equal(tf.argmax(y, <span class="hljs-number">1</span>), tf.argmax(y_, <span class="hljs-number">1</span>))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 计算并输出准确率结果</span></span><br><span class="line">print(accuracy.eval(&#123;x: mnist.test.image, y_: mnist.test.labels, keep_prob: <span class="hljs-number">1.0</span>&#125;))</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://www.jianshu.com/p/a088a9d8307f" target="_blank" rel="noopener">深度学习笔记二：多层感知机（MLP）与神经网络结构</a></li>
+<li><a href="https://blog.csdn.net/lykymy/article/details/91128833" target="_blank" rel="noopener">MNIST数据集下载</a></li>
+<li><a href="https://www.jianshu.com/p/d282bce1a999" target="_blank" rel="noopener">MNIST数据集介绍及读取</a></li>
+<li><a href="https://www.jianshu.com/p/ac5c1d83dc71" target="_blank" rel="noopener">人工智能 - 多层感知机 MLP [3]</a></li>
+</ul>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/07/12/Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/ANN/">ANN</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -185,9 +231,65 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/image/alipay.png" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/image/wechat.png" alt="Wechat"></div>
+</a>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
+    <span class="icon is-small">
+        <i class="fab fa-paypal"></i>
+    </span>
+    <span>Paypal</span>
+</a>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="SuperGsama@outlook.com">
+    <input type="hidden" name="currency_code" value="USD">
+</form>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/13/Artificial Neural Network(1) Single-layer Perception(SLP)/">
+                <span class="level-item">\#Machine Learning\# Artificial Neural Network(1) Single-layer Perception(SLP)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -789,7 +891,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="\#Machine Learning\# Artificial Neural Network(2) Multi-layer Perception(MLP)" height="28">
                 
                 </a>
                 <p class="is-size-7">
