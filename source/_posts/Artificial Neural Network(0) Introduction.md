@@ -1,6 +1,6 @@
 ---
 title: \#Machine Learning\# Artificial Neural Network(10) Introduction
-date: 2019-07-13 19:13:21
+date: 2019-07-13 09:13:21
 categories: Machine Learning
 tags:
 - ANN

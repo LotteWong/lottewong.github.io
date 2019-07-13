@@ -1,6 +1,6 @@
 ---
 title: \#Machine Learning\# Artificial Neural Network(1) Single-layer Perception(SLP)
-date: 2019-07-14 19:13:21
+date: 2019-07-13 10:13:21
 categories: Machine Learning
 tags:
 - ANN
@@ -10,7 +10,7 @@ thumbnail: /images/Artificial Neural Network.png
 
 
 
-本文主要讨论**ANN**的重要概念和核心问题，包括以下**四个部分**：
+本文主要讨论**单层感知机**的概念和应用，包括以下**六个部分**：
 
 - **单层感知机的结构**
 - **单层感知机的训练**
