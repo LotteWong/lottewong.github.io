@@ -3,9 +3,6 @@ title: \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(1) 
 categories: Cloud Computing
 tags:
 - Virtualization
-- KVM
-- VirtualBox
-- Vagrant
 thumbnail: /images/cloud_computing.png
 ---
 
@@ -46,7 +43,7 @@ By the end of this chapter, you should be able to:
 
 *"Configuring and sharing one VM is easy, but, when we have to deal with multiple VMs for the same project, doing everything manually can be tiresome. [Vagrant](https://www.vagrantup.com/) by HashiCorp helps us automate the setup of one or more VMs by providing an end-to-end lifecycle using the vagrant command line. Vagrant is a cross-platform tool. It can be installed on Linux, Mac OSX, and Windows. We have to use different providers, depending on the OS. It has recently added support for Docker, which can help us manage Docker containers.“*
 
-#### Feature
+#### Features
 
 - **Boxes**
 

@@ -3,11 +3,6 @@ title: \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(2) 
 categories: Cloud Computing
 tags:
 - IaaS
-- AWS
-- Azure
-- Google Cloud
-- DigitalOcean
-- OpenStack
 thumbnail: /images/cloud_computing.png
 ---
 
@@ -39,7 +34,7 @@ By the end of this chapter, you should be able to:
 
 *"[Amazo](https://aws.amazon.com/)[n](https://aws.amazon.com/)[ ](https://aws.amazon.com/)[Web](https://aws.amazon.com/)[ Ser](https://aws.amazon.com/)[vices](https://aws.amazon.com/) (AWS) is one of the leaders in providing different cloud services. With [Am](https://aws.amazon.com/ec2/)[azon](https://aws.amazon.com/ec2/)[ Elastic](https://aws.amazon.com/ec2/)[ ](https://aws.amazon.com/ec2/)[Compute](https://aws.amazon.com/ec2/), Amazon provides the IaaS infrastructure, on which most of the other services are built. We can manage compute resources from the Amazon EC2 web interface and can scale up or down, depending on the need. AWS also [offers a command line](https://aws.amazon.com/cli/) to manage the instances from the command line. Amazon EC2 uses XEN and KVM hypervisors to provision compute resources".*
 
-#### Feature
+#### Features
 
 - Amazon EC2 offers compute instances for different resources, which we can choose from depending on our need.
 - Amazon EC2 provides some preconfigured images, called Amazon Machine Images (AMIs). These images can be used to quickly start instances. We can also create our own custom AMIs to boot our instances.
@@ -57,7 +52,7 @@ By the end of this chapter, you should be able to:
 
 *'"[Azure](https://azure.microsoft.com/) is Microsoft's cloud offering, which has products in different domains, such as compute, web and mobile, data and storage, Internet of Things, and many others. Through Azure Virtual Machine, Microsoft provides compute provisioning and management: We can manage Virtual Machines from Azure's web interface. Azure also provides a [command line utility](https://github.com/azure/azure-xplat-cli) to manage resources and applications on the Azure cloud".*
 
-#### Feature
+#### Features
 
 - Azure lets you choose between different tiers, based on the usage and the operating systems or the predefined application virtual machines (SharePoint, Oracle, etc.).
 - Using Resource Manager templates, we can define the template for the virtual machine deployment.
@@ -69,7 +64,7 @@ By the end of this chapter, you should be able to:
 
 *”[Google Cloud Platform](https://cloud.google.com/) is Google's Cloud offering, which has many products in different domains, like compute, storage, networking, big data, and others. [Google Compute Engine](https://cloud.google.com/compute/) provides the compute service. We can manage the instances through GUI, APIs or [command line](https://cloud.google.com/sdk/gcloud/). Access to the individual VM's console is also available“.*
 
-#### Feature
+#### Features
 
 - GCE supports different [machine types](https://cloud.google.com/compute/docs/machine-types), which we can choose from depending on our need.
 - GCE has other features as well, like Persistent Disk, Local SSD, Global Load Balancing, Compliance and Security, Automatic Discount, etc.
@@ -80,7 +75,7 @@ By the end of this chapter, you should be able to:
 
 *"[DigitalOcean](https://www.digitalocean.com/) helps you create a simple cloud quickly, in as little as 55 seconds. All of the VMs are created on top of the KVM hypervisor and have SSD (Solid-State Drive) as the primary disk."*
 
-#### Feature
+#### Features
 
 - Based on your need, DigitalOcean offers [different plans](https://www.digitalocean.com/pricing/).
 - DigitalOcean provides other features, like Floating IPs, Shared Private Networking, Load Balancers, Team Accounts, etc.
@@ -92,7 +87,7 @@ By the end of this chapter, you should be able to:
 
 *"With [OpenStack](https://www.openstack.org/)**,** we can offer a cloud computing platform for public and private clouds. Other than providing a IaaS solution, OpenStack has evolved over time to provide other services, like Database, Storage, etc".*
 
-#### Feature
+#### Features
 
 Due to the modular nature of OpenStack, anyone can add additional components to get specific features or functionality. Some of the major OpenStack components are
 

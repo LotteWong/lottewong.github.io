@@ -3,9 +3,6 @@ title: \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(3) 
 categories: Cloud Computing
 tags:
 - PaaS
-- Cloud Foudry
-- OpenShift
-- Heroku
 thumbnail: /images/cloud_computing.png
 ---
 
@@ -37,7 +34,7 @@ By the end of this chapter, you should be able to:
 
 *"[Cloud Foundry](https://www.cloudfoundry.org/) CF) is an open source Platform as a Service (PaaS) that provides a choice of clouds, developer frameworks, and application services. It can be deployed on-premise or on IaaS, like AWS, vSphere, or OpenStack. There are many commercial [CF cloud providers](https://www.cloudfoundry.org/learn/certified-providers/) as well, like IBM Cloud Foundry, SAP Cloud Platform, Pivotal Cloud Foundry, etc".*
 
-#### Feature
+#### Features
 
 Among the characteristics employed by Cloud Foundry are the following:
 
@@ -59,7 +56,7 @@ Among the characteristics employed by Cloud Foundry are the following:
 
 *"[CF Application Runtime](https://www.cloudfoundry.org/application-runtime/), previously known as Elastic Runtime, is used by developers to run applications written in any language or framework on the cloud of their choice".*
 
-##### Feature
+##### Features
 
 - CF Application Runtime uses [buildpacks](https://docs.cloudfoundry.org/buildpacks/), which provide the framework and runtime support for the applications. They are programming language-specific and have information about how to download dependencies and configure specific applications. Developers can build new buildpacks or customize the existing ones.
 
@@ -77,7 +74,7 @@ Among the characteristics employed by Cloud Foundry are the following:
 
 *"[CF Container Runtime](https://www.cloudfoundry.org/container-runtime/) gives Cloud Foundry the flexibility to deploy developer-built, pre-packaged applications using containers".*
 
-##### Feature
+##### Features
 
 - [BOSH](https://www.cloudfoundry.org/bosh/) is a cloud-agnostic open source tool for release engineering, deployment, and lifecycle management of complex distributed systems.
 
@@ -93,7 +90,7 @@ Among the characteristics employed by Cloud Foundry are the following:
 
 *"[OpenShift](https://www.openshift.com/) is an open source PaaS solution provided by Red Hat. It is built on top of the container technology, which uses Kubernetes underneath. OpenShift can be deployed on top of a full-fledged Linux OS or on a Micro OS which is specifically designed to run containers and Kubernetes".*
 
-#### Feature
+#### Features
 
 - With OpenShift, we can deploy containerized applications. With application images and QuickStart application templates, applications can be deployed with one click.
 - As OpenShift uses Kubernetes, we get all the features offered by Kubernetes, like adding or removing nodes at runtime, persistent storage, auto-scaling, etc.
@@ -117,7 +114,7 @@ Among the characteristics employed by Cloud Foundry are the following:
 - Depending on the process-type declaration in the **Procfile**, a virtualized UNIX container is created to serve the process in an isolated environment, which can be scaled up or down, based on the requirements. Each virtualized UNIX container is referred to as a dyno. Each dyno gets its own ephemeral storage.
 - Dyno Manager manages dynos across all applications running on Heroku.
 
-#### Feature
+#### Features
 
 - Individual components of an application can be scaled up or down using dynos.
 - It is a very rich ecosystem, and it allows us to extend the functionality of an application with [add-ons](https://elements.heroku.com/addons). Add-ons allow us to easily integrate our applications with other fully-managed cloud services like database, logging, email, etc.

@@ -24,12 +24,12 @@ Once you complete this course, you will have a good understanding of the termino
 
 *"Cloud computing is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g. networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction".*
 
-### Term
+### Terms
 
 - [nested virtualization](https://en.wikipedia.org/wiki/Virtualization#Nested_virtualization)
 - [overcommitting](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/)
 
-### Feature
+### Features
 
 - **Speed and Agility**
   The required resources are just one click away, which saves time and provides agility. We can also easily scale up or down, depending on our need.
