@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(3) Platform as a Service (PaaS) - LotteWong</title>
+<title>\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(6) Container Orchestration - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(3) Platform as a Service (PaaS)" height="28">
+                <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(6) Container Orchestration" height="28">
             
             </a>
         </div>
@@ -119,7 +119,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(3) Platform as a Service (PaaS)">
+            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(6) Container Orchestration">
         </span>
     </div>
     
@@ -127,7 +127,7 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-12T02:18:27.718Z">2019-07-12</time>
+                <time class="level-item has-text-grey" datetime="2019-07-16T07:13:21.000Z">2019-07-16</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
@@ -137,7 +137,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    7 minutes read (About 1072 words)
+                    25 minutes read (About 3822 words)
                 </span>
                 
                 
@@ -146,93 +146,286 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(3) Platform as a Service (PaaS)
+                \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(6) Container Orchestration
             
         </h1>
         <div class="content">
             <p><strong>Welcome to LFS151x: Introduction to Cloud Infrastructure Technologies</strong></p>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>Explain the concept of Platform as a Service (PaaS).</li>
-<li>Distinguish between different PaaS providers.</li>
-<li>Deploy an application on top of different PaaS providers: Cloud Foundry, OpenShift, Heroku.</li>
+<li>Describe different container orchestration tools: Docker Swarm, Kubernetes, Mesos, Nomad, Amazon ECS.</li>
+<li>Describe different Kubernetes hosted services like AWS Elastic Kubernetes Service (EKS), Azure Kubernetes Services (AKS) and Google Kubernetes Engine (GKE).</li>
+<li>Deploy sample applications using various container orchestration tools: Docker Swarm, Kubernetes, Mesos, Nomad, Amazon ECS.</li>
 </ul>
 <a id="more"></a>
 
 
 
-<h2 id="Platform-as-a-Service-PaaS"><a href="#Platform-as-a-Service-PaaS" class="headerlink" title="Platform as a Service (PaaS)"></a>Platform as a Service (PaaS)</h2><h3 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h3><p>*”Platform as a Service (PaaS) is a class of cloud computing services which allows its users to develop, run, and manage applications without worrying about the underlying infrastructure. With PaaS, users can simply focus on building their applications, which is a great help to developers. We can either use PaaS services offered by different cloud computing providers like Amazon, Google, Azure, etc., or deploy it on-premise, using software like OpenShift Origin. PaaS can be deployed on top of IaaS, or, independently on VMs, bare metal, and containers”.*</p>
-<h3 id="Cloud-Foudry"><a href="#Cloud-Foudry" class="headerlink" title="Cloud Foudry"></a>Cloud Foudry</h3><h4 id="Concept-1"><a href="#Concept-1" class="headerlink" title="Concept"></a>Concept</h4><p>*”<a href="https://www.cloudfoundry.org/" target="_blank" rel="noopener">Cloud Foundry</a> CF) is an open source Platform as a Service (PaaS) that provides a choice of clouds, developer frameworks, and application services. It can be deployed on-premise or on IaaS, like AWS, vSphere, or OpenStack. There are many commercial <a href="https://www.cloudfoundry.org/learn/certified-providers/" target="_blank" rel="noopener">CF cloud providers</a> as well, like IBM Cloud Foundry, SAP Cloud Platform, Pivotal Cloud Foundry, etc”.*</p>
-<h4 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h4><p>Among the characteristics employed by Cloud Foundry are the following:</p>
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p>*”Container orchestration is an umbrella term which encompasses container scheduling and cluster management. Container scheduling allows us to decide on which host a container or a group of containers should be deployed. With the cluster management orchestrator we can manage the existing nodes, add or delete nodes, etc”.*</p>
+<h2 id="Docker-Swarm"><a href="#Docker-Swarm" class="headerlink" title="Docker Swarm"></a>Docker Swarm</h2><h3 id="Concept-1"><a href="#Concept-1" class="headerlink" title="Concept"></a>Concept</h3><p>*”<a href="https://docs.docker.com/engine/swarm/" target="_blank" rel="noopener">Docker Swarm</a> is a native container orchestration tool from Docker, Inc. It logically groups multiple Docker engines to create a virtual engine, on which we can deploy and scale applications”.*</p>
+<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>It is compatible with Docker tools and API, so that the existing workflow does not change much.</li>
+<li>It provides native support to Docker networking and volumes.</li>
+<li>It can scale up to large numbers of nodes.</li>
+<li>It supports failover and High Availability for the cluster manager.</li>
+<li>It uses a declarative approach to define the desired state of the various services of the application stack.</li>
+<li>For each service, you can declare the number of tasks you want to run. When you scale up or down, the Swarm manager automatically adapts by adding or removing tasks to maintain the desired state.</li>
+<li>The Docker Swarm manager node constantly monitors the cluster state and reconciles any differences between the actual state and your expressed desired state.</li>
+<li>The communication between the nodes of Docker Swarm is enforced with <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security" target="_blank" rel="noopener">Transport Layer Security</a> (TLS), which makes it secure by default.</li>
+<li>It supports rolling updates, using which we can control the delay between service deployment to different sets of nodes. If anything goes wrong, you can roll back a task to a previous version of the service.</li>
+</ul>
+<h3 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h3><ul>
+<li><strong>Swarm Manager Nodes</strong><br>There can be one or more manager nodes. They accept commands on behalf of the cluster and make scheduling decisions. They also store the cluster state using the <em>Internal Distributed State Store</em>, which uses the <a href="https://raft.github.io/raft.pdf" target="_blank" rel="noopener">Raft</a> consensus algorithm. One or more nodes can be configured as managers, but they work in <em>active</em>/<em>passive</em> modes.</li>
+<li><strong>Swarm Worker Nodes</strong><br>They run the Docker Engine and the sole purpose of the worker nodes is to run the container workload given by the manager node(s).</li>
+</ul>
+<p><img src="/images/Swarm_Cluster_Components.png" alt="Swarm_Cluster_Components"></p>
+<h3 id="Docker-Machine"><a href="#Docker-Machine" class="headerlink" title="Docker Machine"></a>Docker Machine</h3><h4 id="Concept-2"><a href="#Concept-2" class="headerlink" title="Concept"></a>Concept</h4><p>*”Docker Machine helps us configure and manage one or more Docker engines running locally or on cloud environments. With Docker Machine we can start, inspect, stop, and restart a managed host, upgrade the Docker client and daemon, and configure a Docker client to talk to our host. We can also use Docker Machine to configure a Swarm cluster”.*</p>
+<p><img src="/images/provision-use-case.png" alt="provision-use-case"></p>
+<h4 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h4><p>Docker Machine has drivers for Amazon EC2, Google Cloud, Digital Ocean, Vagrant, etc., to set up Docker engines. You can also add already running instances of the Docker engine to the Docker Machine:</p>
 <ul>
-<li><p>Application portability</p>
+<li><p>Setting up the Docker engine using the VirtualBox driver:</p>
+<figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker-machine create -d virtualbox dev1</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Application auto-scaling</p>
-</li>
-<li><p>Centralized platform management</p>
-</li>
-<li><p>Centralized logging</p>
-</li>
-<li><p>Dynamic routing</p>
-</li>
-<li><p>Application health management</p>
-</li>
-<li><p>Role-based application deployment</p>
-</li>
-<li><p>Horizontal and vertical scaling</p>
-</li>
-<li><p>Security</p>
-</li>
-<li><p>Support for different IaaS technologies.</p>
+<li><p>Setting up the Docker engine using DigitalOcean:</p>
+<figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker-machine create --driver digitalocean --digitalocean-access-token=&lt;TOKEN&gt; dev2</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
-<h4 id="CF-Application-Runtime"><a href="#CF-Application-Runtime" class="headerlink" title="CF Application Runtime"></a>CF Application Runtime</h4><h5 id="Concept-2"><a href="#Concept-2" class="headerlink" title="Concept"></a>Concept</h5><p>*”<a href="https://www.cloudfoundry.org/application-runtime/" target="_blank" rel="noopener">CF Application Runtime</a>, previously known as Elastic Runtime, is used by developers to run applications written in any language or framework on the cloud of their choice”.*</p>
-<h5 id="Features-1"><a href="#Features-1" class="headerlink" title="Features"></a>Features</h5><ul>
-<li><p>CF Application Runtime uses <a href="https://docs.cloudfoundry.org/buildpacks/" target="_blank" rel="noopener">buildpacks</a>, which provide the framework and runtime support for the applications. They are programming language-specific and have information about how to download dependencies and configure specific applications. Developers can build new buildpacks or customize the existing ones.</p>
+<h3 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h3><h4 id="Concept-3"><a href="#Concept-3" class="headerlink" title="Concept"></a>Concept</h4><p>*”<a href="https://docs.docker.com/compose/overview/" target="_blank" rel="noopener">Docker Compose</a> allows us to define and run multi-container applications through a configuration file. In a configuration file, we can define services, images or Dockerfiles to use, network, etc. Docker Swarm uses <a href="https://docs.docker.com/get-started/part5/" target="_blank" rel="noopener">Docker Stack</a> to deploy the distributed applications. We can use Docker Compose to generate the stack file, which can be used to deploy applications on Docker Swarm”.*</p>
+<h4 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h4><p><img src="/images/DockerFile.png" alt="DockerFile"></p>
+<h3 id="Docker-Datacenter"><a href="#Docker-Datacenter" class="headerlink" title="Docker Datacenter"></a>Docker Datacenter</h3><h4 id="Concept-4"><a href="#Concept-4" class="headerlink" title="Concept"></a>Concept</h4><p>*”Docker has another project called <a href="https://www.docker.com/products/docker-datacenter" target="_blank" rel="noopener">Docker Datacenter</a>, which is built on top of UCP and Docker Trusted Registry. Docker Datacenter is hosted completely behind the firewall. With Docker Datacenter we can build an enterprise-class CaaS platform on-premises, as it is built on top of Docker Swarm and integrates well with Docker tools, Docker Registry. It also has other features, such as LDAP/AD integration, monitoring, logging, network and storage plugins”.*</p>
+<p><img src="/images/Docker_Datacenter.png" alt="Docker_Datacenter"></p>
+<h3 id="Docker-Enterprise-Edition"><a href="#Docker-Enterprise-Edition" class="headerlink" title="Docker Enterprise Edition"></a>Docker Enterprise Edition</h3><h4 id="Concept-5"><a href="#Concept-5" class="headerlink" title="Concept"></a>Concept</h4><p>*”Docker Enterprise Edition (EE) 2.0 is the Container-as-a-Service (CaaS) platform that manages the entire lifecycle of the applications on enterprise Linux or Windows operating systems and Cloud providers. It supports Docker Swarm and Kubernetes as container orchestrators.”*</p>
+<h4 id="Features-1"><a href="#Features-1" class="headerlink" title="Features"></a>Features</h4><ul>
+<li>It is a multi-Linux, multi-OS, multi-Cloud solution.</li>
+<li>It supports Docker Swarm and Kubernetes as container orchestrators.</li>
+<li>It provides centralized cluster management.</li>
+<li>It has a built-in authentication mechanism with role-based access control (RBAC).</li>
+</ul>
+<h4 id="Components-1"><a href="#Components-1" class="headerlink" title="Components"></a>Components</h4><ul>
+<li><p><strong>Docker EE Engine</strong><br>It is a commercially supported Docker Engine for creating images and running Docker containers.</p>
 </li>
-<li><p>In addition, by using the Open Service Broker API, we can connect our application to external services like databases or third-party SaaS providers.</p>
+<li><p><strong>Docker Trusted Registry</strong> (<strong>DTR</strong>)
+It is a production-grade image registry designed to store images, from Docker, Inc.</p>
 </li>
-<li><p>As presented in the graphic below, the CF Application Runtime platform can manage the entire workflow and lifecycle of the application, from routing to logging. </p>
-<p><img src="/images/CF_Application_Runtime.jpg" alt="CF_Application_Runtime"></p>
+<li><p><strong>Universal Control Plane</strong> (<strong>UCP</strong>)It manages the Kubernetes and Swarm orchestrators, deploys applications using the CLI and GUI, and provides High Availability. UCP also provides role-based access control to ensure that only authorized users can make changes and deploy applications to your cluster.</p>
 </li>
 </ul>
-<h4 id="CF-Container-Runtime"><a href="#CF-Container-Runtime" class="headerlink" title="CF Container Runtime"></a>CF Container Runtime</h4><h5 id="Concept-3"><a href="#Concept-3" class="headerlink" title="Concept"></a>Concept</h5><p>*”<a href="https://www.cloudfoundry.org/container-runtime/" target="_blank" rel="noopener">CF Container Runtime</a> gives Cloud Foundry the flexibility to deploy developer-built, pre-packaged applications using containers”.*</p>
-<h5 id="Features-2"><a href="#Features-2" class="headerlink" title="Features"></a>Features</h5><ul>
-<li><p><a href="https://www.cloudfoundry.org/bosh/" target="_blank" rel="noopener">BOSH</a> is a cloud-agnostic open source tool for release engineering, deployment, and lifecycle management of complex distributed systems.</p>
+<p><img src="/images/Docker_EE_Architecture.png" alt="Docker_EE_Architecture"></p>
+<h2 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h2><h3 id="Concept-6"><a href="#Concept-6" class="headerlink" title="Concept"></a>Concept</h3><p><em>“<a href="https://kubernetes.io/" target="_blank" rel="noopener">Kubernetes</a> is an Apache 2.0-licensed open source project for automating deployment, operations, and scaling of containerized applications. It was started by Google, but many other companies like Docker, Red Hat, and VMware contributed to it. Kubernetes supports container runtimes like Docker, CRI-O, etc., to run containers”.</em></p>
+<h3 id="Features-2"><a href="#Features-2" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>It automatically places containers based on resource requirements and other constraints.</li>
+<li>It supports horizontal scaling through the CLI and GUI. It can auto-scale based on the CPU load as well.</li>
+<li>It supports rolling updates and rollbacks.</li>
+<li>It supports multiple volume plugins like the GCP/AWS disk, NFS, iSCSI, Ceph, Gluster, Cinder, Flocker, etc. to attach volumes to pods.</li>
+<li>It automatically self-heals by restarting failed pods, rescheduling pods from failed nodes, etc.</li>
+<li>It deploys and updates secrets for an application without rebuilding the image.</li>
+<li>It supports batch execution.</li>
+<li>It support High Availability cluster.</li>
+<li>It eliminates infrastructure lock-in by providing core capabilities for containers without imposing restrictions.</li>
+<li>We can deploy and update the application at scale.</li>
+</ul>
+<h3 id="Components-2"><a href="#Components-2" class="headerlink" title="Components"></a>Components</h3><ul>
+<li><p><strong>Cluster</strong><br>The cluster is a group of systems (physical or virtual) and other infrastructure resources used by Kubernetes to run containerized applications.</p>
 </li>
-<li><p>Kubernetes is a container orchestrator which allows us to deploy containers.</p>
+<li><p><strong>Master Node</strong><br>The master is a system that takes pod scheduling decisions and manages the replication and manager nodes. It has three main components: API Server, Scheduler, and Controller. There can be more than one master node. </p>
 </li>
-<li><p>The CF Container Runtime platform does it by deploying containers on a <a href="https://kubernetes.io/" target="_blank" rel="noopener">Kubernetes</a> cluster, which is managed by CF BOSH. With CF BOSH, you can achieve high availability, scaling, VM healing and upgrades for the Kubernetes cluster.</p>
-<p><img src="/images/CF_Container_Runtime.jpg" alt="CF_Container_Runtime"></p>
+<li><p><strong>Worker Node</strong><br>A system on which pods are scheduled and run. The node runs a daemon called <strong>kubelet</strong> to communicate with the master node. <strong>kube-proxy</strong>, which runs on all nodes, allows applications from the external world.</p>
+</li>
+<li><p><strong>Key-Value Store</strong><br>The Kubernetes cluster state is saved in a <em>key-value store</em>, like <strong>etcd</strong>. It can be either part of the same Kubernetes cluster or it can resides outside.</p>
+</li>
+<li><p><strong>Pod</strong><br>The pod is a co-located group of containers with shared volumes. It is the smallest deployment unit in Kubernetes. A pod can be created independently, but it is recommended to use the Replica Set, even if only a single pod is being deployed.</p>
+</li>
+<li><p><strong>Replica Set</strong><br>The Replica Set manages the lifecycle of pods. It makes sure that the desired numbers of pods is running at any given point in time. </p>
+</li>
+<li><p><strong>Deployments</strong><br>Deployments allow us to provide declarative updates for pods and Replica Sets. We can define Deployments to create new resources, or replace existing ones with new ones. </p>
+</li>
+<li><p><strong>Service</strong><br>The service groups sets of pods together and provides a way to refer to them from a single static IP address and the corresponding DNS name. </p>
+</li>
+<li><p><strong>Label</strong><br>The label is an arbitrary key-value pair which is attached to a resource like pod, Replica Set, etc. In the example above, we defined labels as <strong>app</strong> and <strong>tier</strong>.</p>
+</li>
+<li><p><strong>Selector</strong><br>Selectors enable us to group resources based on labels. In the above example, the <strong>frontend</strong> service will select all pods which have the labels <strong>app==dockchat</strong> and <strong>tier==frontend</strong>.</p>
+</li>
+<li><p><strong>Volume</strong><br>The volume is an external filesystem or storage which is available to pods. They are built on top of <a href="https://docs.docker.com/userguide/dockervolumes/" target="_blank" rel="noopener">Docker volumes</a>.</p>
+</li>
+<li><p><strong>Namespace</strong><br>The namespace allows us to partition the cluster into sub-clusters.</p>
 </li>
 </ul>
-<h3 id="OpenShift"><a href="#OpenShift" class="headerlink" title="OpenShift"></a>OpenShift</h3><h4 id="Concept-4"><a href="#Concept-4" class="headerlink" title="Concept"></a>Concept</h4><p>*”<a href="https://www.openshift.com/" target="_blank" rel="noopener">OpenShift</a> is an open source PaaS solution provided by Red Hat. It is built on top of the container technology, which uses Kubernetes underneath. OpenShift can be deployed on top of a full-fledged Linux OS or on a Micro OS which is specifically designed to run containers and Kubernetes”.*</p>
-<h4 id="Features-3"><a href="#Features-3" class="headerlink" title="Features"></a>Features</h4><ul>
-<li>With OpenShift, we can deploy containerized applications. With application images and QuickStart application templates, applications can be deployed with one click.</li>
-<li>As OpenShift uses Kubernetes, we get all the features offered by Kubernetes, like adding or removing nodes at runtime, persistent storage, auto-scaling, etc.</li>
-<li>OpenShift has a framework called <em>Source to Image</em> (<em>S2I</em>), which enables us to create container images from the source code repository to deploy applications easily.</li>
-<li>OpenShift integrates well with Continuous Deployment tools to deploy applications as part of the CI/CD pipeline.</li>
-<li>With CLI, GUI and IDE integration applications can be managed easily.</li>
-<li>It enables application portability, meaning that any application created on OpenShift can run on any platform that supports Docker. OpenShift integrated Docker registry, automatic edge load balancing, cluster logging, and integrated metrics.</li>
-</ul>
-<h3 id="Heroku"><a href="#Heroku" class="headerlink" title="Heroku"></a>Heroku</h3><h4 id="Concept-5"><a href="#Concept-5" class="headerlink" title="Concept"></a>Concept</h4><p><em>“<a href="http://www.heroku.com/" target="_blank" rel="noopener">Heroku</a> is a fully-managed container-based cloud platform, with integrated data services and a strong ecosystem. Heroku is used to deploy and run modern applications”.</em></p>
+<p><img src="/images/kubernetes_architecture.png" alt="kubernetes_architecture"></p>
+<h3 id="KubernetesFile"><a href="#KubernetesFile" class="headerlink" title="KubernetesFile"></a>KubernetesFile</h3><p>Some typical use cases are presented below:</p>
+<ol>
+<li><p>Create a Deployment to bring up a Replica Set and pods.</p>
+</li>
+<li><p>Check the status of a Deployment to see if it succeeds or not.</p>
+</li>
+<li><p>Later, update that Deployment to recreate the pods (for example, to use a new image).</p>
+</li>
+<li><p>Roll back to an earlier Deployment revision if the current Deployment isn’t stable.</p>
+</li>
+<li><p>Pause and resume a Deployment. Below we provide a <a href="http://kubernetes.io/docs/user-guide/deployments/" target="_blank" rel="noopener">sample deployment</a>:</p>
+<p><img src="/images/KubernetesFile1.png" alt="KubernetesFile1"></p>
+<p><img src="/images/KubernetesFile2.png" alt="KubernetesFile2"></p>
+</li>
+</ol>
+<h3 id="Kubernetes-Hosted-Solutions"><a href="#Kubernetes-Hosted-Solutions" class="headerlink" title="Kubernetes Hosted Solutions"></a>Kubernetes Hosted Solutions</h3><h4 id="Concept-7"><a href="#Concept-7" class="headerlink" title="Concept"></a>Concept</h4><p>*”Kubernetes can be deployed anywhere, be it on-premise or on-cloud. If we are deploying on-premise, then our Kubernetes administrators would have to perform all the Kubernetes management tasks like upgrading, back up, etc. With an on-cloud setup, we have different options. For instance, we can manage our own on-premise or opt for hosted Kubernetes services in which all the management tasks would be performed by the service providers. “*</p>
+<p>There are many hosted solutions available for Kubernetes, including:</p>
 <ul>
-<li>Applications should contain the source code, its dependency information and the list of named commands to be executed to deploy it, in a file called <strong>Procfile.</strong></li>
-<li>For each supported language, it has a pre-built image which contains a compiler for that language. This pre-built image is referred to as a <a href="https://devcenter.heroku.com/articles/buildpacks" target="_blank" rel="noopener">buildpack</a>. <a href="https://devcenter.heroku.com/articles/using-multiple-buildpacks-for-an-app" target="_blank" rel="noopener">Multiple buildpacks</a> can be used together. We can also create a custom buildpack.</li>
-<li>While deploying, we need to send the application’s content to Heroku, either via Git, GitHub, Dropbox or via an API. Once the application is received by Heroku, a buildpack is selected based on the language of preference.</li>
-<li>To create the runtime which is ready for execution, we compile the application after fetching its dependency and configuration variables on the selected buildpack. This runtime is often referred to as a slug.</li>
-<li>We can also use third party <a href="https://elements.heroku.com/addons" target="_blank" rel="noopener">add-ons</a> to get access to value-added services like logging, caching, monitoring, etc.</li>
-<li>A combination of slug, configuration variables, and add-ons is referred to as a release, on which we can perform upgrade or rollback.</li>
-<li>Depending on the process-type declaration in the <strong>Procfile</strong>, a virtualized UNIX container is created to serve the process in an isolated environment, which can be scaled up or down, based on the requirements. Each virtualized UNIX container is referred to as a dyno. Each dyno gets its own ephemeral storage.</li>
-<li>Dyno Manager manages dynos across all applications running on Heroku.</li>
+<li><a href="https://cloud.google.com/kubernetes-engine/" target="_blank" rel="noopener">Google Kubernetes Engine</a><br>Offers managed Kubernetes clusters on Google Cloud Platform.</li>
+<li><a href="https://aws.amazon.com/eks/" target="_blank" rel="noopener">Amazon Elastic Container Service for Kubernetes</a> (Amazon EKS)<br>Offers a managed Kubernetes service on AWS.</li>
+<li><a href="https://azure.microsoft.com/en-us/services/kubernetes-service/" target="_blank" rel="noopener">Azure Kubernetes Service</a> (AKS)<br>Offers a managed Kubernetes clusters Microsoft Azure.</li>
+<li><a href="https://stackpoint.io/" target="_blank" rel="noopener">Stackpoint.io</a><br>Provides Kubernetes infrastructure automation and management for multiple public clouds.</li>
+<li><a href="https://www.openshift.com/products/dedicated/" target="_blank" rel="noopener">OpenShift Dedicated</a><br>Offers managed Kubernetes clusters powered by Red Hat.</li>
 </ul>
-<h4 id="Features-4"><a href="#Features-4" class="headerlink" title="Features"></a>Features</h4><ul>
-<li>Individual components of an application can be scaled up or down using dynos.</li>
-<li>It is a very rich ecosystem, and it allows us to extend the functionality of an application with <a href="https://elements.heroku.com/addons" target="_blank" rel="noopener">add-ons</a>. Add-ons allow us to easily integrate our applications with other fully-managed cloud services like database, logging, email, etc.</li>
-<li>Applications can be easily integrated with Salesforce.</li>
-<li>It enables a development-friendly workflow.</li>
-<li>It provides the ability to do automated backups.</li>
+<h4 id="Google-Kubernetes-Engine-GKE"><a href="#Google-Kubernetes-Engine-GKE" class="headerlink" title="Google Kubernetes Engine (GKE)"></a>Google Kubernetes Engine (GKE)</h4><h5 id="Concept-8"><a href="#Concept-8" class="headerlink" title="Concept"></a>Concept</h5><p><em>“<a href="https://cloud.google.com/kubernetes-engine/" target="_blank" rel="noopener">Google Kubernetes Engine</a> is a fully-managed solution for running Kubernetes on Google Cloud. As we have learned earlier, Kubernetes is used for automating deployment, operations, and scaling of containerized applications. In GKE, Kubernetes can be integrated with all Google Cloud Platform’s services, like Stackdriver monitoring, diagnostics, and logging, identity and access management, etc”.</em></p>
+<h5 id="Features-3"><a href="#Features-3" class="headerlink" title="Features"></a>Features</h5><ul>
+<li>It has all of Kubernetes’ features.</li>
+<li>It runs on a container-optimized OS built and managed by Google.</li>
+<li>It is a fully-managed service, so the users do not have to worry about managing and scaling the cluster.</li>
+<li>We can store images privately, using the private container registry.</li>
+<li>Logging can be enabled easily using Google <a href="https://cloud.google.com/logging/docs/" target="_blank" rel="noopener">Cloud Logging</a>.</li>
+<li>It supports Hybrid Networking to reserve an IP address range for the container cluster.</li>
+<li>It enables a fast setup of managed clusters.</li>
+<li>It facilitates increased productivity for Dev and Ops teams.</li>
+<li>It is Highly Available in multiple zones and SLA promises 99.5% of availability.</li>
+<li>It has Google-grade managed infrastructure.</li>
+<li>It can be seamlessly integrated with all GCP services.</li>
+<li>It provides a feature called <em>Auto Repair</em>, which initiates a repair process for unhealthy nodes.</li>
 </ul>
+<h4 id="Amazon-Elastic-Container-Service-for-Kubernetes-EKS"><a href="#Amazon-Elastic-Container-Service-for-Kubernetes-EKS" class="headerlink" title="Amazon Elastic Container Service for Kubernetes (EKS)"></a>Amazon Elastic Container Service for Kubernetes (EKS)</h4><h5 id="Concept-9"><a href="#Concept-9" class="headerlink" title="Concept"></a>Concept</h5><p>*”<a href="https://aws.amazon.com/eks/" target="_blank" rel="noopener">Amazon Elastic Container Service for Kubernetes</a> is a hosted Kubernetes service offered by AWS. With Amazon EKS, users don’t need to worry about the infrastructure management, deployment and maintenance of the Kubernetes control plane. EKS provides a scalable and highly-available control plane that runs across multiple AWS availability zones. It can automatically detect the unhealthy Kubernetes control plane nodes and replace them. EKS also supports cluster autoscaling, using which it can dynamically add worker nodes, based on the workload. It also integrates with Kubernetes RBAC (Role-Based Control Access) to support AWS IAM authentication”.*</p>
+<p><img src="/images/Amazon_Elastic_Container_Service_for_Kubernetes.png" alt="Amazon_Elastic_Container_Service_for_Kubernetes"></p>
+<h5 id="Features-4"><a href="#Features-4" class="headerlink" title="Features"></a>Features</h5><ul>
+<li>No need to manage the Kubernetes Control Plane.</li>
+<li>Provides secure communication between the worker nodes and the control plane.</li>
+<li>Supports auto scaling in response to changes in load.</li>
+<li>Well integrated with various AWS services, like IAM and CloudTrail.</li>
+<li>Certified hosted Kubernetes platform.</li>
+</ul>
+<h4 id="Azure-Kubernetes-Service-AKS"><a href="#Azure-Kubernetes-Service-AKS" class="headerlink" title="Azure Kubernetes Service (AKS)"></a>Azure Kubernetes Service (AKS)</h4><h5 id="Concept-10"><a href="#Concept-10" class="headerlink" title="Concept"></a>Concept</h5><p>*”<a href="https://azure.microsoft.com/en-us/services/kubernetes-service/" target="_blank" rel="noopener">Azure Kubernetes Service</a> is a hosted Kubernetes service offered by Microsoft Azure. AKS offers a fully-managed Kubernetes container orchestration service, which reduces the complexity and operational overhead of managing Kubernetes. AKS handles all of the cluster management tasks, health monitoring, upgrades, scaling, etc. AKS also supports cluster autoscaling using which it can dynamically add worker nodes, based on the workload. It supports Kubernetes RBAC (Role-Based Control Access) and can integrate with Azure Active Directory for identity and security management.”*</p>
+<h5 id="Features-5"><a href="#Features-5" class="headerlink" title="Features"></a>Features</h5><ul>
+<li>No need to manage the Kubernetes Control Plane.</li>
+<li>Supports GUI and CLI-based deployment.</li>
+<li>Integrates well with other Azure services.</li>
+<li>Certified hosted Kubernetes platform.</li>
+<li>Compliant with SOC and ISO/HIPAA/HITRUST.</li>
+</ul>
+<h2 id="Apache-Mesos"><a href="#Apache-Mesos" class="headerlink" title="Apache Mesos"></a>Apache Mesos</h2><h3 id="Concept-11"><a href="#Concept-11" class="headerlink" title="Concept"></a>Concept</h3><p>*”<a href="http://mesos.apache.org/" target="_blank" rel="noopener">Apache Mesos</a> was created with this idea in mind, so that we can optimally use the resources available, even if we are running disparate applications on a pool of nodes. It helps us treat a cluster of nodes as one big computer, which manages CPU, memory, and other resources across a cluster. Mesos provides functionality that crosses between Infrastructure as a Service (IaaS) and Platform as a Service (PaaS).”*</p>
+<h3 id="Features-6"><a href="#Features-6" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>It can scale up to 10,000 nodes.</li>
+<li>It uses ZooKeeper for fault-tolerant replicated master and slaves.</li>
+<li>It provides support for Docker containers.</li>
+<li>It enables native isolation between tasks with Linux containers.</li>
+<li>It allows multi-resource scheduling (memory, CPU, disk, and ports).</li>
+<li>It uses Java, Python and C++ APIs to develop new parallel applications.</li>
+<li>It uses WebUI to view cluster statistics.</li>
+<li>It allows high resource utilization.</li>
+<li>It helps handling mixed workloads.</li>
+<li>It provides an easy-to-use container orchestration right out of the box.</li>
+<li>It ships binaries for different components (e.g. master, slaves, frameworks, etc.), which we can bind together to create our Mesos cluster.</li>
+</ul>
+<h3 id="Components-3"><a href="#Components-3" class="headerlink" title="Components"></a>Components</h3><ul>
+<li><p><strong>Master</strong><br>Master nodes are the brain of the cluster and provide a single source of truth for running tasks. There is one active master node at any point in time. The master node mediates between schedulers and slaves. Slaves advertise their resources to the master node, then the master node forwards them to the scheduler. Once the scheduler accepts the offer, it sends the task to run on the slave to the master, and the master forwards these tasks to the slave.</p>
+</li>
+<li><p><strong>Slave</strong><br>Slaves manage resources at each machine level and execute the tasks submitted via the scheduler.</p>
+</li>
+<li><p><strong>Frameworks</strong><br>Frameworks are distributed applications that solve a specific use case. They consist of a scheduler and an executor. The scheduler gets a resource offer, which it can accept or decline. The executor runs the job on the slave, which the scheduler schedules. There are many existing frameworks and we can also create custom ones. Some of the existing frameworks are: Hadoop, Spark, Marathon, Chronos, Jenkins, Aurora, and many more.</p>
+</li>
+<li><p><strong>Executor</strong> Executors are used to run jobs on slaves. They can be shell scripts, Docker containers, and programs written in different languages (e.g. Java). </p>
+</li>
+</ul>
+<p><img src="/images/mesos_architecture.jpg" alt="mesos_architecture"></p>
+<h3 id="Mesosphere-DC-OS"><a href="#Mesosphere-DC-OS" class="headerlink" title="Mesosphere DC/OS"></a>Mesosphere DC/OS</h3><h4 id="Concept-12"><a href="#Concept-12" class="headerlink" title="Concept"></a>Concept</h4><p>*”Mesosphere Enterprise DC/OS, offers a one-click install and enterprise features like security, monitoring, user interface, etc. on top of Mesos. By default, DC/OS comes with the Marathon framework and others can be added as required”.*</p>
+<h4 id="Features-7"><a href="#Features-7" class="headerlink" title="Features"></a>Features</h4><p>The Marathon framework has the following features:</p>
+<ul>
+<li>It starts, stops, scales, and updates applications.</li>
+<li>It has a nice web interface, API.</li>
+<li>It is highly available, with no single point of failure.</li>
+<li>It uses native Docker support.</li>
+<li>It supports rolling deploy/restart.</li>
+<li>It allows application health checks.</li>
+<li>It provides artifact staging.</li>
+</ul>
+<p>In addition to the Mesos features presented on the previous page, DC/OS provides the following ones:</p>
+<ul>
+<li>It provides an easy-to-use container orchestration right out of the box.</li>
+<li>It can configure multiple resource isolation zones.</li>
+<li>It can support applications with multiple persistent and ephemeral storage options.</li>
+<li>It allows you to install both public community and private community packaged applications.</li>
+<li>It allows you to manage your cluster and services using the web and command line interfaces.</li>
+<li>It allows you to easily scale up and scale down your services.</li>
+<li>It provides automation for updating services and the systems with zero downtime.</li>
+<li>Its <em>Enterprise</em> edition provides centralized management, control plane for service availability and performance monitoring.</li>
+</ul>
+<h4 id="Components-4"><a href="#Components-4" class="headerlink" title="Components"></a>Components</h4><p>The DC/OS Master has the following default components:</p>
+<ul>
+<li><strong>Mesos Master Process</strong><br>It is similar to the master component of Mesos.</li>
+<li><strong>Mesos DNS</strong><br>It provides service discovery within the cluster, so applications and services running inside the cluster can reach to each other.</li>
+<li><strong>Marathon</strong><br>It is a framework which comes by default with DC/OS and provides the <em>init</em> system<em>.</em></li>
+<li><strong>ZooKeeper</strong><br>It is a high-performance coordination service that manages the DC/OS services.</li>
+<li><strong>Admin Router</strong><br>It is an open source Nginx configuration created by Mesosphere, providing central authentication and proxy to DC/OS services within the cluster.</li>
+</ul>
+<p>The DC/OS Agent nodes have the following components:</p>
+<ul>
+<li><strong>Mesos Agent Process</strong><br>It runs the <strong>mesos-slave</strong> process, which is similar to the slave component of Mesos.</li>
+<li><strong>Mesos Containerizer</strong><br>It provides lightweight containerization and resource isolation of executors, using Linux-specific functionality, such as cgroups and namespaces.</li>
+<li><strong>Docker Container</strong><br>It provides support for launching tasks that contain Docker images.</li>
+</ul>
+<p>DC/OS has its own <a href="https://docs.mesosphere.com/usage/cli/" target="_blank" rel="noopener">command line</a> and web <a href="https://docs.mesosphere.com/1.11/gui/" target="_blank" rel="noopener">interfaces</a>, and comes with a simple packaging and installation.</p>
+<p><img src="/images/DC_OS_Architecture_Layers.png" alt="DC_OS_Architecture_Layers"></p>
+<h2 id="Nomad"><a href="#Nomad" class="headerlink" title="Nomad"></a>Nomad</h2><h3 id="Concept-13"><a href="#Concept-13" class="headerlink" title="Concept"></a>Concept</h3><p>*”<a href="https://www.nomadproject.io/" target="_blank" rel="noopener">HashiCorp Nomad</a> is a cluster manager and resource scheduler from <a href="https://www.hashicorp.com/" target="_blank" rel="noopener">HashiCorp</a>, which is distributed, highly available, and scales to thousands of nodes. It is especially designed to run microservices and batch jobs, and it supports different workloads, like containers (Docker), VMs, and individual applications. It is also capable of scheduling applications and services on different platforms like Linux, Windows and Mac”.*</p>
+<h3 id="Features-8"><a href="#Features-8" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>It handles both cluster management and resource scheduling.</li>
+<li>It supports multiple workloads, like containers (Docker), VMs, unikernels, and individual applications.</li>
+<li>It has multi-datacenter and multi-region support. We can have a Nomad <em>client</em>/<em>server</em> running in different clouds, which form the same logical Nomad <em>cluster</em>.</li>
+<li>It bin-packs applications onto servers to achieve high resource utilization.</li>
+<li>In Nomad, millions of containers can be deployed or upgraded by using the <strong>job</strong> file.</li>
+<li>It provides a built-in dry run execution facility, which shows the scheduling actions that are going to take place.</li>
+<li>It ensures that applications are running in <em>failure</em> scenarios.</li>
+<li>It supports long-running services, as well as batch jobs and cron jobs.</li>
+<li>It provides a built-in mechanism for rolling upgrades.</li>
+<li>Blue-green and canary deployments can be deployed using a declarative job file syntax.</li>
+<li>If nodes fail, Nomad automatically redeploys the application from unhealthy nodes to healthy nodes.</li>
+</ul>
+<h3 id="NomadFile"><a href="#NomadFile" class="headerlink" title="NomadFile"></a>NomadFile</h3><p>It is distributed as a single binary, which has all of its dependency and runs in a <em>server</em> and <em>client</em> mode. To submit a job, the user has to define it using a declarative language called <a href="https://github.com/hashicorp/hcl" target="_blank" rel="noopener">HashiCorp Configuration Language</a> (HCL) with its resource requirements. Once submitted, Nomad will find available resources in the cluster and run it to maximize the resource utilization.</p>
+<p><img src="/images/NomadFile.png" alt="NomadFile"></p>
+<h2 id="Amazon-ECS"><a href="#Amazon-ECS" class="headerlink" title="Amazon ECS"></a>Amazon ECS</h2><h3 id="Concept-14"><a href="#Concept-14" class="headerlink" title="Concept"></a>Concept</h3><p><em>“<a href="https://aws.amazon.com/ecs/" target="_blank" rel="noopener">Amazon Elastic Container Service</a> (Amazon ECS) is part of the Amazon Web Services (AWS) offerings. It provides a fast and highly scalable container management service that makes it easy to run, stop, and manage Docker containers on a cluster.”</em></p>
+<p>It can be configured in the following two launch modes:</p>
+<ul>
+<li><strong>Fargate Launch Type</strong></li>
+</ul>
+<p>AWS Fargate allows us to run containers without managing servers and clusters. In this mode, we just have to package our applications in containers along with CPU, memory, networking and IAM policies. We don’t have to provision, configure, and scale clusters of virtual machines to run containers, as AWS will take care of it for us.</p>
+<ul>
+<li><p><strong>EC2 Launch Type</strong></p>
+<p>With the EC2 launch type, we can provision, patch, and scale the ECS cluster. This gives more control to our servers and provides a range of customization options.</p>
+</li>
+</ul>
+<p><img src="/images/EC2_Launch_Type.png" alt="EC2_Launch_Type"></p>
+<h3 id="Features-9"><a href="#Features-9" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>It is compatible with Docker.</li>
+<li>It provides a managed cluster, so that users do not have to worry about managing and scaling the cluster.</li>
+<li>The task definition allows the user to define the applications through a .json file. Shared data volumes, as well as resource constraints for memory and CPU, can also be defined in the same file.</li>
+<li>It provides APIs to manage clusters, tasks, etc.</li>
+<li>It allows easy updates of containers to new versions.</li>
+<li>The monitoring feature is available through AWS CloudWatch.</li>
+<li>The logging facility is available through AWS CloudTrail.</li>
+<li>It supports third party Docker Registry or Docker Hub.</li>
+<li>AWS Fargate allows you to run and manage containers without having to provision or manage servers.</li>
+<li>AWS ECS allows you to build all types of containers. You can build a long-running service or a batch service in a container and run it on ECS.</li>
+<li>You can apply your Amazon Virtual Private Cloud (VPC), security groups and AWS Identity and Access Management (IAM) roles to the containers, which helps maintain a secure environment.</li>
+<li>You can run containers across multiple availability zones within regions to maintain High Availability.</li>
+<li>ECS can be integrated with AWS services like Elastic Load Balancing, Amazon VPC, AWS IAM, Amazon ECR, AWS Batch, Amazon CloudWatch, AWS CloudFormation, AWS CodeStar, AWS CloudTrail, and more.</li>
+</ul>
+<h3 id="Components-5"><a href="#Components-5" class="headerlink" title="Components"></a>Components</h3><ul>
+<li><strong>Cluster</strong><br>It is a logical grouping of tasks or services. With the EC2 launch type, a cluster is also a grouping of container instances.</li>
+<li><strong>Container Instance</strong><br>It is only applicable if we use the EC2 launch type. We define the Amazon EC2 instance to become part of the ECS cluster and to run the container workload.</li>
+<li><strong>Container Agent</strong><br>It is only applicable if we use the Fargate launch type. It allows container instances to connect to your cluster.</li>
+<li><strong>Task Definition</strong><br>It specifies the blueprint of an application, which consists of one or more containers. </li>
+<li><strong>Scheduler</strong><br>It places tasks on the cluster.</li>
+<li><strong>Service</strong><br>It allows one or more instances of tasks to run, depending on the task definition.</li>
+<li><strong>Task</strong><br>It is a running container instance from the task definition.</li>
+<li><strong>Container</strong><br>It is a Docker container created from the task definition.</li>
+</ul>
+<h3 id="AmazonEC2File"><a href="#AmazonEC2File" class="headerlink" title="AmazonEC2File"></a>AmazonEC2File</h3><p><img src="/images/AmazonEC2File1.png" alt="AmazonEC2File1"></p>
+<p><img src="/images/AmazonEC2File2.png" alt="AmazonEC2File2"></p>
 
         </div>
         
@@ -240,7 +433,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/PaaS/">PaaS</a>
+                    <a class="has-link-grey -link" href="/tags/Kubernetes/">Kubernetes</a>
                 </div>
             </div>
         </div>
@@ -301,17 +494,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/07/13/Artificial Neural Network(0) Introduction/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">\#Machine Learning\# Artificial Neural Network(0) Introduction</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/12/Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)/">
-                <span class="level-item">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/15/Introduction to Cloud Infrastructure Technologies(5) Containers Micro OSes for Container/">
+                <span class="level-item">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -961,7 +1147,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(3) Platform as a Service (PaaS)" height="28">
+                    <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(6) Container Orchestration" height="28">
                 
                 </a>
                 <p class="is-size-7">
