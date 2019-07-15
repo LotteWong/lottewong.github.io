@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Archives - LotteWong</title>
+<title>\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers" height="28">
             
             </a>
         </div>
@@ -89,7 +89,7 @@
                 
                 <a class="navbar-item" href="/">Home</a>
                 
-                <a class="navbar-item is-active" href="/archives">Archives</a>
+                <a class="navbar-item" href="/archives">Archives</a>
                 
                 <a class="navbar-item" href="/categories">Categories</a>
                 
@@ -115,270 +115,170 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
         
-<div class="card widget">
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-15T07:13:21.000Z">2019-07-15</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 821 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers
+            
+        </h1>
+        <div class="content">
+            <p><strong>Welcome to LFS151x: Introduction to Cloud Infrastructure Technologies</strong></p>
+<p>By the end of this chapter, you should be able to:</p>
+<ul>
+<li><p>Discuss the characteristics and functionality of Micro OSes, which are specially designed to run containers.</p>
+</li>
+<li><p>Describe different Micro OSes designed to run containers: Project Atomic and Red Hat CoreOS, VMware Photon, and RancherOS.</p>
+</li>
+<li><p>Deploy containers and containerized applications on Micro OSes.</p>
+</li>
+</ul>
+<a id="more"></a>
+
+
+
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p><em>“Once we remove the packages which are not required to boot the base OS and run container-related services, we are left with specialized OSes, which are referred to as Micro OSes for containers”.</em></p>
+<p><img src="/images/Micro_OSes_for_Containers_updated.png" alt="Micro_OSes_for_Containers_updated"></p>
+<h2 id="Atomic-Host"><a href="#Atomic-Host" class="headerlink" title="Atomic Host"></a>Atomic Host</h2><h3 id="Concept-1"><a href="#Concept-1" class="headerlink" title="Concept"></a>Concept</h3><p>*”<a href="http://www.projectatomic.io/" target="_blank" rel="noopener">Atomic Host</a> is a lightweight operating system, assembled out of a specific RPM content. It allows us to run just containerized applications in a quick and reliable manner”.*</p>
+<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>Atomic Host can be based on Fedora, CentOS, or Red Hat Enterprise Linux (RHEL).</li>
+<li>Atomic Host is a sub-project of <strong>Project Atomic</strong>, which includes other sub-projects, such as <a href="https://www.projectatomic.io/blog/2017/06/introducing-buildah/" target="_blank" rel="noopener">Buildah</a>, <a href="https://www.projectatomic.io/docs/cockpit/" target="_blank" rel="noopener">Cockpit</a> and <a href="https://www.projectatomic.io/blog/2016/07/working-with-containers-image-made-easy/" target="_blank" rel="noopener">skopeo</a>.</li>
+<li>Atomic Host comes out-of-the-box with Kubernetes installed. It also includes several Kubernetes utilities, such as <strong>etcd</strong> and <strong>flannel</strong>.</li>
+</ul>
+<h3 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h3><p>Atomic Host has a very minimal base OS, but it includes components like <strong>systemd</strong>and <strong>journald</strong> to help its users and administrators. It is built on top of the following:</p>
+<ul>
+<li><strong>rpm-ostree</strong><br>One cannot manage individual packages on Atomic Host, as there is no <strong>rpm</strong> or other related commands. To get any required service, you would have to start a respective container. Atomic Host has two bootable, immutable, and versioned filesystems; one is used to boot the system and the other is used to fetch updates from upstream. <strong>rpm-ostree</strong> is the tool to manage these two versioned filesystems.</li>
+<li><strong>systemd</strong><br>It is used to manage system services for Atomic Host.</li>
+<li><strong>Docker</strong><br>Atomic Host currently supports Docker as a container runtime.</li>
+<li><strong>Kubernetes</strong><br>With Kubernetes, we can create a cluster of Atomic Hosts to run applications at scale.</li>
+</ul>
+<p>Atomic Host also comes with a command called <strong>atomic.</strong> This command provides a high-level, coherent entry point to the system, and fills in the gaps that are not filled by Linux container implementations, such as upgrading the system to the new <strong>rpm-ostree</strong>, running containers with pre-defined <strong>docker run</strong> options using <a href="https://github.com/docker/docker/pull/9882/" target="_blank" rel="noopener">labels</a>, verifying an image, etc.</p>
+<h2 id="Red-Hat-CoreOS"><a href="#Red-Hat-CoreOS" class="headerlink" title="Red Hat CoreOS"></a>Red Hat CoreOS</h2><h3 id="Concept-2"><a href="#Concept-2" class="headerlink" title="Concept"></a>Concept</h3><p>*”According to the “Bringing CoreOS Technology to Red Hat OpenShift to Deliver a Next-Generation Automated Kubernetes Platform” article posted on the CoreOS blog, Red Hat CoreOS will be based on Fedora and Red Hat Enterprise Linux sources, and is expected to ultimately supersede Atomic Host as Red Hat’s immutable, container-centric operating system”.*</p>
+<h3 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h3><ul>
+<li>Atomic Host can be managed using tools such as <a href="http://www.projectatomic.io/docs/cockpit/" target="_blank" rel="noopener">Cockpit</a>. Cockpit is a server manager that makes it easy to administer your GNU/Linux servers via a web browser.</li>
+</ul>
+<h2 id="VMware-Photon"><a href="#VMware-Photon" class="headerlink" title="VMware Photon"></a>VMware Photon</h2><h3 id="Concept-3"><a href="#Concept-3" class="headerlink" title="Concept"></a>Concept</h3><p>*”<a href="https://vmware.github.io/photon/" target="_blank" rel="noopener">Photon OS™</a> is a technology preview of a minimal Linux container host provided by VMware. It is designed to have a small footprint and boot extremely quickly on VMware platforms”.*</p>
+<h3 id="Features-1"><a href="#Features-1" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>It supports Docker, rkt, and the Pivotal Garden container specifications.</li>
+<li>It also has a new, open source, yum-compatible package manager (<strong>tdnf</strong>).</li>
+<li>Photon OS™ is a security-hardened Linux. The kernel and other aspects of the Photon OS™ are built with an emphasis on security recommendations given by the <a href="https://kernsec.org/wiki/index.php/Kernel_Self_Protection_Project" target="_blank" rel="noopener">Kernel Self-Protection Project</a> (KSPP).</li>
+<li>It can be easily managed, patched, and updated. It also provides support for persistent volumes to store the data of cloud-native applications on VMware vSAN™ .</li>
+</ul>
+<h2 id="RancherOS"><a href="#RancherOS" class="headerlink" title="RancherOS"></a>RancherOS</h2><h3 id="Concept-4"><a href="#Concept-4" class="headerlink" title="Concept"></a>Concept</h3><p>*”<a href="http://rancher.com/rancher-os/" target="_blank" rel="noopener">RancherOS</a> is a 20 MB Linux distribution that runs Docker containers. It has the least footprint of all the Micro OSes available nowadays. This is possible because it runs directly on top of the Linux kernel. RancherOS is a product provided by <a href="http://rancher.com/" target="_blank" rel="noopener">Rancher</a>, which is an end-to-end platform used to deploy and run private container services”.*</p>
+<h3 id="Features-2"><a href="#Features-2" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>It automates OS configuration with <strong>cloud-init</strong>.</li>
+<li>It can be customized to add custom system Docker containers using the <strong>cloud-init</strong> file or Docker Compose.</li>
+</ul>
+<h3 id="Components-1"><a href="#Components-1" class="headerlink" title="Components"></a>Components</h3><p>RancherOS runs two instances of the Docker daemon. Just after booting, it starts the first instance of the Docker daemon with <strong>PID 1</strong> to run system containers like <strong>dhcp</strong>, <strong>udev*</strong>,* etc. To run user-level containers, the System Docker daemon creates a service to start other Docker daemons.</p>
+<p><img src="/images/RancherOS_Architecture.png" alt="RancherOS_Architecture"></p>
+<p>RancherOS also includes a CLI utility called <strong>ros</strong>, which can be used to control and configure the system.</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Micro-OSes/">Micro OSes</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
     <div class="card-content">
-        <h3 class="tag is-link">
-        2019
-        </h3>
-        <div class="timeline">
-        
-            <article class="media">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
                 
-                <a href="/2019/07/15/Introduction to Cloud Infrastructure Technologies(5) Containers Micro OSes for Container/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers">
-                    </p>
-                </a>
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/image/alipay.png" alt="Alipay"></div>
+</a>
+
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-15T07:13:21.000Z">2019-07-15</time>
-                        <a href="/2019/07/15/Introduction to Cloud Infrastructure Technologies(5) Containers Micro OSes for Container/" class="has-link-black-ter is-size-6">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
                 
-                <a href="/2019/07/14/Introduction to Cloud Infrastructure Technologies(4) Containers/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(4) Containers">
-                    </p>
-                </a>
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/image/wechat.png" alt="Wechat"></div>
+</a>
+
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-14T03:18:16.000Z">2019-07-14</time>
-                        <a href="/2019/07/14/Introduction to Cloud Infrastructure Technologies(4) Containers/" class="has-link-black-ter is-size-6">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(4) Containers</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
+    <span class="icon is-small">
+        <i class="fab fa-paypal"></i>
+    </span>
+    <span>Paypal</span>
+</a>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="SuperGsama@outlook.com">
+    <input type="hidden" name="currency_code" value="USD">
+</form>
+
                 
-                <a href="/2019/07/13/Artificial Neural Network(2) Multi-layer Perception(MLP)/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/Artificial Neural Network.png" alt="\#Machine Learning\# Artificial Neural Network(2) Multi-layer Perception(MLP)">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-13T03:13:21.000Z">2019-07-13</time>
-                        <a href="/2019/07/13/Artificial Neural Network(2) Multi-layer Perception(MLP)/" class="has-link-black-ter is-size-6">\#Machine Learning\# Artificial Neural Network(2) Multi-layer Perception(MLP)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Machine-Learning/">Machine Learning</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <a href="/2019/07/13/Artificial Neural Network(1) Single-layer Perception(SLP)/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/Artificial Neural Network.png" alt="\#Machine Learning\# Artificial Neural Network(1) Single-layer Perception(SLP)">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-13T02:13:21.000Z">2019-07-13</time>
-                        <a href="/2019/07/13/Artificial Neural Network(1) Single-layer Perception(SLP)/" class="has-link-black-ter is-size-6">\#Machine Learning\# Artificial Neural Network(1) Single-layer Perception(SLP)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Machine-Learning/">Machine Learning</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <a href="/2019/07/13/Artificial Neural Network(0) Introduction/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/Artificial Neural Network.png" alt="\#Machine Learning\# Artificial Neural Network(0) Introduction">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-13T01:13:21.000Z">2019-07-13</time>
-                        <a href="/2019/07/13/Artificial Neural Network(0) Introduction/" class="has-link-black-ter is-size-6">\#Machine Learning\# Artificial Neural Network(0) Introduction</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Machine-Learning/">Machine Learning</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <a href="/2019/07/12/Introduction to Cloud Infrastructure Technologies(3) Platform as a Service (PaaS)/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(3) Platform as a Service (PaaS)">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-12T02:18:27.718Z">2019-07-12</time>
-                        <a href="/2019/07/12/Introduction to Cloud Infrastructure Technologies(3) Platform as a Service (PaaS)/" class="has-link-black-ter is-size-6">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(3) Platform as a Service (PaaS)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <a href="/2019/07/12/Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-12T02:17:06.101Z">2019-07-12</time>
-                        <a href="/2019/07/12/Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)/" class="has-link-black-ter is-size-6">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(2) Infrastructure as a Service (IaaS)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <a href="/2019/07/11/Introduction to Cloud Infrastructure Technologies(1) Virtualization/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(1) Virtualization">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-11T02:07:05.960Z">2019-07-11</time>
-                        <a href="/2019/07/11/Introduction to Cloud Infrastructure Technologies(1) Virtualization/" class="has-link-black-ter is-size-6">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(1) Virtualization</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <a href="/2019/07/11/Introduction to Cloud Infrastructure Technologies(0) Introduction/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(0) Introduction">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-11T01:53:46.756Z">2019-07-11</time>
-                        <a href="/2019/07/11/Introduction to Cloud Infrastructure Technologies(0) Introduction/" class="has-link-black-ter is-size-6">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(0) Introduction</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <a href="/2019/07/10/从零到壹：GitHub Pages + Hexo = Blog/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/images/hexo-github.png" alt="\#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-10T14:41:45.650Z">2019-07-10</time>
-                        <a href="/2019/07/10/从零到壹：GitHub Pages + Hexo = Blog/" class="has-link-black-ter is-size-6">\#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Configuration/">Configuration</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
         </div>
     </div>
 </div>
 
-    
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/14/Introduction to Cloud Infrastructure Technologies(4) Containers/">
+                <span class="level-item">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(4) Containers</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
 </div>
                 
 
@@ -1006,7 +906,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers" height="28">
                 
                 </a>
                 <p class="is-size-7">
