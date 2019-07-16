@@ -1,5 +1,5 @@
 ---
-title: \#Machine Learning\# Artificial Neural Network(10) Introduction
+title: \#Machine Learning\# Artificial Neural Network(0) Introduction
 date: 2019-07-13 09:13:21
 categories: Machine Learning
 tags:

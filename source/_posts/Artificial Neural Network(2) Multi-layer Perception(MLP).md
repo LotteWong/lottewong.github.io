@@ -51,7 +51,7 @@ thumbnail: /images/Artificial Neural Network.png
 
 *通过合理地改变权值和偏置一点点的方式来让这个神经网络最后的结果向我们预期的结果进军，激活函数的选择对于神经网络的训练来说，也是很重要的。*
 
-![delta change](/images/delta change.webp)
+![delta change](/images/delta change.png)
 
 ## 问题
 
