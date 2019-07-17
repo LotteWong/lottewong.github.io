@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Tag: Micro OSes - LotteWong</title>
+<title>\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Microservices - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Microservices" height="28">
             
             </a>
         </div>
@@ -116,29 +116,18 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Micro OSes</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-image">
-        <a href="/2019/07/15/Introduction to Cloud Infrastructure Technologies(5) Containers Micro OSes for Container/" class="image is-7by1">
-            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Microservices">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-15T07:13:21.000Z">2019-07-15</time>
+                <time class="level-item has-text-grey" datetime="2019-07-17T08:13:21.000Z">2019-07-17</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
@@ -148,7 +137,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 minutes read (About 821 words)
+                    2 minutes read (About 299 words)
                 </span>
                 
                 
@@ -157,30 +146,38 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/15/Introduction to Cloud Infrastructure Technologies(5) Containers Micro OSes for Container/">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers</a>
+                \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Microservices
             
         </h1>
         <div class="content">
             <p><strong>Welcome to LFS151x: Introduction to Cloud Infrastructure Technologies</strong></p>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li><p>Discuss the characteristics and functionality of Micro OSes, which are specially designed to run containers.</p>
-</li>
-<li><p>Describe different Micro OSes designed to run containers: Project Atomic and Red Hat CoreOS, VMware Photon, and RancherOS.</p>
-</li>
-<li><p>Deploy containers and containerized applications on Micro OSes.</p>
-</li>
+<li>Explain the concept of microservices.</li>
+<li>Discuss the benefits and challenges of using microservices.</li>
 </ul>
+<a id="more"></a>
+
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>Over the years, with different experiments, we evolved towards a new approach, in which a single application is deployed and managed via a small set of services. Each service runs its own process and communicates with other services via lightweight mechanisms like REST APIs. Each of these services is independently deployed and managed. Technologies like containers and unikernels are becoming default choices for creating such services.</p>
+<p><img src="/images/Monoliths-Microservices.png" alt="Monoliths-Microservices"></p>
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p><em>“Microservices are small, independent processes that communicate with each other to form complex applications which utilize language-agnostic APIs. These services are small building blocks, highly decoupled and focused on doing a small task, facilitating a modular approach tosystem-building. The microservices architectural style is becoming the standard for building continuously deployed systems.”</em></p>
+<h2 id="Approaches"><a href="#Approaches" class="headerlink" title="Approaches"></a>Approaches</h2><ul>
+<li>If you have a complex monolith application, then it is not advisable to rewrite the entire application from scratch. Instead, you should start carving out services from the monolith, which implement the desired functionalities for the code we take out from the monolith. Over time, all or most functionalities will be implemented in the microservices architecture.</li>
+<li>We can split the monoliths based on the business logic, front-end (presentation), and data access. In the microservices architecture it is recommended to have a local database for individual services. And, if the services need to access the database from other services, then we can implement an event-driven communication between these services. </li>
+<li>As mentioned earlier, we can split the monolith based on the modules of the monolith application and each time we do it, our monolith shrinks. </li>
+</ul>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/07/15/Introduction to Cloud Infrastructure Technologies(5) Containers Micro OSes for Container/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Microservices/">Microservices</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -188,9 +185,65 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/image/alipay.png" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/image/wechat.png" alt="Wechat"></div>
+</a>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
+    <span class="icon is-small">
+        <i class="fab fa-paypal"></i>
+    </span>
+    <span>Paypal</span>
+</a>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="SuperGsama@outlook.com">
+    <input type="hidden" name="currency_code" value="USD">
+</form>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/17/Introduction to Cloud Infrastructure Technologies(7) Unikernels/">
+                <span class="level-item">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Unikernels</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -862,7 +915,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Microservices" height="28">
                 
                 </a>
                 <p class="is-size-7">

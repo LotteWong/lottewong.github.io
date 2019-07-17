@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Tag: Micro OSes - LotteWong</title>
+<title>\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Unikernels - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Unikernels" height="28">
             
             </a>
         </div>
@@ -116,29 +116,18 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Micro OSes</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-image">
-        <a href="/2019/07/15/Introduction to Cloud Infrastructure Technologies(5) Containers Micro OSes for Container/" class="image is-7by1">
-            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Unikernels">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-15T07:13:21.000Z">2019-07-15</time>
+                <time class="level-item has-text-grey" datetime="2019-07-17T07:13:21.000Z">2019-07-17</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
@@ -148,7 +137,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 minutes read (About 821 words)
+                    2 minutes read (About 335 words)
                 </span>
                 
                 
@@ -157,30 +146,54 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/15/Introduction to Cloud Infrastructure Technologies(5) Containers Micro OSes for Container/">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(5) Micro OSes for Containers</a>
+                \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Unikernels
             
         </h1>
         <div class="content">
             <p><strong>Welcome to LFS151x: Introduction to Cloud Infrastructure Technologies</strong></p>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li><p>Discuss the characteristics and functionality of Micro OSes, which are specially designed to run containers.</p>
+<li>Explain the concept of unikernels.</li>
+<li>Compare and contrast unikernels and containers.</li>
+</ul>
+<a id="more"></a>
+
+
+
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p><em>“Unikernels are specialised, single-address-space machine images constructed by using library operating systems. With unikernels, we can also select the part of the kernel needed to run with the specific application. With unikernels, we can create a single address space executable, which has both application and kernel components. The image can be deployed on VMs or bare metal, based on the unikernel’s type.”</em></p>
+<h2 id="Categories"><a href="#Categories" class="headerlink" title="Categories"></a>Categories</h2><ul>
+<li><strong>Specialized and purpose-built</strong> <strong>unikernels</strong><br>They utilize all the modern features of software and hardware, without worrying about the backward compatibility. They are not POSIX-compliant. Some examples of specialized and purpose-built unikernels are ING, HalVM, MirageOS, and Clive.</li>
+<li><strong>Generalized ‘fat’ unikernels</strong> They run unmodified applications, which make them fat. Some examples of generalized ‘fat’ unikernels are BSD Rump kernels, OSv, Drawbridge, etc.</li>
+</ul>
+<h2 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h2><p>The <a href="http://unikernel.org/" target="_blank" rel="noopener">Unikernel</a> goes one step further than other technologies, creating specialized virtual machine images with just:</p>
+<ul>
+<li>The application code</li>
+<li>The configuration files of the application</li>
+<li>The user-space libraries needed by the application</li>
+<li>The application runtime (like JVM)</li>
+<li>The system libraries of the unikernel, which allow back and forth communication with the hypervisor.</li>
+</ul>
+<p>Unikernel images would run directly on top of a hypervisor like Xen or on bare metal, based on the unikernel types.</p>
+<p><img src="/images/Example_of_a_Unikernel_Architecture__as_Compared_to_a_Traditional_OS_Stack.png" alt="Example_of_a_Unikernel_Architecture__as_Compared_to_a_Traditional_OS_Stack"></p>
+<h2 id="Unikernels-and-Constainers"><a href="#Unikernels-and-Constainers" class="headerlink" title="Unikernels and Constainers"></a>Unikernels and Constainers</h2><ul>
+<li><p>Both containers and unikernels can co-exist on the same host. They can be managed by the same Docker binary. </p>
 </li>
-<li><p>Describe different Micro OSes designed to run containers: Project Atomic and Red Hat CoreOS, VMware Photon, and RancherOS.</p>
-</li>
-<li><p>Deploy containers and containerized applications on Micro OSes.</p>
+<li><p>Unikernels helped Docker to run the Docker Engine on top of <a href="http://www.alpinelinux.org/" target="_blank" rel="noopener">Alpine Linux</a> on Mac and Windows with their default hypervisors, which are xhyve Virtual Machine and Hyper-V VM respectively.</p>
 </li>
 </ul>
+<p><img src="/images/SharedKernel-vs-Unikernel.png" alt="SharedKernel-vs-Unikernel"></p>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/07/15/Introduction to Cloud Infrastructure Technologies(5) Containers Micro OSes for Container/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Unikernels/">Unikernels</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -188,9 +201,72 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/image/alipay.png" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/image/wechat.png" alt="Wechat"></div>
+</a>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
+    <span class="icon is-small">
+        <i class="fab fa-paypal"></i>
+    </span>
+    <span>Paypal</span>
+</a>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="SuperGsama@outlook.com">
+    <input type="hidden" name="currency_code" value="USD">
+</form>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/07/17/Introduction to Cloud Infrastructure Technologies(7) Microservices/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Microservices</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/16/Introduction to Cloud Infrastructure Technologies(6) Container Orchestration/">
+                <span class="level-item">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(6) Container Orchestration</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -862,7 +938,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(7) Unikernels" height="28">
                 
                 </a>
                 <p class="is-size-7">
