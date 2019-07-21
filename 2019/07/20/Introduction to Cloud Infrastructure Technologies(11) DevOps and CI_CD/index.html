@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Tag: Docker - LotteWong</title>
+<title>\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(11) DevOps and CI_CD - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(11) DevOps and CI_CD" height="28">
             
             </a>
         </div>
@@ -116,29 +116,18 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Docker</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-image">
-        <a href="/2019/07/14/Introduction to Cloud Infrastructure Technologies(4) Containers/" class="image is-7by1">
-            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(4) Containers">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/cloud_computing.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(11) DevOps and CI_CD">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-14T03:18:16.000Z">2019-07-14</time>
+                <time class="level-item has-text-grey" datetime="2019-07-20T07:13:21.000Z">2019-07-20</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
@@ -148,7 +137,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    8 minutes read (About 1231 words)
+                    11 minutes read (About 1621 words)
                 </span>
                 
                 
@@ -157,30 +146,127 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/14/Introduction to Cloud Infrastructure Technologies(4) Containers/">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(4) Containers</a>
+                \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(11) DevOps and CI_CD
             
         </h1>
         <div class="content">
             <p><strong>Welcome to LFS151x: Introduction to Cloud Infrastructure Technologies</strong></p>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li><p>Discuss about containers and their runtimes. </p>
-</li>
-<li><p>Describe the basic Docker operations.</p>
-</li>
-<li><p>Understand how Project Moby helps create container platforms like Docker. </p>
+<li>Explain the concept of DevOps.</li>
+<li>Discuss about Continuous Integration and Continuous Deployment.</li>
+<li>Run automated tests using tools like Jenkins, Travis CI, Shippable, and Concourse.</li>
+<li>Understand Cloud Native CI/CD.</li>
+</ul>
+<a id="more"></a>
+
+
+
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>Every industry thrives for better quality and faster innovation. The IT industry is no exception and has to address numerous challenges, like the following:</p>
+<ul>
+<li>It must quickly go from business idea to market.</li>
+<li>It must lower the failure rate for new releases.</li>
+<li>It must have a shorter lead time between fixes.</li>
+<li>It must have a faster mean time to recovery.</li>
+</ul>
+<p>Over the last decade or so, we gradually shifted from the <a href="https://en.wikipedia.org/wiki/Waterfall_model" target="_blank" rel="noopener">Waterfall model</a> to <a href="https://en.wikipedia.org/wiki/Agile_software_development" target="_blank" rel="noopener">Agile software development</a>, in which teams deliver working software in smaller and more frequent increments. In this process, the IT operations (Ops) teams were unintentionally left behind, which put a lot of pressure on them, due to high end-to-end deployment rates. By putting the Ops teams in the loop from the very beginning of the development cycle, we can reduce this burn-out and can take advantage of their expertise in the continuous integration process.</p>
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><h3 id="DevOps"><a href="#DevOps" class="headerlink" title="DevOps"></a>DevOps</h3><p><em>“The collaborative work between Developers and Operations is referred to as DevOps. DevOps is more of a mindset, a way of thinking, versus a set of processes implemented in a specific way.”</em></p>
+<h3 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h3><p><em>“Besides Continuous Integration (CI), DevOps also enables Continuous Deployment(CD), which can be seen as the next step of CI. In CD, we deploy the entire application/software automatically, provided that all the tests’ results and conditions have met the expectations.”</em></p>
+<h2 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h2><h3 id="Concept-1"><a href="#Concept-1" class="headerlink" title="Concept"></a>Concept</h3><p><em>“<a href="https://jenkins-ci.org/2.0/" target="_blank" rel="noopener">Jenkins</a> is one of the most popular and used tools for doing any kind of automation. It is an open source automation system which can provide Continuous Integration and Continuous Deployment. It is written in Java.”</em></p>
+<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>Jenkins can build Freestyle, Apache Ant and Apache Maven-based projects. We can also extend the functionality of Jenkins, using <a href="https://wiki.jenkins-ci.org/display/JENKINS/Plugins" target="_blank" rel="noopener">plugins</a>. Currently, Jenkins supports more than 1000 plugins in different categories, like <em>Source Code Management, Slave Launchers, Build tools, External tools/site integration</em>, etc.</li>
+<li>Jenkins also has the functionality to build a pipeline, which allows us to to define an entire application lifecycle. <strong>Pipeline</strong> is most useful for doing Continuous Deployment.<ul>
+<li><strong>Durable:</strong> Pipelines can survive both planned and unplanned restarts of your Jenkins master.</li>
+<li><strong>Pausable</strong>: Pipelines can optionally stop and wait for human input or approval before completing the jobs for which they were built.</li>
+<li><strong>Versatile</strong>: Pipelines support complex real-world CD requirements, including the ability to fork or join, loop, and work in parallel with each other.</li>
+<li><strong>Extensible</strong>: The Pipeline plugin supports custom extensions to its DSL (domain scripting language) and multiple options for integration with other plugins.</li>
+</ul>
 </li>
 </ul>
+<p><img src="/images/Jenkins_Pipeline.png" alt="Jenkins_Pipeline"></p>
+<h2 id="Travis-CI"><a href="#Travis-CI" class="headerlink" title="Travis CI"></a>Travis CI</h2><h3 id="Concept-2"><a href="#Concept-2" class="headerlink" title="Concept"></a>Concept</h3><p><em>“<a href="https://travis-ci.com/" target="_blank" rel="noopener">Travis CI</a> is a hosted, distributed CI solution for projects hosted only on GitHub. ”</em></p>
+<h3 id="Features-1"><a href="#Features-1" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>Travis CI supports different databases, like MYSQL, RIAK, memcached, etc. We can also use Docker during the build.</li>
+<li>Travis CI supports most languages. To see a detailed list of the languages supported, please take a look at the “<a href="https://docs.travis-ci.com/user/language-specific/" target="_blank" rel="noopener"><em>Language-specific</em> Guides</a>“ page.</li>
+<li>After running the test, we can deploy the application in many cloud providers, such as Heroku, AWS Codedeploy, Cloud Foundry, OpenShift, etc. A detailed list of providers is available in the “<em>Supported Providers</em>“ page by Travis CI.</li>
+</ul>
+<h3 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h3><p>To run the test with CI, first we have to link our GitHub account with Travis and select the project (repository) for which we want to run the test. In the project’s repository, we have to create a <strong>.travis.yml</strong> file, which defines how our build should be executed step-by-step.</p>
+<p>A typical build with Travis consists of two steps:</p>
+<ul>
+<li><strong>install</strong>: to install any dependency or pre-requisite.</li>
+<li><strong>script</strong>: to run the build script.</li>
+</ul>
+<p>We can also add other optional steps, including the deployment steps. Following are all the build options one can put in a <strong>.travis.yml</strong> file.</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">before_install</span></span><br><span class="line"><span class="hljs-string">install</span></span><br><span class="line"><span class="hljs-string">before_script</span></span><br><span class="line"><span class="hljs-string">script</span></span><br><span class="line"><span class="hljs-string">after_success</span> <span class="hljs-string">or</span> <span class="hljs-string">after_failure</span> </span><br><span class="line"><span class="hljs-string">OPTIONAL</span> <span class="hljs-string">before_deploy</span></span><br><span class="line"><span class="hljs-string">OPTIONAL</span> <span class="hljs-string">deploy</span></span><br><span class="line"><span class="hljs-string">OPTIONAL</span> <span class="hljs-string">after_deploy</span></span><br><span class="line"><span class="hljs-string">after_script</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Shippable"><a href="#Shippable" class="headerlink" title="Shippable"></a>Shippable</h2><h3 id="Concept-3"><a href="#Concept-3" class="headerlink" title="Concept"></a>Concept</h3><p><em>“Shippable is a DevOps Assembly Lines Platform that helps developers and DevOps teams achieve CI/CD and make software releases frequent, predictable, and error-free. We do this by connecting all your DevOps tools and activities into a event-driven, stateful workflow”</em></p>
+<p><img src="/images/codeToProdPipelines.png" alt="codeToProdPipelines"></p>
+<h3 id="Features-2"><a href="#Features-2" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>One can use Shippable as a SaaS service, install on-premise using Shippable Server or attach their own servers to Shippable Subscription.</li>
+<li>Shippable runs all the builds inside a Docker container, which are called <strong>minions.</strong> Shippable has minions for all the different combinations of programming languages and versions they support. But, if you are already doing development with Docker, you can either use your own image or build a new one, while doing the CI.</li>
+<li>Currently, Shippable supports the following programming languages for CI:<ul>
+<li>C/C++</li>
+<li>Clojure</li>
+<li>Go</li>
+<li>Java</li>
+<li>Node.js</li>
+<li>PHP</li>
+<li>Python</li>
+<li>Ruby</li>
+<li>Scala.</li>
+</ul>
+</li>
+<li>Shippable integrates well with all popular CI/CD and DevOps tools like GitHub, Bitbucket, Docker Hub, JUnit, Kubernetes, Slack, Terraform, etc.</li>
+</ul>
+<h3 id="Commands-1"><a href="#Commands-1" class="headerlink" title="Commands"></a>Commands</h3><p>To run CI tests with Shippable, we have to create a configuration file inside the project’s source code repository which we want to test, called <strong>shippable.yml</strong>.</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">resources:</span></span><br><span class="line"><span class="hljs-attr">  - name:</span> <span class="hljs-string">docs_repo</span></span><br><span class="line"><span class="hljs-attr">    type:</span> <span class="hljs-string">gitRepo</span></span><br><span class="line"><span class="hljs-attr">    integration:</span> <span class="hljs-string">ric03uec-github</span></span><br><span class="line"><span class="hljs-attr">    pointer:</span></span><br><span class="line"><span class="hljs-attr">      sourceName:</span> <span class="hljs-string">shippable/docs</span></span><br><span class="line"><span class="hljs-attr">      branch:</span> <span class="hljs-string">master</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attr">  - name:</span> <span class="hljs-string">aws_rc_cli</span></span><br><span class="line"><span class="hljs-attr">    type:</span> <span class="hljs-string">cliConfig</span></span><br><span class="line"><span class="hljs-attr">    integration:</span> <span class="hljs-string">aws_rc_access</span></span><br><span class="line"><span class="hljs-attr">    pointer:</span></span><br><span class="line"><span class="hljs-attr">      region:</span> <span class="hljs-string">us-east-1</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attr">  - name:</span> <span class="hljs-string">aws_prod_cli</span></span><br><span class="line"><span class="hljs-attr">    type:</span> <span class="hljs-string">cliConfig</span></span><br><span class="line"><span class="hljs-attr">    integration:</span> <span class="hljs-string">aws_prod_access</span></span><br><span class="line"><span class="hljs-attr">    pointer:</span></span><br><span class="line"><span class="hljs-attr">      region:</span> <span class="hljs-string">us-west-2</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attr">  jobs:</span></span><br><span class="line"><span class="hljs-attr">  - name:</span> <span class="hljs-string">publish_prod_docs</span></span><br><span class="line"><span class="hljs-attr">    type:</span> <span class="hljs-string">runSh</span></span><br><span class="line"><span class="hljs-attr">    steps:</span></span><br><span class="line"><span class="hljs-attr">      - IN:</span> <span class="hljs-string">docs_repo</span></span><br><span class="line"><span class="hljs-attr">        switch:</span> <span class="hljs-string">off</span></span><br><span class="line"><span class="hljs-attr">      - IN:</span> <span class="hljs-string">aws_prod_cli</span></span><br><span class="line"><span class="hljs-attr">      - TASK:</span></span><br><span class="line"><span class="hljs-attr">        - script:</span> <span class="hljs-string">|</span></span><br><span class="line"><span class="hljs-string">            pushd $(shipctl get_resource_state "docs_repo")</span></span><br><span class="line"><span class="hljs-string">              ./deployDocs.sh s3://docs.shippable.com us-west-2 production</span></span><br><span class="line"><span class="hljs-string">            popd</span></span><br><span class="line"><span class="hljs-string"></span></span><br><span class="line"><span class="hljs-string"></span><span class="hljs-attr">  - name:</span> <span class="hljs-string">publish_rc_docs</span></span><br><span class="line"><span class="hljs-attr">    type:</span> <span class="hljs-string">runSh</span></span><br><span class="line"><span class="hljs-attr">    steps:</span></span><br><span class="line"><span class="hljs-attr">      - IN:</span> <span class="hljs-string">docs_repo</span></span><br><span class="line"><span class="hljs-attr">      - IN:</span> <span class="hljs-string">aws_rc_cli</span></span><br><span class="line"><span class="hljs-attr">      - TASK:</span></span><br><span class="line"><span class="hljs-attr">        - script:</span> <span class="hljs-string">|</span></span><br><span class="line"><span class="hljs-string">            pushd $(shipctl get_resource_state "docs_repo")</span></span><br><span class="line"><span class="hljs-string">              ./deployDocs.sh s3://rcdocs.shippable.com us-east-1 rc</span></span><br><span class="line"><span class="hljs-string">            popd</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Concourse"><a href="#Concourse" class="headerlink" title="Concourse"></a>Concourse</h2><h3 id="Concept-4"><a href="#Concept-4" class="headerlink" title="Concept"></a>Concept</h3><p><em>“Concourse is an open source CI/CD system. With Concourse, we run series of tasks to perform desired operations. Each task runs inside a container. Using series of tasks along with resources, we can can build a job or pipeline.”</em></p>
+<h3 id="Features-3"><a href="#Features-3" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>In Concourse, the necessary data to run the pipeline can be provided by resources. These resources never affect the performance of a worker.</li>
+</ul>
+<h3 id="Commands-2"><a href="#Commands-2" class="headerlink" title="Commands"></a>Commands</h3><p>Following is a sample task file:</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">platform:</span> <span class="hljs-string">linux</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attr">image_resource:</span></span><br><span class="line"><span class="hljs-attr">  type:</span> <span class="hljs-string">docker-image</span></span><br><span class="line"><span class="hljs-attr">  source:</span> <span class="hljs-string">&#123;repository:</span> <span class="hljs-string">busybox&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attr">run:</span></span><br><span class="line"><span class="hljs-attr">  path:</span> <span class="hljs-string">echo</span></span><br><span class="line"><span class="hljs-attr">  args:</span> <span class="hljs-string">[hello</span> <span class="hljs-string">world]</span></span><br></pre></td></tr></table></figure>
+
+<p>Concourse is primarily driven via a CLI, which is referred to as <em>fly</em>. We can use <em>fly</em> to login to our Concourse setup, execute tasks, etc.</p>
+<h2 id="Cloud-Native-CI-CD"><a href="#Cloud-Native-CI-CD" class="headerlink" title="Cloud Native CI/CD"></a>Cloud Native CI/CD</h2><h3 id="Background-1"><a href="#Background-1" class="headerlink" title="Background"></a>Background</h3><p>So far, we have seen that containers are now playing a major role in an application’s lifecycle, from packaging to deployment. Containers have brought Dev, QA and Ops teams together, which led to a significant improvement in CI/CD. We can code our CI/CD pipeline and put it along the source code, like we’ve seen in the earlier sections.</p>
+<p>We have also seen running containers at scale using container orchestrators. There are many options for orchestrators, but Kubernetes seems to be the preferred one.</p>
+<h3 id="Concept-5"><a href="#Concept-5" class="headerlink" title="Concept"></a>Concept</h3><p><em>“In the Cloud Native approach, we design a package and run applications on top of our infrastructure (on-premise or cloud) using operations tools like containers, container orchestration and services like continuous integration, logging, monitoring, etc. Kubernetes along with the tooling around it meets our requirements to run Cloud Native applications.”</em></p>
+<h3 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h3><p>Let’s now look at some of the tools which can help us in doing CI/CD with Kubernetes for Cloud Native applications.</p>
+<ul>
+<li><p><strong>Helm</strong></p>
+<p>It is the package manager for Kubernetes. Packages are referred as Charts. Using Helm, we can package, share, install or upgrade an application. It was recently incubated as a CNCF project.</p>
+</li>
+<li><p><strong>Draft</strong></p>
+<p>It is being promoted as a developer tool cloud native application on Kubernetes. With Draft, we can containerize and deploy an application on Kubernetes.</p>
+</li>
+<li><p><strong>Skaffold</strong></p>
+<p>It is a tool from Google that helps us build and deploy the code to the Kubernetes development environment each time the code changes locally. It also supports <em>Helm.</em></p>
+</li>
+<li><p><strong>Argo</strong></p>
+<p>It is a container-native workflow engine for Kubernetes. Its use cases include running Machine Learning, Data Processing and CI/CD tasks on Kubernetes.</p>
+</li>
+<li><p><strong>Jenkins X</strong></p>
+<p>Jenkins has been a very popular tool for doing CI/CD and it can be used on Kubernetes as well. But the Jenkins team built a new cloud native CI/CD, Jenkins X from the ground up, to run directly on Kubernetes.</p>
+</li>
+<li><p><strong>Spinnaker</strong></p>
+<p>It is an open source multi-cloud continuous delivery platform from Netflix for releasing software changes with high velocity. It supports all the major cloud providers like Amazon Web Services, Azure, Google Cloud Platform and OpenStack. It supports Kubernetes natively.</p>
+</li>
+</ul>
+<h2 id="GitOps-and-SecOps"><a href="#GitOps-and-SecOps" class="headerlink" title="GitOps and SecOps"></a>GitOps and SecOps</h2><h3 id="Concept-6"><a href="#Concept-6" class="headerlink" title="Concept"></a>Concept</h3><h4 id="GitOps"><a href="#GitOps" class="headerlink" title="GitOps"></a>GitOps</h4><p>“With GitOps, it is extended to the entire system. Git becomes the single point of truth for code, deployment configuration, monitoring rules, etc.. With just a Git pull request, we can do/update the complete application deployment. Some of the examples of GitOps are Weave Flux and GitKube.”</p>
+<h4 id="SecOps"><a href="#SecOps" class="headerlink" title="SecOps"></a>SecOps</h4><p>“With SecOps, security would not be an afterthought when it comes tp application deployment. It would be included along with the application deployment, to avoid any security risks.”</p>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/07/14/Introduction to Cloud Infrastructure Technologies(4) Containers/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/CI-CD/">CI_CD</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -188,9 +274,65 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/image/alipay.png" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/image/wechat.png" alt="Wechat"></div>
+</a>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
+    <span class="icon is-small">
+        <i class="fab fa-paypal"></i>
+    </span>
+    <span>Paypal</span>
+</a>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="SuperGsama@outlook.com">
+    <input type="hidden" name="currency_code" value="USD">
+</form>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/19/Introduction to Cloud Infrastructure Technologies(10) Software-Defined Storage and Storage Management for Containers/">
+                <span class="level-item">\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(10) Software-Defined Storage and Storage Management for Containers</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -882,7 +1024,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="\#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(11) DevOps and CI_CD" height="28">
                 
                 </a>
                 <p class="is-size-7">
