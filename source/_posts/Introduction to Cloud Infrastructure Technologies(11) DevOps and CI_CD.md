@@ -1,9 +1,9 @@
 ---
-title: \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(11) DevOps and CI_CD
+title: \#Cloud Computing\# Introduction to Cloud Infrastructure Technologies(11) DevOps and CI/CD
 date: 2019-07-20 15:13:21
 categories: Cloud Computing
 tags:
-- CI_CD
+- CI/CD
 thumbnail: /images/cloud_computing.png
 ---
 
