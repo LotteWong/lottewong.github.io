@@ -1,5 +1,6 @@
 ---
 title: \#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog
+date: 2019-06-02 07:00:21
 categories: Configuration
 tags:
 - GitHub Pages
