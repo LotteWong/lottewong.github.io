@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>\#Configuration\# 如何令本地代码在服务器端启动：以GitHub作中转 - LotteWong</title>
+<title>Tag: Curl - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="\#Configuration\# 如何令本地代码在服务器端启动：以GitHub作中转" height="28">
+                <img src="/images/logo.png" alt="LotteWong" height="28">
             
             </a>
         </div>
@@ -116,28 +116,39 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">Tags</a></li>
+            <li class="is-active"><a href="#" aria-current="page">Curl</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    <div class="card">
     
     <div class="card-image">
-        <span class="image is-7by1">
-            <img class="thumbnail" src="/images/architecture.png" alt="\#Configuration\# 如何令本地代码在服务器端启动：以GitHub作中转">
-        </span>
+        <a href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/" class="image is-7by1">
+            <img class="thumbnail" src="/images/fiddler.png" alt="\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
+        </a>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-06-02T23:00:21.000Z">2019-06-03</time>
+                <time class="level-item has-text-grey" datetime="2019-10-10T23:00:21.000Z">2019-10-11</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Configuration/">Configuration</a>
+                <a class="has-link-grey -link" href="/categories/Testing/">Testing</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    5 minutes read (About 757 words)
+                    9 minutes read (About 1349 words)
                 </span>
                 
                 
@@ -146,207 +157,37 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                \#Configuration\# 如何令本地代码在服务器端启动：以GitHub作中转
+                <a class="has-link-black-ter" href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/">\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包</a>
             
         </h1>
         <div class="content">
-            <p>利用<strong>GitHub</strong>作为中转，实现本地端和服务器的双向互通，主要分为以下<strong>五个部分</strong>：</p>
+            <p>利用Fiddler抓包和Socket发包，并用Curl脚本统计响应时间，主要分为以下四个部分：</p>
 <ul>
-<li>前期的准备</li>
-<li><strong>从远程克隆</strong></li>
-<li>本地端修改</li>
-<li><strong>推送到远程</strong></li>
-<li>服务器操作</li>
+<li>工具的配置及工具的使用</li>
+<li><strong>截获、修改、发送数据包</strong></li>
+<li><strong>统计网页和元素的响应时间</strong></li>
+<li>需注意事项及待改进事项</li>
 </ul>
-<a id="more"></a>
-
-
-
-<h2 id="前期的准备"><a href="#前期的准备" class="headerlink" title="前期的准备"></a><strong>前期的准备</strong></h2><h3 id="Step-1-环境需要"><a href="#Step-1-环境需要" class="headerlink" title="Step 1: 环境需要"></a><strong>Step 1: 环境需要</strong></h3><ul>
-<li><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a></li>
-<li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
-<li><u>SSH客户端</u><ul>
-<li>Windows用户：<a href="https://www.putty.org/" target="_blank" rel="noopener">PuTTY</a></li>
-<li>Unix用户：<u>cmd</u></li>
-</ul>
-</li>
-</ul>
-<h3 id="Step-2-Git和GitHub配置"><a href="#Step-2-Git和GitHub配置" class="headerlink" title="Step 2: Git和GitHub配置"></a><strong>Step 2: Git和GitHub配置</strong></h3><h4 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h4><ul>
-<li><a href="https://www.liaoxuefeng.com/wiki/896043488029600/896067074338496" target="_blank" rel="noopener">安装Git</a></li>
-</ul>
-<h4 id="配置GitHub"><a href="#配置GitHub" class="headerlink" title="配置GitHub"></a>配置GitHub</h4><ul>
-<li><a href="https://www.liaoxuefeng.com/wiki/896043488029600/898732864121440" target="_blank" rel="noopener">添加远程库</a></li>
-</ul>
-<h3 id="Step-3-SSH配置"><a href="#Step-3-SSH配置" class="headerlink" title="Step 3: SSH配置"></a><strong>Step 3: SSH配置</strong></h3><h4 id="Windows用户"><a href="#Windows用户" class="headerlink" title="Windows用户"></a>Windows用户</h4><ul>
-<li><a href="https://cnzhx.net/blog/putty-basic-usage/" target="_blank" rel="noopener">使用 PuTTY 远程登录管理服务器</a></li>
-</ul>
-<h4 id="Unix用户"><a href="#Unix用户" class="headerlink" title="Unix用户"></a>Unix用户</h4><ul>
-<li><a href="https://blog.csdn.net/u011054333/article/details/52443061" target="_blank" rel="noopener">如何使用SSH登录远程服务器</a></li>
-</ul>
-<h2 id="从远程克隆"><a href="#从远程克隆" class="headerlink" title="从远程克隆"></a><strong>从远程克隆</strong></h2><h3 id="Step-1-在GitHub上Fork对应repo"><a href="#Step-1-在GitHub上Fork对应repo" class="headerlink" title="Step 1: 在GitHub上Fork对应repo"></a><strong>Step 1: 在GitHub上Fork对应repo</strong></h3><ul>
-<li><p>选择特定repo，如：<a href="https://github.com/LotteWong/Bone-Metastasis-Neural-Network" target="_blank" rel="noopener">https://github.com/LotteWong/Bone-Metastasis-Neural-Network</a></p>
-</li>
-<li><p>点击<code>Fork</code>按钮，即可在自己的GitHub看到对应的repo</p>
-<p><img src="/images/Fork.png" alt="Fork"></p>
-</li>
-</ul>
-<h3 id="Step-2-git-clone到本地目录"><a href="#Step-2-git-clone到本地目录" class="headerlink" title="Step 2: git clone到本地目录"></a><strong>Step 2: git clone到本地目录</strong></h3><ul>
-<li><p>在自己的GitHub打开对应repo，复制<code>SSH key</code></p>
-<p><img src="/images/SSH-key.png" alt="SSH key"></p>
-</li>
-<li><p>切到想要下载到的目录，使用<code>git clone</code>命令</p>
-<p><img src="/images/git-clone.png" alt="git clone"></p>
-</li>
-</ul>
-<h2 id="本地端修改"><a href="#本地端修改" class="headerlink" title="本地端修改"></a><strong>本地端修改</strong></h2><h3 id="Step-1-本地edit"><a href="#Step-1-本地edit" class="headerlink" title="Step 1: 本地edit"></a><strong>Step 1: 本地edit</strong></h3><ul>
-<li>在本地修改文件</li>
-</ul>
-<h3 id="Step-2-本地add"><a href="#Step-2-本地add" class="headerlink" title="Step 2: 本地add"></a><strong>Step 2: 本地add</strong></h3><ul>
-<li><a href="https://www.liaoxuefeng.com/wiki/896043488029600/896827951938304" target="_blank" rel="noopener">学习<code>git add</code>命令</a></li>
-</ul>
-<h3 id="Step-3-本地commit"><a href="#Step-3-本地commit" class="headerlink" title="Step 3: 本地commit"></a><strong>Step 3: 本地commit</strong></h3><ul>
-<li><a href="https://www.liaoxuefeng.com/wiki/896043488029600/896827951938304" target="_blank" rel="noopener">学习<code>git commit</code>命令</a></li>
-</ul>
-<h2 id="推送到远程"><a href="#推送到远程" class="headerlink" title="推送到远程"></a><strong>推送到远程</strong></h2><h3 id="Step-1-bash查看远程服务器"><a href="#Step-1-bash查看远程服务器" class="headerlink" title="Step 1: bash查看远程服务器"></a><strong>Step 1: bash查看远程服务器</strong></h3><p><img src="/images/git-remote.png" alt="git remote"></p>
-<h3 id="Step-2-push到GitHub"><a href="#Step-2-push到GitHub" class="headerlink" title="Step 2: push到GitHub"></a><strong>Step 2: push到GitHub</strong></h3><p><img src="/images/git-push.png" alt="git push"></p>
-<h2 id="服务器操作"><a href="#服务器操作" class="headerlink" title="服务器操作"></a><strong>服务器操作</strong></h2><h3 id="Step-1-SSH登录远程服务器"><a href="#Step-1-SSH登录远程服务器" class="headerlink" title="Step 1: SSH登录远程服务器"></a><strong>Step 1: SSH登录远程服务器</strong></h3><ul>
-<li><p>按照<strong>前期的准备</strong>中的教程登录服务器</p>
-<p><img src="/images/SSH-login.png" alt="SSH login"></p>
-</li>
-</ul>
-<h3 id="Step-2-pull到服务器"><a href="#Step-2-pull到服务器" class="headerlink" title="Step 2: pull到服务器"></a><strong>Step 2: pull到服务器</strong></h3><ul>
-<li><p><code>pwd</code>：查看当前路径</p>
-</li>
-<li><p><code>ll</code>: 查看当前路径下的目录和文件</p>
-</li>
-<li><p><code>cd $path</code>：切换特定路径</p>
-</li>
-<li><p><code>git clone</code>：<strong>若目录中还没有repo</strong>，按上述步骤做过的，在服务器进行<code>git clone</code><em>【PS：因为之前已经<code>git clone</code>过，所以服务器上已经有<code>Bone-Metastasis-Neural-Network</code>目录】</em></p>
-</li>
-<li><p><code>git pull</code>：<strong>若目录中已经有repo</strong>，使用<code>git pull</code>命令将GitHub的更新拉到服务器</p>
-<p><img src="/images/git-pull.png" alt="git pull"></p>
-</li>
-</ul>
-<h3 id="Step-3-运行py文件"><a href="#Step-3-运行py文件" class="headerlink" title="Step 3: 运行py文件"></a><strong>Step 3: 运行py文件</strong></h3><ul>
-<li><p>切到py文件所在路径</p>
-</li>
-<li><p><code>python $filename</code><em>【PS：现在<code>Network.py</code>是有bug的，所以没run起来】</em></p>
-<p><img src="/images/run.png" alt="run"></p>
-</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><p><strong>每次需要更新文件重复下述步骤：</strong></p>
-<ul>
-<li>Step 1: <strong>在本地</strong>修改文件，<code>git add</code>并<code>git commit</code></li>
-<li>Step 2: <strong>在本地</strong><code>git push</code>到origin</li>
-<li>Step 3: <strong>在服务器</strong>从origin中<code>git clone</code> / <code>git pull</code></li>
-<li>Step 4: <strong>在服务器</strong>切到py文件所在路径<code>python $filename</code>启动</li>
-</ul>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a><strong>附录</strong></h2><ol>
-<li><p><a href="https://www.liaoxuefeng.com/wiki/896043488029600" target="_blank" rel="noopener">Git教程</a></p>
-</li>
-<li><p><a href="http://rogerdudler.github.io/git-guide/index.zh.html" target="_blank" rel="noopener">GitHub教程</a></p>
-</li>
-<li><p><a href="https://github.com/LotteWong/LearnGit" target="_blank" rel="noopener">Git练习repo</a></p>
-</li>
-<li><p><a href="https://www.jianshu.com/p/091518780e2a" target="_blank" rel="noopener">Git命令速查</a></p>
-</li>
-<li><p><a href="https://www.jianshu.com/p/77f47f4a6706" target="_blank" rel="noopener">Linux命令速查</a></p>
-</li>
-<li><p><u>使用GPU加速</u></p>
-<ol>
-<li><p><strong>使用tensorflow的代码：</strong></p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># limit GPU memory</span></span><br><span class="line">tf_config = tf.ConfigProto() </span><br><span class="line">tf_config.gpu_options.allow_growth = <span class="hljs-literal">True</span></span><br><span class="line"><span class="hljs-keyword">with</span> tf.Session(config=tf_config) <span class="hljs-keyword">as</span> sess:</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>使用keras的代码：</strong></p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># limit GPU memory</span></span><br><span class="line"><span class="hljs-keyword">import</span> keras.backend.tensorflow_backend <span class="hljs-keyword">as</span> KTF</span><br><span class="line">config = tf.ConfigProto()  </span><br><span class="line">config.gpu_options.allow_growth=<span class="hljs-literal">True</span>   </span><br><span class="line">session = tf.Session(config=config)</span><br><span class="line">KTF.set_session(session)</span><br></pre></td></tr></table></figure></li>
-</ol>
-</li>
-</ol>
-
         </div>
         
-        <div class="level is-size-7 is-uppercase">
+        
+        <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Git/">Git</a>, <a class="has-link-grey -link" href="/tags/GitHub/">GitHub</a>, <a class="has-link-grey -link" href="/tags/Linux/">Linux</a>, <a class="has-link-grey -link" href="/tags/SSH/">SSH</a>
+                <a class="button is-size-7 is-light" href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/#more">Read More</a>
                 </div>
             </div>
         </div>
         
         
-        
     </div>
 </div>
 
 
 
-<div class="card">
-    <div class="card-content">
-        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
-        <div class="buttons is-centered">
-            
-                
-<a class="button is-info donate">
-    <span class="icon is-small">
-        <i class="fab fa-alipay"></i>
-    </span>
-    <span>Alipay</span>
-    <div class="qrcode"><img src="/images/alipay.png" alt="Alipay"></div>
-</a>
-
-                
-                
-<a class="button is-success donate">
-    <span class="icon is-small">
-        <i class="fab fa-weixin"></i>
-    </span>
-    <span>Wechat</span>
-    <div class="qrcode"><img src="/images/wechat.png" alt="Wechat"></div>
-</a>
-
-                
-                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
-
-<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
-    <span class="icon is-small">
-        <i class="fab fa-paypal"></i>
-    </span>
-    <span>Paypal</span>
-</a>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
-    <input type="hidden" name="cmd" value="_donations">
-    <input type="hidden" name="business" value="SuperGsama@outlook.com">
-    <input type="hidden" name="currency_code" value="USD">
-</form>
-
-                
-        </div>
-    </div>
-</div>
 
 
 
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包</span>
-            </a>
-        </div>
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/">
-                <span class="level-item">\#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
 
 
 </div>
@@ -930,7 +771,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="\#Configuration\# 如何令本地代码在服务器端启动：以GitHub作中转" height="28">
+                    <img src="/images/logo.png" alt="LotteWong" height="28">
                 
                 </a>
                 <p class="is-size-7">
