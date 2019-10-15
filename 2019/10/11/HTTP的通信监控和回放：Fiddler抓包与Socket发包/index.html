@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包 - LotteWong</title>
+<title>\#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
+                <img src="/images/logo.png" alt="\#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
             
             </a>
         </div>
@@ -119,7 +119,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/images/fiddler.png" alt="\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
+            <img class="thumbnail" src="/images/fiddler.png" alt="\#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
         </span>
     </div>
     
@@ -137,7 +137,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 minutes read (About 1349 words)
+                    11 minutes read (About 1604 words)
                 </span>
                 
                 
@@ -146,7 +146,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                \#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包
+                \#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包
             
         </h1>
         <div class="content">
@@ -159,6 +159,38 @@
 </ul>
 <a id="more"></a>
 
+<h1 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h1><blockquote>
+<p>部署类似Microsoft PetshopWeb应用基本实例，开发性能测试小工具能截获基于IE浏览器与Web服务器的交互的数据包，修改数据包（比如简化起见，修改要搜索的关键字），再把修改后的内容使用多线程的方式发送到服务器。统计请求每个网页上主要元素（gif,css等）需要的时间，以及请求整个网页的时间。</p>
+<p>提示：</p>
+<ol>
+<li><p>在获取数据包的过程中要根据HTTP请求的特点，从原始的数据包中过滤出HTTP的数据包。找到提交的“搜索的关键字”，将其替换成其它字符。</p>
+</li>
+<li><p>发送数据包使用Socket，可以参考网络编程的资料。</p>
+</li>
+</ol>
+</blockquote>
+<ul>
+<li>方法<ul>
+<li>截获数据包</li>
+<li>修改数据包</li>
+<li>发送数据包</li>
+<li>记响应时间</li>
+</ul>
+</li>
+<li>手段<ul>
+<li>用Fiddler截获</li>
+<li>用Python修改</li>
+<li>用Socket发送</li>
+<li>用Fiddler查看</li>
+</ul>
+</li>
+<li>验证<ul>
+<li>可用性</li>
+<li>易用性</li>
+<li>并发性</li>
+</ul>
+</li>
+</ul>
 <h2 id="工具的配置"><a href="#工具的配置" class="headerlink" title="工具的配置"></a><strong>工具的配置</strong></h2><h3 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a><strong>安装工具</strong></h3><p><a href="https://www.telerik.com/fiddler" target="_blank" rel="noopener">Fiddler下载地址</a></p>
 <h3 id="导入证书"><a href="#导入证书" class="headerlink" title="导入证书"></a><strong>导入证书</strong></h3><p><img src="/images/decrypt_https_1.png" alt="Decrypt to capture Https"></p>
 <p><img src="/images/decrypt_https_2.png" alt="Decrypt to capture Https"></p>
@@ -207,13 +239,7 @@
 </ul>
 <h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a><strong>Socket</strong></h3>  <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:</span><br><span class="line">    <span class="hljs-comment"># 读取信息</span></span><br><span class="line">    file = input(<span class="hljs-string">"file:"</span>)</span><br><span class="line">    cont = input(<span class="hljs-string">"cont:"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 套接字连接服务端</span></span><br><span class="line">    s = ssl.wrap_socket(socket.socket())</span><br><span class="line">    s.connect((<span class="hljs-string">'www.baidu.com'</span>, <span class="hljs-number">443</span>))</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 发送修改后的请求</span></span><br><span class="line">    s.send(get_req(file, cont))</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 缓存服务端的响应</span></span><br><span class="line">    buffer = []</span><br><span class="line">    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:</span><br><span class="line">        d = s.recv(<span class="hljs-number">1024</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> d:</span><br><span class="line">            buffer.append(d)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            <span class="hljs-keyword">break</span></span><br><span class="line">    res = <span class="hljs-string">b''</span>.join(buffer)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 客户端关闭套接字</span></span><br><span class="line">    s.close()</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 保存响应</span></span><br><span class="line">    header, html = res.split(<span class="hljs-string">b'\r\n\r\n'</span>, <span class="hljs-number">1</span>)</span><br><span class="line">    print(header.decode(<span class="hljs-string">'utf-8'</span>))</span><br><span class="line">    <span class="hljs-keyword">with</span> open(cont + <span class="hljs-string">'.html'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        f.write(html)</span><br></pre></td></tr></table></figure>
 
-<h2 id="记响应时间"><a href="#记响应时间" class="headerlink" title="记响应时间"></a><strong>记响应时间</strong></h2><h3 id="整个网页"><a href="#整个网页" class="headerlink" title="整个网页"></a><strong>整个网页</strong></h3><ul>
-<li>To be continue…</li>
-</ul>
-<h3 id="单个元素"><a href="#单个元素" class="headerlink" title="单个元素"></a><strong>单个元素</strong></h3><ul>
-<li>To be continue…</li>
-</ul>
-<h2 id="实例的演示"><a href="#实例的演示" class="headerlink" title="实例的演示"></a><strong>实例的演示</strong></h2><p><img src="/images/fiddler_socket.png" alt="Flowchart"></p>
+<h2 id="记响应时间"><a href="#记响应时间" class="headerlink" title="记响应时间"></a><strong>记响应时间</strong></h2><h3 id="Fiddler-1"><a href="#Fiddler-1" class="headerlink" title="Fiddler"></a>Fiddler</h3><h3 id="PyCurl"><a href="#PyCurl" class="headerlink" title="PyCurl"></a>PyCurl</h3><h3 id="Urllib"><a href="#Urllib" class="headerlink" title="Urllib"></a>Urllib</h3><h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><h2 id="实例的演示"><a href="#实例的演示" class="headerlink" title="实例的演示"></a><strong>实例的演示</strong></h2><p><img src="/images/fiddler_socket.png" alt="Flowchart"></p>
 <ul>
 <li>[仅使用Fiddler抓包、修改、发包](录屏链接To be continue…)</li>
 <li>[Fiddler抓包+Python修改+Socket发包](录屏链接To be continue…)</li>
@@ -239,12 +265,9 @@
 <li><code>Break on Response</code> 和 <code>Run to Completion</code> 对应会话并不相同</li>
 </ul>
 <h2 id="待改进事项"><a href="#待改进事项" class="headerlink" title="待改进事项"></a><strong>待改进事项</strong></h2><ul>
-<li><p>优化过滤会话和替换内容脚本（正则表达式）</p>
-</li>
-<li><p>发送响应回浏览器（Socket向其它进程发报文）</p>
-</li>
-<li><p>持续化、多线程抓包、修改、发包（多线程编程）</p>
-</li>
+<li>优化过滤会话和替换内容脚本（正则表达式）</li>
+<li>发送响应回浏览器（Socket向其它进程发报文）</li>
+<li>持续化、多线程抓包、修改、发包（多线程编程）</li>
 </ul>
 
         </div>
@@ -537,14 +560,14 @@
             
             <a href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/fiddler.png" alt="\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
+                    <img class="thumbnail" src="/images/fiddler.png" alt="\#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-10T23:00:21.000Z">2019-10-11</time></div>
-                    <a href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/" class="has-link-black-ter is-size-6">\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包</a>
+                    <a href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/" class="has-link-black-ter is-size-6">\#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Testing/">Testing</a>
                     </p>
@@ -727,14 +750,14 @@
             
             <a href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/fiddler.png" alt="\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
+                    <img class="thumbnail" src="/images/fiddler.png" alt="\#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-10T23:00:21.000Z">2019-10-11</time></div>
-                    <a href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/" class="has-link-black-ter is-size-6">\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包</a>
+                    <a href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/" class="has-link-black-ter is-size-6">\#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Testing/">Testing</a>
                     </p>
@@ -907,7 +930,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="\#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
+                    <img src="/images/logo.png" alt="\#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
                 
                 </a>
                 <p class="is-size-7">
