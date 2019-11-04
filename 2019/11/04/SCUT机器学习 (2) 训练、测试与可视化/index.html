@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Tag: GitHub Pages - LotteWong</title>
+<title>\#Machine Learning\# SCUT Machine Learning(2) 训练、测试与可视化 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="\#Machine Learning\# SCUT Machine Learning(2) 训练、测试与可视化" height="28">
             
             </a>
         </div>
@@ -116,39 +116,28 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">GitHub Pages</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-image">
-        <a href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/" class="image is-7by1">
-            <img class="thumbnail" src="/images/hexo-github.png" alt="\#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/Artificial Intelligence.jpg" alt="\#Machine Learning\# SCUT Machine Learning(2) 训练、测试与可视化">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-06-01T23:00:21.000Z">2019-06-02</time>
+                <time class="level-item has-text-grey" datetime="2019-11-04T07:05:21.000Z">2019-11-04</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Configuration/">Configuration</a>
+                <a class="has-link-grey -link" href="/categories/Artificial-Intelligence/">Artificial Intelligence</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    11 minutes read (About 1678 words)
+                    2 minutes read (About 286 words)
                 </span>
                 
                 
@@ -157,28 +146,42 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/">\#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog</a>
+                \#Machine Learning\# SCUT Machine Learning(2) 训练、测试与可视化
             
         </h1>
         <div class="content">
-            <p>利用<strong>GitHub Pages+Hexo</strong>打造一个个人博客，主要分为以下<strong>五个部分</strong>：</p>
+            <p>本文主要讨论<strong>Machine Learning</strong>的基本步骤，包括以下<strong>三个部分</strong>：</p>
 <ul>
-<li>环境准备 Environment</li>
-<li><strong>文件配置 Configuration</strong></li>
-<li>个性化 Customization</li>
-<li><strong>博客写作 Writing</strong></li>
-<li>双备份 Backup</li>
+<li><strong>训练的三部曲</strong></li>
+<li><strong>测试的验证法</strong></li>
+<li><strong>数据的可视化</strong></li>
 </ul>
+<a id="more"></a>
+
+
+
+<h2 id="Machine-Learning"><a href="#Machine-Learning" class="headerlink" title="Machine Learning"></a><strong>Machine Learning</strong></h2><h3 id="训练的三部曲"><a href="#训练的三部曲" class="headerlink" title="训练的三部曲"></a><strong>训练的三部曲</strong></h3><h4 id="Step-1-Model"><a href="#Step-1-Model" class="headerlink" title="Step 1: Model"></a><strong>Step 1: Model</strong></h4><h4 id="Step-2-Goodness-of-Function"><a href="#Step-2-Goodness-of-Function" class="headerlink" title="Step 2: Goodness of Function"></a><strong>Step 2: Goodness of Function</strong></h4><h4 id="Step-3-Best-Function"><a href="#Step-3-Best-Function" class="headerlink" title="Step 3: Best Function"></a><strong>Step 3: Best Function</strong></h4><h5 id="合并更新参数"><a href="#合并更新参数" class="headerlink" title="合并更新参数"></a><strong>合并更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 更新参数：梯度下降</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">update</span><span class="hljs-params">(self, X, y)</span>:</span></span><br><span class="line">    m = X.shape[<span class="hljs-number">0</span>]  <span class="hljs-comment"># 标签个数</span></span><br><span class="line">    dTheta = X.T.dot(self.model(X) - y) / m</span><br><span class="line"></span><br><span class="line">    self.theta = self.theta - self.eta * dTheta</span><br></pre></td></tr></table></figure>
+
+<h5 id="分开更新参数"><a href="#分开更新参数" class="headerlink" title="分开更新参数"></a><strong>分开更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 更新参数：梯度下降</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">update</span><span class="hljs-params">(self, X, y)</span>:</span></span><br><span class="line">    m = X.shape[<span class="hljs-number">0</span>]  <span class="hljs-comment"># 标签个数</span></span><br><span class="line">    dZ = self.model(X) - y</span><br><span class="line">    dW = X.T.dot(dZ) / m</span><br><span class="line">    db = dZ.sum(axis=<span class="hljs-number">0</span>, keepdims=<span class="hljs-literal">True</span>) / m</span><br><span class="line"></span><br><span class="line">    self.W = self.W - self.eta * dW</span><br><span class="line">    self.b = self.b - self.eta * db</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试的验证法"><a href="#测试的验证法" class="headerlink" title="测试的验证法"></a><strong>测试的验证法</strong></h3><h4 id="损失值"><a href="#损失值" class="headerlink" title="损失值"></a><strong>损失值</strong></h4><h4 id="准确率"><a href="#准确率" class="headerlink" title="准确率"></a><strong>准确率</strong></h4><h5 id="回归问题"><a href="#回归问题" class="headerlink" title="回归问题"></a><strong>回归问题</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># pass</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="分类问题"><a href="#分类问题" class="headerlink" title="分类问题"></a><strong>分类问题</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 数据的准确率</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">accuracy</span><span class="hljs-params">(self, X, y, threshold)</span>:</span></span><br><span class="line">    y_pred = self.predict(X_test, threshold)</span><br><span class="line">    y_true = y</span><br><span class="line"></span><br><span class="line">    right = <span class="hljs-number">0</span></span><br><span class="line">    total = y_pred.shape[<span class="hljs-number">0</span>]</span><br><span class="line">    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(total):</span><br><span class="line">        <span class="hljs-keyword">if</span> y_pred[i] == y_true[i]:</span><br><span class="line">            right += <span class="hljs-number">1</span></span><br><span class="line">            </span><br><span class="line">	acc = right / total</span><br><span class="line"></span><br><span class="line">	<span class="hljs-keyword">return</span> str(acc * <span class="hljs-number">100</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据的可视化"><a href="#数据的可视化" class="headerlink" title="数据的可视化"></a><strong>数据的可视化</strong></h3><h4 id="损失值-1"><a href="#损失值-1" class="headerlink" title="损失值"></a><strong>损失值</strong></h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 数据的可视化</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">visualize</span><span class="hljs-params">(self, iter_list, loss_list)</span>:</span></span><br><span class="line">    plt.figure(<span class="hljs-string">'program title'</span>)</span><br><span class="line">    plt.title(<span class="hljs-string">'chart title'</span>)</span><br><span class="line">    ax = plt.gca()</span><br><span class="line">    ax.set_xlabel(<span class="hljs-string">'epoch'</span>)</span><br><span class="line">    ax.set_ylabel(<span class="hljs-string">'loss'</span>)</span><br><span class="line">    ax.plot(iter_list, loss_list, color=<span class="hljs-string">'r'</span>, linewidth=<span class="hljs-number">1</span>, alpha=<span class="hljs-number">0.6</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Machine-Learning/">Machine Learning</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -186,9 +189,72 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/images/alipay.png" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="Wechat"></div>
+</a>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
+    <span class="icon is-small">
+        <i class="fab fa-paypal"></i>
+    </span>
+    <span>Paypal</span>
+</a>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="SuperGsama@outlook.com">
+    <input type="hidden" name="currency_code" value="USD">
+</form>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/11/04/SCUT机器学习 (3) 算法与工程/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">\#Machine Learning\# SCUT Machine Learning(3) 算法与工程</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/11/04/SCUT机器学习 (1) 数据与参数/">
+                <span class="level-item">\#Machine Learning\# SCUT Machine Learning(1) 数据与参数</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -836,7 +902,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="\#Machine Learning\# SCUT Machine Learning(2) 训练、测试与可视化" height="28">
                 
                 </a>
                 <p class="is-size-7">

@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Tag: GitHub Pages - LotteWong</title>
+<title>\#Machine Learning\# SCUT Machine Learning(1) 数据与参数 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="\#Machine Learning\# SCUT Machine Learning(1) 数据与参数" height="28">
             
             </a>
         </div>
@@ -116,39 +116,28 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">GitHub Pages</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-image">
-        <a href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/" class="image is-7by1">
-            <img class="thumbnail" src="/images/hexo-github.png" alt="\#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/Artificial Intelligence.jpg" alt="\#Machine Learning\# SCUT Machine Learning(1) 数据与参数">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-06-01T23:00:21.000Z">2019-06-02</time>
+                <time class="level-item has-text-grey" datetime="2019-11-04T07:00:21.000Z">2019-11-04</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Configuration/">Configuration</a>
+                <a class="has-link-grey -link" href="/categories/Artificial-Intelligence/">Artificial Intelligence</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    11 minutes read (About 1678 words)
+                    4 minutes read (About 594 words)
                 </span>
                 
                 
@@ -157,28 +146,49 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/">\#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog</a>
+                \#Machine Learning\# SCUT Machine Learning(1) 数据与参数
             
         </h1>
         <div class="content">
-            <p>利用<strong>GitHub Pages+Hexo</strong>打造一个个人博客，主要分为以下<strong>五个部分</strong>：</p>
+            <p>本文主要讨论<strong>Machine Learning</strong>的基本步骤，包括以下<strong>两个部分</strong>：</p>
 <ul>
-<li>环境准备 Environment</li>
-<li><strong>文件配置 Configuration</strong></li>
-<li>个性化 Customization</li>
-<li><strong>博客写作 Writing</strong></li>
-<li>双备份 Backup</li>
+<li><strong>读取处理数据</strong></li>
+<li><strong>初始化各参数</strong></li>
 </ul>
+<a id="more"></a>
+
+
+
+<h2 id="Machine-Learning"><a href="#Machine-Learning" class="headerlink" title="Machine Learning"></a><strong>Machine Learning</strong></h2><h3 id="读取处理数据"><a href="#读取处理数据" class="headerlink" title="读取处理数据"></a><strong>读取处理数据</strong></h3><h4 id="本地数据"><a href="#本地数据" class="headerlink" title="本地数据"></a><strong>本地数据</strong></h4><h5 id="合并更新参数"><a href="#合并更新参数" class="headerlink" title="合并更新参数"></a><strong>合并更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">local_file = <span class="hljs-string">'$local_dataset_path'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_data</span><span class="hljs-params">(path)</span>:</span></span><br><span class="line">    <span class="hljs-comment"># 读取本地原始数据集</span></span><br><span class="line">    raw_data = datasets.load_svmlight_file(path)  <span class="hljs-comment"># 返回scipy.matrix</span></span><br><span class="line">    或</span><br><span class="line">    raw_data = datasets.load_files(path)  <span class="hljs-comment"># 返回numpy.ndarray</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment"># 分开处理特征和标签</span></span><br><span class="line">    X, y = np.c_[raw_data[<span class="hljs-number">0</span>].A, np.ones((raw_data[<span class="hljs-number">0</span>].shape[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>))], raw_data[<span class="hljs-number">1</span>].reshape(<span class="hljs-number">-1</span>, <span class="hljs-number">1</span>)</span><br><span class="line">    或</span><br><span class="line">    X, y = np.c_[raw_data[<span class="hljs-number">0</span>], np.ones((raw_data[<span class="hljs-number">0</span>].shape[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>))], raw_data[<span class="hljs-number">1</span>].reshape(<span class="hljs-number">-1</span>, <span class="hljs-number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 切分训练集和验证集</span></span><br><span class="line">    <span class="hljs-keyword">return</span> model_selection.train_test_split(X, y, test_size=<span class="hljs-number">0.3</span>, random_state=<span class="hljs-number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="分开更新参数"><a href="#分开更新参数" class="headerlink" title="分开更新参数"></a><strong>分开更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">local_file = <span class="hljs-string">'$local_dataset_path'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_data</span><span class="hljs-params">(path)</span>:</span></span><br><span class="line">    <span class="hljs-comment"># 读取本地原始数据集</span></span><br><span class="line">    raw_data = datasets.load_svmlight_file(path)  <span class="hljs-comment"># 返回scipy.matrix</span></span><br><span class="line">    或</span><br><span class="line">    raw_data = datasets.load_files(path)  <span class="hljs-comment"># 返回numpy.ndarray"""</span></span><br><span class="line">   	</span><br><span class="line">    <span class="hljs-comment"># 分开处理特征和标签</span></span><br><span class="line">    X, y = raw_data[<span class="hljs-number">0</span>].A, raw_data[<span class="hljs-number">1</span>].reshape(<span class="hljs-number">-1</span>, <span class="hljs-number">1</span>)</span><br><span class="line">    或</span><br><span class="line">    X, y = raw_data[<span class="hljs-number">0</span>], raw_data[<span class="hljs-number">1</span>].reshape(<span class="hljs-number">-1</span>, <span class="hljs-number">1</span>)</span><br><span class="line">	</span><br><span class="line">    <span class="hljs-comment"># 切分训练集和验证集</span></span><br><span class="line">    <span class="hljs-keyword">return</span> model_selection.train_test_split(X, y, test_size=<span class="hljs-number">0.3</span>, random_state=<span class="hljs-number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="网络数据"><a href="#网络数据" class="headerlink" title="网络数据"></a><strong>网络数据</strong></h4><h5 id="合并更新参数-1"><a href="#合并更新参数-1" class="headerlink" title="合并更新参数"></a><strong>合并更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># pass</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="分开更新参数-1"><a href="#分开更新参数-1" class="headerlink" title="分开更新参数"></a><strong>分开更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># pass</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="随机抽样"><a href="#随机抽样" class="headerlink" title="随机抽样"></a><strong>随机抽样</strong></h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 随机抽样</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">random_select</span><span class="hljs-params">(self, X, y, sample_size=<span class="hljs-number">1024</span>)</span>:</span></span><br><span class="line">    m = X.shape[<span class="hljs-number">0</span>]  <span class="hljs-comment"># 标签个数</span></span><br><span class="line">    i_list = random.sample([idx <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> range(n)], batch_size)  <span class="hljs-comment"># 下标序列</span></span><br><span class="line"></span><br><span class="line">    X_list = []</span><br><span class="line">    y_list = []</span><br><span class="line">    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> i_list:</span><br><span class="line">        X_list.append(X[i])</span><br><span class="line">        y_list.append(y[i])</span><br><span class="line">        X_array = np.array(X_list)</span><br><span class="line">        y_array = np.array(y_list)</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> X_array, y_array</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化各参数"><a href="#初始化各参数" class="headerlink" title="初始化各参数"></a><strong>初始化各参数</strong></h3><h4 id="不抽样"><a href="#不抽样" class="headerlink" title="不抽样"></a><strong>不抽样</strong></h4><h5 id="合并更新参数-2"><a href="#合并更新参数-2" class="headerlink" title="合并更新参数"></a><strong>合并更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 加载参数</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, eta, epo, batch_size, n)</span>:</span></span><br><span class="line">    self.eta = eta  <span class="hljs-comment"># 学习速率</span></span><br><span class="line">    self.epo = epo  <span class="hljs-comment"># 迭代次数</span></span><br><span class="line">    self.batch_size = batch_size  <span class="hljs-comment"># 批处理量</span></span><br><span class="line">    self.theta = np.zeros((n, <span class="hljs-number">1</span>))  <span class="hljs-comment"># 权重偏置</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="分开更新参数-2"><a href="#分开更新参数-2" class="headerlink" title="分开更新参数"></a><strong>分开更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 加载参数</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, eta, epo, batch_size, n)</span>:</span></span><br><span class="line">    self.eta = eta  <span class="hljs-comment"># 学习速率</span></span><br><span class="line">    self.epo = epo  <span class="hljs-comment"># 迭代次数</span></span><br><span class="line">    self.batch_size = batch_size  <span class="hljs-comment"># 批处理量</span></span><br><span class="line">    self.W = np.zeros((n, <span class="hljs-number">1</span>))  <span class="hljs-comment"># 权重参数</span></span><br><span class="line">    self.b = <span class="hljs-number">0</span>  <span class="hljs-comment"># 偏置参数</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="要抽样"><a href="#要抽样" class="headerlink" title="要抽样"></a><strong>要抽样</strong></h4><h5 id="合并更新参数-3"><a href="#合并更新参数-3" class="headerlink" title="合并更新参数"></a><strong>合并更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 加载参数</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, eta, epo, sample_size, batch_size, n)</span>:</span></span><br><span class="line">    self.eta = eta  <span class="hljs-comment"># 学习速率</span></span><br><span class="line">    self.epo = epo  <span class="hljs-comment"># 迭代次数</span></span><br><span class="line">    self.sample_size = sample_size  <span class="hljs-comment"># 抽样大小</span></span><br><span class="line">    self.batch_size = batch_size  <span class="hljs-comment"># 批处理量</span></span><br><span class="line">    self.theta = np.zeros((n, <span class="hljs-number">1</span>))  <span class="hljs-comment"># 权重偏置</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="分开更新参数-3"><a href="#分开更新参数-3" class="headerlink" title="分开更新参数"></a><strong>分开更新参数</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 加载参数</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, eta, epo, sample_size, batch_size, n)</span>:</span></span><br><span class="line">    self.eta = eta  <span class="hljs-comment"># 学习速率</span></span><br><span class="line">    self.epo = epo  <span class="hljs-comment"># 迭代次数</span></span><br><span class="line">    self.sample_size = sample_size  <span class="hljs-comment"># 抽样大小</span></span><br><span class="line">    self.batch_size = batch_size  <span class="hljs-comment"># 批处理量</span></span><br><span class="line">    self.W = np.zeros((n, <span class="hljs-number">1</span>))  <span class="hljs-comment"># 权重参数</span></span><br><span class="line">    self.b = <span class="hljs-number">0</span>  <span class="hljs-comment"># 偏置参数</span></span><br></pre></td></tr></table></figure>
+
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Machine-Learning/">Machine Learning</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -186,9 +196,72 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/images/alipay.png" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="Wechat"></div>
+</a>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
+    <span class="icon is-small">
+        <i class="fab fa-paypal"></i>
+    </span>
+    <span>Paypal</span>
+</a>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="SuperGsama@outlook.com">
+    <input type="hidden" name="currency_code" value="USD">
+</form>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/11/04/SCUT机器学习 (2) 训练、测试与可视化/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">\#Machine Learning\# SCUT Machine Learning(2) 训练、测试与可视化</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/10/11/HTTP的通信监控和回放：Fiddler抓包与Socket发包/">
+                <span class="level-item">\#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -836,7 +909,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="\#Machine Learning\# SCUT Machine Learning(1) 数据与参数" height="28">
                 
                 </a>
                 <p class="is-size-7">

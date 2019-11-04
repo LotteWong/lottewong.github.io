@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Tag: GitHub Pages - LotteWong</title>
+<title>\#Machine Learning\# SCUT Machine Learning(3) 算法与工程 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="\#Machine Learning\# SCUT Machine Learning(3) 算法与工程" height="28">
             
             </a>
         </div>
@@ -116,39 +116,28 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">GitHub Pages</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-image">
-        <a href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/" class="image is-7by1">
-            <img class="thumbnail" src="/images/hexo-github.png" alt="\#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/Artificial Intelligence.jpg" alt="\#Machine Learning\# SCUT Machine Learning(3) 算法与工程">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-06-01T23:00:21.000Z">2019-06-02</time>
+                <time class="level-item has-text-grey" datetime="2019-11-04T07:10:21.000Z">2019-11-04</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Configuration/">Configuration</a>
+                <a class="has-link-grey -link" href="/categories/Artificial-Intelligence/">Artificial Intelligence</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    11 minutes read (About 1678 words)
+                    7 minutes read (About 1052 words)
                 </span>
                 
                 
@@ -157,28 +146,90 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/">\#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog</a>
+                \#Machine Learning\# SCUT Machine Learning(3) 算法与工程
             
         </h1>
         <div class="content">
-            <p>利用<strong>GitHub Pages+Hexo</strong>打造一个个人博客，主要分为以下<strong>五个部分</strong>：</p>
+            <p>本文主要讨论<strong>Machine Learning</strong>的基本步骤，包括以下<strong>两个部分</strong>：</p>
 <ul>
-<li>环境准备 Environment</li>
-<li><strong>文件配置 Configuration</strong></li>
-<li>个性化 Customization</li>
-<li><strong>博客写作 Writing</strong></li>
-<li>双备份 Backup</li>
+<li><strong>优化与调参学</strong></li>
+<li><strong>软件工程之戒</strong></li>
 </ul>
+<a id="more"></a>
+
+
+
+<h2 id="Machine-Learning"><a href="#Machine-Learning" class="headerlink" title="Machine Learning"></a><strong>Machine Learning</strong></h2><h3 id="优化与调参学"><a href="#优化与调参学" class="headerlink" title="优化与调参学"></a><strong>优化与调参学</strong></h3><h4 id="数据的预处理"><a href="#数据的预处理" class="headerlink" title="数据的预处理"></a><strong>数据的预处理</strong></h4><h5 id="归一化"><a href="#归一化" class="headerlink" title="归一化"></a><strong>归一化</strong></h5><h5 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a><strong>标准化</strong></h5><h5 id="中心化"><a href="#中心化" class="headerlink" title="中心化"></a><strong>中心化</strong></h5><h5 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a><strong>正则化</strong></h5><h4 id="参数的初始化"><a href="#参数的初始化" class="headerlink" title="参数的初始化"></a><strong>参数的初始化</strong></h4><h5 id="全零初始"><a href="#全零初始" class="headerlink" title="全零初始"></a><strong>全零初始</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.theta = np.zeros((n, <span class="hljs-number">1</span>))  <span class="hljs-comment"># 权重偏置</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="全一初始"><a href="#全一初始" class="headerlink" title="全一初始"></a><strong>全一初始</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.theta = np.ones((n, <span class="hljs-number">1</span>))  <span class="hljs-comment"># 权重偏置</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="随机初始"><a href="#随机初始" class="headerlink" title="随机初始"></a><strong>随机初始</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.theta = np.random.random((n, <span class="hljs-number">1</span>))  <span class="hljs-comment"># 权重偏置</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="正态初始"><a href="#正态初始" class="headerlink" title="正态初始"></a><strong>正态初始</strong></h5><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.theta = np.random.normal(size=(n, <span class="hljs-number">1</span>))  <span class="hljs-comment"># 权重偏置</span></span><br><span class="line">或</span><br><span class="line">self.theta = np.random.randn(n, <span class="hljs-number">1</span>)  <span class="hljs-comment"># 权重偏置</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="梯度下降选择"><a href="#梯度下降选择" class="headerlink" title="梯度下降选择"></a><strong>梯度下降选择</strong></h4><blockquote>
+<p>参考链接：<a href="https://zhuanlan.zhihu.com/p/22252270" target="_blank" rel="noopener">深度学习最全优化方法总结比较（SGD，Adagrad，Adadelta，Adam，Adamax，Nadam）</a></p>
+<p>经验之谈：</p>
+<ul>
+<li>对于稀疏数据，尽量使用学习率可自适应的优化方法，不用手动调节，而且最好采用默认值。</li>
+<li>SGD通常训练时间更长，但是在好的初始化和学习率调度方案的情况下，结果更可靠。</li>
+<li>如果在意更快的收敛，并且需要训练较深较复杂的网络时，推荐使用学习率自适应的优化方法。</li>
+<li>Adadelta，RMSprop，Adam是比较相近的算法，在相似的情况下表现差不多。</li>
+<li>在想使用带动量的RMSprop，或者Adam的地方，大多可以使用Nadam取得更好的效果。</li>
+</ul>
+</blockquote>
+<h5 id="单样本"><a href="#单样本" class="headerlink" title="单样本"></a><strong>单样本</strong></h5><ul>
+<li>梯度下降速度最快，迭代计算时间最长</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 单样本梯度下降</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sgd</span><span class="hljs-params">(self, X_array, y_array)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">for</span> X_item, y_item <span class="hljs-keyword">in</span> zip(X_array, y_array):</span><br><span class="line">        X_single = X_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line">        y_single = y_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line">        self.update(X_single, y_single)</span><br></pre></td></tr></table></figure>
+
+<h5 id="小批量"><a href="#小批量" class="headerlink" title="小批量"></a><strong>小批量</strong></h5><ul>
+<li>梯度下降速度适中，迭代计算时间适中</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 小批量梯度下降</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mbgd</span><span class="hljs-params">(self, X_array, y_array, batch_size=<span class="hljs-number">64</span>)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, X_array.shape[<span class="hljs-number">0</span>], batch_size):</span><br><span class="line">        X_batch = X_array[idx:idx+batch_size]</span><br><span class="line">        y_batch = y_array[idx:idx+batch_size]</span><br><span class="line">        self.update(X_batch, y_batch)</span><br></pre></td></tr></table></figure>
+
+<h5 id="全样本"><a href="#全样本" class="headerlink" title="全样本"></a><strong>全样本</strong></h5><ul>
+<li>梯度下降速度最慢，迭代计算时间最短</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 全样本梯度下降</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fbgd</span><span class="hljs-params">(self, X_array, y_array)</span>:</span></span><br><span class="line">    self.update(X_array, y_array)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a><strong>Adagrad</strong></h5><ul>
+<li>自定义学习率，后期更新很慢</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Adagrad</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">adagrad</span><span class="hljs-params">(self, X_array, y_array)</span>:</span></span><br><span class="line">    sigma = <span class="hljs-number">1e-7</span>  <span class="hljs-comment"># 平滑项</span></span><br><span class="line">    <span class="hljs-keyword">for</span> X_item, y_item <span class="hljs-keyword">in</span> zip(X_array, y_array):</span><br><span class="line">        X_single = X_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line">        y_single = y_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line"></span><br><span class="line">        grad = X_single.T.dot(self.model(X_single) - y_single) / <span class="hljs-number">1</span></span><br><span class="line">        self.grad_sum = self.grad_sum + np.sum(grad * grad)</span><br><span class="line">        dTheta = -self.eta * (grad / math.sqrt(self.grad_sum + sigma))</span><br><span class="line"></span><br><span class="line">        self.theta = self.theta + dTheta</span><br></pre></td></tr></table></figure>
+
+<h5 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a><strong>RMSprop</strong></h5><ul>
+<li>进化Adagrad，变种Adadelta</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># RMSprop</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">adadelta</span><span class="hljs-params">(self, X_array, y_array)</span>:</span></span><br><span class="line">    sigma = <span class="hljs-number">1e-7</span>  <span class="hljs-comment"># 平滑项</span></span><br><span class="line">    gama = <span class="hljs-number">0.5</span>  <span class="hljs-comment"># 冲顶项</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span> X_item, y_item <span class="hljs-keyword">in</span> zip(X_array, y_array):</span><br><span class="line">        X_single = X_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line">        y_single = y_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line"></span><br><span class="line">        grad = X_single.T.dot(self.model(X_single) - y_single) / <span class="hljs-number">1</span></span><br><span class="line">        self.grad_sum = gama * self.grad_sum + (<span class="hljs-number">1</span> - gama) * np.sum(grad * grad)</span><br><span class="line">        dTheta = -self.eta * (grad / math.sqrt(self.grad_sum + sigma))</span><br></pre></td></tr></table></figure>
+
+<h5 id="Adadelta"><a href="#Adadelta" class="headerlink" title="Adadelta"></a><strong>Adadelta</strong></h5><ul>
+<li>自定义学习率，后期更新变快</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Adadelta</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">adadelta</span><span class="hljs-params">(self, X_array, y_array)</span>:</span></span><br><span class="line">    sigma = <span class="hljs-number">1e-7</span>  <span class="hljs-comment"># 平滑项</span></span><br><span class="line">    gama = <span class="hljs-number">0.9</span>  <span class="hljs-comment"># 冲顶项</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span> X_item, y_item <span class="hljs-keyword">in</span> zip(X_array, y_array):</span><br><span class="line">        X_single = X_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line">        y_single = y_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line"></span><br><span class="line">        grad = X_single.T.dot(self.model(X_single) - y_single) / <span class="hljs-number">1</span></span><br><span class="line">        self.grad_sum = gama * self.grad_sum + (<span class="hljs-number">1</span> - gama) * np.sum(grad * grad)</span><br><span class="line">        dTheta = -self.eta * (grad / math.sqrt(self.grad_sum + sigma))</span><br><span class="line"></span><br><span class="line">        self.theta = self.theta + dTheta</span><br></pre></td></tr></table></figure>
+
+<h5 id="Adamax"><a href="#Adamax" class="headerlink" title="Adamax"></a><strong>Adamax</strong></h5><ul>
+<li>简单范围的Adam，学习率有确定范围，参数比较平稳</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Adamax</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">adamax</span><span class="hljs-params">(self, X_array, y_array)</span>:</span></span><br><span class="line">    sigma = <span class="hljs-number">1e-7</span>  <span class="hljs-comment"># 平滑项</span></span><br><span class="line">    u = <span class="hljs-number">0.5</span>  <span class="hljs-comment"># 冲顶项</span></span><br><span class="line">    v = <span class="hljs-number">0.5</span>  <span class="hljs-comment"># 冲顶项</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span> X_item, y_item <span class="hljs-keyword">in</span> zip(X_array, y_array):</span><br><span class="line">        X_single = X_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line">        y_single = y_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line"></span><br><span class="line">        grad = X_single.T.dot(self.model(X_single) - y_single) / <span class="hljs-number">1</span></span><br><span class="line">        self.grad = u * self.grad + (<span class="hljs-number">1</span> - u) * grad</span><br><span class="line">        self.grad_sum = np.maximum(v * self.grad_sum, np.sum(grad))</span><br><span class="line">        m_t_hat = self.grad / (<span class="hljs-number">1</span> - u)</span><br><span class="line">        n_t_hat = self.grad_sum / (<span class="hljs-number">1</span> - v)</span><br><span class="line">        dTheta = - self.eta / (n_t_hat + sigma) * m_t_hat</span><br><span class="line"></span><br><span class="line">        self.theta = self.theta + dTheta</span><br></pre></td></tr></table></figure>
+
+<h5 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a><strong>Adam</strong></h5><ul>
+<li>带动量项的RMSprop，学习率有确定范围，参数比较平稳</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Adam</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">adam</span><span class="hljs-params">(self, X_array, y_array)</span>:</span></span><br><span class="line">    sigma = <span class="hljs-number">1e-7</span>  <span class="hljs-comment"># 平滑项</span></span><br><span class="line">    u = <span class="hljs-number">0.5</span>  <span class="hljs-comment"># 冲顶项</span></span><br><span class="line">    v = <span class="hljs-number">0.5</span>  <span class="hljs-comment"># 冲顶项</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span> X_item, y_item <span class="hljs-keyword">in</span> zip(X_array, y_array):</span><br><span class="line">        X_single = X_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line">        y_single = y_item.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)</span><br><span class="line"></span><br><span class="line">        grad = X_single.T.dot(self.model(X_single) - y_single) / <span class="hljs-number">1</span></span><br><span class="line">        self.grad = u * self.grad + (<span class="hljs-number">1</span> - u) * grad</span><br><span class="line">        self.grad_sum = v * self.grad_sum + (<span class="hljs-number">1</span> - v) * np.sum(grad * grad)</span><br><span class="line">        m_t_hat = self.grad / (<span class="hljs-number">1</span> - u)</span><br><span class="line">        n_t_hat = self.grad_sum / (<span class="hljs-number">1</span> - v)</span><br><span class="line">        dTheta = - self.eta * (m_t_hat / (math.sqrt(n_t_hat) + sigma))</span><br><span class="line"></span><br><span class="line">        self.theta = self.theta + dTheta</span><br></pre></td></tr></table></figure>
+
+<h3 id="软件工程之戒"><a href="#软件工程之戒" class="headerlink" title="软件工程之戒"></a><strong>软件工程之戒</strong></h3><h4 id="模块"><a href="#模块" class="headerlink" title="模块"></a><strong>模块</strong></h4><h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a><strong>函数</strong></h4>
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Machine-Learning/">Machine Learning</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -186,9 +237,65 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/images/alipay.png" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="Wechat"></div>
+</a>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<a class="button is-warning donate" onclick="document.getElementById(&#39;paypal-donate-form&#39;).submit()">
+    <span class="icon is-small">
+        <i class="fab fa-paypal"></i>
+    </span>
+    <span>Paypal</span>
+</a>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" id="paypal-donate-form">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="SuperGsama@outlook.com">
+    <input type="hidden" name="currency_code" value="USD">
+</form>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/11/04/SCUT机器学习 (2) 训练、测试与可视化/">
+                <span class="level-item">\#Machine Learning\# SCUT Machine Learning(2) 训练、测试与可视化</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -836,7 +943,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="\#Machine Learning\# SCUT Machine Learning(3) 算法与工程" height="28">
                 
                 </a>
                 <p class="is-size-7">
