@@ -1,5 +1,5 @@
 ---
-title: \#Configuration\# HTTP的通信监控和回放：Fiddler抓包与Socket发包
+title: \#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包
 date: 2019-10-11 07:00:21
 categories: Testing
 tags:
@@ -23,6 +23,31 @@ thumbnail: /images/fiddler.png
 
 
 <!-- more -->
+
+# 任务
+
+> 部署类似Microsoft PetshopWeb应用基本实例，开发性能测试小工具能截获基于IE浏览器与Web服务器的交互的数据包，修改数据包（比如简化起见，修改要搜索的关键字），再把修改后的内容使用多线程的方式发送到服务器。统计请求每个网页上主要元素（gif,css等）需要的时间，以及请求整个网页的时间。
+>
+> 提示：
+>
+> 1. 在获取数据包的过程中要根据HTTP请求的特点，从原始的数据包中过滤出HTTP的数据包。找到提交的“搜索的关键字”，将其替换成其它字符。
+>
+> 2. 发送数据包使用Socket，可以参考网络编程的资料。
+
+- 方法
+  - 截获数据包
+  - 修改数据包
+  - 发送数据包
+  - 记响应时间
+- 手段
+  - 用Fiddler截获
+  - 用Python修改
+  - 用Socket发送
+  - 用Fiddler查看
+- 验证
+  - 可用性
+  - 易用性
+  - 并发性
 
 ## **工具的配置**
 
@@ -249,13 +274,13 @@ if (oSession.fullUrl.Contains("baidu.com")) {
 
 ## **记响应时间**
 
-### **整个网页**
+### Fiddler
 
-- To be continue...
+### PyCurl
 
-### **单个元素**
+### Urllib
 
-- To be continue...
+### Request
 
 ## **实例的演示**
 
@@ -291,7 +316,5 @@ if (oSession.fullUrl.Contains("baidu.com")) {
 ## **待改进事项**
 
 - 优化过滤会话和替换内容脚本（正则表达式）
-
 - 发送响应回浏览器（Socket向其它进程发报文）
-
 - 持续化、多线程抓包、修改、发包（多线程编程）
