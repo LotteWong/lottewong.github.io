@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>About Me - LotteWong</title>
+<title>\#Machine Learning\# SCUT Machine Learning(7) 决策树 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -79,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="About Me" height="28">
+                <img src="/images/logo.png" alt="\#Machine Learning\# SCUT Machine Learning(7) 决策树" height="28">
             
             </a>
         </div>
@@ -95,7 +95,7 @@
                 
                 <a class="navbar-item" href="/tags">Tags</a>
                 
-                <a class="navbar-item is-active" href="/about">About</a>
+                <a class="navbar-item" href="/about">About</a>
                 
             </div>
             
@@ -117,105 +117,194 @@
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/Artificial Intelligence.jpg" alt="\#Machine Learning\# SCUT Machine Learning(7) 决策树">
+        </span>
+    </div>
+    
     <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-11-04T07:10:21.000Z">2019-11-04</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Artificial-Intelligence/">Artificial Intelligence</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 minutes read (About 2012 words)
+                </span>
+                
+                
+            </div>
+        </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                About Me
+                \#Machine Learning\# SCUT Machine Learning(7) 决策树
             
         </h1>
         <div class="content">
-            <blockquote>
-<p><em>程序员小黄，会吃福建人的广东人，面临90后中年危机，爱的人都叫夏洛特。</em></p>
-</blockquote>
+            <p>本文主要讨论<strong>Machine Learning</strong>的决策树C4.5算法，包括以下<strong>六个部分</strong>：</p>
+<ul>
+<li>任务描述</li>
+<li><strong>数据分析</strong></li>
+<li><strong>算法分析</strong></li>
+<li><strong>数据处理</strong></li>
+<li><strong>优化调参</strong></li>
+<li>结果分析</li>
+</ul>
 <a id="more"></a>
 
 
 
-<h2 id="Roles"><a href="#Roles" class="headerlink" title="Roles"></a><strong>Roles</strong></h2><ul>
-<li>华南理工大学SE本科在读</li>
-<li>M$ Club技术部指定背锅位</li>
-<li>准备去AWS (C)l(ub)康康</li>
-<li>神(hua)出(shui)鬼(mo)没(yu)校园足球边裁</li>
-<li>每次签到都慢过107的宿舍长</li>
+<h1 id="Decision-Tree"><a href="#Decision-Tree" class="headerlink" title="Decision Tree"></a><strong>Decision Tree</strong></h1><h2 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h2><blockquote>
+<p>在<a href="https://www.datafountain.cn/datasets/7guide" target="_blank" rel="noopener">信用卡欺诈检测数据集</a>上通过实现决策树C4.5算法，用于识别欺诈性信用卡交易。 </p>
+</blockquote>
+<h2 id="数据特征"><a href="#数据特征" class="headerlink" title="数据特征"></a>数据特征</h2><h3 id="数据列表"><a href="#数据列表" class="headerlink" title="数据列表"></a>数据列表</h3><ul>
+<li>creditcard.csv </li>
 </ul>
-<h2 id="Projects"><a href="#Projects" class="headerlink" title="Projects"></a><strong>Projects</strong></h2><h3 id="赶过死线"><a href="#赶过死线" class="headerlink" title="赶过死线"></a><strong>赶过死线</strong></h3><ul>
-<li>云计算大作业</li>
-<li>建模课大作业</li>
-<li>项目课大作业</li>
-<li>测试课大作业</li>
-<li>数据库实训</li>
-<li>西加加实训</li>
-</ul>
-<h3 id="搞过副业"><a href="#搞过副业" class="headerlink" title="搞过副业"></a><strong>搞过副业</strong></h3><ul>
-<li>卡片式日记应用开发</li>
-</ul>
-<h3 id="抱过大腿"><a href="#抱过大腿" class="headerlink" title="抱过大腿"></a><strong>抱过大腿</strong></h3><ul>
-<li>BBT</li>
-<li>SRP</li>
-<li>ACM</li>
-<li>GAC</li>
-<li>互联网+大赛</li>
-<li>黑客马拉松<ul>
-<li>2017</li>
-<li>2018</li>
-<li>2019</li>
+<h3 id="整体特征"><a href="#整体特征" class="headerlink" title="整体特征"></a>整体特征</h3><table>
+<thead>
+<tr>
+<th align="center">数据集合名称</th>
+<th align="center">数据类型</th>
+<th align="center">字段数</th>
+<th align="center">行数</th>
+<th align="center">值离散</th>
+<th align="center">值缺失</th>
+<th align="center">相关任务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">信用卡欺诈检测</td>
+<td align="center">数值数据</td>
+<td align="center">31</td>
+<td align="center">284807</td>
+<td align="center">否</td>
+<td align="center">无</td>
+<td align="center">分类</td>
+</tr>
+</tbody></table>
+<h3 id="属性描述"><a href="#属性描述" class="headerlink" title="属性描述"></a>属性描述</h3><table>
+<thead>
+<tr>
+<th align="center">序号</th>
+<th align="center">字段名</th>
+<th align="center">数据类型</th>
+<th align="center">字段描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">Time</td>
+<td align="center">Integer</td>
+<td align="center">此交易与数据集中第一个交易之间经过的秒数</td>
+</tr>
+<tr>
+<td align="center">2-29</td>
+<td align="center">V1-V28</td>
+<td align="center">Float</td>
+<td align="center">经PAC转换后数据</td>
+</tr>
+<tr>
+<td align="center">30</td>
+<td align="center">Amount</td>
+<td align="center">Float</td>
+<td align="center">交易金额</td>
+</tr>
+<tr>
+<td align="center">31</td>
+<td align="center">Class</td>
+<td align="center">Integer</td>
+<td align="center">在欺诈情况下取值为1，否则取0</td>
+</tr>
+</tbody></table>
+<h2 id="算法分析-训练"><a href="#算法分析-训练" class="headerlink" title="算法分析[训练]"></a>算法分析[训练]</h2><h3 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h3><ul>
+<li>C4.5是一系列用在机器学习和数据挖掘中分类问题的算法，它的目标是监督学习。即给定一个数据集，其中的每一个元组都能用一组属性值描述，每一个元组属于一个互斥的类别中的某一类。C4.5的目标是通过学习，找到一个从属性值到类别的映射关系，并且这个映射能够用于对新的类别未知的实体进行分类。 </li>
+<li>C4.5算法是对ID3算法的改进，C4.5克服了ID3的2个缺点：<ul>
+<li>用信息增益选择属性时偏向于选择分枝比较多的属性值，即取值多的属性</li>
+<li>不能处理连续属性。</li>
 </ul>
 </li>
-<li>微软空间站<ul>
-<li>Bot Framework</li>
-<li>神经网络简明教程</li>
-<li>CNTK Speech API</li>
 </ul>
-</li>
-<li>中国农行雅典娜数据挖掘大赛</li>
-<li>中国计算机学会数据挖掘大赛</li>
+<h3 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h3><h4 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h4><ul>
+<li><strong>信息熵（information entropy）</strong>是度量样本集合纯度的一种常用指标，如果一个数据集内只有同一类的标签，那么我们就说这个数据集的纯度很高。 </li>
 </ul>
-<h3 id="看过风景"><a href="#看过风景" class="headerlink" title="看过风景"></a><strong>看过风景</strong></h3><ul>
-<li>拼客学院Linux运维训练营</li>
-<li>微软亚研2019技术夏令营</li>
+<p>$$<br>Entropy(D) = -\sum_{i=1}^{L} \frac{|D_{i}|}{|D|} log_2 \frac{|D_{i}|}{|D|}<br>$$</p>
+<h4 id="信息值"><a href="#信息值" class="headerlink" title="信息值"></a>信息值</h4><ul>
+<li><strong>信息值（information value）</strong>又称为属性a的“固有值”，属性a的取值数目越多，则其越大，这样就平衡了信息增益对取值较多的属性的偏好；然而增益率又会对取值数目较少的属性有偏好，因此又有一个“启发式”的规则：先从候选划分属性中找出信息增益高于平均水平的属性，再从中选择增益率最高的。 </li>
 </ul>
-<h3 id="正在背锅"><a href="#正在背锅" class="headerlink" title="正在背锅"></a>正在背锅</h3><ul>
-<li>俱乐部微信程序开发</li>
-<li>多剧情分支游戏开发</li>
-<li>俱乐部门户网站开发</li>
+<p>$$<br>IV(D, f) = -\sum_{i=1}^{V} \frac{|D_{i}|}{|D|} log_2 \frac{|D_{i}|}{|D|}<br>$$</p>
+<h4 id="信息增益值"><a href="#信息增益值" class="headerlink" title="信息增益值"></a>信息增益值</h4><ul>
+<li><strong>信息增益（information gain）</strong>指的是，使用某一个属性a进行划分后，所带来的纯度提高的大小。一般而言，信息增益越大，意味着使用属性a来进行划分所获得的“纯度提升”越大。 </li>
 </ul>
-<h3 id="即将生产"><a href="#即将生产" class="headerlink" title="即将生产"></a>即将生产</h3><ul>
-<li>俱乐部文件服务器</li>
-<li>华南地区镜像站</li>
-<li>俱乐部私有云平台</li>
+<p>$$<br>Gain(D, f) = Entropy(D) - \sum_{i=1}^{V} \frac{|D_{i}|}{|D|}Entropy(D_{i})<br>$$</p>
+<h4 id="信息增益率"><a href="#信息增益率" class="headerlink" title="信息增益率"></a>信息增益率</h4><ul>
+<li><strong>信息增益率（information gain radio）</strong>的本质是在信息增益的基础之上乘上一个惩罚参数。特征个数较多时，惩罚参数较小；特征个数较少时，惩罚参数较大。</li>
 </ul>
-<h2 id="Focus"><a href="#Focus" class="headerlink" title="Focus"></a><strong>Focus</strong></h2><ul>
-<li>迷恋云计算，操着开发的心选的大数据方向（非ML狂热粉丝，目前水平止于调包 逃</li>
-<li>FullStack爱好者（实际上是全菜工程师，手持跨平台开发、轻量级应用潜力股，用谷歌全家桶武装大脑，后被M$诱惑有叛逃迹象</li>
-<li>励志成为优秀的软件工程狮+架构狮，respect计算机科学家，认识超棒的设计狮+产品经理，如果可以想当一位还不错的PM</li>
-</ul>
-<h2 id="Hobbies"><a href="#Hobbies" class="headerlink" title="Hobbies"></a><strong>Hobbies</strong></h2><ul>
-<li>努力为祖国健康打码五十年</li>
-<li>诺基亚信仰用户，电子产品云收藏者</li>
-<li>左派青年，涉猎文史哲</li>
-<li>平权，能出力的出力，能发声的发声</li>
-<li>书、歌、剧，赏画有待提高</li>
-<li>曾经是一名不合格的剪刀手</li>
-<li>热爱小语种，推广文言文</li>
-<li>只有篆刻的时候字是允许丑的</li>
-<li>FM拜仁Chef Coach，没事踢波</li>
-<li>精神健身达人</li>
-</ul>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a><strong>Links</strong></h2><ul>
-<li>Github</li>
-<li>Stack Overflow</li>
-<li>V2EX</li>
-<li>Zhihu</li>
-<li>Jianshu</li>
-<li>Gitee</li>
-<li>SegmentFault</li>
-</ul>
-<h2 id="Todos"><a href="#Todos" class="headerlink" title="Todos"></a><strong>Todos</strong></h2><ul>
-<li>丰富图片</li>
-<li>详细介绍</li>
-</ul>
+<p>$$<br>Gain_radio(D) = \frac{Gain(D, f)}{IV(D, f)}<br>$$</p>
+<h3 id="逻辑步骤"><a href="#逻辑步骤" class="headerlink" title="逻辑步骤"></a>逻辑步骤</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">TreeGenerate(D,A):</span><br><span class="line"></span><br><span class="line">    生成节点node</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">if</span> D中样本全属于同一类别C:</span><br><span class="line"></span><br><span class="line">          将node标记为C类叶节点</span><br><span class="line"></span><br><span class="line">          <span class="hljs-keyword">return</span></span><br><span class="line"></span><br><span class="line">    end <span class="hljs-keyword">if</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">if</span> 属性集A为空或者D的所有属性值均一样:</span><br><span class="line"></span><br><span class="line">          将node标记为最多类</span><br><span class="line"></span><br><span class="line">          <span class="hljs-keyword">return</span></span><br><span class="line"></span><br><span class="line">    end <span class="hljs-keyword">if</span></span><br><span class="line"></span><br><span class="line">          从A中选取最佳划分属性a*</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> a*:</span><br><span class="line"></span><br><span class="line">          为node生成一个分支，令Dv表示D中在a*属性值为a的样本子集</span><br><span class="line"></span><br><span class="line">          <span class="hljs-keyword">if</span> Dv为空:</span><br><span class="line"></span><br><span class="line">                <span class="hljs-keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">          <span class="hljs-keyword">else</span>:</span><br><span class="line"></span><br><span class="line">                TreeGenerate(Dv,A\&#123;a*&#125;)递归继续</span><br><span class="line"></span><br><span class="line">          end <span class="hljs-keyword">if</span></span><br><span class="line"></span><br><span class="line">    end <span class="hljs-keyword">for</span></span><br></pre></td></tr></table></figure>
 
+<h4 id="Step-1-选取特征作结点"><a href="#Step-1-选取特征作结点" class="headerlink" title="Step 1: 选取特征作结点"></a>Step 1: 选取特征作结点</h4><h4 id="Step-2-选取候选作条件"><a href="#Step-2-选取候选作条件" class="headerlink" title="Step 2: 选取候选作条件"></a>Step 2: 选取候选作条件</h4><h4 id="Step-3-作决策生成分支"><a href="#Step-3-作决策生成分支" class="headerlink" title="Step 3: 作决策生成分支"></a>Step 3: 作决策生成分支</h4><h4 id="Step-4-递归建立决策树"><a href="#Step-4-递归建立决策树" class="headerlink" title="Step 4: 递归建立决策树"></a>Step 4: 递归建立决策树</h4><h4 id="Step-5-保存决策树模型"><a href="#Step-5-保存决策树模型" class="headerlink" title="Step 5: 保存决策树模型"></a>Step 5: 保存决策树模型</h4><h5 id="model-json"><a href="#model-json" class="headerlink" title="model.json"></a>model.json</h5><figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="hljs-attr">"V1"</span>: &#123;<span class="hljs-attr">"&lt;=0.9260963826321527"</span>: &#123;<span class="hljs-attr">"V2"</span>: &#123;<span class="hljs-attr">"&lt;=0.9630955056895321"</span>: &#123;<span class="hljs-attr">"V17"</span>: &#123;<span class="hljs-attr">"&lt;=0.401054898240464"</span>: <span class="hljs-string">"0"</span>, <span class="hljs-attr">"&gt;0.401054898240464"</span>: &#123;<span class="hljs-attr">"V10"</span>: &#123;<span class="hljs-attr">"&lt;=0.9621327679155876"</span>: &#123;<span class="hljs-attr">"V14"</span>: &#123;<span class="hljs-attr">"&lt;=1.0599043959975"</span>: &#123;<span class="hljs-attr">"V5"</span>: &#123;<span class="hljs-attr">"&lt;=1.1559118351695647"</span>: &#123;<span class="hljs-attr">"V7"</span>: &#123;<span class="hljs-attr">"&lt;=1.4048794511624"</span>: <span class="hljs-string">"0"</span>, <span class="hljs-attr">"&gt;1.4048794511624"</span>: &#123;<span class="hljs-attr">"Time"</span>: &#123;<span class="hljs-attr">"&lt;=135053.0"</span>: &#123;<span class="hljs-attr">"V4"</span>: &#123;<span class="hljs-attr">"&lt;=-0.387069102393921"</span>: <span class="hljs-string">"0"</span>, <span class="hljs-attr">"&gt;-0.387069102393921"</span>: &#123;<span class="hljs-attr">"V3"</span>: &#123;<span class="hljs-attr">"&lt;=-1.2291843352679714"</span>: <span class="hljs-string">"0"</span>, <span class="hljs-attr">"&gt;-1.2291843352679714"</span>: &#123;<span class="hljs-attr">"V6"</span>: &#123;<span class="hljs-attr">"&lt;=-0.037153262071598525"</span>: <span class="hljs-string">"0"</span>, <span class="hljs-attr">"&gt;-0.037153262071598525"</span>: <span class="hljs-string">"1"</span>&#125;&#125;&#125;&#125;&#125;&#125;, <span class="hljs-attr">"&gt;135053.0"</span>: <span class="hljs-string">"0"</span>&#125;&#125;&#125;&#125;, <span class="hljs-attr">"&gt;1.1559118351695647"</span>: <span class="hljs-string">"0"</span>&#125;&#125;, <span class="hljs-attr">"&gt;1.0599043959975"</span>: <span class="hljs-string">"0"</span>&#125;&#125;, <span class="hljs-attr">"&gt;0.9621327679155876"</span>: <span class="hljs-string">"0"</span>&#125;&#125;&#125;&#125;, <span class="hljs-attr">"&gt;0.9630955056895321"</span>: &#123;<span class="hljs-attr">"V3"</span>: &#123;<span class="hljs-attr">"&lt;=-3.440999869353935"</span>: &#123;<span class="hljs-attr">"Time"</span>: &#123;<span class="hljs-attr">"&lt;=141818.5"</span>: &#123;<span class="hljs-attr">"V4"</span>: &#123;<span class="hljs-attr">"&lt;=0.2178224300570959"</span>: <span class="hljs-string">"0"</span>, <span class="hljs-attr">"&gt;0.2178224300570959"</span>: &#123;<span class="hljs-attr">"V5"</span>: &#123;<span class="hljs-attr">"&lt;=-6.548129350703285"</span>: <span class="hljs-string">"1"</span>, <span class="hljs-attr">"&gt;-6.548129350703285"</span>: <span class="hljs-string">"0"</span>&#125;&#125;&#125;&#125;, <span class="hljs-attr">"&gt;141818.5"</span>: <span class="hljs-string">"0"</span>&#125;&#125;, <span class="hljs-attr">"&gt;-3.440999869353935"</span>: <span class="hljs-string">"0"</span>&#125;&#125;&#125;&#125;, <span class="hljs-attr">"&gt;0.9260963826321527"</span>: <span class="hljs-string">"0"</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="model-png"><a href="#model-png" class="headerlink" title="model.png"></a>model.png</h5><p><img src="E:%5CMyPrograms%5Ctheories%5CSCUT_Data_Mining%5Cexperiment%5Cexp1%5CDecisionTree%5Cmodel%5Cmodel.png" alt="Decision Tree"></p>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><h3 id="连续值处理"><a href="#连续值处理" class="headerlink" title="连续值处理"></a>连续值处理</h3><h4 id="候选划分节点"><a href="#候选划分节点" class="headerlink" title="候选划分节点"></a>候选划分节点</h4><p>$$<br>Candidate(f) = {\frac{v^{i} + v^{i+1}}{2} | 1 \leq i \leq |V|-1}<br>$$</p>
+<h4 id="新信息值"><a href="#新信息值" class="headerlink" title="新信息值"></a>新信息值</h4><p>$$<br>IV(D, f, c) = -\sum_{\lambda \in {-, +}} \frac{|D_{c}^{\lambda}|}{|D|} log_2 \frac{|D_{c}^{\lambda}|}{|D|}<br>$$</p>
+<h4 id="新信息增益值"><a href="#新信息增益值" class="headerlink" title="新信息增益值"></a>新信息增益值</h4><p>$$<br>Gain(D, f, c) = Entropy(D) - \sum_{\lambda \in {-, +}} \frac{|D_{c}^{\lambda}|}{|D|}Entropy(D_{c}^{\lambda})<br>$$</p>
+<h4 id="新信息增益率"><a href="#新信息增益率" class="headerlink" title="新信息增益率"></a>新信息增益率</h4><p>$$<br>Gain_radio(D) = \max_{c \in Candidate(f)} \frac{Gain(D, f, c)}{IV(D, f, c)}<br>$$</p>
+<h3 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h3><h4 id="引入权重变量"><a href="#引入权重变量" class="headerlink" title="引入权重变量"></a>引入权重变量</h4><p>$$<br>\rho = \frac{\sum_{x \in \widetilde D}w_x}{\sum_{x \in D}w_x}<br>\<br>\widetilde p_k = \frac{\sum_{x \in \widetilde D_k}w_x}{\sum_{x \in \widetilde D}w_x} (1 \leq k \leq |y|)<br>\<br>\widetilde r_v = \frac{\sum_{x \in \widetilde D^v}w_x}{\sum_{x \in \widetilde D}w_x} (1 \leq v \leq V)<br>$$</p>
+<h4 id="新信息值-1"><a href="#新信息值-1" class="headerlink" title="新信息值"></a>新信息值</h4><p>$$<br>IV(D, f) = \rho \times (- \sum_{v=1}^{V} \widetilde r_v \frac{|\widetilde D_{c}^{\lambda}|}{|\widetilde D|} log_2 \frac{|\widetilde D_{c}^{\lambda}|}{|\widetilde D|})<br>$$</p>
+<h4 id="新信息增益值-1"><a href="#新信息增益值-1" class="headerlink" title="新信息增益值"></a>新信息增益值</h4><p>$$<br>Gain(D, f) = \rho \times (Entropy(\widetilde D) - \sum_{v=1}^{V} \widetilde r_v Entropy(\widetilde D^v))<br>$$</p>
+<h4 id="新信息增益率-1"><a href="#新信息增益率-1" class="headerlink" title="新信息增益率"></a>新信息增益率</h4><p>$$<br>Gain_radio(D) = \frac{Gain(D, f)}{IV(D, f)}<br>$$</p>
+<h2 id="优化调参"><a href="#优化调参" class="headerlink" title="优化调参"></a>优化调参</h2><blockquote>
+<p><em>备注： 副标题前有”</em>“标记的部分为优化的思路，在本次实验中并未真正实现或效果并不理想。*</p>
+</blockquote>
+<h3 id="剔除属性"><a href="#剔除属性" class="headerlink" title="剔除属性"></a>剔除属性</h3><ul>
+<li>通过<code>seaborn</code>模块的<code>heatmap</code>可视化数据样本相关性 ，删除对正负样本区分度不大的变量</li>
+<li>在本实验中，被删除的变量为：<code>&#39;V8&#39;, &#39;V13&#39;, &#39;V15&#39;, &#39;V20&#39;, &#39;V21&#39;, &#39;V22&#39;, &#39;V23&#39;, &#39;V24&#39;, &#39;V25&#39;, &#39;V26&#39;, &#39;V27&#39;, &#39;V28&#39;</code></li>
+</ul>
+<h3 id="减少候选"><a href="#减少候选" class="headerlink" title="减少候选"></a>减少候选</h3><ul>
+<li><strong>启发式原则：</strong>先从候选划分点中找出信息增益高于平均水平的属性，再从中选择信息增益率最高的。 </li>
+<li><strong>贪婪法原则：</strong>如果出现了首个计算出信息增益率为1的候选划分点，可以认为该候选划分点已是当前特征的最优候选，继而中断后续的系列计算，开始寻找下一特征的最优候选。</li>
+</ul>
+<h3 id="计算加速"><a href="#计算加速" class="headerlink" title="*计算加速"></a>*计算加速</h3><ul>
+<li>使用<code>thread</code>模块编写多线程加速决策树训练。</li>
+<li>使用<code>GPU加速</code>方法加速决策树训练。</li>
+</ul>
+<h3 id="剪除枝叶"><a href="#剪除枝叶" class="headerlink" title="剪除枝叶"></a>剪除枝叶</h3><h4 id="预剪枝"><a href="#预剪枝" class="headerlink" title="预剪枝"></a>预剪枝</h4><p>预剪枝通过提前停止树的构造(比如决定在某个节点不再分裂或划分训练元组的自己)。但先剪枝有个视野效果缺点问题，也就是说在相同的标准下，也许当前扩展不能满足要求，但更进一步又能满足要求，这样会过早停止树的生长。先剪枝可通过以下方法：</p>
+<ul>
+<li>当决策树达到一定的高度就停止决策树的生长。</li>
+<li>到达节点的实例个数小于某个阈值的时候也可以停止树的生长，不足之处是不能处理那些数量比较小的特殊情况。</li>
+<li>计算每次扩展对系统性能的增益，如果小于某个阈值就可以停止树的生长。</li>
+</ul>
+<h4 id="后剪枝"><a href="#后剪枝" class="headerlink" title="后剪枝"></a>后剪枝</h4><p>后剪枝是一种全局的优化方法，在决策树构建好之后，然后才开始进行剪枝。后剪枝的过程就是删除一些子树，这个叶子节点的标识类别通过大多数原则来确定，即属于这个叶子节点下大多数样本所属的类别就是该叶子节点的标识。选择减掉哪些子树时，可以计算没有减掉子树之前的误差和减掉子树之后的误差，如果相差不大，可以将子树减掉。</p>
+<h3 id="集成学习"><a href="#集成学习" class="headerlink" title="*集成学习"></a>*集成学习</h3><ul>
+<li>集成多个决策树学习，提高模型分类效果。<ul>
+<li>Bagging</li>
+<li>Boosting</li>
+</ul>
+</li>
+</ul>
+<h2 id="结果分析-验证"><a href="#结果分析-验证" class="headerlink" title="结果分析[验证]"></a>结果分析[验证]</h2><h3 id="逻辑步骤-1"><a href="#逻辑步骤-1" class="headerlink" title="逻辑步骤"></a>逻辑步骤</h3><h4 id="Step-1-预测类别"><a href="#Step-1-预测类别" class="headerlink" title="Step 1: 预测类别"></a>Step 1: 预测类别</h4><h4 id="Step-2-计算指标"><a href="#Step-2-计算指标" class="headerlink" title="Step 2: 计算指标"></a>Step 2: 计算指标</h4><h5 id="accuracy-score"><a href="#accuracy-score" class="headerlink" title="accuracy_score"></a>accuracy_score</h5><h5 id="precision-score"><a href="#precision-score" class="headerlink" title="precision_score"></a>precision_score</h5><h5 id="recall-score"><a href="#recall-score" class="headerlink" title="recall_score"></a>recall_score</h5><h5 id="f1-score"><a href="#f1-score" class="headerlink" title="f1_score"></a>f1_score</h5><h5 id="roc-auc"><a href="#roc-auc" class="headerlink" title="roc_auc"></a>roc_auc</h5><h3 id="辅助工具"><a href="#辅助工具" class="headerlink" title="辅助工具"></a>辅助工具</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score</span><br><span class="line"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> precision_score</span><br><span class="line"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> f1_score</span><br><span class="line"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> recall_score</span><br><span class="line"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> roc_auc_score</span><br></pre></td></tr></table></figure>
+
+
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Machine-Learning/">Machine Learning</a>
+                </div>
+            </div>
         </div>
         
         
@@ -235,6 +324,27 @@
 </div>
 
 
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/11/04/SCUT机器学习 (3) 算法与工程/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">\#Machine Learning\# SCUT Machine Learning(3) 算法与工程</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/11/04/SCUT机器学习 (2) 训练、测试与可视化/">
+                <span class="level-item">\#Machine Learning\# SCUT Machine Learning(2) 训练、测试与可视化</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -882,7 +992,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="About Me" height="28">
+                    <img src="/images/logo.png" alt="\#Machine Learning\# SCUT Machine Learning(7) 决策树" height="28">
                 
                 </a>
                 <p class="is-size-7">
