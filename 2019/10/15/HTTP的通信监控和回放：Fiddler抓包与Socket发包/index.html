@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Tag: Fiddler - LotteWong&#39;s Blog</title>
+<title>#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包 - LotteWong&#39;s Blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="LotteWong&#39;s Blog" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包" type="application/atom+xml">
 
 
 
@@ -85,7 +85,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong&#39;s Blog" height="28">
+                <img src="/images/logo.png" alt="#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
             
             </a>
         </div>
@@ -131,22 +131,11 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Fiddler</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-image">
-        <a href="/2019/10/15/HTTP的通信监控和回放：Fiddler抓包与Socket发包/" class="image is-7by1">
+        <span class="image is-7by1">
             <img class="thumbnail" src="/images/fiddler.png" alt="#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
-        </a>
+        </span>
     </div>
     
     <div class="card-content article ">
@@ -167,12 +156,17 @@
                 </span>
                 
                 
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/10/15/HTTP的通信监控和回放：Fiddler抓包与Socket发包/">#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包</a>
+                #Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包
             
         </h1>
         <div class="content">
@@ -184,16 +178,186 @@
 <li>需注意事项及待改进事项</li>
 </ul>
 <hr>
+<a id="more"></a>
+
+
+
+<h1><span id="目录-table-of-contents"><strong>目录 Table of Contents</strong></span></h1><!-- toc -->
+
+<ul>
+<li><a href="#任务-task"><strong>任务 Task</strong></a></li>
+<li><a href="#工具的配置-configuration"><strong>工具的配置 Configuration</strong></a><ul>
+<li><a href="#安装工具">安装工具</a></li>
+<li><a href="#勾选解码">勾选解码</a></li>
+<li><a href="#过滤保存">过滤保存</a></li>
+<li><a href="#设置断点">设置断点</a></li>
+</ul>
+</li>
+<li><a href="#工具的使用-usage"><strong>工具的使用 Usage</strong></a><ul>
+<li><a href="#statistics">Statistics</a></li>
+<li><a href="#filters">Filters</a></li>
+<li><a href="#inspectors">Inspectors</a></li>
+<li><a href="#composer">Composer</a></li>
+<li><a href="#autoresponder">AutoResponder</a></li>
+</ul>
+</li>
+<li><a href="#截获数据包-capture"><strong>截获数据包 Capture</strong></a><ul>
+<li><a href="#图形界面">图形界面</a></li>
+</ul>
+</li>
+<li><a href="#修改数据包-modify"><strong>修改数据包 Modify</strong></a><ul>
+<li><a href="#程序脚本">程序脚本</a></li>
+</ul>
+</li>
+<li><a href="#发送数据包-send"><strong>发送数据包 Send</strong></a><ul>
+<li><a href="#fiddler">Fiddler</a></li>
+<li><a href="#socket">Socket</a></li>
+</ul>
+</li>
+<li><a href="#记响应时间-analyses"><strong>记响应时间 Analyses</strong></a><ul>
+<li><a href="#fiddler-1">Fiddler</a></li>
+<li><a href="#curl">Curl</a></li>
+</ul>
+</li>
+<li><a href="#需注意事项-notices"><strong>需注意事项 Notices</strong></a></li>
+<li><a href="#待改进事项-todos"><strong>待改进事项 Todos</strong></a></li>
+</ul>
+<!-- tocstop -->
+
+<hr>
+<h2><span id="任务-task"><strong>任务 Task</strong></span></h2><blockquote>
+<p>部署类似Microsoft PetshopWeb应用基本实例，开发性能测试小工具能截获基于IE浏览器与Web服务器的交互的数据包，修改数据包（比如简化起见，修改要搜索的关键字），再把修改后的内容使用多线程的方式发送到服务器。统计请求每个网页上主要元素（gif,css等）需要的时间，以及请求整个网页的时间。</p>
+<p>提示：</p>
+<ol>
+<li><p>在获取数据包的过程中要根据HTTP请求的特点，从原始的数据包中过滤出HTTP的数据包。找到提交的“搜索的关键字”，将其替换成其它字符。</p>
+</li>
+<li><p>发送数据包使用Socket，可以参考网络编程的资料。</p>
+</li>
+</ol>
+</blockquote>
+<p><img src="/images/fiddler_socket.png" alt="Flowchart"></p>
+<h2><span id="工具的配置-configuration"><strong>工具的配置 Configuration</strong></span></h2><h3><span id="安装工具">安装工具</span></h3><p><a href="https://www.telerik.com/fiddler" target="_blank" rel="noopener">Fiddler下载地址</a></p>
+<p><img src="/images/decrypt_https_1.png" alt="Decrypt to capture Https"></p>
+<p><img src="/images/decrypt_https_2.png" alt="Decrypt to capture Https"></p>
+<h3><span id="勾选解码">勾选解码</span></h3><p><img src="/images/encode_decode.png" alt="GZip encoding is default in Fiddler"></p>
+<h3><span id="过滤保存">过滤保存</span></h3><ol>
+<li>手动</li>
+</ol>
+<p><img src="/images/filters.png" alt="Set filters"></p>
+<p><img src="/images/save_sessions.png" alt="Save sessions"></p>
+<ol start="2">
+<li>脚本</li>
+</ol>
+<p><img src="/images/customize_rules_1.png" alt="Customize Rules"></p>
+<p><img src="/images/customize_rules_2.png" alt="Edit scripts"></p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> (oSession.fullUrl.Contains(<span class="hljs-string">"baidu.com"</span>)) &#123;</span><br><span class="line">    <span class="hljs-comment">// for(var key in oSession.oRequest.headers) &#123;</span></span><br><span class="line">        <span class="hljs-comment">// if('Referer' === key) &#123;</span></span><br><span class="line">            <span class="hljs-keyword">if</span>(oSession.oRequest.headers[<span class="hljs-string">'Referer'</span>].indexOf(<span class="hljs-string">"&amp;wd="</span>) != <span class="hljs-number">-1</span>) &#123;</span><br><span class="line">                <span class="hljs-keyword">var</span> fso;</span><br><span class="line">                <span class="hljs-keyword">var</span> file;</span><br><span class="line">                fso = <span class="hljs-keyword">new</span> ActiveXObject(<span class="hljs-string">"Scripting.FileSystemObject"</span>);</span><br><span class="line">                file = fso.OpenTextFile(<span class="hljs-string">"E:\\MyPrograms\\fiddler_sessions\\Session"</span> + <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime() + <span class="hljs-string">".txt"</span>, <span class="hljs-number">8</span> ,<span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>);</span><br><span class="line">                <span class="hljs-comment">// file.writeLine("Request url: " + oSession.url);</span></span><br><span class="line">                file.writeLine(<span class="hljs-string">"Request header:"</span> + <span class="hljs-string">"\n"</span> + oSession.oRequest.headers);</span><br><span class="line">                <span class="hljs-comment">// file.writeLine("Request body: " + oSession.GetRequestBodyAsString());</span></span><br><span class="line">                file.writeLine(<span class="hljs-string">"\n"</span>);</span><br><span class="line">                file.close();</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="hljs-comment">// &#125;</span></span><br><span class="line">    <span class="hljs-comment">// &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="设置断点">设置断点</span></h3><ol>
+<li>手动</li>
+</ol>
+<p><img src="/images/breakpoints.png" alt="Set Breakpoints"></p>
+<ol start="2">
+<li>命令</li>
+</ol>
+<ul>
+<li>在左下角黑框框中输入命令<ul>
+<li>停止断点：<code>bpu</code></li>
+<li>开始断点：<code>bpu $host</code></li>
+</ul>
+</li>
+</ul>
+<h2><span id="工具的使用-usage"><strong>工具的使用 Usage</strong></span></h2><h3><span id="statistics">Statistics</span></h3><p><img src="/images/statistics.png" alt="Statistics"></p>
+<h3><span id="filters">Filters</span></h3><p><img src="/images/filters.png" alt="Filters"></p>
+<h3><span id="inspectors">Inspectors</span></h3><p><img src="/images/inspectors.png" alt="Inspectors"></p>
+<h3><span id="composer">Composer</span></h3><p><img src="/images/composer.png" alt="Composer"></p>
+<h3><span id="autoresponder">AutoResponder</span></h3><p><img src="/images/auto_responder.png" alt="AutoResponder"></p>
+<h2><span id="截获数据包-capture"><strong>截获数据包 Capture</strong></span></h2><h3><span id="图形界面">图形界面</span></h3><ul>
+<li>使用图形界面或编程脚本应用过滤</li>
+<li>点击左下角 <code>Capturing或空白处</code> 停止或开始截获数据包</li>
+<li>使用Statistics查看时间，使用Inspectors查看内容</li>
+<li>使用图形界面或编程脚本保存会话</li>
+</ul>
+<h2><span id="修改数据包-modify"><strong>修改数据包 Modify</strong></span></h2><h3><span id="程序脚本">程序脚本</span></h3><ol>
+<li><p>对于手动保存的会话</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 替换请求中的搜索字段</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_ref</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-8'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                start = line.find(<span class="hljs-string">"&amp;wd="</span>)</span><br><span class="line">                end = line.find(<span class="hljs-string">"&amp;rsv_pq="</span>)</span><br><span class="line">                old_str = line[start+<span class="hljs-number">4</span>:end]</span><br><span class="line">                new_str = parse.quote(cont)</span><br><span class="line">                line = line.replace(old_str, new_str)</span><br><span class="line">                <span class="hljs-keyword">return</span> line</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重新拼装需发送的报文</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_req</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    msg = <span class="hljs-string">''</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-8'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'GET'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = <span class="hljs-string">'GET '</span> + get_ref(file, cont)[<span class="hljs-number">9</span>:<span class="hljs-number">-1</span>] + <span class="hljs-string">' HTTP/1.1'</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = get_ref(file, cont)</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Accept-Encoding'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                <span class="hljs-keyword">continue</span></span><br><span class="line">            line = line.strip(<span class="hljs-string">'\n'</span>) + <span class="hljs-string">'\r\n'</span></span><br><span class="line">            msg += line</span><br><span class="line">        msg = bytes(msg, encoding=<span class="hljs-string">"utf8"</span>)</span><br><span class="line">        <span class="hljs-keyword">return</span> msg</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于自动保存的会话</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 替换请求中的搜索字段</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_ref</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-16'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                start = line.find(<span class="hljs-string">"&amp;wd="</span>)</span><br><span class="line">                end = line.find(<span class="hljs-string">"&amp;rsv_pq="</span>)</span><br><span class="line">                old_str = line[start+<span class="hljs-number">4</span>:end]</span><br><span class="line">                new_str = parse.quote(cont)</span><br><span class="line">                line = line.replace(old_str, new_str)</span><br><span class="line">                <span class="hljs-keyword">return</span> line</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重新拼装需发送的报文</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_req</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    msg = <span class="hljs-string">''</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-16'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Request header:'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                <span class="hljs-keyword">continue</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'GET'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = <span class="hljs-string">'GET '</span> + get_ref(file, cont)[<span class="hljs-number">9</span>:<span class="hljs-number">-1</span>] + <span class="hljs-string">' HTTP/1.1'</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = get_ref(file, cont)</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Accept-Encoding'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                <span class="hljs-keyword">continue</span></span><br><span class="line">            line = line.strip(<span class="hljs-string">'\n'</span>) + <span class="hljs-string">'\r\n'</span></span><br><span class="line">            msg += line</span><br><span class="line">        msg = bytes(msg[:<span class="hljs-number">-4</span>], encoding=<span class="hljs-string">"utf8"</span>)</span><br><span class="line">        <span class="hljs-keyword">return</span> msg</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2><span id="发送数据包-send"><strong>发送数据包 Send</strong></span></h2><h3><span id="fiddler">Fiddler</span></h3><ol>
+<li>使用WebForms</li>
+</ol>
+<ul>
+<li>使用图形界面或编程脚本应用过滤</li>
+<li>使用图形界面或运行命令设置断点</li>
+<li>在 <code>对应报文A</code> 的 <code>Request WebForms</code>内修改“搜索关键字”</li>
+<li>点击 <code>Break on Response</code> 将修改后的 <code>对应报文A</code> 发送到Fiddler</li>
+<li>在 <code>对应报文B</code> 的 <code>Request WebForms</code>内查看“搜索关键字”</li>
+<li>点击 <code>Run to Completion</code> 将修改后的 <code>对应报文B</code> 发送到Server</li>
+</ul>
+<ol start="2">
+<li>使用Composer</li>
+</ol>
+<ul>
+<li>保存会话Request请求头部</li>
+<li>在记事本内修改“搜索关键字”</li>
+<li>在Composer内发送请求报文</li>
+</ul>
+<h3><span id="socket">Socket</span></h3>  <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:</span><br><span class="line">    <span class="hljs-comment"># 读取信息</span></span><br><span class="line">    file = input(<span class="hljs-string">"file:"</span>)</span><br><span class="line">    cont = input(<span class="hljs-string">"cont:"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 套接字连接服务端</span></span><br><span class="line">    s = ssl.wrap_socket(socket.socket())</span><br><span class="line">    s.connect((<span class="hljs-string">'www.baidu.com'</span>, <span class="hljs-number">443</span>))</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 发送修改后的请求</span></span><br><span class="line">    s.send(get_req(file, cont))</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 缓存服务端的响应</span></span><br><span class="line">    buffer = []</span><br><span class="line">    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:</span><br><span class="line">        d = s.recv(<span class="hljs-number">1024</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> d:</span><br><span class="line">            buffer.append(d)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            <span class="hljs-keyword">break</span></span><br><span class="line">    res = <span class="hljs-string">b''</span>.join(buffer)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 客户端关闭套接字</span></span><br><span class="line">    s.close()</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 保存响应</span></span><br><span class="line">    header, html = res.split(<span class="hljs-string">b'\r\n\r\n'</span>, <span class="hljs-number">1</span>)</span><br><span class="line">    print(header.decode(<span class="hljs-string">'utf-8'</span>))</span><br><span class="line">    <span class="hljs-keyword">with</span> open(cont + <span class="hljs-string">'.html'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        f.write(html)</span><br></pre></td></tr></table></figure>
+
+<h2><span id="记响应时间-analyses"><strong>记响应时间 Analyses</strong></span></h2><h3><span id="fiddler">Fiddler</span></h3><h3><span id="curl">Curl</span></h3><h2><span id="需注意事项-notices"><strong>需注意事项 Notices</strong></span></h2><ol>
+<li>报文格式</li>
+</ol>
+<ul>
+<li>无论使手动还是脚本保存会话的请求报文，都需要注意每个属性是否以 <code>\r\n</code>  结尾，最后属性是否以 <code>\r\n\r\n</code> 结尾</li>
+<li>遇到 <code>HTTP 400 Bad Request</code> 响应仔细检查报文格式是否正确</li>
+</ul>
+<ol start="2">
+<li>编码问题</li>
+</ol>
+<ul>
+<li>注意保存会话的编码格式，手动保存使用编码格式 <code>utf-8</code> ，脚本保存使用编码格式 <code>utf-16</code></li>
+<li>Socket发送报文和接受报文都需要二进制数据</li>
+<li>Fiddler默认使用GZip格式压缩，在发送请求报文时为确保响应主题非乱码，应该去除 <code>Accept-Encoding: gzip, deflate</code> 这行属性</li>
+</ul>
+<ol start="3">
+<li>端口问题</li>
+</ol>
+<ul>
+<li>Socket通信需要知道主机地址及其端口号<ul>
+<li>Fiddler Sessions或Inpectors可知主机地址及其端口号</li>
+<li>保存的TCP报文（使用Wireshark）可知主机地址及其端口号</li>
+<li>保存的HTTP/HTTPS报文（使用Fiddler）仅知主机地址，已知常用端口：HTTP为80/HTTPS为443</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>请求变化</li>
+</ol>
+<ul>
+<li><code>Break on Response</code> 和 <code>Run to Completion</code> 对应会话并不相同</li>
+</ul>
+<h2><span id="待改进事项-todos"><strong>待改进事项 Todos</strong></span></h2><ul>
+<li>优化过滤会话和替换内容脚本：正则表达式</li>
+<li>发送响应回浏览器：Socket向其它进程发报文</li>
+<li>持续化、多线程抓包、修改、发包：多线程编程</li>
+<li>实现替代Fiddler的代理服务器：利用Python第三方代理库</li>
+</ul>
+<hr>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/10/15/HTTP的通信监控和回放：Fiddler抓包与Socket发包/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Curl/">Curl</a>, <a class="has-link-grey -link" href="/tags/Fiddler/">Fiddler</a>, <a class="has-link-grey -link" href="/tags/Socket/">Socket</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -203,7 +367,26 @@
 
 
 
-
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/01/写在二零二零/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">#Sucks# 写在二零二零</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/06/18/LinuxOne上的Docker实践/">
+                <span class="level-item">#Cloud Computing# LinuxOne上的Docker初体验</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -832,7 +1015,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong&#39;s Blog" height="28">
+                    <img src="/images/logo.png" alt="#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
                 
                 </a>
                 <p class="is-size-7">
