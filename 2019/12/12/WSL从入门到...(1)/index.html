@@ -152,7 +152,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    8 minutes read (About 1227 words)
+                    8 minutes read (About 1232 words)
                 </span>
                 
                 
@@ -239,7 +239,7 @@
 <h3><span id="full-system-call-compatibility">Full system call compatibility</span></h3><p><img src="/images/full_system_call_compatibility.png" alt="Full system call compatibility"></p>
 <h2><span id="架构对比"><strong>架构对比</strong></span></h2><h3><span id="wsl-1">WSL 1</span></h3><p><img src="/images/wsl1_architecture.png" alt="WSL 1 Architecture"></p>
 <ul>
-<li><p><strong>WSL 1</strong> 的大体思路是，在一台 Windows 主机上安装 Linux 发行版本，依赖<strong>中间层的驱动器</strong>完成 Linux Namespace 和 Windows Kernel 之间的<strong>通信捕获和指令翻译</strong>（比如 <code>path</code> 和 <code>flag</code> ），作用范围包括但不局限于系统调用、文件系统和网络资源等。</p>
+<li><p><strong>WSL 1</strong> 的大体思路是，在一台 Windows 主机上安装 Linux 发行版本，依赖<strong>中间层的驱动器</strong>完成 Linux Namespace 和 Windows Kernel 之间的<strong>通信捕获和指令翻译</strong>（比如 <code>path</code> 和 <code>flag</code> ），作用范围包括但不局限于系统调用、文件系统、权限管理和网络配置等。</p>
 </li>
 <li><p>这样的设计存在一些<strong>缺陷</strong>：</p>
 <ol>
