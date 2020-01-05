@@ -239,30 +239,48 @@
 <p><img src="/images/wsl1_component.png" alt="WSL 1 Architecture"></p>
 <p><strong>工作流大概是：</strong>Windows 的 Bash 键入指令，交由 LXSS Manager Service 启动对应的 Linux 实例并进入对应的 Pico 进程，Linux 的 Bash 通过中间层的驱动器与 Windows Kernel 进行翻译交流（<u>“The lxss.sys and lxcore.sys drivers translate the Linux system calls into NT APIs and emulate the Linux kernel.”</u>）。</p>
 <p><img src="/images/wsl1_lecture.png" alt="Deepu Thomas and Seth Juarez discuss the underlying architecture that enables the Windows Subsystem for Linux"></p>
-<h3><span id="lxss-manager-service">LXSS Manager Service</span></h3><p><strong>LXSS Manager Service 负责 Windows 的 Bash（Win32 Process）和 Linux 的 Bash（Pico Process）之间的通信，主要在初始时工作。</strong>作用范围包括但不局限于：同步 Linux 实例的安装和卸载、每次只允许一个进程启动 Linux Binary 并在 pending 时阻塞后续启动进程等等。</p>
-<h3><span id="pico-drivers">Pico Drivers</span></h3><p><strong>Pico Drivers 负责 Linux Instance（User Mode）和 Windows Kernel（Kernel Mode）之间的通信，主要在运行时工作。</strong>作用范围包括但不局限于：翻译 Linux system calls 为 Windows NT APIs 可以理解的形式，模拟 Linux 内核并对 Windows 内核进行操作等等。</p>
-<h3><span id="pico-processes">Pico Processes</span></h3><p><strong>将可执行的 ELF binaries 加载进到 Pico Processes 的地址空间，并在 Linux 层上运行。</strong>其中 Linux 实例是一个特殊的为 Pico Processes 服务的数据结构，可以包含并追踪所有的 Linux 进程、线程和运行状态。它在 Win32 Process 首次启动 Linux Binary 时创建，在 Win32 Process 最后的客户端关闭连接时被销毁。从整体上看，整个 WSL 1 只有一个 Linux 实例，它隔离开了本机原有的 Windows 和所有新建的 Linux ；从内部来看，Linux 实例内的每个 Pico Process 都被单独隔离，这点和容器很类似。</p>
+<h3><span id="lxss-manager-service">LXSS Manager Service</span></h3><ul>
+<li><strong>LXSS Manager Service 负责 Windows 的 Bash（Win32 Process）和 Linux 的 Bash（Pico Process）之间的通信，主要在初始时工作。</strong>作用范围包括但不局限于：同步 Linux 实例的安装和卸载、每次只允许一个进程启动 Linux Binary 并在 pending 时阻塞后续启动进程等等。</li>
+</ul>
+<h3><span id="pico-drivers">Pico Drivers</span></h3><ul>
+<li><strong>Pico Drivers 负责 Linux Instance（User Mode）和 Windows Kernel（Kernel Mode）之间的通信，主要在运行时工作。</strong>作用范围包括但不局限于：翻译 Linux system calls 为 Windows NT APIs 可以理解的形式，模拟 Linux 内核并对 Windows 内核进行操作等等。</li>
+</ul>
+<h3><span id="pico-processes">Pico Processes</span></h3><ul>
+<li><strong>将可执行的 ELF binaries 加载进到 Pico Processes 的地址空间，并在 Linux 层上运行。</strong>其中 Linux 实例是一个特殊的为 Pico Processes 服务的数据结构，可以包含并追踪所有的 Linux 进程、线程和运行状态。它在 Win32 Process 首次启动 Linux Binary 时创建，在 Win32 Process 最后的客户端关闭连接时被销毁。从整体上看，整个 WSL 1 只有一个 Linux 实例，它隔离开了本机原有的 Windows 和所有新建的 Linux ；从内部来看，Linux 实例内的每个 Pico Process 都被单独隔离，这点和容器很类似。</li>
+</ul>
 <h2><span id="功能"><strong>功能</strong></span></h2><br>
 
 <p>由于 Windows Kernel 和 Linux Kernel <strong>基本上不兼容</strong>，需要<strong>额外处理很多中间转换</strong>，一般包括系统调用、文件系统、权限管理和网络配置等，下面介绍最基本和最重要的两个方面：</p>
-<h3><span id="system-calls">System Calls</span></h3><p>syscall 是内核提供的一项服务，可以在用户模式下调用。<strong>Windows Kernel 和 Linux Kernel 都暴露了非常多的 syscall，但两者对此的设计模式并不同导致不兼容。</strong></p>
-<p><strong>解决这种冲突的方法是引入 Pico Drivers（<code>lxss.sys</code> and <code>lxcore.sys</code>）。</strong>当一个 Linux Kernel syscall 被调用，该请求将被转发给 <code>lxcore.sys</code>，<code>lxcore.sys</code> 将 Linux Kernel syscall 翻译成等价的 Windows Kernel syscall，最后传到 Windows Kernel。特别地，如果在两种内核之间有某个 syscall 不存在映射关系（亦即不能互相翻译），<code>lxss.sys</code> 还被要求处理这种异常并提供相应的服务。</p>
-<p><em>以 Linux 的 <code>fork()</code> 为例：</em></p>
+<h3><span id="system-calls">System Calls</span></h3><ul>
+<li><p>syscall 是内核提供的一项服务，可以在用户模式下调用。<strong>Windows Kernel 和 Linux Kernel 都暴露了非常多的 syscall，但两者对此的设计模式并不同导致不兼容。</strong></p>
+</li>
+<li><p><strong>解决这种冲突的方法是引入 Pico Drivers（<code>lxss.sys</code> and <code>lxcore.sys</code>）。</strong>当一个 Linux Kernel syscall 被调用，该请求将被转发给 <code>lxcore.sys</code>，<code>lxcore.sys</code> 将 Linux Kernel syscall 翻译成等价的 Windows Kernel syscall，最后传到 Windows Kernel。特别地，如果在两种内核之间有某个 syscall 不存在映射关系（亦即不能互相翻译），<code>lxss.sys</code> 还被要求处理这种异常并提供相应的服务。</p>
+<ol>
+<li><p><em>以 Linux 的 <code>fork()</code> 为例：</em></p>
 <blockquote>
 <p>As an example, the Linux fork() syscall has no direct equivalent call documented for Windows. When a fork system call is made to the Windows Subsystem for Linux, <code>lxcore.sys</code> does some of the initial work to prepare for copying the process. It then calls internal Windows NT kernel APIs to create the process with the correct semantics, and completes copying additional data for the new process.</p>
 </blockquote>
-<p><em>以 Linux 的 <code>chmod</code> 为例：</em></p>
+</li>
+<li><p><em>以 Linux 的 <code>chmod</code> 为例：</em></p>
 <blockquote>
 <p>Linux Instance 产生附加 metadata，只由 Linux 文件系统能理解， Windows 文件系统并不能理解，但是 Windows Kernel 仍会接收该 metadata。但是 NTFS 对这个 metadata 无动于衷，而是 <code>lxss.sys</code> 处理该 metadata，最终反映到 ext4 中。由此可见，WSL 1 非常大的工作量都要花在应对不兼容的指令集。</p>
 </blockquote>
 <p><em>PS: 尽管 Linux 的内核更新得非常快，用户模式的接口却是相对固定的，所以可以认为<u>“WSL 1 abstracts the Linux kernel via their interface”</u></em></p>
-<h3><span id="file-system">File System</span></h3><p>由于 Windows 和 Linux 的文件系统也不相同（Windows 的文件系统是 NTFS，Linux 的文件系统是 ext4），不能直接互相操作。<strong>WSL 的文件系统设计需要满足两点：</strong></p>
+</li>
+</ol>
+</li>
+</ul>
+<h3><span id="file-system">File System</span></h3><ul>
+<li><p>由于 Windows 和 Linux 的文件系统也不相同（Windows 的文件系统是 NTFS，Linux 的文件系统是 ext4），不能直接互相操作。<strong>WSL 的文件系统设计需要满足两点：</strong></p>
 <ol>
 <li>完整支持 Linux 文件系统</li>
 <li>可访问和操作 Windows 中的磁盘和文件</li>
 </ol>
-<p><strong>为实现以上的目标 WSL 引入了两套文件系统（VolFs and DriveFs）。</strong> VolFs 文件系统主要提供了 Linux 文件系统特性的支持，比如 Linux 文件目录（/etc, /bin, /usr, etc.）、权限管理和符号链接等等。DriveDs 文件系统主要用于与 Windows 做交互，比如 Windows 文件目录（/mnt/c, /mnt/d, etc.）、启动 Windows 的可执行文件等等。</p>
+</li>
+<li><p><strong>为实现以上的目标 WSL 引入了两套文件系统（VolFs and DriveFs）。</strong> VolFs 文件系统主要提供了 Linux 文件系统特性的支持，比如 Linux 文件目录（/etc, /bin, /usr, etc.）、权限管理和符号链接等等。DriveDs 文件系统主要用于与 Windows 做交互，比如 Windows 文件目录（/mnt/c, /mnt/d, etc.）、启动 Windows 的可执行文件等等。</p>
 <p><em>PS: 需要注意的是，两套文件系统之间是如何进行交互的并未在原博客详细讨论，感兴趣的小伙伴可自行阅读续篇 <a href="https://blogs.msdn.microsoft.com/wsl/2016/06/15/wsl-file-system-support/" target="_blank" rel="noopener">WSL File System Support</a></em> </p>
+</li>
+</ul>
 <h2><span id="总结"><strong>总结</strong></span></h2><br>
 
 <p><strong>简单的理解：</strong>WSL 1 在 Windows Kernel 之上创建 Linux Instance，Win32 Process 通过 LXSS Manager Service 管理 Pico Process，用户模式的 Linux Instance 和内核模式的 Windows Kernel 之间通过 Pico Drivers 交流，依靠中间层驱动器翻译可以解决 System Calls 不兼容的问题，设计两套文件系统能够满足同时使用 Windows 和 Linux 的需要。</p>
