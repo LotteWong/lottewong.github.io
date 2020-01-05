@@ -381,6 +381,28 @@
 </div>
 
 
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: 'd56099954c6c51b61ebcb8326f9ebe07',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
 </div>
                 
 
@@ -1103,6 +1125,9 @@
                 </span>
                 
                 </p>-->
+								<br>
+								<span id="busuanzi_container_site_uv"> Viewed by <span id="busuanzi_value_site_uv"></span> people </span>
+                <span id="busuanzi_container_site_pv">, at <span id="busuanzi_value_site_pv"></span> times </span>
             </p></div>
             <div class="level-end">
             
