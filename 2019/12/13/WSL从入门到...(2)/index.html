@@ -265,9 +265,9 @@
 <blockquote>
 <p>Linux Instance 产生附加 metadata，只由 Linux 文件系统能理解， Windows 文件系统并不能理解，但是 Windows Kernel 仍会接收该 metadata。但是 NTFS 对这个 metadata 无动于衷，而是 <code>lxss.sys</code> 处理该 metadata，最终反映到 ext4 中。由此可见，WSL 1 非常大的工作量都要花在应对不兼容的指令集。</p>
 </blockquote>
-<p><em>PS: 尽管 Linux 的内核更新得非常快，用户模式的接口却是相对固定的，所以可以认为<u>“WSL 1 abstracts the Linux kernel via their interface”</u></em></p>
 </li>
 </ol>
+<p><em>PS: 尽管 Linux 的内核更新得非常快，用户模式的接口却是相对固定的，所以可以认为<u>“WSL 1 abstracts the Linux kernel via their interface”</u></em></p>
 </li>
 </ul>
 <h3><span id="file-system">File System</span></h3><ul>
