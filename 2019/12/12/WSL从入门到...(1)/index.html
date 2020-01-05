@@ -152,7 +152,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    8 minutes read (About 1231 words)
+                    8 minutes read (About 1247 words)
                 </span>
                 
                 
@@ -212,7 +212,9 @@
 <h2><span id="前情提要"><strong>前情提要</strong></span></h2><br>
 
 <p><em>前阵网上冲浪围观 M$ Build 2019 的 WSL Session ，感受了一波  Microsoft ❤ Open Source，遂决定根据讲座和文档内容当一次复读机讨论一下 WSL ( 啊我的塑料英语_(:з)∠)_。</em></p>
-<h2><span id="相关简介"><strong>相关简介</strong></span></h2><blockquote>
+<h2><span id="相关简介"><strong>相关简介</strong></span></h2><br>
+
+<blockquote>
 <p><strong>The Windows Subsystem for Linux</strong> lets developers run a GNU/Linux environment – including most command-line tools, utilities, and applications – directly on Windows, unmodified, without the overhead of a virtual machine.</p>
 </blockquote>
 <ul>
@@ -237,7 +239,9 @@
 <p><strong>WSL 2</strong> 相比 <strong>WSL 1</strong>，主要<strong>优化了访问文件系统的速度</strong>以及<strong>提供了更完整的系统调用接口</strong>。</p>
 <h3><span id="file-system-performance">File system performance</span></h3><p><img src="/images/file_system_performance.png" alt="File system performance"></p>
 <h3><span id="full-system-call-compatibility">Full system call compatibility</span></h3><p><img src="/images/full_system_call_compatibility.png" alt="Full system call compatibility"></p>
-<h2><span id="架构对比"><strong>架构对比</strong></span></h2><h3><span id="wsl-1">WSL 1</span></h3><p><img src="/images/wsl1_architecture.png" alt="WSL 1 Architecture"></p>
+<h2><span id="架构对比"><strong>架构对比</strong></span></h2><br>
+
+<h3><span id="wsl-1">WSL 1</span></h3><p><img src="/images/wsl1_architecture.png" alt="WSL 1 Architecture"></p>
 <ul>
 <li><p><strong>WSL 1</strong> 的大体思路是，在一台 Windows 主机上安装 Linux 发行版本，依赖<strong>中间层的驱动器</strong>完成 Linux Namespace 和 Windows Kernel 之间的<strong>通信捕获和指令翻译</strong>（比如 <code>path</code> 和 <code>flag</code> ），作用范围包括但不局限于系统调用、文件系统、权限管理和网络配置等。</p>
 </li>
@@ -248,7 +252,7 @@
 </ol>
 </li>
 </ul>
-<p>【更多详见 👉 <a href>WSL从入门到…(2) Dive into WSL 1 // 其实还没有写</a>】</p>
+<p>【更多详见 👉 <a href="https://lottewong.github.io/2019/12/13/WSL%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0...(2)/">WSL从入门到…(2) Dive into WSL 1</a>】</p>
 <h3><span id="wsl-2">WSL 2</span></h3><p><img src="/images/wsl2_architecture.png" alt="WSL 2 Architecture"></p>
 <ul>
 <li><p><strong>WSL 2</strong> 的大体思路是，<strong>开启 Hyper-V 功能</strong>，Windows Hyper-V Container（包含Windows Kernel和Windows Usermode）<strong>持续运行</strong>，Linux Hyper-V Container（包含Linux Kernel和Linux Usermode）<strong>随用随开</strong>，两者<strong>通过 Socket 通信</strong>。</p>
@@ -261,7 +265,7 @@
 </ol>
 </li>
 </ul>
-<p>【更多详见 👉 <a href>WSL从入门到…(3) Dive into WSL 2 // 其实还没有写</a>】</p>
+<p>【更多详见 👉 <a href="https://lottewong.github.io/2019/12/13/WSL%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0...(3)/">WSL从入门到…(3) Dive into WSL 2</a>】</p>
 <h4><span id="linux-kernel">Linux Kernel</span></h4><ul>
 <li><p>用 Linux Kernel 是为了<strong>解决 WSL 1 的遗留问题</strong>（<u>“Uses real Linux kernel for improved performance and perfect compatibility”</u>），翻译不好搞就“拿来主义”。 M$ 甚至为 WSL 2 定制了 Linux Kernel  (没想到吧.jpg</p>
 <p><img src="/images/linux_kernel.png" alt="Shipping a Linux Kernel with Windows"> </p>
