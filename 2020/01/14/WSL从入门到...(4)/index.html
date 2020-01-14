@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Tag: Docker - LotteWong&#39;s Blog</title>
+<title>#Operation# WSL从入门到...(4) Quick Start on WSL - LotteWong&#39;s Blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="LotteWong&#39;s Blog" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="#Operation# WSL从入门到...(4) Quick Start on WSL" type="application/atom+xml">
 
 
 
@@ -85,7 +85,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong&#39;s Blog" height="28">
+                <img src="/images/logo.png" alt="#Operation# WSL从入门到...(4) Quick Start on WSL" height="28">
             
             </a>
         </div>
@@ -131,70 +131,311 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Docker</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-image">
-        <a href="/2019/06/18/LinuxOne上的Docker实践/" class="image is-7by1">
-            <img class="thumbnail" src="/images/docker.png" alt="#Cloud Computing# LinuxOne上的Docker初体验">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/wsl.jpg" alt="#Operation# WSL从入门到...(4) Quick Start on WSL">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-06-17T23:00:21.000Z">2019-06-18</time>
+                <time class="level-item has-text-grey" datetime="2020-01-13T23:00:21.000Z">2020-01-14</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Cloud-Computing/">Cloud Computing</a>
+                <a class="has-link-grey -link" href="/categories/Operation/">Operation</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    19 minutes read (About 2872 words)
+                    9 minutes read (About 1376 words)
                 </span>
                 
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
                 
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/06/18/LinuxOne上的Docker实践/">#Cloud Computing# LinuxOne上的Docker初体验</a>
+                #Operation# WSL从入门到...(4) Quick Start on WSL
             
         </h1>
         <div class="content">
-            <p>在<strong>LinuxOne</strong>上利用<strong>Docker</strong>部署应用与服务，主要分为以下<strong>五个部分</strong>：</p>
+            <p><strong>安装</strong>、<strong>配置</strong>并<strong>使用</strong> WSL ，主要分为以下<strong>五个部分</strong>：</p>
 <ul>
-<li>环境准备 Environment</li>
-<li><strong>Docker原理 Theory</strong></li>
-<li><strong>Docker使用 Usage</strong></li>
-<li><strong>Docker实战 Practice</strong></li>
-<li>注意事项 Notices</li>
+<li>前情提要</li>
+<li><strong>安装发行版本</strong></li>
+<li><strong>编写配置脚本</strong></li>
+<li><strong>使用相关命令</strong></li>
+<li>参考链接</li>
 </ul>
 <hr>
+<a id="more"></a>
+
+
+
+<h1><span id="目录-table-of-contents"><strong>目录 Table of Contents</strong></span></h1><!-- toc -->
+
+<ul>
+<li><a href="#前情提要"><strong>前情提要</strong></a></li>
+<li><a href="#安装发行版本"><strong>安装发行版本</strong></a><ul>
+<li><a href="#step-1-开启支持-wsl-选项">Step 1: 开启支持 WSL 选项</a></li>
+<li><a href="#step-2-安装-linux-发行版本">Step 2: 安装 Linux 发行版本</a></li>
+<li><a href="#step-3-配置-linux-发行版本">Step 3: 配置 Linux 发行版本</a></li>
+</ul>
+</li>
+<li><a href="#编写配置脚本"><strong>编写配置脚本</strong></a><ul>
+<li><a href="#自动挂载">自动挂载</a></li>
+<li><a href="#网络配置">网络配置</a></li>
+<li><a href="#交互操作">交互操作</a></li>
+<li><a href="#具体示例">具体示例</a></li>
+</ul>
+</li>
+<li><a href="#使用相关命令"><strong>使用相关命令</strong></a><ul>
+<li><a href="#查看版本列表">查看版本列表</a></li>
+<li><a href="#设置默认版本">设置默认版本</a></li>
+<li><a href="#重新安装版本">重新安装版本</a></li>
+<li><a href="#指定参数登录">指定参数登录</a></li>
+<li><a href="#交互操作选择">交互操作选择</a></li>
+<li><a href="#windows命令行运行linux工具">Windows命令行运行Linux工具</a></li>
+<li><a href="#linux命令行运行windows工具">Linux命令行运行Windows工具</a></li>
+</ul>
+</li>
+<li><a href="#参考链接"><strong>参考链接</strong></a></li>
+</ul>
+<!-- tocstop -->
+
+<hr>
+<h2><span id="前情提要"><strong>前情提要</strong></span></h2><br>
+
+<p><em>终于结束漫长的听力翻译和阅读理解，开始真正搞机（期待地搓手手.gif。本文将解锁 WSL 1 初体验（发现 Windows build 版本好像快落后了一个世纪，WSL 2 装不了惹。</em></p>
+<h2><span id="安装发行版本"><strong>安装发行版本</strong></span></h2><br>
+
+<p><u>配置相关</u>：</p>
+<ul>
+<li>Windows 10 家庭中文版 1903 </li>
+<li>64 位操作系统，基于 x64 的处理器</li>
+<li>WSL 1</li>
+<li>Ubuntu 16.04 LTS</li>
+<li>Alpine WSL</li>
+</ul>
+<h3><span id="step-1-开启支持-wsl-选项">Step 1: 开启支持 WSL 选项</span></h3><ul>
+<li><p><strong>方法一：控制面板设置</strong></p>
+<ol>
+<li><p>“控制面板” -&gt; “程序” -&gt; “启用或关闭 Windows 功能” -&gt; “适用于 Linux 的 Windows 子系统”</p>
+</li>
+<li><p>重启电脑</p>
+</li>
+</ol>
+</li>
+<li><p><strong>方法二：输入命令设置</strong></p>
+<ol>
+<li><p>“Windows PowerShell（以管理员身份运行）” -&gt; <code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</code></p>
+</li>
+<li><p>重启电脑</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3><span id="step-2-安装-linux-发行版本">Step 2: 安装 Linux 发行版本</span></h3><ul>
+<li><strong>方法一：Microsoft Store 安装</strong><ol>
+<li>打开应用商店 </li>
+<li>选择发行版本<ul>
+<li><a href="https://www.microsoft.com/store/apps/9pjn388hp8c9" target="_blank" rel="noopener">Ubuntu 16.04 LTS</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9N9TNGVNDL3Q" target="_blank" rel="noopener">Ubuntu 18.04 LTS</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9n1tb6fpvj8c" target="_blank" rel="noopener">OpenSUSE Leap 15</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9njvjts82tjx" target="_blank" rel="noopener">OpenSUSE Leap 42</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9p32mwbh6cns" target="_blank" rel="noopener">SUSE Linux Enterprise Server 12</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9pmw35d7fnlx" target="_blank" rel="noopener">SUSE Linux Enterprise Server 15</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9PKR34TNCV07" target="_blank" rel="noopener">Kali Linux</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9MSVKQC78PK6" target="_blank" rel="noopener">Debian GNU/Linux</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9n6gdm4k2hnc" target="_blank" rel="noopener">Fedora Remix for WSL</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9NV1GV1PXZ6P" target="_blank" rel="noopener">Pengwin</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9N8LP0X93VCP" target="_blank" rel="noopener">Pengwin Enterprise</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9p804crf0395" target="_blank" rel="noopener">Alpine WSL</a></li>
+</ul>
+</li>
+<li>安装发行版本</li>
+</ol>
+</li>
+<li><strong>方法二：Command-Line/Script 安装</strong><ul>
+<li><a href="https://docs.microsoft.com/en-us/windows/wsl/install-manual" target="_blank" rel="noopener">Manually download Windows Subsystem for Linux distro packages</a></li>
+</ul>
+</li>
+</ul>
+<h3><span id="step-3-配置-linux-发行版本">Step 3: 配置 Linux 发行版本</span></h3><ol>
+<li>启动已安装好的 Linux 发行版本<ul>
+<li>点击启动：<ul>
+<li>菜单栏单击运行发行版本</li>
+<li>磁贴板单击运行发行版本</li>
+</ul>
+</li>
+<li>命令启动：<ul>
+<li><code>bash.exe</code> ：默认目录为 Windows 用户目录</li>
+<li><code>distro.exe</code>：默认目录为 Linux 用户目录</li>
+<li><code>wsl.exe</code>：允许 Windows 和 Linux 的命令混用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>等待 Linux 发行版本解压缩和初始化</li>
+<li>创建 Linux 下的新用户及其密码<ul>
+<li>管理员用户之一</li>
+<li>每次进入的默认用户</li>
+<li>与 Windows 用户名无关</li>
+</ul>
+</li>
+<li>定期更新 Linux 下的 Package<ul>
+<li><code>sudo apt update &amp;&amp; sudo apt upgrade</code></li>
+</ul>
+</li>
+</ol>
+<p><em>PS: 常见报错解决页 👉  <a href="https://docs.microsoft.com/en-us/windows/wsl/troubleshooting" target="_blank" rel="noopener">WSL troubleshooting page</a></em></p>
+<h2><span id="编写配置脚本"><strong>编写配置脚本</strong></span></h2><br>
+
+<p>WSL 支持使用 <code>wsl.conf</code> 来初始化自动挂载和网络配置两大功能。<code>wsl.conf</code> 位于 <code>/etc</code>目录，如果文件已存在，WSL 会自动读取适配；如果文件不存在，可以自行在目录内新建；如果文件出错了，WSL 会忽略配置文件。</p>
+<h3><span id="自动挂载">自动挂载</span></h3><p><u>Section Label</u>: <code>[automount]</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">key</th>
+<th align="left">value</th>
+<th align="left">default</th>
+<th align="left">notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">enabled</td>
+<td align="left">boolean</td>
+<td align="left">true</td>
+<td align="left"><code>true</code> causes fixed drives (i.e <code>C:/</code> or <code>D:/</code>) to be automatically mounted with DrvFs under <code>/mnt</code>. <code>false</code> means drives won’t be mounted automatically, but you could still mount them manually or via <code>fstab</code>.</td>
+</tr>
+<tr>
+<td align="left">mountFsTab</td>
+<td align="left">boolean</td>
+<td align="left">true</td>
+<td align="left"><code>true</code> sets <code>/etc/fstab</code> to be processed on WSL start. /etc/fstab is a file where you can declare other filesystems, like an SMB share. Thus, you can mount these filesystems automatically in WSL on start up.</td>
+</tr>
+<tr>
+<td align="left">root</td>
+<td align="left">String</td>
+<td align="left"><code>/mnt/</code></td>
+<td align="left">Sets the directory where fixed drives will be automatically mounted. For example, if you have a directory in WSL at <code>/windir/</code>and you specify that as the root, you would expect to see your fixed drives mounted at <code>/windir/c</code></td>
+</tr>
+<tr>
+<td align="left">options</td>
+<td align="left">comma-separated list of values</td>
+<td align="left">empty string</td>
+<td align="left">This value is appended to the default DrvFs mount options string. <strong>Only DrvFs-specific options can be specified.</strong> Options that the mount binary would normally parse into a flag are not supported. If you want to explicitly specify those options, you must include every drive for which you want to do so in /etc/fstab.</td>
+</tr>
+</tbody></table>
+<h3><span id="网络配置">网络配置</span></h3><p><u>Section label</u>: <code>[network]</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">key</th>
+<th align="left">value</th>
+<th align="left">default</th>
+<th align="left">notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">generateHosts</td>
+<td align="left">boolean</td>
+<td align="left"><code>true</code></td>
+<td align="left"><code>true</code> sets WSL to generate <code>/etc/hosts</code>. The <code>hosts</code> file contains a static map of hostnames corresponding IP address.</td>
+</tr>
+<tr>
+<td align="left">generateResolvConf</td>
+<td align="left">boolean</td>
+<td align="left"><code>true</code></td>
+<td align="left"><code>true</code> set WSL to generate <code>/etc/resolv.conf</code>. The <code>resolv.conf</code> contains a DNS list that are capable of resolving a given hostname to its IP address.</td>
+</tr>
+</tbody></table>
+<h3><span id="交互操作">交互操作</span></h3><p><u>Section label</u>: <code>[interop]</code></p>
+<p>These options are available in Insider Build 17713 and later.</p>
+<table>
+<thead>
+<tr>
+<th align="left">key</th>
+<th align="left">value</th>
+<th align="left">default</th>
+<th align="left">notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">enabled</td>
+<td align="left">boolean</td>
+<td align="left"><code>true</code></td>
+<td align="left">Setting this key will determine whether WSL will support launching Windows processes.</td>
+</tr>
+<tr>
+<td align="left">appendWindowsPath</td>
+<td align="left">boolean</td>
+<td align="left"><code>true</code></td>
+<td align="left">Setting this key will determine whether WSL will add Windows path elements to the $PATH environment variable.</td>
+</tr>
+</tbody></table>
+<h3><span id="具体示例">具体示例</span></h3><figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Enable extra metadata options by default</span></span><br><span class="line">[automount]</span><br><span class="line">enabled = <span class="hljs-literal">true</span></span><br><span class="line">root = /windir/</span><br><span class="line">options = <span class="hljs-string">"metadata,umask=22,fmask=11"</span></span><br><span class="line">mountFsTab = <span class="hljs-literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Enable DNS – even though these are turned on by default, we’ll specify here just to be explicit.</span></span><br><span class="line">[network]</span><br><span class="line">generateHosts = <span class="hljs-literal">true</span></span><br><span class="line">generateResolvConf = <span class="hljs-literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="使用相关命令"><strong>使用相关命令</strong></span></h2><h3><span id="查看版本列表">查看版本列表</span></h3><ol>
+<li><code>wsl -l</code>, <code>wsl --list</code>：可用的 Linux 发行版</li>
+<li><code>wsl --list --all</code>： 未可用和已可用的 Linux 发行版</li>
+<li><code>wsl --list --running</code>：运行的 Linux 发行版</li>
+</ol>
+<h3><span id="设置默认版本">设置默认版本</span></h3><ul>
+<li><code>wsl -s &lt;DistributionName&gt;</code>, <code>wsl --setdefault &lt;DistributionName&gt;</code></li>
+</ul>
+<h3><span id="重新安装版本">重新安装版本</span></h3><ol>
+<li><code>wsl --unregister &lt;DistributionName&gt;</code></li>
+<li>重复“安装发行版本”的“Step 3: 配置 Linux 发行版本”</li>
+</ol>
+<h3><span id="指定参数登录">指定参数登录</span></h3><ol>
+<li><code>wsl -d</code>, <code>wsl --distribution</code>：指定版本登录</li>
+<li><code>wsl -u</code>, <code>wsl --user</code>：指定用户登录</li>
+</ol>
+<h3><span id="交互操作选择">交互操作选择</span></h3><ol>
+<li><code>$ echo 0 &gt; /proc/sys/fs/binfmt_misc/WSLInterop</code>：停用交互操作</li>
+<li><code>$ echo 1 &gt; /proc/sys/fs/binfmt_misc/WSLInterop</code>：开启交互操作</li>
+</ol>
+<h3><span id="windows命令行运行linux工具">Windows命令行运行Linux工具</span></h3><ul>
+<li><p><code>wsl &lt;LinuxCommand&gt;</code></p>
+<figure class="highlight powershell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\temp&gt; wsl ls -la | findstr <span class="hljs-string">"foo"</span></span><br><span class="line">-rwxrwxrwx <span class="hljs-number">1</span> root root     <span class="hljs-number">14</span> Sep <span class="hljs-number">27</span> <span class="hljs-number">14</span>:<span class="hljs-number">26</span> foo.bat</span><br><span class="line"></span><br><span class="line">C:\temp&gt; dir | wsl grep foo</span><br><span class="line"><span class="hljs-number">09</span>/<span class="hljs-number">27</span>/<span class="hljs-number">2016</span>  <span class="hljs-number">02</span>:<span class="hljs-number">26</span> PM                <span class="hljs-number">14</span> foo.bat</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3><span id="linux命令行运行windows工具">Linux命令行运行Windows工具</span></h3><ul>
+<li><p><code>&lt;WindowsCommand&gt;</code></p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cmd.exe /C dir</span><br><span class="line">&lt;- contents of C:\ -&gt;</span><br><span class="line"></span><br><span class="line">$ PING.EXE www.microsoft.com</span><br><span class="line">Pinging e1863.dspb.akamaiedge.net [2600:1409:a:5a2::747] with 32 bytes of data:</span><br><span class="line">Reply from 2600:1409:a:5a2::747: time=2ms</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><em>PS: 以上适用于 “<u>Windows 10 Version 1903 and later</u>“, “<u>Versions Earlier than Windows 10 Version 1903</u> “的对应目录请查看文末的参考链接。Windows Insiders Builds 17063 起支持 Windows 和 Linux 共享环境变量；Fall Creators Update 起 Windows <code>Path</code>将加入 Linux <code>$PATH</code>。</em></p>
+<h2><span id="参考链接"><strong>参考链接</strong></span></h2><ul>
+<li><a href="https://docs.microsoft.com/en-us/windows/wsl/about" target="_blank" rel="noopener">Windows Subsystem for Linux Documentation</a></li>
+</ul>
+<hr>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/06/18/LinuxOne上的Docker实践/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Linux/">Linux</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -204,9 +445,43 @@
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/13/WSL从入门到...(3)/">
+                <span class="level-item">#Operation# WSL从入门到...(3) Dive into WSL 2</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '37aa53d8c52c266da68ae976005016bd',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
 </div>
                 
 
@@ -923,7 +1198,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong&#39;s Blog" height="28">
+                    <img src="/images/logo.png" alt="#Operation# WSL从入门到...(4) Quick Start on WSL" height="28">
                 
                 </a>
                 <p class="is-size-7">
