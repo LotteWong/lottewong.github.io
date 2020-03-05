@@ -134,7 +134,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/images/golang.png" alt="#Golang# Golang与并发编程(1) Goroutine, here we go!">
+            <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(1) Goroutine, here we go!">
         </span>
     </div>
     
@@ -152,7 +152,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    18 minutes read (About 2734 words)
+                    18 minutes read (About 2713 words)
                 </span>
                 
                 
@@ -311,7 +311,10 @@
 <li><strong><code>KSE</code></strong>：<code>kernel schedule entity</code>，一个 <code>KSE</code> 代表一个<strong>内核线程</strong></li>
 </ul>
 </blockquote>
-<h4><span id="共享任务队列global-queue">+ 共享任务队列（Global Queue）</span></h4><p><img src="/images/global_queue.png" alt="Global Queue"></p>
+<h4><span id="共享任务队列global-queue">+ 共享任务队列（Global Queue）</span></h4><div align="center">
+    <img src="/images/global_queue.png" alt="Global Queue">
+</div>
+
 <ul>
 <li><strong>流程：</strong><ul>
 <li><em>Step1.</em> 先开一个<strong>线程池</strong>；</li>
@@ -331,7 +334,10 @@
 </ul>
 </li>
 </ul>
-<h4><span id="独有任务队列local-queue">+ 独有任务队列（Local Queue）</span></h4><p><img src="/images/local_queue.png" alt="Local Queue"></p>
+<h4><span id="独有任务队列local-queue">+ 独有任务队列（Local Queue）</span></h4><div align="center">
+    <img src="/images/local_queue.png" alt="Local Queue">
+</div>
+
 <ul>
 <li><strong>流程：</strong><ul>
 <li><em>Step2.</em> 每个线程<strong>不断从 <code>Local Queue</code> 中取 <code>G</code> 执行</strong>，亦即一个线程非同时刻可以执行多个协程；</li>
@@ -346,7 +352,10 @@
 </ul>
 </li>
 </ul>
-<h4><span id="线程调度器m">+ 线程调度器（M）</span></h4><p><img src="/images/machine.png" alt="Machine"></p>
+<h4><span id="线程调度器m">+ 线程调度器（M）</span></h4><div align="center">
+    <img src="/images/machine.png" alt="Machine">
+</div>
+
 <ul>
 <li><strong>流程：</strong><ul>
 <li><em>Step1.</em> 线程池中每个线程对应一个 <code>M</code>，<code>M</code> 将<strong>根据调度算法选择</strong>合适的 <code>G</code> 交由内核线程执行。</li>
@@ -361,7 +370,10 @@
 </ul>
 </li>
 </ul>
-<h4><span id="抢占式p">+ 抢占式（P）</span></h4><p><img src="/images/processor.png" alt="Processor"></p>
+<h4><span id="抢占式p">+ 抢占式（P）</span></h4><div align="center">
+    <img src="/images/processor.png" alt="Processor">
+</div>
+
 <ul>
 <li><strong>流程：</strong><ul>
 <li><em>Step3.</em>当一个 <code>G</code> 占用一定的 CPU 时间，又没有被调度过，那么它<strong>将被 <code>runtime</code> 抢占</strong>。</li>
@@ -391,10 +403,13 @@
 <h4><span id="负载均衡">负载均衡</span></h4><ul>
 <li><strong>从本地到全局</strong>：<code>Local Queue</code> 满了，会将前一半的 <code>G</code> 和新创建的 <code>G</code> 放到 <code>Global Queue</code> 并打乱顺序；</li>
 <li><strong>从全局到本地</strong>：<code>Local Queue</code> 空了，会从 <code>Glocal Queue</code> 随机选取 <code>n = min(len(GQ)/GOMAXPROCS + 1, len(GQ/2))</code> 个 <code>G</code>；</li>
-<li><strong>为了调度公平</strong>：，1/61 的几率在 <code>Global Queue</code> 中找 <code>G</code>，60/61 的几率在 <code>Local Queue</code> 找 <code>G</code>，否则 <code>Global Queue</code> 中的 <code>G</code> 有可能永远没办法被调度。</li>
+<li><strong>为了调度公平</strong>：1/61 的几率在 <code>Global Queue</code> 中找 <code>G</code>，60/61 的几率在 <code>Local Queue</code> 找 <code>G</code>，否则 <code>Global Queue</code> 中的 <code>G</code> 有可能永远没办法被调度。</li>
 </ul>
 <h4><span id="任务窃取">任务窃取</span></h4><ul>
-<li>出现空闲的<code>M</code>，此时它绑定的 <code>P</code> 的 <code>Local Queue</code> 为空，并且 <code>Global Queue</code> 也为空，则从其它 <code>P</code> 中窃取后一半的 <code>G</code>，这就是 <strong><code>work-stealing</code> 算法</strong>。</li>
+<li><p>出现空闲的<code>M</code>，此时它绑定的 <code>P</code> 的 <code>Local Queue</code> 为空，并且 <code>Global Queue</code> 也为空，则从其它 <code>P</code> 中窃取后一半的 <code>G</code>，这就是 <strong><code>work-stealing</code> 算法</strong>。</p>
+<img src="/images/work_stealing.png" alt="Work-stealing" align="center/">
+
+</li>
 </ul>
 <h4><span id="线程自旋">线程自旋</span></h4><ul>
 <li>在创建 <code>G</code> 时，运行的 <code>G</code> 会尝试唤醒其他空闲的 <code>M</code> 执行，如果没有 <code>G</code>，<code>M</code> 将<strong>自旋而不阻塞</strong>，不停地找 <code>G</code>；</li>
@@ -468,7 +483,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Golang/">Golang</a>, <a class="has-link-grey -link" href="/tags/Programming-Paradigm/">Programming Paradigm</a>
+                    <a class="has-link-grey -link" href="/tags/Concurrency/">Concurrency</a>, <a class="has-link-grey -link" href="/tags/Golang/">Golang</a>
                 </div>
             </div>
         </div>
@@ -582,7 +597,7 @@
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        9
+                        10
                     </p>
                 </div>
             </div>
@@ -771,7 +786,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Curl/" style="font-size: 10px;">Curl</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 15px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Programming-Paradigm/" style="font-size: 15px;">Programming Paradigm</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a>
+        <a href="/tags/Concurrency/" style="font-size: 10px;">Concurrency</a> <a href="/tags/Curl/" style="font-size: 10px;">Curl</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 15px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a>
     </div>
 </div>
 
@@ -790,7 +805,7 @@
             
             <a href="/2020/03/04/Golang与并发编程(1)/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/golang.png" alt="#Golang# Golang与并发编程(1) Goroutine, here we go!">
+                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(1) Goroutine, here we go!">
                 </p>
             </a>
             
@@ -956,6 +971,13 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/Curl/">
                         <span class="tag">Curl</span>
                         <span class="tag is-grey">1</span>
@@ -1007,7 +1029,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Programming-Paradigm/">
                         <span class="tag">Programming Paradigm</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1045,7 +1067,7 @@
             
             <a href="/2020/03/04/Golang与并发编程(1)/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/golang.png" alt="#Golang# Golang与并发编程(1) Goroutine, here we go!">
+                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(1) Goroutine, here we go!">
                 </p>
             </a>
             
@@ -1211,6 +1233,13 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/Curl/">
                         <span class="tag">Curl</span>
                         <span class="tag is-grey">1</span>
@@ -1262,7 +1291,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Programming-Paradigm/">
                         <span class="tag">Programming Paradigm</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
