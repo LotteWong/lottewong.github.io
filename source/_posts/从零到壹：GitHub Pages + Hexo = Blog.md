@@ -1,7 +1,7 @@
 ---
-title: \#Configuration\# 从零到壹：GitHub Pages + Hexo = Blog
+title: "#Others# 从零到壹：GitHub Pages + Hexo = Blog"
 date: 2019-06-02 07:00:21
-categories: Configuration
+categories: Others
 tags:
 - GitHub Pages
 - Hexo

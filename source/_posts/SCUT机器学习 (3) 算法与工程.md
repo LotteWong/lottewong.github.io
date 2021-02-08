@@ -1,5 +1,5 @@
 ---
-title: \#Machine Learning\# SCUT Machine Learning(3) 算法与工程
+title: "#Machine Learning# SCUT Machine Learning(3) 算法与工程"
 date: 2019-11-04 15:10:21
 categories: Artificial Intelligence
 tags:

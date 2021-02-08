@@ -1,5 +1,5 @@
 ---
-title: \#Machine Learning\# SCUT Machine Learning(2) 训练、测试与可视化
+title: "#Machine Learning# SCUT Machine Learning(2) 训练、测试与可视化"
 date: 2019-11-04 15:05:21
 categories: Artificial Intelligence
 tags:

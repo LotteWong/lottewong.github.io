@@ -1,5 +1,5 @@
 ---
-title: \#Machine Learning\# SCUT Machine Learning(1) 数据与参数
+title: "#Machine Learning# SCUT Machine Learning(1) 数据与参数"
 date: 2019-11-04 15:00:21
 categories: Artificial Intelligence
 tags:

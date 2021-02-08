@@ -1,11 +1,9 @@
 ---
-title: \#Testing\# HTTP的通信监控和回放：Fiddler抓包与Socket发包
+title: "#Fiddler# HTTP的通信监控和回放：Fiddler抓包与Socket发包"
 date: 2019-10-11 07:00:21
 categories: Testing
 tags:
 - Fiddler
-- Curl
-- Socket
 thumbnail: /images/fiddler.png
 ---
 
