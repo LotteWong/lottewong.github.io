@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包 - LotteWong&#39;s Blog</title>
+<title>#WSL# WSL从入门到...(3) Dive into WSL 2 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="#WSL# WSL从入门到...(3) Dive into WSL 2" type="application/atom+xml">
 
 
 
@@ -85,7 +85,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
+                <img src="/images/logo.png" alt="#WSL# WSL从入门到...(3) Dive into WSL 2" height="28">
             
             </a>
         </div>
@@ -134,7 +134,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/images/fiddler.png" alt="#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
+            <img class="thumbnail" src="/images/wsl.jpg" alt="#WSL# WSL从入门到...(3) Dive into WSL 2">
         </span>
     </div>
     
@@ -142,17 +142,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-10-14T23:00:21.000Z">2019-10-15</time>
+                <time class="level-item has-text-grey" datetime="2019-12-13T23:00:21.000Z">2019-12-14</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Testing/">Testing</a>
+                <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    10 minutes read (About 1538 words)
+                    11 minutes read (About 1694 words)
                 </span>
                 
                 
@@ -166,184 +166,103 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                #Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包
+                #WSL# WSL从入门到...(3) Dive into WSL 2
             
         </h1>
         <div class="content">
-            <p>利用<strong>Fiddler</strong>抓包和<strong>Socket</strong>发包，并用<strong>Curl</strong>统计响应时间，主要分为以下<strong>四个部分</strong>：</p>
+            <p>对 <strong>WSL 2 的一些实现细节</strong>进行补充说明，主要分为以下<strong>五个部分</strong>：</p>
 <ul>
-<li>工具的配置及工具的使用</li>
-<li><strong>截获、修改、发送数据包</strong></li>
-<li><strong>统计网页和元素的响应时间</strong></li>
-<li>需注意事项及待改进事项</li>
+<li>前情提要</li>
+<li>背景</li>
+<li><strong>架构与答疑</strong></li>
+<li>总结</li>
+<li>参考链接</li>
 </ul>
 <hr>
 <a id="more"></a>
 
 
 
-<h1><span id="目录-table-of-contents"><strong>目录 Table of Contents</strong></span></h1><!-- toc -->
-
-<ul>
-<li><a href="#任务-task"><strong>任务 Task</strong></a></li>
-<li><a href="#工具的配置-configuration"><strong>工具的配置 Configuration</strong></a><ul>
-<li><a href="#安装工具">安装工具</a></li>
-<li><a href="#勾选解码">勾选解码</a></li>
-<li><a href="#过滤保存">过滤保存</a></li>
-<li><a href="#设置断点">设置断点</a></li>
-</ul>
-</li>
-<li><a href="#工具的使用-usage"><strong>工具的使用 Usage</strong></a><ul>
-<li><a href="#statistics">Statistics</a></li>
-<li><a href="#filters">Filters</a></li>
-<li><a href="#inspectors">Inspectors</a></li>
-<li><a href="#composer">Composer</a></li>
-<li><a href="#autoresponder">AutoResponder</a></li>
-</ul>
-</li>
-<li><a href="#截获数据包-capture"><strong>截获数据包 Capture</strong></a><ul>
-<li><a href="#图形界面">图形界面</a></li>
-</ul>
-</li>
-<li><a href="#修改数据包-modify"><strong>修改数据包 Modify</strong></a><ul>
-<li><a href="#程序脚本">程序脚本</a></li>
-</ul>
-</li>
-<li><a href="#发送数据包-send"><strong>发送数据包 Send</strong></a><ul>
-<li><a href="#fiddler">Fiddler</a></li>
-<li><a href="#socket">Socket</a></li>
-</ul>
-</li>
-<li><a href="#记响应时间-analyses"><strong>记响应时间 Analyses</strong></a><ul>
-<li><a href="#fiddler-1">Fiddler</a></li>
-<li><a href="#curl">Curl</a></li>
-</ul>
-</li>
-<li><a href="#需注意事项-notices"><strong>需注意事项 Notices</strong></a></li>
-<li><a href="#待改进事项-todos"><strong>待改进事项 Todos</strong></a></li>
-</ul>
-<!-- tocstop -->
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
 
 <hr>
-<h2><span id="任务-task"><strong>任务 Task</strong></span></h2><blockquote>
-<p>部署类似Microsoft PetshopWeb应用基本实例，开发性能测试小工具能截获基于IE浏览器与Web服务器的交互的数据包，修改数据包（比如简化起见，修改要搜索的关键字），再把修改后的内容使用多线程的方式发送到服务器。统计请求每个网页上主要元素（gif,css等）需要的时间，以及请求整个网页的时间。</p>
-<p>提示：</p>
-<ol>
-<li><p>在获取数据包的过程中要根据HTTP请求的特点，从原始的数据包中过滤出HTTP的数据包。找到提交的“搜索的关键字”，将其替换成其它字符。</p>
-</li>
-<li><p>发送数据包使用Socket，可以参考网络编程的资料。</p>
-</li>
-</ol>
+<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a><strong>前情提要</strong></h2><br>
+
+<p><em>前面已经简要介绍了 WSL 1 和 WSL 2 的区别，本节将聚焦于 WSL 2的实现细节。点开官方博客开始收获惊(<del>da</del>)喜(<del>keng</del>)，才疏学浅写错也不要打我 (预先感谢各位勘误 逃</em></p>
+<p>【更多信息 👉 <a href="https://lottewong.github.io/2019/12/12/WSL%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0...(1)/" target="_blank" rel="noopener">WSL从入门到…(1) WSL 1 vs WSL 2</a>】</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a><strong>背景</strong></h2><h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><blockquote>
+<p>…… still provides <strong>the same user experience</strong> as in WSL 1 (the current widely available version).</p>
 </blockquote>
-<p><img src="/images/fiddler_socket.png" alt="Flowchart"></p>
-<h2><span id="工具的配置-configuration"><strong>工具的配置 Configuration</strong></span></h2><h3><span id="安装工具">安装工具</span></h3><p><a href="https://www.telerik.com/fiddler" target="_blank" rel="noopener">Fiddler下载地址</a></p>
-<p><img src="/images/decrypt_https_1.png" alt="Decrypt to capture Https"></p>
-<p><img src="/images/decrypt_https_2.png" alt="Decrypt to capture Https"></p>
-<h3><span id="勾选解码">勾选解码</span></h3><p><img src="/images/encode_decode.png" alt="GZip encoding is default in Fiddler"></p>
-<h3><span id="过滤保存">过滤保存</span></h3><ol>
-<li>手动</li>
-</ol>
-<p><img src="/images/filters.png" alt="Set filters"></p>
-<p><img src="/images/save_sessions.png" alt="Save sessions"></p>
-<ol start="2">
-<li>脚本</li>
-</ol>
-<p><img src="/images/customize_rules_1.png" alt="Customize Rules"></p>
-<p><img src="/images/customize_rules_2.png" alt="Edit scripts"></p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> (oSession.fullUrl.Contains(<span class="hljs-string">"baidu.com"</span>)) &#123;</span><br><span class="line">    <span class="hljs-comment">// for(var key in oSession.oRequest.headers) &#123;</span></span><br><span class="line">        <span class="hljs-comment">// if('Referer' === key) &#123;</span></span><br><span class="line">            <span class="hljs-keyword">if</span>(oSession.oRequest.headers[<span class="hljs-string">'Referer'</span>].indexOf(<span class="hljs-string">"&amp;wd="</span>) != <span class="hljs-number">-1</span>) &#123;</span><br><span class="line">                <span class="hljs-keyword">var</span> fso;</span><br><span class="line">                <span class="hljs-keyword">var</span> file;</span><br><span class="line">                fso = <span class="hljs-keyword">new</span> ActiveXObject(<span class="hljs-string">"Scripting.FileSystemObject"</span>);</span><br><span class="line">                file = fso.OpenTextFile(<span class="hljs-string">"E:\\MyPrograms\\fiddler_sessions\\Session"</span> + <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime() + <span class="hljs-string">".txt"</span>, <span class="hljs-number">8</span> ,<span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>);</span><br><span class="line">                <span class="hljs-comment">// file.writeLine("Request url: " + oSession.url);</span></span><br><span class="line">                file.writeLine(<span class="hljs-string">"Request header:"</span> + <span class="hljs-string">"\n"</span> + oSession.oRequest.headers);</span><br><span class="line">                <span class="hljs-comment">// file.writeLine("Request body: " + oSession.GetRequestBodyAsString());</span></span><br><span class="line">                file.writeLine(<span class="hljs-string">"\n"</span>);</span><br><span class="line">                file.close();</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="hljs-comment">// &#125;</span></span><br><span class="line">    <span class="hljs-comment">// &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><blockquote>
+<p>Its primary goals are to <strong>increase file system performance</strong>, as well as <strong>adding full system call compatibility</strong>.</p>
+</blockquote>
+<h3 id="兼容"><a href="#兼容" class="headerlink" title="兼容"></a>兼容</h3><blockquote>
+<p>Individual Linux distros can be run either as a WSL 1 distro, or as a WSL 2 distro, can be <strong>upgraded or downgraded at any time</strong>, and you can run WSL 1 and WSL 2 distros <strong>side by side</strong>. </p>
+</blockquote>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a><strong>架构</strong></h2><br>
 
-<h3><span id="设置断点">设置断点</span></h3><ol>
-<li>手动</li>
+<p><img src="/images/wsl2_component.png" alt="WSL 2 Architecture"></p>
+<p><strong>工作流大概是：</strong></p>
+<ol>
+<li>启动 LXSS Manager Service <strong>跟踪 Linux Distribution 的安装、运行和卸载</strong>。</li>
+<li>启动 Host compute service 和 Host Network Service <strong>创建和初始化 Lightweight utility VM 实例</strong>。</li>
+<li>被封装好的（<u>“shipping in box”</u>）基于 Linux Kernel 的<strong>虚拟机运行</strong>。</li>
+<li>LXSS Manager Service <strong>映射、加载和管理 Linux Distribution 的文件系统</strong>。</li>
+<li>以上准备工作完成后，<code>wsl.exe</code> 和 <code>bash</code> 之间将<strong>通过 <code>socket</code> 传递指令</strong>来完成作业。</li>
 </ol>
-<p><img src="/images/breakpoints.png" alt="Set Breakpoints"></p>
-<ol start="2">
-<li>命令</li>
-</ol>
+<p><em>PS: Lightweight utility VM 只会在需要时创建运行，如果 <code>bash</code> 或 <code>wsl.exe</code> 退出，一段时间后将会被回收。</em></p>
+<h3 id="访问-Windows-文件"><a href="#访问-Windows-文件" class="headerlink" title="访问 Windows 文件"></a>访问 Windows 文件</h3><p><img src="/images/accessing_windows_files_with_wsl2.png" alt="Accessing Windows Files with WSL 2"></p>
 <ul>
-<li>在左下角黑框框中输入命令<ul>
-<li>停止断点：<code>bpu</code></li>
-<li>开始断点：<code>bpu $host</code></li>
-</ul>
+<li><p><strong>Windows</strong> 主机启动一个文件<strong>服务器</strong>，此时 <strong>Linux</strong> 作为<strong>客户端</strong>发送请求，两者<strong>使用 9P 协议</strong>进行通信。</p>
+</li>
+<li><p><strong>效果看起来像</strong>把 Windows 的 <code>C</code> 盘挂载到了 Linux 的 <code>/mnt</code> 目录下。访问 Linux 的 <code>/mnt/c</code> 就是在 访问 Window 的 <code>C:\</code> 。</p>
 </li>
 </ul>
-<h2><span id="工具的使用-usage"><strong>工具的使用 Usage</strong></span></h2><h3><span id="statistics">Statistics</span></h3><p><img src="/images/statistics.png" alt="Statistics"></p>
-<h3><span id="filters">Filters</span></h3><p><img src="/images/filters.png" alt="Filters"></p>
-<h3><span id="inspectors">Inspectors</span></h3><p><img src="/images/inspectors.png" alt="Inspectors"></p>
-<h3><span id="composer">Composer</span></h3><p><img src="/images/composer.png" alt="Composer"></p>
-<h3><span id="autoresponder">AutoResponder</span></h3><p><img src="/images/auto_responder.png" alt="AutoResponder"></p>
-<h2><span id="截获数据包-capture"><strong>截获数据包 Capture</strong></span></h2><h3><span id="图形界面">图形界面</span></h3><ul>
-<li>使用图形界面或编程脚本应用过滤</li>
-<li>点击左下角 <code>Capturing或空白处</code> 停止或开始截获数据包</li>
-<li>使用Statistics查看时间，使用Inspectors查看内容</li>
-<li>使用图形界面或编程脚本保存会话</li>
+<p><em>PS: 特别地，如果在 <code>bash</code> 内启动 <code>cmd.exe</code> ，由于 Windows 和 Linux 的可执行文件格式不同（前者是 PE 或 PE32+ ，后者是 ELF32 或 ELF64），<code>.exe</code> 文件无法直接运行。WSL 2 的处理方法实际上是：Linux 下的 <code>bash</code> 向 <code>wsl.exe</code> 发送 Interop command，Windows 下的 <code>wsl.exe</code> 解析后启动 <code>.exe</code> 文件。</em></p>
+<h3 id="访问-Linux-文件"><a href="#访问-Linux-文件" class="headerlink" title="访问 Linux 文件"></a>访问 Linux 文件</h3><p><img src="/images/accessing_linux_files_with_wsl2.png" alt="Accessing Linux Files with WSL 2"></p>
+<ul>
+<li><strong>Linux</strong> 虚拟机启动一个文件<strong>服务器</strong>，此时 <strong>Windows</strong> 作为<strong>客户端</strong>发送请求，两者<strong>使用 9P 协议</strong>进行通信。</li>
+<li><strong>效果看起来像</strong>在 Windows 上开一般的虚拟机，对应的目录（在 <code>Network</code> 内）可以被文件资源管理器轻松地访问。</li>
 </ul>
-<h2><span id="修改数据包-modify"><strong>修改数据包 Modify</strong></span></h2><h3><span id="程序脚本">程序脚本</span></h3><ol>
-<li><p>对于手动保存的会话</p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 替换请求中的搜索字段</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_ref</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-8'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                start = line.find(<span class="hljs-string">"&amp;wd="</span>)</span><br><span class="line">                end = line.find(<span class="hljs-string">"&amp;rsv_pq="</span>)</span><br><span class="line">                old_str = line[start+<span class="hljs-number">4</span>:end]</span><br><span class="line">                new_str = parse.quote(cont)</span><br><span class="line">                line = line.replace(old_str, new_str)</span><br><span class="line">                <span class="hljs-keyword">return</span> line</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重新拼装需发送的报文</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_req</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    msg = <span class="hljs-string">''</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-8'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'GET'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = <span class="hljs-string">'GET '</span> + get_ref(file, cont)[<span class="hljs-number">9</span>:<span class="hljs-number">-1</span>] + <span class="hljs-string">' HTTP/1.1'</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = get_ref(file, cont)</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Accept-Encoding'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                <span class="hljs-keyword">continue</span></span><br><span class="line">            line = line.strip(<span class="hljs-string">'\n'</span>) + <span class="hljs-string">'\r\n'</span></span><br><span class="line">            msg += line</span><br><span class="line">        msg = bytes(msg, encoding=<span class="hljs-string">"utf8"</span>)</span><br><span class="line">        <span class="hljs-keyword">return</span> msg</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于自动保存的会话</p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 替换请求中的搜索字段</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_ref</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-16'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                start = line.find(<span class="hljs-string">"&amp;wd="</span>)</span><br><span class="line">                end = line.find(<span class="hljs-string">"&amp;rsv_pq="</span>)</span><br><span class="line">                old_str = line[start+<span class="hljs-number">4</span>:end]</span><br><span class="line">                new_str = parse.quote(cont)</span><br><span class="line">                line = line.replace(old_str, new_str)</span><br><span class="line">                <span class="hljs-keyword">return</span> line</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重新拼装需发送的报文</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_req</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    msg = <span class="hljs-string">''</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-16'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Request header:'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                <span class="hljs-keyword">continue</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'GET'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = <span class="hljs-string">'GET '</span> + get_ref(file, cont)[<span class="hljs-number">9</span>:<span class="hljs-number">-1</span>] + <span class="hljs-string">' HTTP/1.1'</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = get_ref(file, cont)</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Accept-Encoding'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                <span class="hljs-keyword">continue</span></span><br><span class="line">            line = line.strip(<span class="hljs-string">'\n'</span>) + <span class="hljs-string">'\r\n'</span></span><br><span class="line">            msg += line</span><br><span class="line">        msg = bytes(msg[:<span class="hljs-number">-4</span>], encoding=<span class="hljs-string">"utf8"</span>)</span><br><span class="line">        <span class="hljs-keyword">return</span> msg</span><br></pre></td></tr></table></figure>
+<p><em>PS: 从上述中可见，WSL 2 访问文件的中心观点 —— “两个系统都做各自可以做 / 擅长做的事情，遇事不决就通过<code>socket</code>发指令吱一声，而不会选择简单粗暴地翻译。”</em></p>
+<h2 id="答疑"><a href="#答疑" class="headerlink" title="答疑"></a><strong>答疑</strong></h2><br>
 
-</li>
-</ol>
-<h2><span id="发送数据包-send"><strong>发送数据包 Send</strong></span></h2><h3><span id="fiddler">Fiddler</span></h3><ol>
-<li>使用WebForms</li>
-</ol>
-<ul>
-<li>使用图形界面或编程脚本应用过滤</li>
-<li>使用图形界面或运行命令设置断点</li>
-<li>在 <code>对应报文A</code> 的 <code>Request WebForms</code>内修改“搜索关键字”</li>
-<li>点击 <code>Break on Response</code> 将修改后的 <code>对应报文A</code> 发送到Fiddler</li>
-<li>在 <code>对应报文B</code> 的 <code>Request WebForms</code>内查看“搜索关键字”</li>
-<li>点击 <code>Run to Completion</code> 将修改后的 <code>对应报文B</code> 发送到Server</li>
-</ul>
-<ol start="2">
-<li>使用Composer</li>
-</ol>
-<ul>
-<li>保存会话Request请求头部</li>
-<li>在记事本内修改“搜索关键字”</li>
-<li>在Composer内发送请求报文</li>
-</ul>
-<h3><span id="socket">Socket</span></h3>  <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:</span><br><span class="line">    <span class="hljs-comment"># 读取信息</span></span><br><span class="line">    file = input(<span class="hljs-string">"file:"</span>)</span><br><span class="line">    cont = input(<span class="hljs-string">"cont:"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 套接字连接服务端</span></span><br><span class="line">    s = ssl.wrap_socket(socket.socket())</span><br><span class="line">    s.connect((<span class="hljs-string">'www.baidu.com'</span>, <span class="hljs-number">443</span>))</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 发送修改后的请求</span></span><br><span class="line">    s.send(get_req(file, cont))</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 缓存服务端的响应</span></span><br><span class="line">    buffer = []</span><br><span class="line">    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:</span><br><span class="line">        d = s.recv(<span class="hljs-number">1024</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> d:</span><br><span class="line">            buffer.append(d)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            <span class="hljs-keyword">break</span></span><br><span class="line">    res = <span class="hljs-string">b''</span>.join(buffer)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 客户端关闭套接字</span></span><br><span class="line">    s.close()</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 保存响应</span></span><br><span class="line">    header, html = res.split(<span class="hljs-string">b'\r\n\r\n'</span>, <span class="hljs-number">1</span>)</span><br><span class="line">    print(header.decode(<span class="hljs-string">'utf-8'</span>))</span><br><span class="line">    <span class="hljs-keyword">with</span> open(cont + <span class="hljs-string">'.html'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        f.write(html)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><u>Q1</u>: Microsoft 的 Linux Team 根据 WSL 2 <strong>针对 Linux Kernel 做了哪些调整</strong>？</p>
+<p><u>A1</u>: 首先，和 WSL 1 一样，WSL 2 <strong>本身并不提供 Linux 发行版本</strong>，用户需自行<strong>前往 Windows Store 下载</strong>或<strong>脚本安装自定义的发行版本</strong>；其次，WSL 2 的 Linux Kernel <strong>基于稳定的 <a href="https://www.kernel.org/" target="_blank" rel="noopener">version 4.19</a></strong>，并在<strong>启动时间、内存占用和需支持设备数等方面</strong>都进行了相应的优化；最后， WSL 2 将<strong>通过 Windows 更新来推送新服务</strong>，并由 Microsoft 及其它专业的商业伙伴<strong>提供安全监控和保障</strong>。</p>
+</blockquote>
+<blockquote>
+<p><u>Q2</u>: 可以<strong>在虚拟机中使用 WSL 2</strong> 吗？</p>
+<p><u>A2</u>: 可以，但要确保<strong>开启 <code>nested virtualization</code> 选项</strong>（在  Windows PowerShell （以管理员身份运行）中输入 <code>Set-VMProcessor -VMName &lt;VMName&gt; -ExposeVirtualizationExtensions $true</code> 命令）。</p>
+</blockquote>
+<blockquote>
+<p><u>Q3</u>: WSL 1 中的<strong>配置文件 <code>wsl.conf</code></strong> 在 WSL 2 中仍可以使用吗？</p>
+<p><u>A3</u>: 可以，比如自动挂载磁盘、开启或关闭 interop command和更改挂载目录等操作都将<strong>继续支持</strong>，更多 WSL 配置项可见 <a href="https://docs.microsoft.com/en-us/windows/wsl/wsl-config" target="_blank" rel="noopener">Distro Management</a> 。</p>
+</blockquote>
+<blockquote>
+<p><u>Q4</u>: WSL 2 将支持 Docker 技术，<strong>WSL 2 的 Docker 会有什么特别的限制吗</strong>？</p>
+<p><u>A4</u>: 如果启动的是 Windows 的 Docker ，将按照 Window 的 Docker 工作；如果启动的是 Linux 的 Docker ，将按照 Linux 的 Docker 工作。尽管 Windows 的 Docker 和 Linux 的 Docker 实现方式有所出入（由于篇幅有限，将不展开说明），但<strong>原则上 WSL 2 不存在对 Docker 的特别限制</strong>。</p>
+</blockquote>
+<blockquote>
+<p><u>Q5</u>: 有没有针对 WSL 2 的<strong>硬件支持</strong>，比如访问并加速GPU并之类？</p>
+<p><u>A5</u>: <strong>暂未完善</strong>，但持续开发中（但 WSL 1 支持串行端口和USB设备的访问，有需要可以先凑合用）。</p>
+</blockquote>
+<blockquote>
+<p><u>Q6</u>: 有没有统一 Windows 文件和 Linux 文件<strong>权限管理</strong>的解决方案？</p>
+<p><u>A6</u>: 在 <strong>WSL 1</strong> 中，因为是同一主机不存在系统边界（映射相对容易），权限管理是通过<strong>中间层的驱动器提供额外服务</strong>实现的；在 WSL 2 中，因为是不同主机而存在系统边界（映射相对困难），WSL 2 采取的策略是<strong>保持各自系统原有的访问权限</strong>，通过<strong>补充一些上层协议（比如 SSH）</strong>进行辅助管理，新的 Release 版本已经支持 “<a href="https://devblogs.microsoft.com/commandline/sharing-ssh-keys-between-windows-and-wsl-2/" target="_blank" rel="noopener">Sharing SSH keys between Windows and WSL 2</a>“。</p>
+</blockquote>
+<blockquote>
+<p><u>Q7</u>: 有没有 WSL 2 对<strong>网络配置</strong>的支持？</p>
+<p><u>A7</u>: 在 <strong>WSL 1</strong> 中，因为是同一主机，网络出口的 IP 地址是相同的，<strong>相关操作也接近原生</strong> ；在 <strong>WSL 2</strong> 中，因为是不同主机，网络出口的 IP 地址是不同的，<strong>WSL 2 计划实现的 Feature 包括</strong>：① 在提供不同的IP 地址情景下，加速网络访问；② 将客机映射到主机，共享同一 IP 地址；③ 尽快支持全部 Linux 下的网络应用。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><br>
 
-<h2><span id="记响应时间-analyses"><strong>记响应时间 Analyses</strong></span></h2><h3><span id="fiddler">Fiddler</span></h3><h3><span id="curl">Curl</span></h3><h2><span id="需注意事项-notices"><strong>需注意事项 Notices</strong></span></h2><ol>
-<li>报文格式</li>
-</ol>
-<ul>
-<li>无论使手动还是脚本保存会话的请求报文，都需要注意每个属性是否以 <code>\r\n</code>  结尾，最后属性是否以 <code>\r\n\r\n</code> 结尾</li>
-<li>遇到 <code>HTTP 400 Bad Request</code> 响应仔细检查报文格式是否正确</li>
-</ul>
-<ol start="2">
-<li>编码问题</li>
-</ol>
-<ul>
-<li>注意保存会话的编码格式，手动保存使用编码格式 <code>utf-8</code> ，脚本保存使用编码格式 <code>utf-16</code></li>
-<li>Socket发送报文和接受报文都需要二进制数据</li>
-<li>Fiddler默认使用GZip格式压缩，在发送请求报文时为确保响应主题非乱码，应该去除 <code>Accept-Encoding: gzip, deflate</code> 这行属性</li>
-</ul>
-<ol start="3">
-<li>端口问题</li>
-</ol>
-<ul>
-<li>Socket通信需要知道主机地址及其端口号<ul>
-<li>Fiddler Sessions或Inpectors可知主机地址及其端口号</li>
-<li>保存的TCP报文（使用Wireshark）可知主机地址及其端口号</li>
-<li>保存的HTTP/HTTPS报文（使用Fiddler）仅知主机地址，已知常用端口：HTTP为80/HTTPS为443</li>
-</ul>
-</li>
-</ul>
-<ol start="4">
-<li>请求变化</li>
-</ol>
-<ul>
-<li><code>Break on Response</code> 和 <code>Run to Completion</code> 对应会话并不相同</li>
-</ul>
-<h2><span id="待改进事项-todos"><strong>待改进事项 Todos</strong></span></h2><ul>
-<li>优化过滤会话和替换内容脚本：正则表达式</li>
-<li>发送响应回浏览器：Socket向其它进程发报文</li>
-<li>持续化、多线程抓包、修改、发包：多线程编程</li>
-<li>实现替代Fiddler的代理服务器：利用Python第三方代理库</li>
+<p><strong>简单的理解：</strong>通过使用虚拟化技术，使得 Hypervisor 上同时运行 Windows 实例和 Linux 实例，Windows 实例占主导地位并且持续地运行，Linux 实例非常轻量级并且只有在用到时才会启动。采用原生的 Linux Kernel 保证了系统调用的完整性，9P 协议的注入又很好地解决了两个不同文件系统之间的交互问题。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><ul>
+<li><a href="https://mybuild.techcommunity.microsoft.com/sessions/77003" target="_blank" rel="noopener">The new Windows subsystem for Linux architecture: a deep dive</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/wsl/wsl2-about" target="_blank" rel="noopener">About WSL 2</a></li>
+<li><a href="https://devblogs.microsoft.com/commandline/shipping-a-linux-kernel-with-windows/" target="_blank" rel="noopener">Shipping a Linux Kernel with Windows</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/wsl/wsl2-faq" target="_blank" rel="noopener">WSL 2 Frequently Asked Questions</a></li>
 </ul>
 <hr>
 
@@ -353,7 +272,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Curl/">Curl</a>, <a class="has-link-grey -link" href="/tags/Fiddler/">Fiddler</a>, <a class="has-link-grey -link" href="/tags/Socket/">Socket</a>
+                    <a class="has-link-grey -link" href="/tags/WSL/">WSL</a>
                 </div>
             </div>
         </div>
@@ -371,16 +290,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/12/12/WSL从入门到...(1)/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/12/15/WSL从入门到...(4)/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">#DevOps# WSL从入门到...(1) WSL 1 vs WSL 2</span>
+                <span class="level-item">#WSL# WSL从入门到...(4) Quick Start on WSL</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/06/18/LinuxOne上的Docker实践/">
-                <span class="level-item">#Cloud Computing# LinuxOne上的Docker初体验</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/13/WSL从入门到...(2)/">
+                <span class="level-item">#WSL# WSL从入门到...(2) Dive into WSL 1</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -401,7 +320,7 @@
     var gitalk = new Gitalk({
         clientID: '31cfc7a3a72e1e062ccd',
         clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
-        id: 'b590b9ebf1d4fa403a384dc9d032e595',
+        id: '96e534a7c7611c78f2ac968477dd2e80',
         repo: 'lottewong.github.io',
         owner: 'LotteWong',
         admin: "LotteWong"
@@ -454,7 +373,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        18
                     </p>
                 </div>
             </div>
@@ -464,7 +383,7 @@
                         Categories
                     </p>
                     <p class="title has-text-weight-normal">
-                        7
+                        8
                     </p>
                 </div>
             </div>
@@ -474,7 +393,7 @@
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        10
+                        11
                     </p>
                 </div>
             </div>
@@ -587,6 +506,17 @@
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2020/05/">
                 <span class="level-start">
                     <span class="level-item">May 2020</span>
@@ -614,7 +544,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">1</span>
                 </span>
             </a>
         </li>
@@ -625,7 +555,18 @@
                     <span class="level-item">December 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -657,19 +598,19 @@
     </div>
 </div>
     
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
         
+            
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 15px;">Concurrency</a> <a href="/tags/Curl/" style="font-size: 10px;">Curl</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a>
+        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
     </div>
 </div>
 
-    
-    
-        <div class="column-right-shadow is-hidden-widescreen ">
         
             
 <div class="card widget">
@@ -680,16 +621,35 @@
         
         <article class="media">
             
+            <a href="/2021/01/01/写在二零二壹/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二壹">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-31T16:00:00.000Z">2021-01-01</time></div>
+                    <a href="/2021/01/01/写在二零二壹/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二壹</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/linux.png" alt="#Linux# 速查手册：常用 Linux 命令">
+                    <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux# 速查手册：常用 Linux 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -754,25 +714,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/03/Golang与并发编程(1)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(1) goroutine使用">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-02T23:00:21.000Z">2020-03-03</time></div>
-                    <a href="/2020/03/03/Golang与并发编程(1)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(1) goroutine使用</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -786,17 +727,17 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/Artificial-Intelligence/">
+            <span class="level-start">
+                <span class="level-item">Artificial Intelligence</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Cloud-Computing/">
             <span class="level-start">
                 <span class="level-item">Cloud Computing</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/Configuration/">
-            <span class="level-start">
-                <span class="level-item">Configuration</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -808,6 +749,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Programming-Language/">
@@ -831,7 +780,7 @@
                 <span class="level-item">Sucks</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Testing/">
@@ -863,13 +812,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Curl/">
-                        <span class="tag">Curl</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/Docker/">
                         <span class="tag">Docker</span>
                         <span class="tag is-grey">1</span>
@@ -907,7 +849,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Linux/">
                         <span class="tag">Linux</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Machine-Learning/">
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -919,9 +868,16 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Socket/">
-                        <span class="tag">Socket</span>
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
                     </a>
                 </div>
                 
@@ -945,21 +901,51 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
             Recent
         </h3>
         
         <article class="media">
             
+            <a href="/2021/01/01/写在二零二壹/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二壹">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-31T16:00:00.000Z">2021-01-01</time></div>
+                    <a href="/2021/01/01/写在二零二壹/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二壹</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/linux.png" alt="#Linux# 速查手册：常用 Linux 命令">
+                    <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux# 速查手册：常用 Linux 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -1024,25 +1010,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/03/Golang与并发编程(1)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(1) goroutine使用">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-02T23:00:21.000Z">2020-03-03</time></div>
-                    <a href="/2020/03/03/Golang与并发编程(1)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(1) goroutine使用</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1056,17 +1023,17 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/Artificial-Intelligence/">
+            <span class="level-start">
+                <span class="level-item">Artificial Intelligence</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Cloud-Computing/">
             <span class="level-start">
                 <span class="level-item">Cloud Computing</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/Configuration/">
-            <span class="level-start">
-                <span class="level-item">Configuration</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -1078,6 +1045,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Programming-Language/">
@@ -1101,7 +1076,7 @@
                 <span class="level-item">Sucks</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Testing/">
@@ -1129,13 +1104,6 @@
                     <a class="tags has-addons" href="/tags/Concurrency/">
                         <span class="tag">Concurrency</span>
                         <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Curl/">
-                        <span class="tag">Curl</span>
-                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1177,7 +1145,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Linux/">
                         <span class="tag">Linux</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Machine-Learning/">
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1189,9 +1164,16 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Socket/">
-                        <span class="tag">Socket</span>
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
                     </a>
                 </div>
                 
@@ -1212,11 +1194,11 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="#Testing# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
+                    <img src="/images/logo.png" alt="#WSL# WSL从入门到...(3) Dive into WSL 2" height="28">
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2020 LotteWong
+                &copy; 2021 LotteWong
                 ,&nbsp;<a href="http://www2.scut.edu.cn/sse/" target="_blank">SCUT SE</a> & <a href="https://github.com/SCUTMSC" target="_blank">SCUT MSC</a>
                 
                 <!-- <br>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>#DevOps# WSL从入门到...(3) Dive into WSL 2 - LotteWong&#39;s Blog</title>
+<title>Archives: 2021/1 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="#DevOps# WSL从入门到...(3) Dive into WSL 2" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="LotteWong" type="application/atom+xml">
 
 
 
@@ -85,7 +85,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="#DevOps# WSL从入门到...(3) Dive into WSL 2" height="28">
+                <img src="/images/logo.png" alt="LotteWong" height="28">
             
             </a>
         </div>
@@ -130,225 +130,45 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    
-    <div class="card-image">
-        <span class="image is-7by1">
-            <img class="thumbnail" src="/images/wsl.jpg" alt="#DevOps# WSL从入门到...(3) Dive into WSL 2">
-        </span>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-12T23:00:21.000Z">2020-01-13</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    11 minutes read (About 1694 words)
-                </span>
-                
-                
-                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-                    <i class="far fa-eye"></i>
-                    <span id="busuanzi_value_page_pv">0</span> visits
-                </span>
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                #DevOps# WSL从入门到...(3) Dive into WSL 2
-            
-        </h1>
-        <div class="content">
-            <p>对 <strong>WSL 2 的一些实现细节</strong>进行补充说明，主要分为以下<strong>五个部分</strong>：</p>
-<ul>
-<li>前情提要</li>
-<li>背景</li>
-<li><strong>架构与答疑</strong></li>
-<li>总结</li>
-<li>参考链接</li>
-</ul>
-<hr>
-<a id="more"></a>
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 
-
-
-<h1><span id="目录-table-of-contents"><strong>目录 Table of Contents</strong></span></h1><!-- toc -->
-
-<ul>
-<li><a href="#前情提要"><strong>前情提要</strong></a></li>
-<li><a href="#背景"><strong>背景</strong></a><ul>
-<li><a href="#功能">功能</a></li>
-<li><a href="#性能">性能</a></li>
-<li><a href="#兼容">兼容</a></li>
-</ul>
-</li>
-<li><a href="#架构"><strong>架构</strong></a><ul>
-<li><a href="#访问-windows-文件">访问 Windows 文件</a></li>
-<li><a href="#访问-linux-文件">访问 Linux 文件</a></li>
-</ul>
-</li>
-<li><a href="#答疑"><strong>答疑</strong></a></li>
-<li><a href="#总结"><strong>总结</strong></a></li>
-<li><a href="#参考链接"><strong>参考链接</strong></a></li>
-</ul>
-<!-- tocstop -->
-
-<hr>
-<h2><span id="前情提要"><strong>前情提要</strong></span></h2><br>
-
-<p><em>前面已经简要介绍了 WSL 1 和 WSL 2 的区别，本节将聚焦于 WSL 2的实现细节。点开官方博客开始收获惊(<del>da</del>)喜(<del>keng</del>)，才疏学浅写错也不要打我 (预先感谢各位勘误 逃</em></p>
-<p>【更多信息 👉 <a href="https://lottewong.github.io/2019/12/12/WSL%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0...(1)/">WSL从入门到…(1) WSL 1 vs WSL 2</a>】</p>
-<h2><span id="背景"><strong>背景</strong></span></h2><h3><span id="功能">功能</span></h3><blockquote>
-<p>…… still provides <strong>the same user experience</strong> as in WSL 1 (the current widely available version).</p>
-</blockquote>
-<h3><span id="性能">性能</span></h3><blockquote>
-<p>Its primary goals are to <strong>increase file system performance</strong>, as well as <strong>adding full system call compatibility</strong>.</p>
-</blockquote>
-<h3><span id="兼容">兼容</span></h3><blockquote>
-<p>Individual Linux distros can be run either as a WSL 1 distro, or as a WSL 2 distro, can be <strong>upgraded or downgraded at any time</strong>, and you can run WSL 1 and WSL 2 distros <strong>side by side</strong>. </p>
-</blockquote>
-<h2><span id="架构"><strong>架构</strong></span></h2><br>
-
-<p><img src="/images/wsl2_component.png" alt="WSL 2 Architecture"></p>
-<p><strong>工作流大概是：</strong></p>
-<ol>
-<li>启动 LXSS Manager Service <strong>跟踪 Linux Distribution 的安装、运行和卸载</strong>。</li>
-<li>启动 Host compute service 和 Host Network Service <strong>创建和初始化 Lightweight utility VM 实例</strong>。</li>
-<li>被封装好的（<u>“shipping in box”</u>）基于 Linux Kernel 的<strong>虚拟机运行</strong>。</li>
-<li>LXSS Manager Service <strong>映射、加载和管理 Linux Distribution 的文件系统</strong>。</li>
-<li>以上准备工作完成后，<code>wsl.exe</code> 和 <code>bash</code> 之间将<strong>通过 <code>socket</code> 传递指令</strong>来完成作业。</li>
-</ol>
-<p><em>PS: Lightweight utility VM 只会在需要时创建运行，如果 <code>bash</code> 或 <code>wsl.exe</code> 退出，一段时间后将会被回收。</em></p>
-<h3><span id="访问-windows-文件">访问 Windows 文件</span></h3><p><img src="/images/accessing_windows_files_with_wsl2.png" alt="Accessing Windows Files with WSL 2"></p>
-<ul>
-<li><p><strong>Windows</strong> 主机启动一个文件<strong>服务器</strong>，此时 <strong>Linux</strong> 作为<strong>客户端</strong>发送请求，两者<strong>使用 9P 协议</strong>进行通信。</p>
-</li>
-<li><p><strong>效果看起来像</strong>把 Windows 的 <code>C</code> 盘挂载到了 Linux 的 <code>/mnt</code> 目录下。访问 Linux 的 <code>/mnt/c</code> 就是在 访问 Window 的 <code>C:\</code> 。</p>
-</li>
-</ul>
-<p><em>PS: 特别地，如果在 <code>bash</code> 内启动 <code>cmd.exe</code> ，由于 Windows 和 Linux 的可执行文件格式不同（前者是 PE 或 PE32+ ，后者是 ELF32 或 ELF64），<code>.exe</code> 文件无法直接运行。WSL 2 的处理方法实际上是：Linux 下的 <code>bash</code> 向 <code>wsl.exe</code> 发送 Interop command，Windows 下的 <code>wsl.exe</code> 解析后启动 <code>.exe</code> 文件。</em></p>
-<h3><span id="访问-linux-文件">访问 Linux 文件</span></h3><p><img src="/images/accessing_linux_files_with_wsl2.png" alt="Accessing Linux Files with WSL 2"></p>
-<ul>
-<li><strong>Linux</strong> 虚拟机启动一个文件<strong>服务器</strong>，此时 <strong>Windows</strong> 作为<strong>客户端</strong>发送请求，两者<strong>使用 9P 协议</strong>进行通信。</li>
-<li><strong>效果看起来像</strong>在 Windows 上开一般的虚拟机，对应的目录（在 <code>Network</code> 内）可以被文件资源管理器轻松地访问。</li>
-</ul>
-<p><em>PS: 从上述中可见，WSL 2 访问文件的中心观点 —— “两个系统都做各自可以做 / 擅长做的事情，遇事不决就通过<code>socket</code>发指令吱一声，而不会选择简单粗暴地翻译。”</em></p>
-<h2><span id="答疑"><strong>答疑</strong></span></h2><br>
-
-<blockquote>
-<p><u>Q1</u>: Microsoft 的 Linux Team 根据 WSL 2 <strong>针对 Linux Kernel 做了哪些调整</strong>？</p>
-<p><u>A1</u>: 首先，和 WSL 1 一样，WSL 2 <strong>本身并不提供 Linux 发行版本</strong>，用户需自行<strong>前往 Windows Store 下载</strong>或<strong>脚本安装自定义的发行版本</strong>；其次，WSL 2 的 Linux Kernel <strong>基于稳定的 <a href="https://www.kernel.org/" target="_blank" rel="noopener">version 4.19</a></strong>，并在<strong>启动时间、内存占用和需支持设备数等方面</strong>都进行了相应的优化；最后， WSL 2 将<strong>通过 Windows 更新来推送新服务</strong>，并由 Microsoft 及其它专业的商业伙伴<strong>提供安全监控和保障</strong>。</p>
-</blockquote>
-<blockquote>
-<p><u>Q2</u>: 可以<strong>在虚拟机中使用 WSL 2</strong> 吗？</p>
-<p><u>A2</u>: 可以，但要确保<strong>开启 <code>nested virtualization</code> 选项</strong>（在  Windows PowerShell （以管理员身份运行）中输入 <code>Set-VMProcessor -VMName &lt;VMName&gt; -ExposeVirtualizationExtensions $true</code> 命令）。</p>
-</blockquote>
-<blockquote>
-<p><u>Q3</u>: WSL 1 中的<strong>配置文件 <code>wsl.conf</code></strong> 在 WSL 2 中仍可以使用吗？</p>
-<p><u>A3</u>: 可以，比如自动挂载磁盘、开启或关闭 interop command和更改挂载目录等操作都将<strong>继续支持</strong>，更多 WSL 配置项可见 <a href="https://docs.microsoft.com/en-us/windows/wsl/wsl-config" target="_blank" rel="noopener">Distro Management</a> 。</p>
-</blockquote>
-<blockquote>
-<p><u>Q4</u>: WSL 2 将支持 Docker 技术，<strong>WSL 2 的 Docker 会有什么特别的限制吗</strong>？</p>
-<p><u>A4</u>: 如果启动的是 Windows 的 Docker ，将按照 Window 的 Docker 工作；如果启动的是 Linux 的 Docker ，将按照 Linux 的 Docker 工作。尽管 Windows 的 Docker 和 Linux 的 Docker 实现方式有所出入（由于篇幅有限，将不展开说明），但<strong>原则上 WSL 2 不存在对 Docker 的特别限制</strong>。</p>
-</blockquote>
-<blockquote>
-<p><u>Q5</u>: 有没有针对 WSL 2 的<strong>硬件支持</strong>，比如访问并加速GPU并之类？</p>
-<p><u>A5</u>: <strong>暂未完善</strong>，但持续开发中（但 WSL 1 支持串行端口和USB设备的访问，有需要可以先凑合用）。</p>
-</blockquote>
-<blockquote>
-<p><u>Q6</u>: 有没有统一 Windows 文件和 Linux 文件<strong>权限管理</strong>的解决方案？</p>
-<p><u>A6</u>: 在 <strong>WSL 1</strong> 中，因为是同一主机不存在系统边界（映射相对容易），权限管理是通过<strong>中间层的驱动器提供额外服务</strong>实现的；在 WSL 2 中，因为是不同主机而存在系统边界（映射相对困难），WSL 2 采取的策略是<strong>保持各自系统原有的访问权限</strong>，通过<strong>补充一些上层协议（比如 SSH）</strong>进行辅助管理，新的 Release 版本已经支持 “<a href="https://devblogs.microsoft.com/commandline/sharing-ssh-keys-between-windows-and-wsl-2/" target="_blank" rel="noopener">Sharing SSH keys between Windows and WSL 2</a>“。</p>
-</blockquote>
-<blockquote>
-<p><u>Q7</u>: 有没有 WSL 2 对<strong>网络配置</strong>的支持？</p>
-<p><u>A7</u>: 在 <strong>WSL 1</strong> 中，因为是同一主机，网络出口的 IP 地址是相同的，<strong>相关操作也接近原生</strong> ；在 <strong>WSL 2</strong> 中，因为是不同主机，网络出口的 IP 地址是不同的，<strong>WSL 2 计划实现的 Feature 包括</strong>：① 在提供不同的IP 地址情景下，加速网络访问；② 将客机映射到主机，共享同一 IP 地址；③ 尽快支持全部 Linux 下的网络应用。</p>
-</blockquote>
-<h2><span id="总结"><strong>总结</strong></span></h2><br>
-
-<p><strong>简单的理解：</strong>通过使用虚拟化技术，使得 Hypervisor 上同时运行 Windows 实例和 Linux 实例，Windows 实例占主导地位并且持续地运行，Linux 实例非常轻量级并且只有在用到时才会启动。采用原生的 Linux Kernel 保证了系统调用的完整性，9P 协议的注入又很好地解决了两个不同文件系统之间的交互问题。</p>
-<h2><span id="参考链接"><strong>参考链接</strong></span></h2><ul>
-<li><a href="https://mybuild.techcommunity.microsoft.com/sessions/77003" target="_blank" rel="noopener">The new Windows subsystem for Linux architecture: a deep dive</a></li>
-<li><a href="https://docs.microsoft.com/en-us/windows/wsl/wsl2-about" target="_blank" rel="noopener">About WSL 2</a></li>
-<li><a href="https://devblogs.microsoft.com/commandline/shipping-a-linux-kernel-with-windows/" target="_blank" rel="noopener">Shipping a Linux Kernel with Windows</a></li>
-<li><a href="https://docs.microsoft.com/en-us/windows/wsl/wsl2-faq" target="_blank" rel="noopener">WSL 2 Frequently Asked Questions</a></li>
-</ul>
-<hr>
-
-        </div>
-        
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Linux/">Linux</a>
-                </div>
-            </div>
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/14/WSL从入门到...(4)/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">#DevOps# WSL从入门到...(4) Quick Start on WSL</span>
-            </a>
-        </div>
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/01/写在二零二零/">
-                <span class="level-item">#Sucks# 写在二零二零</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
-
-
-
-<div class="card">
+<div class="card widget">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        <h3 class="tag is-link">
+        January 2021
+        </h3>
+        <div class="timeline">
         
-<div id="comment-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
-<script>
-    var gitalk = new Gitalk({
-        clientID: '31cfc7a3a72e1e062ccd',
-        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
-        id: 'fb802204c0dfb8626d6cc8490adb15a1',
-        repo: 'lottewong.github.io',
-        owner: 'LotteWong',
-        admin: "LotteWong"
-    })
-    gitalk.render('comment-container')
-</script>
-
+            <article class="media">
+                
+                <a href="/2021/01/01/写在二零二壹/" class="media-left">
+                    <p class="image is-64x64">
+                        <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二壹">
+                    </p>
+                </a>
+                
+                <div class="media-content">
+                    <div class="content">
+                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2020-12-31T16:00:00.000Z">2021-01-01</time>
+                        <a href="/2021/01/01/写在二零二壹/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二壹</a>
+                        <div class="level article-meta is-mobile">
+                            <div class="level-left">
+                                
+                                <div class="level-item is-size-7 is-uppercase">
+                                <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        
+        </div>
     </div>
 </div>
+
+
 </div>
                 
 
@@ -392,7 +212,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        18
                     </p>
                 </div>
             </div>
@@ -402,7 +222,7 @@
                         Categories
                     </p>
                     <p class="title has-text-weight-normal">
-                        7
+                        8
                     </p>
                 </div>
             </div>
@@ -412,7 +232,7 @@
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        10
+                        11
                     </p>
                 </div>
             </div>
@@ -525,6 +345,17 @@
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2020/05/">
                 <span class="level-start">
                     <span class="level-item">May 2020</span>
@@ -552,7 +383,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">1</span>
                 </span>
             </a>
         </li>
@@ -563,7 +394,18 @@
                     <span class="level-item">December 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -595,19 +437,19 @@
     </div>
 </div>
     
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
         
+            
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 15px;">Concurrency</a> <a href="/tags/Curl/" style="font-size: 10px;">Curl</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a>
+        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
     </div>
 </div>
 
-    
-    
-        <div class="column-right-shadow is-hidden-widescreen ">
         
             
 <div class="card widget">
@@ -618,16 +460,35 @@
         
         <article class="media">
             
+            <a href="/2021/01/01/写在二零二壹/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二壹">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-31T16:00:00.000Z">2021-01-01</time></div>
+                    <a href="/2021/01/01/写在二零二壹/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二壹</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/linux.png" alt="#Linux# 速查手册：常用 Linux 命令">
+                    <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux# 速查手册：常用 Linux 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -692,25 +553,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/03/Golang与并发编程(1)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(1) goroutine使用">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-02T23:00:21.000Z">2020-03-03</time></div>
-                    <a href="/2020/03/03/Golang与并发编程(1)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(1) goroutine使用</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -724,17 +566,17 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/Artificial-Intelligence/">
+            <span class="level-start">
+                <span class="level-item">Artificial Intelligence</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Cloud-Computing/">
             <span class="level-start">
                 <span class="level-item">Cloud Computing</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/Configuration/">
-            <span class="level-start">
-                <span class="level-item">Configuration</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -746,6 +588,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Programming-Language/">
@@ -769,7 +619,7 @@
                 <span class="level-item">Sucks</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Testing/">
@@ -801,13 +651,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Curl/">
-                        <span class="tag">Curl</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/Docker/">
                         <span class="tag">Docker</span>
                         <span class="tag is-grey">1</span>
@@ -845,7 +688,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Linux/">
                         <span class="tag">Linux</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Machine-Learning/">
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -857,9 +707,16 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Socket/">
-                        <span class="tag">Socket</span>
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
                     </a>
                 </div>
                 
@@ -883,21 +740,51 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
             Recent
         </h3>
         
         <article class="media">
             
+            <a href="/2021/01/01/写在二零二壹/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二壹">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-31T16:00:00.000Z">2021-01-01</time></div>
+                    <a href="/2021/01/01/写在二零二壹/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二壹</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/linux.png" alt="#Linux# 速查手册：常用 Linux 命令">
+                    <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux# 速查手册：常用 Linux 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -962,25 +849,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/03/Golang与并发编程(1)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(1) goroutine使用">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-02T23:00:21.000Z">2020-03-03</time></div>
-                    <a href="/2020/03/03/Golang与并发编程(1)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(1) goroutine使用</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -994,17 +862,17 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/Artificial-Intelligence/">
+            <span class="level-start">
+                <span class="level-item">Artificial Intelligence</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Cloud-Computing/">
             <span class="level-start">
                 <span class="level-item">Cloud Computing</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/Configuration/">
-            <span class="level-start">
-                <span class="level-item">Configuration</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -1016,6 +884,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Programming-Language/">
@@ -1039,7 +915,7 @@
                 <span class="level-item">Sucks</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Testing/">
@@ -1067,13 +943,6 @@
                     <a class="tags has-addons" href="/tags/Concurrency/">
                         <span class="tag">Concurrency</span>
                         <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Curl/">
-                        <span class="tag">Curl</span>
-                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1115,7 +984,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Linux/">
                         <span class="tag">Linux</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Machine-Learning/">
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1127,9 +1003,16 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Socket/">
-                        <span class="tag">Socket</span>
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
                     </a>
                 </div>
                 
@@ -1150,11 +1033,11 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="#DevOps# WSL从入门到...(3) Dive into WSL 2" height="28">
+                    <img src="/images/logo.png" alt="LotteWong" height="28">
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2020 LotteWong
+                &copy; 2021 LotteWong
                 ,&nbsp;<a href="http://www2.scut.edu.cn/sse/" target="_blank">SCUT SE</a> & <a href="https://github.com/SCUTMSC" target="_blank">SCUT MSC</a>
                 
                 <!-- <br>
