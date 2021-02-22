@@ -176,46 +176,19 @@
 
 
 
-<h1><span id="目录-table-of-contents"><strong>目录 Table of Contents</strong></span></h1><!-- toc -->
-
-<ul>
-<li><a href="#前情提要"><strong>前情提要</strong></a></li>
-<li><a href="#goroutine-调度"><strong><code>goroutine</code> 调度</strong></a><ul>
-<li><a href="#线程模型">线程模型</a><ul>
-<li><a href="#共享任务队列global-queue">+ 共享任务队列（Global Queue）</a></li>
-<li><a href="#独有任务队列local-queue">+ 独有任务队列（Local Queue）</a></li>
-<li><a href="#线程调度器m">+ 线程调度器（M）</a></li>
-<li><a href="#抢占式p">+ 抢占式（P）</a></li>
-<li><a href="#全局调度器sched">+ 全局调度器（Sched）</a></li>
-<li><a href="#非阻塞netpoller">+ 非阻塞（netpoller）</a></li>
-</ul>
-</li>
-<li><a href="#调度场景">调度场景</a><ul>
-<li><a href="#负载均衡">负载均衡</a></li>
-<li><a href="#任务窃取">任务窃取</a></li>
-<li><a href="#线程自旋">线程自旋</a></li>
-<li><a href="#请求抢占">请求抢占</a></li>
-<li><a href="#network-io-channel-阻塞">network IO / channel 阻塞</a></li>
-<li><a href="#system-call-阻塞">system call 阻塞</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#参考链接"><strong>参考链接</strong></a></li>
-</ul>
-<!-- tocstop -->
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
 
 <hr>
-<h2><span id="前情提要"><strong>前情提要</strong></span></h2><blockquote>
+<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a><strong>前情提要</strong></h2><blockquote>
 <p><code>Go</code> 中的并发性是以 <strong><code>goroutine</code> (独立活动)</strong>和 <strong><code>channel</code> (用于通信)</strong>的形式实现的，这是因为 <code>Go</code> 所信奉的<strong>“不要通过共享内存来通信，而应该通过通信来共享内存”</strong>。当然，<code>Go</code> 也提供了对传统通信机制的支持，如 <code>Mutex</code> (互斥锁) 和 <code>WaitGroup</code> (信号量)。</p>
 <p>本文将讨论 <strong><code>Go</code> 并发编程中的基本单位 <code>goroutine</code>的调度</strong>，如有错漏，欢迎指出 ;P</p>
 </blockquote>
-<h2><span id="goroutine-调度"><strong><code>goroutine</code> 调度</strong></span></h2><br>
+<h2 id="goroutine-调度"><a href="#goroutine-调度" class="headerlink" title="goroutine 调度"></a><strong><code>goroutine</code> 调度</strong></h2><br>
 
 <blockquote>
 <p><code>goroutines</code> 仅存在于 <code>go runtime</code> 中而不存在于 <code>OS</code> 中，因此需要 <strong>Go Runtime Scheduler</strong> 来管理它们的生命周期。</p>
 </blockquote>
-<h3><span id="线程模型">线程模型</span></h3><p><img src="/images/MPG_model.png" alt="MPG Model"></p>
+<h3 id="线程模型"><a href="#线程模型" class="headerlink" title="线程模型"></a>线程模型</h3><p><img src="/images/MPG_model.png" alt="MPG Model"></p>
 <blockquote>
 <ul>
 <li><strong><code>M</code></strong>：<code>machine</code>，一个 <code>M</code> 代表一个<strong>用户线程</strong></li>
@@ -224,7 +197,7 @@
 <li><strong><code>KSE</code></strong>：<code>kernel schedule entity</code>，一个 <code>KSE</code> 代表一个<strong>内核线程</strong></li>
 </ul>
 </blockquote>
-<h4><span id="共享任务队列global-queue">+ 共享任务队列（Global Queue）</span></h4><div align="center">
+<h4 id="共享任务队列（Global-Queue）"><a href="#共享任务队列（Global-Queue）" class="headerlink" title="+ 共享任务队列（Global Queue）"></a>+ 共享任务队列（Global Queue）</h4><div align="center">
     <img src="/images/global_queue.png" alt="Global Queue">
 </div>
 
@@ -247,7 +220,7 @@
 </ul>
 </li>
 </ul>
-<h4><span id="独有任务队列local-queue">+ 独有任务队列（Local Queue）</span></h4><div align="center">
+<h4 id="独有任务队列（Local-Queue）"><a href="#独有任务队列（Local-Queue）" class="headerlink" title="+ 独有任务队列（Local Queue）"></a>+ 独有任务队列（Local Queue）</h4><div align="center">
     <img src="/images/local_queue.png" alt="Local Queue">
 </div>
 
@@ -265,7 +238,7 @@
 </ul>
 </li>
 </ul>
-<h4><span id="线程调度器m">+ 线程调度器（M）</span></h4><div align="center">
+<h4 id="线程调度器（M）"><a href="#线程调度器（M）" class="headerlink" title="+ 线程调度器（M）"></a>+ 线程调度器（M）</h4><div align="center">
     <img src="/images/machine.png" alt="Machine">
 </div>
 
@@ -283,7 +256,7 @@
 </ul>
 </li>
 </ul>
-<h4><span id="抢占式p">+ 抢占式（P）</span></h4><div align="center">
+<h4 id="抢占式（P）"><a href="#抢占式（P）" class="headerlink" title="+ 抢占式（P）"></a>+ 抢占式（P）</h4><div align="center">
     <img src="/images/processor.png" alt="Processor">
 </div>
 
@@ -301,54 +274,54 @@
 </ul>
 </li>
 </ul>
-<h4><span id="全局调度器sched">+ 全局调度器（Sched）</span></h4><ul>
+<h4 id="全局调度器（Sched）"><a href="#全局调度器（Sched）" class="headerlink" title="+ 全局调度器（Sched）"></a>+ 全局调度器（Sched）</h4><ul>
 <li><strong><code>P</code></strong> 主要负责 <strong><code>Local Queue</code></strong> 的调度，<strong><code>Sched</code></strong> 主要负责 <strong><code>Global Queue</code></strong> 的调度。</li>
 </ul>
-<h4><span id="非阻塞netpoller">+ 非阻塞（netpoller）</span></h4><ul>
+<h4 id="非阻塞（netpoller）"><a href="#非阻塞（netpoller）" class="headerlink" title="+ 非阻塞（netpoller）"></a>+ 非阻塞（netpoller）</h4><ul>
 <li><strong>阻塞的 IO 模型</strong>为：<code>G1</code> 被阻塞后，<code>M1</code> 也被阻塞，但是 <code>M1</code> 的其它 <code>G#</code> 可以转移到空闲或新起的 <code>M#</code> 中执行。</li>
 <li><strong>非阻塞的 IO 模型</strong>为：<code>G1</code> 被阻塞后，<code>M1</code> 不会阻塞，<code>M1</code> 的其它 <code>G#</code> 仍然可以执行。</li>
 <li>此外，<code>netpoller</code> 还抽象了 <strong><code>epoll</code> 的多路复用</strong>，<code>netpoller</code> 将对应的文件描述符注册到 <code>epoll</code> 实例中进行 <code>epoll_wait</code>，就绪的文件描述符回调通知给阻塞的 <code>G</code>，<code>G</code> 更新为就绪状态等待调度继续执行。</li>
 </ul>
-<h3><span id="调度场景">调度场景</span></h3><p><img src="/images/MPG_flowchart.png" alt="MPG Flowchart"></p>
+<h3 id="调度场景"><a href="#调度场景" class="headerlink" title="调度场景"></a>调度场景</h3><p><img src="/images/MPG_flowchart.png" alt="MPG Flowchart"></p>
 <blockquote>
 <p>调度的本质就是 <strong><code>P</code> 将 <code>G</code> 合理地分配给某个 <code>M</code></strong> 的过程，<code>M</code> 只有和 <code>P</code> 绑定才能运行 <code>G</code>。</p>
 </blockquote>
-<h4><span id="负载均衡">负载均衡</span></h4><ul>
+<h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><ul>
 <li><strong>从本地到全局</strong>：<code>Local Queue</code> 满了，会将前一半的 <code>G</code> 和新创建的 <code>G</code> 放到 <code>Global Queue</code> 并打乱顺序；</li>
 <li><strong>从全局到本地</strong>：<code>Local Queue</code> 空了，会从 <code>Glocal Queue</code> 随机选取 <code>n = min(len(GQ)/GOMAXPROCS + 1, len(GQ/2))</code> 个 <code>G</code>；</li>
 <li><strong>为了调度公平</strong>：1/61 的几率在 <code>Global Queue</code> 中找 <code>G</code>，60/61 的几率在 <code>Local Queue</code> 找 <code>G</code>，否则 <code>Global Queue</code> 中的 <code>G</code> 有可能永远没办法被调度。</li>
 </ul>
-<h4><span id="任务窃取">任务窃取</span></h4><ul>
+<h4 id="任务窃取"><a href="#任务窃取" class="headerlink" title="任务窃取"></a>任务窃取</h4><ul>
 <li><p>出现空闲的<code>M</code>，此时它绑定的 <code>P</code> 的 <code>Local Queue</code> 为空，并且 <code>Global Queue</code> 也为空，则从其它 <code>P</code> 中窃取后一半的 <code>G</code>，这就是 <strong><code>work-stealing</code> 算法</strong>。</p>
 <img src="/images/work_stealing.png" alt="Work-stealing" align="center/">
 
 </li>
 </ul>
-<h4><span id="线程自旋">线程自旋</span></h4><ul>
+<h4 id="线程自旋"><a href="#线程自旋" class="headerlink" title="线程自旋"></a>线程自旋</h4><ul>
 <li>在创建 <code>G</code> 时，运行的 <code>G</code> 会尝试唤醒其他空闲的 <code>M</code> 执行，如果没有 <code>G</code>，<code>M</code> 将<strong>自旋而不阻塞</strong>，不停地找 <code>G</code>；</li>
 <li>自旋的优点是<strong>降低了 <code>M</code> 切换上下文的成本</strong>，缺点是 <strong>CPU 空转浪费资源</strong>；</li>
 <li>折中方案是：<strong>最多有 <code>GOMAXPROCS</code> 个自旋的线程，多余的线程将休眠。</strong></li>
 </ul>
-<h4><span id="请求抢占">请求抢占</span></h4><ul>
+<h4 id="请求抢占"><a href="#请求抢占" class="headerlink" title="请求抢占"></a>请求抢占</h4><ul>
 <li>满足以下两个条件，<code>sysmon</code> 将会<strong>发送抢占请求</strong>，但是<strong>能否抢占成功不被保障</strong>：<ul>
 <li><code>G</code> <strong>进行系统调用</strong>超过 <strong>20 μs</strong></li>
 <li><code>G</code> <strong>运行 (非循环)</strong>超过 <strong>10 ms</strong></li>
 </ul>
 </li>
 </ul>
-<h4><span id="network-io-channel-阻塞">network IO / channel 阻塞</span></h4><ul>
+<h4 id="network-IO-channel-阻塞"><a href="#network-IO-channel-阻塞" class="headerlink" title="network IO / channel 阻塞"></a>network IO / channel 阻塞</h4><ul>
 <li><strong>当 network IO / channel 操作发生</strong>，被阻塞的 <code>G</code> 放入等待队列，<code>M</code> 选择其它的 <code>G</code> ；</li>
 <li><strong>如果有</strong>就绪的 <code>G</code>，<code>M</code> <strong>正常执行</strong>；<strong>如果无</strong>就绪的 <code>G</code>，<code>M</code> 将<strong>解绑 <code>P</code> 并且休眠</strong>；</li>
 <li><strong>当 network IO / channel 操作完成</strong>，被阻塞的 <code>G</code> 从等待变成就绪，加入某个 <code>P</code> 中被新的 <code>M</code> 执行或加入到 <code>Global Queue</code>，休眠的 <code>M</code> 将等待新创建的 <code>G</code> 唤醒。</li>
 <li>在这个过程中，调度实际上是<strong>非阻塞的</strong>——<code>M</code> 不会因为 <code>G</code> 阻塞而休眠。</li>
 </ul>
-<h4><span id="system-call-阻塞">system call 阻塞</span></h4><ul>
+<h4 id="system-call-阻塞"><a href="#system-call-阻塞" class="headerlink" title="system call 阻塞"></a>system call 阻塞</h4><ul>
 <li><strong>当 system call 操作发生</strong>，<code>G</code> 会阻塞，<code>M</code> 会解绑 <code>P</code> 并且休眠；</li>
 <li><strong>如果有</strong>空闲的 <code>M</code>，该空闲的 <code>M</code> 将<strong>绑定 <code>P</code></strong> ，<strong>如果无</strong>空闲的 <code>M</code>，将新建一个 <code>M</code> 来<strong>绑定 <code>P</code></strong>；</li>
 <li><strong>当 system call 操作完成</strong>，被阻塞的 <code>G</code> 从阻塞变成就绪，加入某个 <code>P</code> 中被新的 <code>M</code> 执行或加入到 <code>Global Queue</code>，休眠的 <code>M</code> 将等待新创建的 <code>G</code> 唤醒。</li>
 <li>在这个过程中，调度实际上是<strong>阻塞的</strong>——<code>M</code> 会因为 <code>G</code> 阻塞而休眠</li>
 </ul>
-<h2><span id="参考链接"><strong>参考链接</strong></span></h2><ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><ul>
 <li><a href="https://www.iminho.me/wiki/blog-20.html" target="_blank" rel="noopener">Go并发编程-Goroutine如何调度的?</a></li>
 <li><a href="https://segmentfault.com/a/1190000018775901" target="_blank" rel="noopener">Go调度器系列（3）图解调度原理</a></li>
 <li><a href="https://studygolang.com/articles/20991" target="_blank" rel="noopener">一文摸清 Go 的并发调度模型</a></li>
@@ -463,7 +436,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        18
+                        19
                     </p>
                 </div>
             </div>
@@ -483,7 +456,7 @@
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        11
+                        12
                     </p>
                 </div>
             </div>
@@ -612,7 +585,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -688,19 +661,19 @@
     </div>
 </div>
     
-    
-        <div class="column-right-shadow is-hidden-widescreen ">
         
-            
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
+        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
     </div>
 </div>
 
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
         
             
 <div class="card widget">
@@ -730,7 +703,26 @@
         
         <article class="media">
             
-            <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
+            <a href="/2020/05/21/速查手册之常用Git命令/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/git.png" alt="#Git# 速查手册：常用 Git 命令">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-20T23:00:21.000Z">2020-05-21</time></div>
+                    <a href="/2020/05/21/速查手册之常用Git命令/" class="has-link-black-ter is-size-6">#Git# 速查手册：常用 Git 命令</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
@@ -739,7 +731,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -778,25 +770,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T23:00:21.000Z">2020-03-05</time></div>
                     <a href="/2020/03/05/Golang与并发编程(3)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(3) goroutine泄漏</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/04/Golang与并发编程(2)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(2) goroutine调度">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-03T23:00:21.000Z">2020-03-04</time></div>
-                    <a href="/2020/03/04/Golang与并发编程(2)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(2) goroutine调度</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
                     </p>
@@ -862,7 +835,7 @@
                 <span class="level-item">Quick Ref Guide</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Sucks/">
@@ -911,6 +884,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Fiddler/">
                         <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -991,17 +971,6 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Tag Cloud
-        </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
-    </div>
-</div>
-
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
             Recent
         </h3>
         
@@ -1026,7 +995,26 @@
         
         <article class="media">
             
-            <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
+            <a href="/2020/05/21/速查手册之常用Git命令/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/git.png" alt="#Git# 速查手册：常用 Git 命令">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-20T23:00:21.000Z">2020-05-21</time></div>
+                    <a href="/2020/05/21/速查手册之常用Git命令/" class="has-link-black-ter is-size-6">#Git# 速查手册：常用 Git 命令</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
@@ -1035,7 +1023,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -1074,25 +1062,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T23:00:21.000Z">2020-03-05</time></div>
                     <a href="/2020/03/05/Golang与并发编程(3)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(3) goroutine泄漏</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/04/Golang与并发编程(2)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(2) goroutine调度">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-03T23:00:21.000Z">2020-03-04</time></div>
-                    <a href="/2020/03/04/Golang与并发编程(2)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(2) goroutine调度</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
                     </p>
@@ -1158,7 +1127,7 @@
                 <span class="level-item">Quick Ref Guide</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Sucks/">
@@ -1207,6 +1176,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Fiddler/">
                         <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>

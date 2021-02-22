@@ -176,33 +176,10 @@
 
 
 
-<h1><span id="目录-table-of-contents"><strong>目录 Table of Contents</strong></span></h1><!-- toc -->
-
-<ul>
-<li><a href="#前情提要"><strong>前情提要</strong></a></li>
-<li><a href="#概念引申"><strong>概念引申</strong></a><ul>
-<li><a href="#管道-pipe">管道 Pipe</a></li>
-<li><a href="#消息队列-message">消息队列 Message</a></li>
-<li><a href="#信道-channel">信道 Channel</a></li>
-</ul>
-</li>
-<li><a href="#channel-使用"><strong><code>channel</code> 使用</strong></a><ul>
-<li><a href="#创建">创建</a></li>
-<li><a href="#读写">读写</a></li>
-<li><a href="#关闭">关闭</a></li>
-</ul>
-</li>
-<li><a href="#应用实例"><strong>应用实例</strong></a><ul>
-<li><a href="#单生产者-单消费者模型">单生产者-单消费者模型</a></li>
-<li><a href="#多生产者-多消费者模型">多生产者-多消费者模型</a></li>
-</ul>
-</li>
-<li><a href="#参考链接"><strong>参考链接</strong></a></li>
-</ul>
-<!-- tocstop -->
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
 
 <hr>
-<h2><span id="前情提要"><strong>前情提要</strong></span></h2><blockquote>
+<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a><strong>前情提要</strong></h2><blockquote>
 <p>为了<strong>实现 <code>goroutine</code> 通信</strong>，有两种常见并发模型：</p>
 <ul>
 <li><strong>共享内存：</strong>使用共享内存方式，<code>Go</code> 中 <code>sync</code> 库包提供了多种同步的机制。</li>
@@ -211,7 +188,7 @@
 <p>让我们再一次来复读 <code>Go</code> 社区的并发口号——<strong>“不要通过共享内存来通信，而应该通过通信来共享内存”</strong>。</p>
 <p>本文将讨论 <strong><code>Go</code> 并发编程中的通信桥梁 <code>channel</code>的使用</strong>，如有错漏，欢迎指出 ;P</p>
 </blockquote>
-<h2><span id="概念引申"><strong>概念引申</strong></span></h2><h3><span id="管道-pipe">管道 Pipe</span></h3><div align="center">
+<h2 id="概念引申"><a href="#概念引申" class="headerlink" title="概念引申"></a><strong>概念引申</strong></h2><h3 id="管道-Pipe"><a href="#管道-Pipe" class="headerlink" title="管道 Pipe"></a>管道 Pipe</h3><div align="center">
     <img src="/images/pipe.png" alt="Pipe">
 </div>
 
@@ -221,7 +198,7 @@
 <li>有名管道拥有名字，是<strong>全双工</strong>的；有名管道对于管道两端的进程而言是一个存在于<strong>文件系统</strong>的特殊文件；有名管道可以用于<strong>本机任意两个进程</strong>之间通信。</li>
 <li>管道传送<strong>无格式字节流</strong>，这就要求管道的读出方和写入方必须事先约定好数据的格式。</li>
 </ul>
-<h3><span id="消息队列-message">消息队列 Message</span></h3><div align="center">
+<h3 id="消息队列-Message"><a href="#消息队列-Message" class="headerlink" title="消息队列 Message"></a>消息队列 Message</h3><div align="center">
     <img src="/images/message.png" alt="Message">
 </div>
 
@@ -229,7 +206,7 @@
 <li><strong>消息队列 (Message)</strong> 是操作系统中<strong>进程间通信</strong>的一种方式。管道的本质是一个存放在<strong>内核</strong>中的<strong>长度不限的消息链表</strong>，一般遵循<strong>先进先出</strong>规则，也可以<strong>随机或按消息的类型</strong>查询，并且允许一个或多个进程向它写入或读取消息。</li>
 <li>消息队列由消息队列标识符标识，提供<strong>有格式字节流</strong>并且<strong>具有类型</strong>。</li>
 </ul>
-<h3><span id="信道-channel">信道 Channel</span></h3><div align="center">
+<h3 id="信道-Channel"><a href="#信道-Channel" class="headerlink" title="信道 Channel"></a>信道 Channel</h3><div align="center">
     <img src="/images/channel.png" alt="Channel">
 </div>
 
@@ -237,7 +214,7 @@
 <li><strong>信道 (Channel)</strong> 是 <code>Golang</code> 中<strong>协程间通信</strong>的一种方式。信道的本质是一个线程安全的<strong>先进先出队列</strong>，可选择<strong>无缓冲或有缓冲</strong>，任意时刻同时只能有一个 <code>goroutine</code> 访问 <code>channel</code>。</li>
 <li>信道可以<strong>指定类型</strong>。</li>
 </ul>
-<h2><span id="channel-使用"><strong><code>channel</code> 使用</strong></span></h2><h3><span id="创建">创建</span></h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 双向channel</span></span><br><span class="line">ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> T, <span class="hljs-built_in">cap</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 只读channel（但是没什么意义，双向channel可以赋值单向channel）</span></span><br><span class="line">ch_or := <span class="hljs-built_in">make</span>(&lt;-<span class="hljs-keyword">chan</span> T, <span class="hljs-built_in">cap</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 只写channel（但是没什么意义，双向channel可以赋值单向channel）</span></span><br><span class="line">ch_ow := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span>&lt;- T, <span class="hljs-built_in">cap</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="channel-使用"><a href="#channel-使用" class="headerlink" title="channel 使用"></a><strong><code>channel</code> 使用</strong></h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 双向channel</span></span><br><span class="line">ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> T, <span class="hljs-built_in">cap</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 只读channel（但是没什么意义，双向channel可以赋值单向channel）</span></span><br><span class="line">ch_or := <span class="hljs-built_in">make</span>(&lt;-<span class="hljs-keyword">chan</span> T, <span class="hljs-built_in">cap</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 只写channel（但是没什么意义，双向channel可以赋值单向channel）</span></span><br><span class="line">ch_ow := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span>&lt;- T, <span class="hljs-built_in">cap</span>)</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>引用类型，<strong>使用 <code>make</code> 创建</strong>，零值为 <code>nil</code></li>
@@ -253,7 +230,7 @@
 </ul>
 </li>
 </ul>
-<h3><span id="读写">读写</span></h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data := &lt;- ch</span><br></pre></td></tr></table></figure>
+<h3 id="读写"><a href="#读写" class="headerlink" title="读写"></a>读写</h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data := &lt;- ch</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>从 <code>channel</code> 中读取数据：</p>
@@ -272,7 +249,7 @@
 </ul>
 </li>
 </ul>
-<h3><span id="关闭">关闭</span></h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 关闭 channel</span></span><br><span class="line"><span class="hljs-comment">// close 手动关闭或等待自动 GC</span></span><br><span class="line"><span class="hljs-built_in">close</span>(ch)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 尝试写入已关闭的 channel</span></span><br><span class="line"><span class="hljs-comment">// 导致 panic 异常</span></span><br><span class="line">ch &lt;- d</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 返回数据或零值</span></span><br><span class="line"><span class="hljs-comment">// 还有剩余数据则返回数据</span></span><br><span class="line"><span class="hljs-comment">// 没有剩余数据则返回零值</span></span><br><span class="line">d := &lt;-ch</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 返回数据和布尔值</span></span><br><span class="line"><span class="hljs-comment">// true 表示成功从 channel 接收到值</span></span><br><span class="line"><span class="hljs-comment">// false 表示 channel 已经被关闭并且里面没有值可接收</span></span><br><span class="line">d, ok := &lt;-ch</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 尝试重复关闭 channel</span></span><br><span class="line"><span class="hljs-comment">// 导致 panic 异常</span></span><br><span class="line"><span class="hljs-built_in">close</span>(ch)</span><br></pre></td></tr></table></figure>
+<h3 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 关闭 channel</span></span><br><span class="line"><span class="hljs-comment">// close 手动关闭或等待自动 GC</span></span><br><span class="line"><span class="hljs-built_in">close</span>(ch)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 尝试写入已关闭的 channel</span></span><br><span class="line"><span class="hljs-comment">// 导致 panic 异常</span></span><br><span class="line">ch &lt;- d</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 返回数据或零值</span></span><br><span class="line"><span class="hljs-comment">// 还有剩余数据则返回数据</span></span><br><span class="line"><span class="hljs-comment">// 没有剩余数据则返回零值</span></span><br><span class="line">d := &lt;-ch</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 返回数据和布尔值</span></span><br><span class="line"><span class="hljs-comment">// true 表示成功从 channel 接收到值</span></span><br><span class="line"><span class="hljs-comment">// false 表示 channel 已经被关闭并且里面没有值可接收</span></span><br><span class="line">d, ok := &lt;-ch</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 尝试重复关闭 channel</span></span><br><span class="line"><span class="hljs-comment">// 导致 panic 异常</span></span><br><span class="line"><span class="hljs-built_in">close</span>(ch)</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>关闭 <code>channel</code> 可以通过显式的<strong>代码关闭</strong>或隐式的<strong>垃圾回收</strong></li>
@@ -292,11 +269,11 @@
 <li><code>close</code> 常常与 <strong><code>select</code>、<code>range</code> 和 <code>defer</code></strong> 一起使用</li>
 </ul>
 <p><em>PS：<code>Golang</code> 并不支持无限容量的 <code>channel</code>，原因是如果生产速率远远大于消费速率，那么 <code>channel</code> 内的数据不断累积将会爆掉内存。</em></p>
-<h2><span id="应用实例"><strong>应用实例</strong></span></h2><h3><span id="单生产者-单消费者模型">单生产者-单消费者模型</span></h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> (</span><br><span class="line">	<span class="hljs-string">"fmt"</span></span><br><span class="line">	<span class="hljs-string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> BUFLEN = <span class="hljs-number">5</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 生产者</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">producer</span><span class="hljs-params">(ch <span class="hljs-keyword">chan</span>&lt;- <span class="hljs-keyword">int</span>)</span></span> &#123;</span><br><span class="line">	d := <span class="hljs-number">1</span></span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line">		ch &lt;- d</span><br><span class="line">		fmt.Println(<span class="hljs-string">"Produce:"</span>, d)</span><br><span class="line">		d++</span><br><span class="line">		time.Sleep(<span class="hljs-number">1</span> * time.Second) <span class="hljs-comment">// 生产者速率不宜过快</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 消费者</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">consumer</span><span class="hljs-params">(ch &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line">		d := &lt;-ch</span><br><span class="line">		fmt.Println(<span class="hljs-string">"Consume:"</span>, d)</span><br><span class="line">		time.Sleep(<span class="hljs-number">2</span> * time.Second) <span class="hljs-comment">// 消费者速率不宜过快</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">	<span class="hljs-comment">// 生产消费的缓冲区</span></span><br><span class="line">	ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>, BUFLEN)</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 启动生产者协程</span></span><br><span class="line">	<span class="hljs-keyword">go</span> producer(ch)</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 启动消费者协程</span></span><br><span class="line">	<span class="hljs-keyword">go</span> consumer(ch)</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 防止主函数的退出</span></span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a><strong>应用实例</strong></h2><h3 id="单生产者-单消费者模型"><a href="#单生产者-单消费者模型" class="headerlink" title="单生产者-单消费者模型"></a>单生产者-单消费者模型</h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> (</span><br><span class="line">	<span class="hljs-string">"fmt"</span></span><br><span class="line">	<span class="hljs-string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> BUFLEN = <span class="hljs-number">5</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 生产者</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">producer</span><span class="hljs-params">(ch <span class="hljs-keyword">chan</span>&lt;- <span class="hljs-keyword">int</span>)</span></span> &#123;</span><br><span class="line">	d := <span class="hljs-number">1</span></span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line">		ch &lt;- d</span><br><span class="line">		fmt.Println(<span class="hljs-string">"Produce:"</span>, d)</span><br><span class="line">		d++</span><br><span class="line">		time.Sleep(<span class="hljs-number">1</span> * time.Second) <span class="hljs-comment">// 生产者速率不宜过快</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 消费者</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">consumer</span><span class="hljs-params">(ch &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line">		d := &lt;-ch</span><br><span class="line">		fmt.Println(<span class="hljs-string">"Consume:"</span>, d)</span><br><span class="line">		time.Sleep(<span class="hljs-number">2</span> * time.Second) <span class="hljs-comment">// 消费者速率不宜过快</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">	<span class="hljs-comment">// 生产消费的缓冲区</span></span><br><span class="line">	ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>, BUFLEN)</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 启动生产者协程</span></span><br><span class="line">	<span class="hljs-keyword">go</span> producer(ch)</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 启动消费者协程</span></span><br><span class="line">	<span class="hljs-keyword">go</span> consumer(ch)</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 防止主函数的退出</span></span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3><span id="多生产者-多消费者模型">多生产者-多消费者模型</span></h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> (</span><br><span class="line">	<span class="hljs-string">"fmt"</span></span><br><span class="line">	<span class="hljs-string">"math/rand"</span></span><br><span class="line">	<span class="hljs-string">"sync"</span></span><br><span class="line">	<span class="hljs-string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> BUFLEN = <span class="hljs-number">5</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> cond *sync.Cond = sync.NewCond(&amp;sync.Mutex&#123;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 生产者</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">producer</span><span class="hljs-params">(ch <span class="hljs-keyword">chan</span>&lt;- <span class="hljs-keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line">		cond.L.Lock()</span><br><span class="line">		<span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(ch) == BUFLEN &#123;</span><br><span class="line">			cond.Wait()</span><br><span class="line">		&#125;</span><br><span class="line">		data := rand.Intn(<span class="hljs-number">1000</span>)</span><br><span class="line">		ch &lt;- data</span><br><span class="line">		fmt.Println(<span class="hljs-string">"Produce:"</span>, data)</span><br><span class="line">		cond.L.Unlock()</span><br><span class="line"></span><br><span class="line">		cond.Signal()</span><br><span class="line">		time.Sleep(<span class="hljs-number">2</span> * time.Second) <span class="hljs-comment">// 生产者速率不宜过快</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 消费者</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">consumer</span><span class="hljs-params">(ch &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line">		cond.L.Lock()</span><br><span class="line">		<span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(ch) == <span class="hljs-number">0</span> &#123;</span><br><span class="line">			cond.Wait()</span><br><span class="line">		&#125;</span><br><span class="line">		data := &lt;-ch</span><br><span class="line">		fmt.Println(<span class="hljs-string">"Consume:"</span>, data)</span><br><span class="line">		cond.L.Unlock()</span><br><span class="line"></span><br><span class="line">		cond.Signal()</span><br><span class="line">		time.Sleep(<span class="hljs-number">1</span> * time.Second) <span class="hljs-comment">// 消费者速率不宜过快</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">	rand.Seed(time.Now().UnixNano())</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 生产消费的缓冲区</span></span><br><span class="line">	ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>, BUFLEN)</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 启动 10 个生产者协程</span></span><br><span class="line">	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;</span><br><span class="line">		<span class="hljs-keyword">go</span> producer(ch)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 启动 10 个消费者协程</span></span><br><span class="line">	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;</span><br><span class="line">		<span class="hljs-keyword">go</span> consumer(ch)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 防止主函数的退出</span></span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="多生产者-多消费者模型"><a href="#多生产者-多消费者模型" class="headerlink" title="多生产者-多消费者模型"></a>多生产者-多消费者模型</h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> (</span><br><span class="line">	<span class="hljs-string">"fmt"</span></span><br><span class="line">	<span class="hljs-string">"math/rand"</span></span><br><span class="line">	<span class="hljs-string">"sync"</span></span><br><span class="line">	<span class="hljs-string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> BUFLEN = <span class="hljs-number">5</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> cond *sync.Cond = sync.NewCond(&amp;sync.Mutex&#123;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 生产者</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">producer</span><span class="hljs-params">(ch <span class="hljs-keyword">chan</span>&lt;- <span class="hljs-keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line">		cond.L.Lock()</span><br><span class="line">		<span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(ch) == BUFLEN &#123;</span><br><span class="line">			cond.Wait()</span><br><span class="line">		&#125;</span><br><span class="line">		data := rand.Intn(<span class="hljs-number">1000</span>)</span><br><span class="line">		ch &lt;- data</span><br><span class="line">		fmt.Println(<span class="hljs-string">"Produce:"</span>, data)</span><br><span class="line">		cond.L.Unlock()</span><br><span class="line"></span><br><span class="line">		cond.Signal()</span><br><span class="line">		time.Sleep(<span class="hljs-number">2</span> * time.Second) <span class="hljs-comment">// 生产者速率不宜过快</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 消费者</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">consumer</span><span class="hljs-params">(ch &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line">		cond.L.Lock()</span><br><span class="line">		<span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(ch) == <span class="hljs-number">0</span> &#123;</span><br><span class="line">			cond.Wait()</span><br><span class="line">		&#125;</span><br><span class="line">		data := &lt;-ch</span><br><span class="line">		fmt.Println(<span class="hljs-string">"Consume:"</span>, data)</span><br><span class="line">		cond.L.Unlock()</span><br><span class="line"></span><br><span class="line">		cond.Signal()</span><br><span class="line">		time.Sleep(<span class="hljs-number">1</span> * time.Second) <span class="hljs-comment">// 消费者速率不宜过快</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">	rand.Seed(time.Now().UnixNano())</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 生产消费的缓冲区</span></span><br><span class="line">	ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>, BUFLEN)</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 启动 10 个生产者协程</span></span><br><span class="line">	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;</span><br><span class="line">		<span class="hljs-keyword">go</span> producer(ch)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 启动 10 个消费者协程</span></span><br><span class="line">	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;</span><br><span class="line">		<span class="hljs-keyword">go</span> consumer(ch)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 防止主函数的退出</span></span><br><span class="line">	<span class="hljs-keyword">for</span> &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2><span id="参考链接"><strong>参考链接</strong></span></h2><ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><ul>
 <li><a href="https://books.studygolang.com/gopl-zh/" target="_blank" rel="noopener">Go语言圣经</a></li>
 <li><a href="https://github.com/overnote/over-golang/blob/master/02-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/02-channel.md" target="_blank" rel="noopener">channel</a></li>
 <li><a href="https://github.com/overnote/over-golang/blob/master/02-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/04-channel%E7%9A%84%E5%BA%94%E7%94%A8.md" target="_blank" rel="noopener">channel的应用</a></li>
@@ -327,7 +304,7 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/14/速查手册之常用Linux命令/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/14/速查手册之常用Linux&Shell命令/">
                 <i class="level-item fas fa-chevron-left"></i>
                 <span class="level-item">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</span>
             </a>
@@ -410,7 +387,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        18
+                        19
                     </p>
                 </div>
             </div>
@@ -430,7 +407,7 @@
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        11
+                        12
                     </p>
                 </div>
             </div>
@@ -559,7 +536,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -635,19 +612,19 @@
     </div>
 </div>
     
-    
-        <div class="column-right-shadow is-hidden-widescreen ">
         
-            
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
+        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
     </div>
 </div>
 
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
         
             
 <div class="card widget">
@@ -677,7 +654,26 @@
         
         <article class="media">
             
-            <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
+            <a href="/2020/05/21/速查手册之常用Git命令/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/git.png" alt="#Git# 速查手册：常用 Git 命令">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-20T23:00:21.000Z">2020-05-21</time></div>
+                    <a href="/2020/05/21/速查手册之常用Git命令/" class="has-link-black-ter is-size-6">#Git# 速查手册：常用 Git 命令</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
@@ -686,7 +682,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -725,25 +721,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T23:00:21.000Z">2020-03-05</time></div>
                     <a href="/2020/03/05/Golang与并发编程(3)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(3) goroutine泄漏</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/04/Golang与并发编程(2)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(2) goroutine调度">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-03T23:00:21.000Z">2020-03-04</time></div>
-                    <a href="/2020/03/04/Golang与并发编程(2)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(2) goroutine调度</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
                     </p>
@@ -809,7 +786,7 @@
                 <span class="level-item">Quick Ref Guide</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Sucks/">
@@ -858,6 +835,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Fiddler/">
                         <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -938,17 +922,6 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Tag Cloud
-        </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
-    </div>
-</div>
-
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
             Recent
         </h3>
         
@@ -973,7 +946,26 @@
         
         <article class="media">
             
-            <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
+            <a href="/2020/05/21/速查手册之常用Git命令/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/git.png" alt="#Git# 速查手册：常用 Git 命令">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-20T23:00:21.000Z">2020-05-21</time></div>
+                    <a href="/2020/05/21/速查手册之常用Git命令/" class="has-link-black-ter is-size-6">#Git# 速查手册：常用 Git 命令</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
@@ -982,7 +974,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -1021,25 +1013,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T23:00:21.000Z">2020-03-05</time></div>
                     <a href="/2020/03/05/Golang与并发编程(3)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(3) goroutine泄漏</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/04/Golang与并发编程(2)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(2) goroutine调度">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-03T23:00:21.000Z">2020-03-04</time></div>
-                    <a href="/2020/03/04/Golang与并发编程(2)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(2) goroutine调度</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
                     </p>
@@ -1105,7 +1078,7 @@
                 <span class="level-item">Quick Ref Guide</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Sucks/">
@@ -1154,6 +1127,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Fiddler/">
                         <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>

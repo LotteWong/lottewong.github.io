@@ -182,74 +182,31 @@
 
 
 
-<h1><span id="目录-table-of-contents"><strong>目录 Table of Contents</strong></span></h1><!-- toc -->
-
-<ul>
-<li><a href="#简介"><strong>简介</strong></a></li>
-<li><a href="#类和对象"><strong>类和对象</strong></a><ul>
-<li><a href="#c-的类和对象"><code>C++</code> 的类和对象</a></li>
-<li><a href="#golang的类和对象"><code>Golang</code>的“类和对象”</a></li>
-<li><a href="#区别联系">区别联系</a><ul>
-<li><a href="#耦合程度">耦合程度</a></li>
-<li><a href="#this-指针"><code>this</code> 指针</a></li>
-<li><a href="#构造与析构">构造与析构</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#封装"><strong>封装</strong></a><ul>
-<li><a href="#java-的封装"><code>Java</code> 的封装</a></li>
-<li><a href="#golang-的封装"><code>Golang</code> 的封装</a></li>
-<li><a href="#一些说明">一些说明</a></li>
-</ul>
-</li>
-<li><a href="#继承"><strong>继承</strong></a><ul>
-<li><a href="#c-的继承"><code>C++</code> 的继承</a></li>
-<li><a href="#golang-的继承"><code>Golang</code> 的继承</a></li>
-<li><a href="#一些说明-1">一些说明</a></li>
-</ul>
-</li>
-<li><a href="#多态"><strong>多态</strong></a><ul>
-<li><a href="#语言基础">语言基础</a><ul>
-<li><a href="#接口">接口</a></li>
-<li><a href="#断言">断言</a></li>
-</ul>
-</li>
-<li><a href="#golang-的多态"><code>Golang</code> 的多态</a><ul>
-<li><a href="#重载">重载</a></li>
-<li><a href="#重写和动态绑定">重写和动态绑定</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#参考链接"><strong>参考链接</strong></a></li>
-<li><a href="#致谢"><strong>致谢</strong></a></li>
-</ul>
-<!-- tocstop -->
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
 
 <hr>
-<h2><span id="简介"><strong>简介</strong></span></h2><blockquote>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a><strong>简介</strong></h2><blockquote>
 <p><code>Golang</code> 的起源受诸多早期编程语言的影响。类 <code>C</code> 让 <code>Golang</code> 本质上更倾向于是一门<strong>面向过程</strong>的语言，同时<code>Golang</code> 也借鉴了 <code>Alef</code> 来设计 <code>Golang</code> 的<strong>函数式编程</strong>特性，融合 <code>CSP</code> 中使用管道进行通信和控制同步的思想则很好地体现了如何<strong>面向消息</strong>编程。</p>
 <p>虽然 <code>Golang</code> 不是一门传统的<strong>面向对象</strong>语言，但是 <code>Golang</code> 的设计却深受面向对象思想的影响。我们可以通过一种 <code>Golang</code> 的方式来实现面向对象的重要特性，这也是接下来将要讨论的重点。</p>
 </blockquote>
 <p><em>PS：本文 just 一点自己的见解，学识有限难免有误，也希望可以抛砖引玉，欢迎大家的勘误和讨论╰(￣ω￣ｏ)</em></p>
-<h2><span id="类和对象"><strong>类和对象</strong></span></h2><br>
+<h2 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a><strong>类和对象</strong></h2><br>
 
 <blockquote>
 <p>众所周知🤫，<strong>类和对象</strong>是面向对象编程的灵魂（？类定义了一件事物的抽象特点，包含了<strong>数据的形式和对数据的操作</strong>；对象是类的实例，可以通过<strong>构造函数和析构函数</strong>来进行对生成和销毁的特殊处理。</p>
 </blockquote>
-<h3><span id="c-的类和对象"><code>C++</code> 的类和对象</span></h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-comment">// 数据成员</span></span><br><span class="line">    <span class="hljs-built_in">string</span> name;</span><br><span class="line">    </span><br><span class="line"><span class="hljs-keyword">protected</span>:</span><br><span class="line">    <span class="hljs-comment">// 数据方法</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(<span class="hljs-built_in">string</span> name)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>-&gt;name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-comment">// 构造函数</span></span><br><span class="line">    Person(<span class="hljs-built_in">string</span> name) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>-&gt;name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">// 析构函数</span></span><br><span class="line">    ~Person() &#123;</span><br><span class="line">        <span class="hljs-comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    Person* somebody = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">"Bot"</span>);</span><br><span class="line">    <span class="hljs-built_in">cout</span> &lt;&lt; somebody-&gt;getName() &lt;&lt; <span class="hljs-built_in">endl</span>; <span class="hljs-comment">// Output: Bot</span></span><br><span class="line">    somebody-&gt;setName(<span class="hljs-string">"Exp"</span>);</span><br><span class="line">    <span class="hljs-built_in">cout</span> &lt;&lt; somebody-&gt;getName() &lt;&lt; <span class="hljs-built_in">endl</span>; <span class="hljs-comment">// Output: Exp</span></span><br><span class="line">   </span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="C-的类和对象"><a href="#C-的类和对象" class="headerlink" title="C++ 的类和对象"></a><code>C++</code> 的类和对象</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-comment">// 数据成员</span></span><br><span class="line">    <span class="hljs-built_in">string</span> name;</span><br><span class="line">    </span><br><span class="line"><span class="hljs-keyword">protected</span>:</span><br><span class="line">    <span class="hljs-comment">// 数据方法</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(<span class="hljs-built_in">string</span> name)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>-&gt;name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-comment">// 构造函数</span></span><br><span class="line">    Person(<span class="hljs-built_in">string</span> name) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>-&gt;name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">// 析构函数</span></span><br><span class="line">    ~Person() &#123;</span><br><span class="line">        <span class="hljs-comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    Person* somebody = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">"Bot"</span>);</span><br><span class="line">    <span class="hljs-built_in">cout</span> &lt;&lt; somebody-&gt;getName() &lt;&lt; <span class="hljs-built_in">endl</span>; <span class="hljs-comment">// Output: Bot</span></span><br><span class="line">    somebody-&gt;setName(<span class="hljs-string">"Exp"</span>);</span><br><span class="line">    <span class="hljs-built_in">cout</span> &lt;&lt; somebody-&gt;getName() &lt;&lt; <span class="hljs-built_in">endl</span>; <span class="hljs-comment">// Output: Exp</span></span><br><span class="line">   </span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3><span id="golang的类和对象"><code>Golang</code>的“类和对象”</span></h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    <span class="hljs-comment">// 数据成员</span></span><br><span class="line">    name <span class="hljs-keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 数据方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(this *Person)</span> <span class="hljs-title">GetName</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> p.name</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(this *Person)</span> <span class="hljs-title">SetName</span><span class="hljs-params">(name <span class="hljs-keyword">string</span>)</span></span> &#123;</span><br><span class="line">    p.name = name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 构造函数</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewPerson</span><span class="hljs-params">(<span class="hljs-keyword">string</span> name)</span> *<span class="hljs-title">Person</span></span> &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> &amp;Person&#123;</span><br><span class="line">        name: name,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 析构函数</span></span><br><span class="line"><span class="hljs-comment">// 由于 Golang 采用垃圾回收机制，一般不需要显式写析构函数</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    somebody := NewPerson(<span class="hljs-string">"Bot"</span>)</span><br><span class="line">    fmt.Println(somebody.getName()) <span class="hljs-comment">// Output: Bot</span></span><br><span class="line">    somebody.SetName(<span class="hljs-string">"Exp"</span>)</span><br><span class="line">    fmt.Println(somebody.getName()) <span class="hljs-comment">// Output: Exp</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Golang的“类和对象”"><a href="#Golang的“类和对象”" class="headerlink" title="Golang的“类和对象”"></a><code>Golang</code>的“类和对象”</h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    <span class="hljs-comment">// 数据成员</span></span><br><span class="line">    name <span class="hljs-keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 数据方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(this *Person)</span> <span class="hljs-title">GetName</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> p.name</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(this *Person)</span> <span class="hljs-title">SetName</span><span class="hljs-params">(name <span class="hljs-keyword">string</span>)</span></span> &#123;</span><br><span class="line">    p.name = name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 构造函数</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewPerson</span><span class="hljs-params">(<span class="hljs-keyword">string</span> name)</span> *<span class="hljs-title">Person</span></span> &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> &amp;Person&#123;</span><br><span class="line">        name: name,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 析构函数</span></span><br><span class="line"><span class="hljs-comment">// 由于 Golang 采用垃圾回收机制，一般不需要显式写析构函数</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    somebody := NewPerson(<span class="hljs-string">"Bot"</span>)</span><br><span class="line">    fmt.Println(somebody.getName()) <span class="hljs-comment">// Output: Bot</span></span><br><span class="line">    somebody.SetName(<span class="hljs-string">"Exp"</span>)</span><br><span class="line">    fmt.Println(somebody.getName()) <span class="hljs-comment">// Output: Exp</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3><span id="区别联系">区别联系</span></h3><h4><span id="耦合程度">耦合程度</span></h4><ul>
+<h3 id="区别联系"><a href="#区别联系" class="headerlink" title="区别联系"></a>区别联系</h3><h4 id="耦合程度"><a href="#耦合程度" class="headerlink" title="耦合程度"></a>耦合程度</h4><ul>
 <li><p><code>C++</code> 的类是面向 <code>class</code> 而言的，<strong>数据成员和数据方法都必须在 <code>class</code> 内修改</strong>，可见耦合程度较高。</p>
 </li>
 <li><p><code>Golang</code> 的“类”是面向 <code>type</code> 而言的，<strong>数据成员在 <code>struct</code> 内修改</strong>，<strong>数据方法则是可以在任意处增删 <code>(recv *receiver_type)</code> 对应的方法</strong>，可见耦合程度较低。</p>
 <p>【PS：这里 <code>type</code> 的外延比 <code>class</code> 要广，<code>type</code> 除包括<strong>自定义类型</strong>外还支持<strong>内置类型的别名</strong>】</p>
 </li>
 </ul>
-<h4><span id="this-指针"><code>this</code> 指针</span></h4><ul>
+<h4 id="this-指针"><a href="#this-指针" class="headerlink" title="this 指针"></a><code>this</code> 指针</h4><ul>
 <li><p><code>C++</code> 对象的 <code>this</code> 指针常常是<strong>隐式</strong>的，每一个数据方法实际上都隐式传入了一个指向该对象的 <code>this</code> 指针：</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">([Person* <span class="hljs-keyword">this</span>], <span class="hljs-built_in">string</span> name)</span> </span>&#123;</span><br><span class="line">	<span class="hljs-keyword">this</span>-&gt;name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
@@ -258,16 +215,16 @@
 
 </li>
 </ul>
-<h4><span id="构造与析构">构造与析构</span></h4><ul>
+<h4 id="构造与析构"><a href="#构造与析构" class="headerlink" title="构造与析构"></a>构造与析构</h4><ul>
 <li><code>C++</code> 的构造函数和析构函数是比较容易理解的，构造函数在对象创建时被<strong>自动调用</strong>，析构函数在对象销毁时被<strong>自动调用</strong>。由于 <code>C++</code> 无垃圾回收机制，<strong>对象的生命周期和作用域紧密相关</strong>。</li>
 <li><code>Golang</code> 严格上来说没有构造函数和析构函数的说法，可以<strong>通过用来专门做初始化的函数</strong>来模拟构造函数，而<strong><code>defer</code> 和 <code>finalizer</code></strong> 有类似析构的意味，但本质还是很不同的。由于 <code>Golang</code> 有垃圾回收机制，<strong>对象的生命周期取决于何时被 <code>GC</code> 进程回收</strong>，一般而言当变量不再被引用就会被垃圾回收掉。</li>
 </ul>
-<h2><span id="封装"><strong>封装</strong></span></h2><br>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a><strong>封装</strong></h2><br>
 
 <blockquote>
 <p><strong>封装</strong> aka <strong>信息隐藏</strong>，其实包含了两层意思：一是调用方<strong>无须关心</strong>实现细节，二是调用方<strong>无法更改</strong>实现细节。封装在编程语言中一般体现在<strong>访问权限</strong>中。</p>
 </blockquote>
-<h3><span id="java-的封装"><code>Java</code> 的封装</span></h3><ul>
+<h3 id="Java-的封装"><a href="#Java-的封装" class="headerlink" title="Java 的封装"></a><code>Java</code> 的封装</h3><ul>
 <li>以经典的 OO 语言 <code>Java</code> 为例，由于 <code>Java</code> 同时存在<strong>类</strong>和<strong>包</strong>的概念，其访问权限需要考虑到两个维度，相对而言比较复杂。其中，<code>Java</code> 的访问权限<strong>通过关键字定义</strong>：<ul>
 <li><code>public</code>：<strong>公共可见</strong>，所有类可见</li>
 <li><code>protected</code>：<strong>继承可见</strong>，必须为继承关系，允许跨包</li>
@@ -276,37 +233,37 @@
 </ul>
 </li>
 </ul>
-<h3><span id="golang-的封装"><code>Golang</code> 的封装</span></h3><ul>
+<h3 id="Golang-的封装"><a href="#Golang-的封装" class="headerlink" title="Golang 的封装"></a><code>Golang</code> 的封装</h3><ul>
 <li>而在 <code>Golang</code> 中没有所谓的类和对象概念（或者说可以用很 <code>Golang</code> 的方式类似实现），但引入了<strong>包</strong>管理机制，<code>Golang</code> 中只有简化的两层访问权限。其中，<code>Golang</code> 的访问权限<strong>通过标识符大小写定义</strong>：<ul>
 <li><code>标识符首字母大写</code>：<strong>包外可见</strong>，所有的包均可见</li>
 <li><code>标识符首字母小写</code>：<strong>包内可见</strong>，本包文件均可见</li>
 </ul>
 </li>
 </ul>
-<h3><span id="一些说明">一些说明</span></h3><ul>
+<h3 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h3><ul>
 <li><code>Golang</code> 中的 <strong><code>标识符首字母大写</code></strong> 类似于 <code>Java</code> 中的 <strong><code>public</code></strong></li>
 <li><code>Golang</code> 中的 <strong><code>标识符首字母小写</code></strong> 类似于 <code>Java</code> 中的 <strong><code>[default]</code></strong></li>
 </ul>
-<h2><span id="继承"><strong>继承</strong></span></h2><br>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a><strong>继承</strong></h2><br>
 
 <blockquote>
 <p><strong>继承</strong>涉及三方面的内容：一是子类可以<strong>使用</strong>父类的属性和方法，避免重复编码；二是子类可以<strong>覆盖</strong>父类的属性和方法，是实现多态的必要条件之一；三是子类可以<strong>追加</strong>属于自己的属性和方法，完成子类的定制功能。</p>
 </blockquote>
-<h3><span id="c-的继承"><code>C++</code> 的继承</span></h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Parent</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">parentFunc</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">parentFunc</span><span class="hljs-params">(params)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">overrideFunc</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// Parent class content</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Child</span>:</span> <span class="hljs-keyword">public</span> Parent &#123;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">overrideFunc</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// Child class content</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">childFunc</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    Child* child = <span class="hljs-keyword">new</span> Child();</span><br><span class="line">    child-&gt;parentFunc(); <span class="hljs-comment">// 使用父类方法</span></span><br><span class="line">    child-&gt;overrideFunc(); <span class="hljs-comment">// 使用已覆盖的子类方法</span></span><br><span class="line">    child-&gt;Parent::overrideFunc(); <span class="hljs-comment">// 使用未覆盖的父类方法</span></span><br><span class="line">    child-&gt;childFunc(); <span class="hljs-comment">// 使用子类方法</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="C-的继承"><a href="#C-的继承" class="headerlink" title="C++ 的继承"></a><code>C++</code> 的继承</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Parent</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">parentFunc</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">parentFunc</span><span class="hljs-params">(params)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">overrideFunc</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// Parent class content</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Child</span>:</span> <span class="hljs-keyword">public</span> Parent &#123;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">overrideFunc</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// Child class content</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">childFunc</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    Child* child = <span class="hljs-keyword">new</span> Child();</span><br><span class="line">    child-&gt;parentFunc(); <span class="hljs-comment">// 使用父类方法</span></span><br><span class="line">    child-&gt;overrideFunc(); <span class="hljs-comment">// 使用已覆盖的子类方法</span></span><br><span class="line">    child-&gt;Parent::overrideFunc(); <span class="hljs-comment">// 使用未覆盖的父类方法</span></span><br><span class="line">    child-&gt;childFunc(); <span class="hljs-comment">// 使用子类方法</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3><span id="golang-的继承"><code>Golang</code> 的继承</span></h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Parent <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Parent)</span> <span class="hljs-title">ParentFunc</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Parent)</span> <span class="hljs-title">OverrideFunc</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// Parent class content</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">type</span> Child <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    parent Parent</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Child)</span> <span class="hljs-title">OverrideFunc</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// Child class content</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Child)</span> <span class="hljs-title">ChildFunc</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    child := &amp;Child&#123;&#125;</span><br><span class="line">    child.ParentFunc() <span class="hljs-comment">// 使用父类方法</span></span><br><span class="line">    child.OverrideFunc() <span class="hljs-comment">// 使用已覆盖的子类方法</span></span><br><span class="line">    child.parent.OverrideFunc() <span class="hljs-comment">// 使用未覆盖的父类方法</span></span><br><span class="line">    child.ChildFunc() <span class="hljs-comment">// 使用子类方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Golang-的继承"><a href="#Golang-的继承" class="headerlink" title="Golang 的继承"></a><code>Golang</code> 的继承</h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Parent <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Parent)</span> <span class="hljs-title">ParentFunc</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Parent)</span> <span class="hljs-title">OverrideFunc</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// Parent class content</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">type</span> Child <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    parent Parent</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Child)</span> <span class="hljs-title">OverrideFunc</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// Child class content</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Child)</span> <span class="hljs-title">ChildFunc</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    child := &amp;Child&#123;&#125;</span><br><span class="line">    child.ParentFunc() <span class="hljs-comment">// 使用父类方法</span></span><br><span class="line">    child.OverrideFunc() <span class="hljs-comment">// 使用已覆盖的子类方法</span></span><br><span class="line">    child.parent.OverrideFunc() <span class="hljs-comment">// 使用未覆盖的父类方法</span></span><br><span class="line">    child.ChildFunc() <span class="hljs-comment">// 使用子类方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3><span id="一些说明">一些说明</span></h3><ul>
+<h3 id="一些说明-1"><a href="#一些说明-1" class="headerlink" title="一些说明"></a>一些说明</h3><ul>
 <li><code>C++</code> 的继承更像是<strong>链式继承</strong>，从父类到子类进行构造，从子类到父类进行访问</li>
 <li><code>Golang</code> 的继承更像是<strong>组合继承</strong>，子类内嵌一个或多个父类</li>
 <li>从 <code>Golang</code> 的继承机制容易看出它支持<strong>多继承</strong>，一些编程语言（如 <code>Java</code>）仅支持<strong>单继承</strong></li>
 </ul>
-<h2><span id="多态"><strong>多态</strong></span></h2><br>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a><strong>多态</strong></h2><br>
 
 <blockquote>
 <p><strong>多态</strong>指<strong>同一操作</strong>作用于<strong>不同的对象</strong>，可以有不同的解释，产生<strong>不同的执行结果</strong>。当我们讨论多态时，我们常常会讨论<strong>重载</strong>以及<strong>重写和动态绑定</strong>。</p>
 </blockquote>
-<h3><span id="语言基础">语言基础</span></h3><h4><span id="接口">接口</span></h4><ul>
+<h3 id="语言基础"><a href="#语言基础" class="headerlink" title="语言基础"></a>语言基础</h3><h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><ul>
 <li><strong>类型</strong>绑定<strong>方法集</strong>，<strong>接口</strong>定义<strong>方法集</strong>。如果类型绑定的方法集和接口定义的方法集重合，那么<strong>类型</strong>实现了<strong>接口</strong>。</li>
 <li><strong>类型内</strong>定义了有什么<strong>属性</strong>，<strong>接口内</strong>定义了有什么<strong>操作</strong>，两者产生<strong>关联</strong>的关键是<strong>方法</strong>是否都被实现。</li>
 <li>接口是<strong>隐式实现</strong>的，不需要显式声明；接口是一种特殊的类型，它可以<strong>被赋值成实例的指针或引用</strong>。</li>
@@ -317,7 +274,7 @@
 </ul>
 </li>
 </ul>
-<h4><span id="断言">断言</span></h4><ul>
+<h4 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h4><ul>
 <li><p>虽然我们提供对外提供了统一接口调用的方案，但是对内我们到底如何从接口出发辨别纷繁的类型呢？给定一个类型我们又该如何确定它是否实现了某个接口？</p>
 </li>
 <li><p><strong>类型断言和类型选择：</strong>给定接口确定类型</p>
@@ -328,7 +285,7 @@
 
 </li>
 </ul>
-<h3><span id="golang-的多态"><code>Golang</code> 的多态</span></h3><h4><span id="重载">重载</span></h4><ul>
+<h3 id="Golang-的多态"><a href="#Golang-的多态" class="headerlink" title="Golang 的多态"></a><code>Golang</code> 的多态</h3><h4 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h4><ul>
 <li><p><strong>重载</strong>是指根据不同的方法签名调用不同的函数实现。</p>
 </li>
 <li><p><code>Golang</code> 的设计思想中是<strong>不允许任何形式的重载</strong>的，这是为了强化显式化的风格。</p>
@@ -339,7 +296,7 @@
 
 </li>
 </ul>
-<h4><span id="重写和动态绑定">重写和动态绑定</span></h4><ul>
+<h4 id="重写和动态绑定"><a href="#重写和动态绑定" class="headerlink" title="重写和动态绑定"></a>重写和动态绑定</h4><ul>
 <li><p><strong>重写和动态绑定</strong>是为了允许将子类类型的指针赋值给父类类型的指针，在运行时可以通过指向父类的指针来调用实现子类中的方法。</p>
 </li>
 <li><p>既然<code>Golang</code>中不存在严格的类和对象，重写和动态绑定的理论其实并不太适合 <code>Golang</code>，我们只需要关心怎么将<strong>利用一个接口访问可以定位到具体的类型</strong>就可以了。</p>
@@ -349,11 +306,11 @@
 
 </li>
 </ul>
-<h2><span id="参考链接"><strong>参考链接</strong></span></h2><ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><ul>
 <li><a href="https://books.studygolang.com/gopl-zh/" target="_blank" rel="noopener">《Go语言圣经》</a></li>
 <li><a href="https://learnku.com/docs/the-way-to-go" target="_blank" rel="noopener">《Go入门指南》</a></li>
 </ul>
-<h2><span id="致谢"><strong>致谢</strong></span></h2><blockquote>
+<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a><strong>致谢</strong></h2><blockquote>
 <p>感谢王同学坚持不懈的“八点钟检查”以及一点都不嫌弃的“康康博客”，让我得以在快要写不下去的时候还坚持着做一些有意义的复读，XOXO。</p>
 </blockquote>
 <hr>
@@ -465,7 +422,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        18
+                        19
                     </p>
                 </div>
             </div>
@@ -485,7 +442,7 @@
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        11
+                        12
                     </p>
                 </div>
             </div>
@@ -614,7 +571,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -690,19 +647,19 @@
     </div>
 </div>
     
-    
-        <div class="column-right-shadow is-hidden-widescreen ">
         
-            
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
+        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
     </div>
 </div>
 
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
         
             
 <div class="card widget">
@@ -732,7 +689,26 @@
         
         <article class="media">
             
-            <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
+            <a href="/2020/05/21/速查手册之常用Git命令/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/git.png" alt="#Git# 速查手册：常用 Git 命令">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-20T23:00:21.000Z">2020-05-21</time></div>
+                    <a href="/2020/05/21/速查手册之常用Git命令/" class="has-link-black-ter is-size-6">#Git# 速查手册：常用 Git 命令</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
@@ -741,7 +717,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -780,25 +756,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T23:00:21.000Z">2020-03-05</time></div>
                     <a href="/2020/03/05/Golang与并发编程(3)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(3) goroutine泄漏</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/04/Golang与并发编程(2)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(2) goroutine调度">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-03T23:00:21.000Z">2020-03-04</time></div>
-                    <a href="/2020/03/04/Golang与并发编程(2)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(2) goroutine调度</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
                     </p>
@@ -864,7 +821,7 @@
                 <span class="level-item">Quick Ref Guide</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Sucks/">
@@ -913,6 +870,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Fiddler/">
                         <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -993,17 +957,6 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Tag Cloud
-        </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/WSL/" style="font-size: 16.67px;">WSL</a>
-    </div>
-</div>
-
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
             Recent
         </h3>
         
@@ -1028,7 +981,26 @@
         
         <article class="media">
             
-            <a href="/2020/05/14/速查手册之常用Linux命令/" class="media-left">
+            <a href="/2020/05/21/速查手册之常用Git命令/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/git.png" alt="#Git# 速查手册：常用 Git 命令">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-20T23:00:21.000Z">2020-05-21</time></div>
+                    <a href="/2020/05/21/速查手册之常用Git命令/" class="has-link-black-ter is-size-6">#Git# 速查手册：常用 Git 命令</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/linux.png" alt="#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令">
                 </p>
@@ -1037,7 +1009,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-13T23:00:21.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/速查手册之常用Linux命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
+                    <a href="/2020/05/14/速查手册之常用Linux&Shell命令/" class="has-link-black-ter is-size-6">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
                     </p>
@@ -1076,25 +1048,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T23:00:21.000Z">2020-03-05</time></div>
                     <a href="/2020/03/05/Golang与并发编程(3)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(3) goroutine泄漏</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/04/Golang与并发编程(2)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(2) goroutine调度">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-03T23:00:21.000Z">2020-03-04</time></div>
-                    <a href="/2020/03/04/Golang与并发编程(2)/" class="has-link-black-ter is-size-6">#Golang# Golang与并发编程(2) goroutine调度</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Programming-Language/">Programming Language</a>
                     </p>
@@ -1160,7 +1113,7 @@
                 <span class="level-item">Quick Ref Guide</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Sucks/">
@@ -1209,6 +1162,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Fiddler/">
                         <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
