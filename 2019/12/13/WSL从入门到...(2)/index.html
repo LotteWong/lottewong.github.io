@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>#WSL# WSL从入门到...(2) Dive into WSL 1 - LotteWong</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+<link rel="alternative" href="./atom.xml" title="#WSL# WSL从入门到...(2) Dive into WSL 1" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.png" alt="#WSL# WSL从入门到...(2) Dive into WSL 1" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Email" href="mailto:lottewong21@gmail.com">
+                        
+                        <i class="far fa-envelope-open"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/wsl.jpg" alt="#WSL# WSL从入门到...(2) Dive into WSL 1">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-12-12T23:00:21.000Z">2019-12-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 minutes read (About 1879 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                #WSL# WSL从入门到...(2) Dive into WSL 1
+            
+        </h1>
+        <div class="content">
+            <p>对 <strong>WSL 1 的一些实现细节</strong>进行补充说明，主要分为以下<strong>五个部分</strong>：</p>
+<ul>
+<li>前情提要</li>
+<li>背景</li>
+<li><strong>架构与功能</strong></li>
+<li>总结</li>
+<li>参考链接</li>
+</ul>
+<hr>
+<a id="more"></a>
+
+
+
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
+
+<hr>
+<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a><strong>前情提要</strong></h2><br>
+
+<p><em>前面已经简要介绍了 WSL 1 和 WSL 2 的区别，本节将聚焦于 WSL 1的实现细节。点开官方博客开始收获惊(<del>da</del>)喜(<del>keng</del>)，才疏学浅写错也不要打我 (预先感谢各位勘误 逃</em></p>
+<p>【更多信息 👉 <a href="https://lottewong.github.io/2019/12/12/WSL%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0...(1)/" target="_blank" rel="noopener">WSL从入门到…(1) WSL 1 vs WSL 2</a>】</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a><strong>背景</strong></h2><br>
+
+<blockquote>
+<p>Early subsystems were implemented as <strong>user mode modules</strong> that <strong>issued appropriate NT system calls based on the API</strong> they presented to applications for that subsystem. All applications were PE/COFF executables, a set of libraries and services to implement the subsystem API and NTDLL to perform the NT system call. When a user mode application got launched, the loader invoked the right subsystem to satisfy the application dependencies based on the executable header.</p>
+</blockquote>
+<ul>
+<li><strong>早期的子系统</strong>采用的方法是，将子系统视为上层的一系列进程组，通过 NTDLL 提供的 API 实现用户模式和内核模式通信，其中 <code>loader</code> 对 <code>application</code> 和 <code>subsystem</code> 进行管理。这里运行的仍然是 Win32 binaries，需要移植和维护。</li>
+</ul>
+<blockquote>
+<p>Later versions of subsystems replaced the POSIX layer to provide <strong>the Subsystem for Unix-based Applications (SUA)</strong>. The primary role of SUA was to encourage applications to <strong>get ported to Windows without significant rewrites</strong>. This was achieved by implementing the POSIX user mode APIs using NT constructs.</p>
+</blockquote>
+<ul>
+<li><strong>后来的子系统</strong>采用的方法是，在 POSIX 层做优化，移植而不是重写。这里运行的仍然是 Win32 binaries，需要移植和维护。</li>
+</ul>
+<blockquote>
+<p>WSL is a collection of components that enables native Linux ELF64 binaries to run on Windows. It contains <strong>both user mode and kernel mode components</strong>. It is primarily comprised of:</p>
+<ol>
+<li><strong>User mode session manager service</strong> that handles the Linux instance life cycle</li>
+<li><strong>Pico provider drivers</strong> (lxss.sys, lxcore.sys) that emulate a Linux kernel by translating Linux syscalls</li>
+<li><strong>Pico processes</strong> that host the unmodified user mode Linux (e.g. /bin/bash)</li>
+</ol>
+</blockquote>
+<ul>
+<li><strong>WSL</strong> 采用的方法是，构造一整套包含用户模式和内核模式组件的系统，其主要由用户模式会话管理服务（User mode session manager service）、Pico 驱动（Pico provider drivers）和 Pico 进程 （Pico processes）三个部分组成。这里运行的仍然是 Linux binaries，无需移植和维护。</li>
+</ul>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a><strong>架构</strong></h2><br>
+
+<p><img src="/images/wsl1_component.png" alt="WSL 1 Architecture"></p>
+<p><strong>工作流大概是：</strong>Windows 的 Bash 键入指令，交由 LXSS Manager Service 启动对应的 Linux 实例并进入对应的 Pico 进程，Linux 的 Bash 通过中间层的驱动器与 Windows Kernel 进行翻译交流（<u>“The lxss.sys and lxcore.sys drivers translate the Linux system calls into NT APIs and emulate the Linux kernel.”</u>）。</p>
+<p><img src="/images/wsl1_lecture.png" alt="Deepu Thomas and Seth Juarez discuss the underlying architecture that enables the Windows Subsystem for Linux"></p>
+<h3 id="LXSS-Manager-Service"><a href="#LXSS-Manager-Service" class="headerlink" title="LXSS Manager Service"></a>LXSS Manager Service</h3><ul>
+<li><strong>LXSS Manager Service 负责 Windows 的 Bash（Win32 Process）和 Linux 的 Bash（Pico Process）之间的通信，主要在初始时工作。</strong>作用范围包括但不局限于：同步 Linux 实例的安装和卸载、每次只允许一个进程启动 Linux Binary 并在 pending 时阻塞后续启动进程等等。</li>
+</ul>
+<h3 id="Pico-Drivers"><a href="#Pico-Drivers" class="headerlink" title="Pico Drivers"></a>Pico Drivers</h3><ul>
+<li><strong>Pico Drivers 负责 Linux Instance（User Mode）和 Windows Kernel（Kernel Mode）之间的通信，主要在运行时工作。</strong>作用范围包括但不局限于：翻译 Linux system calls 为 Windows NT APIs 可以理解的形式，模拟 Linux 内核并对 Windows 内核进行操作等等。</li>
+</ul>
+<h3 id="Pico-Processes"><a href="#Pico-Processes" class="headerlink" title="Pico Processes"></a>Pico Processes</h3><ul>
+<li><strong>将可执行的 ELF binaries 加载进到 Pico Processes 的地址空间，并在 Linux 层上运行。</strong>其中 Linux 实例是一个特殊的为 Pico Processes 服务的数据结构，可以包含并追踪所有的 Linux 进程、线程和运行状态。它在 Win32 Process 首次启动 Linux Binary 时创建，在 Win32 Process 最后的客户端关闭连接时被销毁。从整体上看，整个 WSL 1 只有一个 Linux 实例，它隔离开了本机原有的 Windows 和所有新建的 Linux ；从内部来看，Linux 实例内的每个 Pico Process 都被单独隔离，这点和容器很类似。</li>
+</ul>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a><strong>功能</strong></h2><br>
+
+<p>由于 Windows Kernel 和 Linux Kernel <strong>基本上不兼容</strong>，需要<strong>额外处理很多中间转换</strong>，一般包括系统调用、文件系统、权限管理和网络配置等，下面介绍最基本和最重要的两个方面：</p>
+<h3 id="System-Calls"><a href="#System-Calls" class="headerlink" title="System Calls"></a>System Calls</h3><ul>
+<li><p>syscall 是内核提供的一项服务，可以在用户模式下调用。<strong>Windows Kernel 和 Linux Kernel 都暴露了非常多的 syscall，但两者对此的设计模式并不同导致不兼容。</strong></p>
+</li>
+<li><p><strong>解决这种冲突的方法是引入 Pico Drivers（<code>lxss.sys</code> and <code>lxcore.sys</code>）。</strong>当一个 Linux Kernel syscall 被调用，该请求将被转发给 <code>lxcore.sys</code>，<code>lxcore.sys</code> 将 Linux Kernel syscall 翻译成等价的 Windows Kernel syscall，最后传到 Windows Kernel。特别地，如果在两种内核之间有某个 syscall 不存在映射关系（亦即不能互相翻译），<code>lxss.sys</code> 还被要求处理这种异常并提供相应的服务。</p>
+<ol>
+<li><p><em>以 Linux 的 <code>fork()</code> 为例：</em></p>
+<blockquote>
+<p>As an example, the Linux fork() syscall has no direct equivalent call documented for Windows. When a fork system call is made to the Windows Subsystem for Linux, <code>lxcore.sys</code> does some of the initial work to prepare for copying the process. It then calls internal Windows NT kernel APIs to create the process with the correct semantics, and completes copying additional data for the new process.</p>
+</blockquote>
+</li>
+<li><p><em>以 Linux 的 <code>chmod</code> 为例：</em></p>
+<blockquote>
+<p>Linux Instance 产生附加 metadata，只由 Linux 文件系统能理解， Windows 文件系统并不能理解，但是 Windows Kernel 仍会接收该 metadata。但是 NTFS 对这个 metadata 无动于衷，而是 <code>lxss.sys</code> 处理该 metadata，最终反映到 ext4 中。由此可见，WSL 1 非常大的工作量都要花在应对不兼容的指令集。</p>
+</blockquote>
+</li>
+</ol>
+<p><em>PS: 尽管 Linux 的内核更新得非常快，用户模式的接口却是相对固定的，所以可以认为<u>“WSL 1 abstracts the Linux kernel via their interface”</u></em></p>
+</li>
+</ul>
+<h3 id="File-System"><a href="#File-System" class="headerlink" title="File System"></a>File System</h3><ul>
+<li><p>由于 Windows 和 Linux 的文件系统也不相同（Windows 的文件系统是 NTFS，Linux 的文件系统是 ext4），不能直接互相操作。<strong>WSL 的文件系统设计需要满足两点：</strong></p>
+<ol>
+<li>完整支持 Linux 文件系统</li>
+<li>可访问和操作 Windows 中的磁盘和文件</li>
+</ol>
+</li>
+<li><p><strong>为实现以上的目标 WSL 引入了两套文件系统（VolFs and DriveFs）。</strong> VolFs 文件系统主要提供了 Linux 文件系统特性的支持，比如 Linux 文件目录（/etc, /bin, /usr, etc.）、权限管理和符号链接等等。DriveDs 文件系统主要用于与 Windows 做交互，比如 Windows 文件目录（/mnt/c, /mnt/d, etc.）、启动 Windows 的可执行文件等等。</p>
+<p><em>PS: 需要注意的是，两套文件系统之间是如何进行交互的并未在原博客详细讨论，感兴趣的小伙伴可自行阅读续篇 <a href="https://blogs.msdn.microsoft.com/wsl/2016/06/15/wsl-file-system-support/" target="_blank" rel="noopener">WSL File System Support</a></em> </p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><br>
+
+<p><strong>简单的理解：</strong>WSL 1 在 Windows Kernel 之上创建 Linux Instance，Win32 Process 通过 LXSS Manager Service 管理 Pico Process，用户模式的 Linux Instance 和内核模式的 Windows Kernel 之间通过 Pico Drivers 交流，依靠中间层驱动器翻译可以解决 System Calls 不兼容的问题，设计两套文件系统能够满足同时使用 Windows 和 Linux 的需要。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><ul>
+<li><a href="https://blogs.msdn.microsoft.com/wsl/2016/04/22/windows-subsystem-for-linux-overview/" target="_blank" rel="noopener">Windows Subsystem for Linux Overview</a></li>
+<li><a href="http://research.microsoft.com/en-us/projects/drawbridge/" target="_blank" rel="noopener">Project Drawbridge</a></li>
+</ul>
+<hr>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/WSL/">WSL</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/12/14/WSL从入门到...(3)/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">#WSL# WSL从入门到...(3) Dive into WSL 2</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/12/WSL从入门到...(1)/">
+                <span class="level-item">#WSL# WSL从入门到...(1) WSL 1 vs WSL 2</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: 'a33fa0631d61f1eeb3c771aa11bc5b44',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="LotteWong">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        LotteWong
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Tencent, Backend Developer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shenzhen, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        10
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        22
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/LotteWong" target="_blank">
+                Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Organization" href="https://github.com/SCUTMSC">
+                
+                <i class="fas fa-sitemap"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Project" href="https://github.com/scutse-man-month-myth/InkYear">
+                
+                <i class="fas fa-project-diagram"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#目录-Table-of-Contents">
+        <span class="has-mr-6">1</span>
+        <span>目录 Table of Contents</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#前情提要">
+        <span class="has-mr-6">1.1</span>
+        <span>前情提要</span>
+        </a></li><li>
+        <a class="is-flex" href="#背景">
+        <span class="has-mr-6">1.2</span>
+        <span>背景</span>
+        </a></li><li>
+        <a class="is-flex" href="#架构">
+        <span class="has-mr-6">1.3</span>
+        <span>架构</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#LXSS-Manager-Service">
+        <span class="has-mr-6">1.3.1</span>
+        <span>LXSS Manager Service</span>
+        </a></li><li>
+        <a class="is-flex" href="#Pico-Drivers">
+        <span class="has-mr-6">1.3.2</span>
+        <span>Pico Drivers</span>
+        </a></li><li>
+        <a class="is-flex" href="#Pico-Processes">
+        <span class="has-mr-6">1.3.3</span>
+        <span>Pico Processes</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#功能">
+        <span class="has-mr-6">1.4</span>
+        <span>功能</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#System-Calls">
+        <span class="has-mr-6">1.4.1</span>
+        <span>System Calls</span>
+        </a></li><li>
+        <a class="is-flex" href="#File-System">
+        <span class="has-mr-6">1.4.2</span>
+        <span>File System</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#总结">
+        <span class="has-mr-6">1.5</span>
+        <span>总结</span>
+        </a></li><li>
+        <a class="is-flex" href="#参考链接">
+        <span class="has-mr-6">1.6</span>
+        <span>参考链接</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Artificial-Intelligence/">
+            <span class="level-start">
+                <span class="level-item">Artificial Intelligence</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Cloud-Computing/">
+            <span class="level-start">
+                <span class="level-item">Cloud Computing</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DevOps/">
+            <span class="level-start">
+                <span class="level-item">DevOps</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Microservice/">
+            <span class="level-start">
+                <span class="level-item">Microservice</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Programming-Language/">
+            <span class="level-start">
+                <span class="level-item">Programming Language</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/QA/">
+            <span class="level-start">
+                <span class="level-item">QA</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Quick-Ref-Guide/">
+            <span class="level-start">
+                <span class="level-item">Quick Ref Guide</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Sucks/">
+            <span class="level-start">
+                <span class="level-item">Sucks</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Testing/">
+            <span class="level-start">
+                <span class="level-item">Testing</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
+        <div class="column-right-shadow  ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2021/03/15/重装系统后的必要软件清单/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microsoft_store.png" alt="#Others# 重装系统后的必要软件清单">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-14T23:00:21.000Z">2021-03-15</time></div>
+                    <a href="/2021/03/15/重装系统后的必要软件清单/" class="has-link-black-ter is-size-6">#Others# 重装系统后的必要软件清单</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/01/01/写在二零二壹/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二壹">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-31T16:00:00.000Z">2021-01-01</time></div>
+                    <a href="/2021/01/01/写在二零二壹/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二壹</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/12/17/Challenge to Mock - Tech Details/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/mock.png" alt="#Mock# Challenge to Mock - Tech Details">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-16T23:00:21.000Z">2020-12-17</time></div>
+                    <a href="/2020/12/17/Challenge to Mock - Tech Details/" class="has-link-black-ter is-size-6">#Mock# Challenge to Mock - Tech Details</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/12/16/Challenge to Mock - Arch Designs/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/mock.png" alt="#Mock# Challenge to Mock - Arch Designs">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-15T23:00:21.000Z">2020-12-16</time></div>
+                    <a href="/2020/12/16/Challenge to Mock - Arch Designs/" class="has-link-black-ter is-size-6">#Mock# Challenge to Mock - Arch Designs</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/11/20/Postman + Newman 最佳实践/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/postman_newman.png" alt="#Api Tests# Postman + Newman 最佳实践">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-11-19T23:00:21.000Z">2020-11-20</time></div>
+                    <a href="/2020/11/20/Postman + Newman 最佳实践/" class="has-link-black-ter is-size-6">#Api Tests# Postman + Newman 最佳实践</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 17.5px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12.5px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 10px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Swaggo/" style="font-size: 10px;">Swaggo</a> <a href="/tags/WSL/" style="font-size: 17.5px;">WSL</a>
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Docker/">
+                        <span class="tag">Docker</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Fiddler/">
+                        <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gin/">
+                        <span class="tag">Gin</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
+                        <span class="tag">GitHub Pages</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Golang/">
+                        <span class="tag">Golang</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gorm/">
+                        <span class="tag">Gorm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Hexo/">
+                        <span class="tag">Hexo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Kubernetes/">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Machine-Learning/">
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mock/">
+                        <span class="tag">Mock</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Newman/">
+                        <span class="tag">Newman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Postman/">
+                        <span class="tag">Postman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
+                        <span class="tag">Programming Paradigm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytest/">
+                        <span class="tag">Pytest</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SQL/">
+                        <span class="tag">SQL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swagger/">
+                        <span class="tag">Swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swaggo/">
+                        <span class="tag">Swaggo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+            
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Bokjan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bokjan.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Kingsley</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kingsleyxie.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">sticnarf</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">sticnarf.me</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">xcw</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">yifanyu123.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Escape</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.cnblogs.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.png" alt="#WSL# WSL从入门到...(2) Dive into WSL 1" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 LotteWong
+                ,&nbsp;<a href="http://www2.scut.edu.cn/sse/" target="_blank">SCUT SE</a> & <a href="https://github.com/SCUTMSC" target="_blank">SCUT MSC</a>
+                
+                <!-- <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+								<br>
+								<span id="busuanzi_container_site_pv">
+                plugin.page-view
+                </span>
+                
+                </p>-->
+								<br>
+								<span id="busuanzi_container_site_uv"> Viewed by <span id="busuanzi_value_site_uv"></span> people </span>
+                <span id="busuanzi_container_site_pv">, at <span id="busuanzi_value_site_pv"></span> times </span>
+            </p></div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/LotteWong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="RSS" href="/atom.xml">
+                        
+                        <i class="fas fa-rss"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

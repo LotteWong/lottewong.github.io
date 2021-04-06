@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>#Git# 速查手册：常用 Git 命令 - LotteWong</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+<link rel="alternative" href="./atom.xml" title="#Git# 速查手册：常用 Git 命令" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.png" alt="#Git# 速查手册：常用 Git 命令" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Email" href="mailto:lottewong21@gmail.com">
+                        
+                        <i class="far fa-envelope-open"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/git.png" alt="#Git# 速查手册：常用 Git 命令">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-05-07T23:00:21.000Z">2020-05-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Quick-Ref-Guide/">Quick Ref Guide</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1374 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                #Git# 速查手册：常用 Git 命令
+            
+        </h1>
+        <div class="content">
+            <p>覆盖在学习和工作中的<strong>常用 Git 命令</strong>：配置 / 仓库 / 查看 / 暂存 / 提交 / 回退 / 克隆 / 拉取 / 推送 / 合并 / 冲突 / 分支 / 标签 / 工具</p>
+<hr>
+<a id="more"></a>
+
+
+
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
+
+<hr>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a><strong>配置</strong></h2><h3 id="账号"><a href="#账号" class="headerlink" title="账号"></a>账号</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 配置多个本地用户的账号</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 全局级</span></span><br><span class="line">git config --global user.name <span class="hljs-string">"<span class="hljs-variable">$&#123;user_name&#125;</span>"</span></span><br><span class="line">git config --global user.email <span class="hljs-string">"<span class="hljs-variable">$&#123;user_email&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 仓库级</span></span><br><span class="line"><span class="hljs-comment"># git config --global --unset user.name "$&#123;user_name&#125;"</span></span><br><span class="line"><span class="hljs-comment"># git config --global --unset user.name "$&#123;user_email&#125;"</span></span><br><span class="line">git config --<span class="hljs-built_in">local</span> user.name <span class="hljs-string">"<span class="hljs-variable">$&#123;user_name&#125;</span>"</span></span><br><span class="line">git config --<span class="hljs-built_in">local</span> user.email <span class="hljs-string">"<span class="hljs-variable">$&#123;user_email&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 提交级</span></span><br><span class="line">git commit --amend --author=<span class="hljs-string">"<span class="hljs-variable">$&#123;user_name&#125;</span> &lt;<span class="hljs-variable">$&#123;user_email&#125;</span>&gt;"</span></span><br><span class="line">git commit --amend --reset-author</span><br></pre></td></tr></table></figure>
+
+<h3 id="密钥"><a href="#密钥" class="headerlink" title="密钥"></a>密钥</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 配置多个远程仓库的密钥</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 生成密钥</span></span><br><span class="line">ssh-keygen -t rsa_github</span><br><span class="line">ssh-keygen -t rsa_gitlab</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 配置密钥</span></span><br><span class="line">vim ~/.ssh/config</span><br><span class="line"></span><br><span class="line">Host github.com</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/rsa_github</span><br><span class="line"> </span><br><span class="line">Host gitlab.com</span><br><span class="line">HostName gitlab.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/rsa_gitlab</span><br><span class="line"></span><br><span class="line">:wq</span><br></pre></td></tr></table></figure>
+
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a><strong>仓库</strong></h2><h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Example: git remote add origin git@github.com:LotteWong/lottewong.github.io.git</span></span><br><span class="line">git remote add <span class="hljs-variable">$&#123;origin_name&#125;</span> git@host:/path/to/registry.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote rm <span class="hljs-variable">$&#123;origin_name&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a><strong>查询</strong></h2><h3 id="当前状态"><a href="#当前状态" class="headerlink" title="当前状态"></a>当前状态</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+<h3 id="差异分析"><a href="#差异分析" class="headerlink" title="差异分析"></a>差异分析</h3><h4 id="工作区-vs-暂存区"><a href="#工作区-vs-暂存区" class="headerlink" title="工作区 vs 暂存区"></a>工作区 vs 暂存区</h4><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff (<span class="hljs-variable">$&#123;branch_name&#125;</span>) (<span class="hljs-variable">$&#123;file&#125;</span>) <span class="hljs-comment"># 默认 branch = current; file 若不填作用于全部文件</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="暂存区-vs-版本库"><a href="#暂存区-vs-版本库" class="headerlink" title="暂存区 vs 版本库"></a>暂存区 vs 版本库</h4><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff --cached (<span class="hljs-variable">$&#123;commit_id&#125;</span>) (<span class="hljs-variable">$&#123;file&#125;</span>) <span class="hljs-comment"># 默认 commit = HEAD; file 若不填作用于全部文件</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="工作区-vs-版本库"><a href="#工作区-vs-版本库" class="headerlink" title="工作区 vs 版本库"></a>工作区 vs 版本库</h4><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff <span class="hljs-variable">$&#123;commit_id&#125;</span> (<span class="hljs-variable">$&#123;file&#125;</span>) <span class="hljs-comment"># file 若不填作用于全部文件</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="版本库-vs-版本库"><a href="#版本库-vs-版本库" class="headerlink" title="版本库 vs 版本库"></a>版本库 vs 版本库</h4><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff <span class="hljs-variable">$&#123;commit_id&#125;</span> <span class="hljs-variable">$&#123;commit_id&#125;</span> (<span class="hljs-variable">$&#123;file&#125;</span>) <span class="hljs-comment"># file 若不填作用于全部文件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="提交记录"><a href="#提交记录" class="headerlink" title="提交记录"></a>提交记录</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="hljs-built_in">log</span> <span class="hljs-comment"># 详细</span></span><br><span class="line">git <span class="hljs-built_in">log</span> --oneline <span class="hljs-comment"># 简略</span></span><br><span class="line">git <span class="hljs-built_in">log</span> --graph <span class="hljs-comment"># 图示</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="操作记录"><a href="#操作记录" class="headerlink" title="操作记录"></a>操作记录</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure>
+
+<h2 id="暂存"><a href="#暂存" class="headerlink" title="暂存"></a><strong>暂存</strong></h2><h3 id="查看-1"><a href="#查看-1" class="headerlink" title="查看"></a>查看</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash list</span><br></pre></td></tr></table></figure>
+
+<h3 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br></pre></td></tr></table></figure>
+
+<h3 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git stash pop <span class="hljs-comment"># 默认还原栈顶数据</span></span><br><span class="line">git stash pop stash@&#123;<span class="hljs-variable">$&#123;id&#125;</span>&#125; <span class="hljs-comment"># 指定还原特定数据</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git stash clear <span class="hljs-comment"># 删除全部暂存数据</span></span><br><span class="line">git stash drop stash@&#123;<span class="hljs-variable">$&#123;id&#125;</span>&#125; <span class="hljs-comment"># 删除指定暂存数据</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a><strong>提交</strong></h2><h3 id="暂存区"><a href="#暂存区" class="headerlink" title="暂存区"></a>暂存区</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add -A or git add --all <span class="hljs-comment"># 提交整个仓库全部文件(New/Modified/Deleted)</span></span><br><span class="line">git add /path/to/file <span class="hljs-comment"># 提交指定目录全部文件(New/Modified/Deleted)</span></span><br><span class="line">git add -u <span class="hljs-comment"># 提交整个仓库已有文件(Modified/Deleted)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="版本库"><a href="#版本库" class="headerlink" title="版本库"></a>版本库</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="hljs-string">"<span class="hljs-variable">$&#123;commit_message&#125;</span>"</span> <span class="hljs-comment"># 指定提交信息标题</span></span><br><span class="line">git commit <span class="hljs-comment"># 打开默认的编辑器</span></span><br><span class="line">git commit --amend <span class="hljs-comment"># 追加提交</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="回退"><a href="#回退" class="headerlink" title="回退"></a><strong>回退</strong></h2><h3 id="工作区"><a href="#工作区" class="headerlink" title="工作区"></a>工作区</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard (<span class="hljs-variable">$&#123;commit_id&#125;</span>) (<span class="hljs-variable">$&#123;file&#125;</span>) <span class="hljs-comment"># 默认 commit = HEAD; file 若不填作用于全部文件</span></span><br><span class="line"><span class="hljs-comment"># git checkout $&#123;commit_id&#125; $&#123;file&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="暂存区-1"><a href="#暂存区-1" class="headerlink" title="暂存区"></a>暂存区</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset (--mixed) (<span class="hljs-variable">$&#123;commit_id&#125;</span>) (<span class="hljs-variable">$&#123;file&#125;</span>) <span class="hljs-comment"># 会清除暂存区; 默认 commit = HEAD; file 若不填作用于全部文件</span></span><br><span class="line"><span class="hljs-comment"># git checkout $&#123;commit_id&#125; $&#123;file&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="版本库-1"><a href="#版本库-1" class="headerlink" title="版本库"></a>版本库</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 向前移动指针</span></span><br><span class="line">git reset --soft (<span class="hljs-variable">$&#123;commit_id&#125;</span>) (<span class="hljs-variable">$&#123;file&#125;</span>) <span class="hljs-comment"># 不清除暂存区; 默认 commit = HEAD; file 若不填作用于全部文件</span></span><br><span class="line"><span class="hljs-comment"># git checkout $&#123;commit_id&#125; $&#123;file&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 向后移动指针</span></span><br><span class="line">git revert (<span class="hljs-variable">$&#123;commit_id&#125;</span>) <span class="hljs-comment"># 默认 commit = HEAD; 撤销单次提交并生成单次提交</span></span><br><span class="line">git revert -n <span class="hljs-variable">$&#123;old_commit&#125;</span>^..<span class="hljs-variable">$&#123;new_commit&#125;</span> <span class="hljs-comment"># 撤销连续提交并生成单次提交</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a><strong>克隆</strong></h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Example: git clone git@github.com:LotteWong/lottewong.github.io.git</span></span><br><span class="line">git <span class="hljs-built_in">clone</span> git@host:/path/to/registry.git <span class="hljs-comment"># 克隆默认分支</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Example: git clone -b backup git@github.com:LotteWong/lottewong.github.io.git</span></span><br><span class="line">git <span class="hljs-built_in">clone</span> -b <span class="hljs-variable">$&#123;branch_name&#125;</span> git@host:/path/to/registry.git <span class="hljs-comment"># 克隆指定分支</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="拉取"><a href="#拉取" class="headerlink" title="拉取"></a><strong>拉取</strong></h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git pull origin <span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-comment"># 拉取到已有本地分支</span></span><br><span class="line">git checkout -b <span class="hljs-variable">$&#123;local_branch&#125;</span> <span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-comment"># 拉取并新建本地分支</span></span><br><span class="line"></span><br><span class="line">git fetch origin <span class="hljs-variable">$&#123;remote_branch&#125;</span></span><br><span class="line">git pull origin <span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-comment"># git fetch + git merge</span></span><br><span class="line">git pull origin --rebase <span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-comment"># git fetch + git rebase</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="推送"><a href="#推送" class="headerlink" title="推送"></a><strong>推送</strong></h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin <span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-comment"># 推送到已有远程分支</span></span><br><span class="line">git push origin <span class="hljs-variable">$&#123;local_branch&#125;</span>:<span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-comment"># 推送并新建远程分支</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a><strong>合并</strong></h2><h3 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git merge <span class="hljs-variable">$&#123;branch_name&#125;</span> <span class="hljs-comment"># 带有单独合并提交信息</span></span><br><span class="line">git merge <span class="hljs-variable">$&#123;branch_name&#125;</span> --no-commit <span class="hljs-comment"># 不带单独合并提交信息</span></span><br><span class="line">git merge --<span class="hljs-built_in">continue</span> <span class="hljs-comment"># 解决冲突后使用</span></span><br><span class="line">git merge --abort <span class="hljs-comment"># 不打算解决冲突</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Squash"><a href="#Squash" class="headerlink" title="Squash"></a>Squash</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git merge --squash <span class="hljs-variable">$&#123;branch_name&#125;</span> <span class="hljs-comment"># A1 → B1 → M3</span></span><br><span class="line">git rebase -i <span class="hljs-variable">$&#123;startpoint&#125;</span> (<span class="hljs-variable">$&#123;endpoint&#125;</span>) <span class="hljs-comment"># A1 → B1 → C2 → D2; 默认 endpoint = HEAD</span></span><br><span class="line"><span class="hljs-comment"># pick(p)：保留本次提交</span></span><br><span class="line"><span class="hljs-comment"># squash(s)：合并前后提交</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Rebase"><a href="#Rebase" class="headerlink" title="Rebase"></a>Rebase</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git rebase <span class="hljs-variable">$&#123;branch_name&#125;</span></span><br><span class="line">git rebase --<span class="hljs-built_in">continue</span> <span class="hljs-comment"># 解决冲突后使用</span></span><br><span class="line">git rebase --abort <span class="hljs-comment"># 不打算解决冲突</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Cherry-Pick"><a href="#Cherry-Pick" class="headerlink" title="Cherry-Pick"></a>Cherry-Pick</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick <span class="hljs-variable">$&#123;commit_id&#125;</span></span><br><span class="line">git cherry-pick --<span class="hljs-built_in">continue</span> <span class="hljs-comment"># 解决冲突后使用</span></span><br><span class="line">git cherry-pick --abort <span class="hljs-comment"># 不打算解决冲突</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="冲突"><a href="#冲突" class="headerlink" title="冲突"></a><strong>冲突</strong></h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git status <span class="hljs-comment"># 查看冲突文件</span></span><br><span class="line">vim /path/to/file <span class="hljs-comment"># 解决冲突之处</span></span><br><span class="line">git add /path/to/file <span class="hljs-comment"># 将文件加入暂存区</span></span><br><span class="line">git commit -m <span class="hljs-string">"<span class="hljs-variable">$&#123;commit_message&#125;</span>"</span> <span class="hljs-comment"># 将文件加入版本库</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a><strong>分支</strong></h2><h3 id="查看-2"><a href="#查看-2" class="headerlink" title="查看"></a>查看</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git branch -a <span class="hljs-comment"># 全部分支</span></span><br><span class="line">git branch -v <span class="hljs-comment"># 本地分支</span></span><br><span class="line">git branch -r <span class="hljs-comment"># 远程分支</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote update</span><br></pre></td></tr></table></figure>
+
+<h3 id="新建-1"><a href="#新建-1" class="headerlink" title="新建"></a>新建</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b <span class="hljs-variable">$&#123;local_branch&#125;</span> <span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-comment"># 创建本地分支：远程分支 → 本地分支</span></span><br><span class="line">git push origin <span class="hljs-variable">$&#123;local_branch&#125;</span>:<span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-comment"># 创建远程分支：本地分支 → 远程分支</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="改名"><a href="#改名" class="headerlink" title="改名"></a>改名</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 本地重命名分支</span></span><br><span class="line">git branch -m <span class="hljs-variable">$&#123;old_branch&#125;</span> <span class="hljs-variable">$&#123;new_branch&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 远程重命名分支</span></span><br><span class="line">git push origin --delete <span class="hljs-variable">$&#123;old_remote_branch&#125;</span></span><br><span class="line">git push origin <span class="hljs-variable">$&#123;new_local_branch&#125;</span>:<span class="hljs-variable">$&#123;new_remote_branch&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="切换"><a href="#切换" class="headerlink" title="切换"></a>切换</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="hljs-variable">$&#123;branch_name&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch --<span class="hljs-built_in">set</span>-upstream-to=<span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-variable">$&#123;local_branch&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除-2"><a href="#删除-2" class="headerlink" title="删除"></a>删除</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git branch -d <span class="hljs-variable">$&#123;local_branch&#125;</span> <span class="hljs-comment"># 非强制删除本地分支</span></span><br><span class="line">git branch -D <span class="hljs-variable">$&#123;local_branch&#125;</span> <span class="hljs-comment"># 强制性删除本地分支</span></span><br><span class="line">git push origin --delete <span class="hljs-variable">$&#123;remote_branch&#125;</span> <span class="hljs-comment"># 删除远程分支</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a><strong>标签</strong></h2><h3 id="查看-3"><a href="#查看-3" class="headerlink" title="查看"></a>查看</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag <span class="hljs-comment"># 全部标签</span></span><br><span class="line">git show <span class="hljs-variable">$&#123;tag_name&#125;</span> <span class="hljs-comment"># 指定标签</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="新建-2"><a href="#新建-2" class="headerlink" title="新建"></a>新建</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag <span class="hljs-variable">$&#123;tag_name&#125;</span> (<span class="hljs-variable">$&#123;commit_id&#125;</span>) <span class="hljs-comment"># 创建本地标签; 默认 commit = HEAD</span></span><br><span class="line">git push origin --tags <span class="hljs-comment"># 创建全部远程标签</span></span><br><span class="line">git push origin <span class="hljs-variable">$&#123;tag_name&#125;</span> <span class="hljs-comment"># 创建指定远程标签</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除-3"><a href="#删除-3" class="headerlink" title="删除"></a>删除</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d <span class="hljs-variable">$&#123;tag_name&#125;</span> <span class="hljs-comment"># 删除本地标签</span></span><br><span class="line">git push origin --delete <span class="hljs-variable">$&#123;tag_name&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a><strong>工具</strong></h2><h3 id="提交规范"><a href="#提交规范" class="headerlink" title="提交规范"></a>提交规范</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 安装</span></span><br><span class="line">npm install -g commitizen cz-conventional-changelog</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 使用</span></span><br><span class="line">git cz</span><br></pre></td></tr></table></figure>
+
+<h3 id="变更日志"><a href="#变更日志" class="headerlink" title="变更日志"></a>变更日志</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 安装</span></span><br><span class="line">npm install -g conventional-changelog-cli</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 使用</span></span><br><span class="line">conventional-changelog -p angular -i CHANGELOG.md -s -r 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码评审"><a href="#代码评审" class="headerlink" title="代码评审"></a>代码评审</h3><ul>
+<li><em>To be continued…</em></li>
+</ul>
+<h3 id="子级模块"><a href="#子级模块" class="headerlink" title="子级模块"></a>子级模块</h3><ul>
+<li><em>To be continued…</em></li>
+</ul>
+<hr>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Git/">Git</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/15/速查手册之常用Linux&Shell命令/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/05/01/速查手册之常用SQL命令/">
+                <span class="level-item">#SQL# 速查手册：常用 SQL 命令</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '03d40c61f963555f8e68e9243c7d3af4',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="LotteWong">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        LotteWong
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Tencent, Backend Developer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shenzhen, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        10
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        22
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/LotteWong" target="_blank">
+                Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Organization" href="https://github.com/SCUTMSC">
+                
+                <i class="fas fa-sitemap"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Project" href="https://github.com/scutse-man-month-myth/InkYear">
+                
+                <i class="fas fa-project-diagram"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#目录-Table-of-Contents">
+        <span class="has-mr-6">1</span>
+        <span>目录 Table of Contents</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#配置">
+        <span class="has-mr-6">1.1</span>
+        <span>配置</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#账号">
+        <span class="has-mr-6">1.1.1</span>
+        <span>账号</span>
+        </a></li><li>
+        <a class="is-flex" href="#密钥">
+        <span class="has-mr-6">1.1.2</span>
+        <span>密钥</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#仓库">
+        <span class="has-mr-6">1.2</span>
+        <span>仓库</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#查看">
+        <span class="has-mr-6">1.2.1</span>
+        <span>查看</span>
+        </a></li><li>
+        <a class="is-flex" href="#新建">
+        <span class="has-mr-6">1.2.2</span>
+        <span>新建</span>
+        </a></li><li>
+        <a class="is-flex" href="#删除">
+        <span class="has-mr-6">1.2.3</span>
+        <span>删除</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#查询">
+        <span class="has-mr-6">1.3</span>
+        <span>查询</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#当前状态">
+        <span class="has-mr-6">1.3.1</span>
+        <span>当前状态</span>
+        </a></li><li>
+        <a class="is-flex" href="#差异分析">
+        <span class="has-mr-6">1.3.2</span>
+        <span>差异分析</span>
+        </a></li><li>
+        <a class="is-flex" href="#提交记录">
+        <span class="has-mr-6">1.3.3</span>
+        <span>提交记录</span>
+        </a></li><li>
+        <a class="is-flex" href="#操作记录">
+        <span class="has-mr-6">1.3.4</span>
+        <span>操作记录</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#暂存">
+        <span class="has-mr-6">1.4</span>
+        <span>暂存</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#查看-1">
+        <span class="has-mr-6">1.4.1</span>
+        <span>查看</span>
+        </a></li><li>
+        <a class="is-flex" href="#保存">
+        <span class="has-mr-6">1.4.2</span>
+        <span>保存</span>
+        </a></li><li>
+        <a class="is-flex" href="#恢复">
+        <span class="has-mr-6">1.4.3</span>
+        <span>恢复</span>
+        </a></li><li>
+        <a class="is-flex" href="#删除-1">
+        <span class="has-mr-6">1.4.4</span>
+        <span>删除</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#提交">
+        <span class="has-mr-6">1.5</span>
+        <span>提交</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#暂存区">
+        <span class="has-mr-6">1.5.1</span>
+        <span>暂存区</span>
+        </a></li><li>
+        <a class="is-flex" href="#版本库">
+        <span class="has-mr-6">1.5.2</span>
+        <span>版本库</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#回退">
+        <span class="has-mr-6">1.6</span>
+        <span>回退</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#工作区">
+        <span class="has-mr-6">1.6.1</span>
+        <span>工作区</span>
+        </a></li><li>
+        <a class="is-flex" href="#暂存区-1">
+        <span class="has-mr-6">1.6.2</span>
+        <span>暂存区</span>
+        </a></li><li>
+        <a class="is-flex" href="#版本库-1">
+        <span class="has-mr-6">1.6.3</span>
+        <span>版本库</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#克隆">
+        <span class="has-mr-6">1.7</span>
+        <span>克隆</span>
+        </a></li><li>
+        <a class="is-flex" href="#拉取">
+        <span class="has-mr-6">1.8</span>
+        <span>拉取</span>
+        </a></li><li>
+        <a class="is-flex" href="#推送">
+        <span class="has-mr-6">1.9</span>
+        <span>推送</span>
+        </a></li><li>
+        <a class="is-flex" href="#合并">
+        <span class="has-mr-6">1.10</span>
+        <span>合并</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Merge">
+        <span class="has-mr-6">1.10.1</span>
+        <span>Merge</span>
+        </a></li><li>
+        <a class="is-flex" href="#Squash">
+        <span class="has-mr-6">1.10.2</span>
+        <span>Squash</span>
+        </a></li><li>
+        <a class="is-flex" href="#Rebase">
+        <span class="has-mr-6">1.10.3</span>
+        <span>Rebase</span>
+        </a></li><li>
+        <a class="is-flex" href="#Cherry-Pick">
+        <span class="has-mr-6">1.10.4</span>
+        <span>Cherry-Pick</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#冲突">
+        <span class="has-mr-6">1.11</span>
+        <span>冲突</span>
+        </a></li><li>
+        <a class="is-flex" href="#分支">
+        <span class="has-mr-6">1.12</span>
+        <span>分支</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#查看-2">
+        <span class="has-mr-6">1.12.1</span>
+        <span>查看</span>
+        </a></li><li>
+        <a class="is-flex" href="#更新">
+        <span class="has-mr-6">1.12.2</span>
+        <span>更新</span>
+        </a></li><li>
+        <a class="is-flex" href="#新建-1">
+        <span class="has-mr-6">1.12.3</span>
+        <span>新建</span>
+        </a></li><li>
+        <a class="is-flex" href="#改名">
+        <span class="has-mr-6">1.12.4</span>
+        <span>改名</span>
+        </a></li><li>
+        <a class="is-flex" href="#切换">
+        <span class="has-mr-6">1.12.5</span>
+        <span>切换</span>
+        </a></li><li>
+        <a class="is-flex" href="#关联">
+        <span class="has-mr-6">1.12.6</span>
+        <span>关联</span>
+        </a></li><li>
+        <a class="is-flex" href="#删除-2">
+        <span class="has-mr-6">1.12.7</span>
+        <span>删除</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#标签">
+        <span class="has-mr-6">1.13</span>
+        <span>标签</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#查看-3">
+        <span class="has-mr-6">1.13.1</span>
+        <span>查看</span>
+        </a></li><li>
+        <a class="is-flex" href="#新建-2">
+        <span class="has-mr-6">1.13.2</span>
+        <span>新建</span>
+        </a></li><li>
+        <a class="is-flex" href="#删除-3">
+        <span class="has-mr-6">1.13.3</span>
+        <span>删除</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#工具">
+        <span class="has-mr-6">1.14</span>
+        <span>工具</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#提交规范">
+        <span class="has-mr-6">1.14.1</span>
+        <span>提交规范</span>
+        </a></li><li>
+        <a class="is-flex" href="#变更日志">
+        <span class="has-mr-6">1.14.2</span>
+        <span>变更日志</span>
+        </a></li><li>
+        <a class="is-flex" href="#代码评审">
+        <span class="has-mr-6">1.14.3</span>
+        <span>代码评审</span>
+        </a></li><li>
+        <a class="is-flex" href="#子级模块">
+        <span class="has-mr-6">1.14.4</span>
+        <span>子级模块</span>
+        </a></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Artificial-Intelligence/">
+            <span class="level-start">
+                <span class="level-item">Artificial Intelligence</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Cloud-Computing/">
+            <span class="level-start">
+                <span class="level-item">Cloud Computing</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DevOps/">
+            <span class="level-start">
+                <span class="level-item">DevOps</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Microservice/">
+            <span class="level-start">
+                <span class="level-item">Microservice</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Programming-Language/">
+            <span class="level-start">
+                <span class="level-item">Programming Language</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/QA/">
+            <span class="level-start">
+                <span class="level-item">QA</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Quick-Ref-Guide/">
+            <span class="level-start">
+                <span class="level-item">Quick Ref Guide</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Sucks/">
+            <span class="level-start">
+                <span class="level-item">Sucks</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Testing/">
+            <span class="level-start">
+                <span class="level-item">Testing</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
+        <div class="column-right-shadow  ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2021/03/15/重装系统后的必要软件清单/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microsoft_store.png" alt="#Others# 重装系统后的必要软件清单">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-14T23:00:21.000Z">2021-03-15</time></div>
+                    <a href="/2021/03/15/重装系统后的必要软件清单/" class="has-link-black-ter is-size-6">#Others# 重装系统后的必要软件清单</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/01/01/写在二零二壹/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二壹">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-31T16:00:00.000Z">2021-01-01</time></div>
+                    <a href="/2021/01/01/写在二零二壹/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二壹</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/12/17/Challenge to Mock - Tech Details/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/mock.png" alt="#Mock# Challenge to Mock - Tech Details">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-16T23:00:21.000Z">2020-12-17</time></div>
+                    <a href="/2020/12/17/Challenge to Mock - Tech Details/" class="has-link-black-ter is-size-6">#Mock# Challenge to Mock - Tech Details</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/12/16/Challenge to Mock - Arch Designs/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/mock.png" alt="#Mock# Challenge to Mock - Arch Designs">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-15T23:00:21.000Z">2020-12-16</time></div>
+                    <a href="/2020/12/16/Challenge to Mock - Arch Designs/" class="has-link-black-ter is-size-6">#Mock# Challenge to Mock - Arch Designs</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/11/20/Postman + Newman 最佳实践/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/postman_newman.png" alt="#Api Tests# Postman + Newman 最佳实践">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-11-19T23:00:21.000Z">2020-11-20</time></div>
+                    <a href="/2020/11/20/Postman + Newman 最佳实践/" class="has-link-black-ter is-size-6">#Api Tests# Postman + Newman 最佳实践</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 17.5px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12.5px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 10px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Swaggo/" style="font-size: 10px;">Swaggo</a> <a href="/tags/WSL/" style="font-size: 17.5px;">WSL</a>
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Docker/">
+                        <span class="tag">Docker</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Fiddler/">
+                        <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gin/">
+                        <span class="tag">Gin</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
+                        <span class="tag">GitHub Pages</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Golang/">
+                        <span class="tag">Golang</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gorm/">
+                        <span class="tag">Gorm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Hexo/">
+                        <span class="tag">Hexo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Kubernetes/">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Machine-Learning/">
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mock/">
+                        <span class="tag">Mock</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Newman/">
+                        <span class="tag">Newman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Postman/">
+                        <span class="tag">Postman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
+                        <span class="tag">Programming Paradigm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytest/">
+                        <span class="tag">Pytest</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SQL/">
+                        <span class="tag">SQL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swagger/">
+                        <span class="tag">Swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swaggo/">
+                        <span class="tag">Swaggo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+            
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Bokjan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bokjan.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Kingsley</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kingsleyxie.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">sticnarf</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">sticnarf.me</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">xcw</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">yifanyu123.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Escape</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.cnblogs.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.png" alt="#Git# 速查手册：常用 Git 命令" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 LotteWong
+                ,&nbsp;<a href="http://www2.scut.edu.cn/sse/" target="_blank">SCUT SE</a> & <a href="https://github.com/SCUTMSC" target="_blank">SCUT MSC</a>
+                
+                <!-- <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+								<br>
+								<span id="busuanzi_container_site_pv">
+                plugin.page-view
+                </span>
+                
+                </p>-->
+								<br>
+								<span id="busuanzi_container_site_uv"> Viewed by <span id="busuanzi_value_site_uv"></span> people </span>
+                <span id="busuanzi_container_site_pv">, at <span id="busuanzi_value_site_pv"></span> times </span>
+            </p></div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/LotteWong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="RSS" href="/atom.xml">
+                        
+                        <i class="fas fa-rss"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

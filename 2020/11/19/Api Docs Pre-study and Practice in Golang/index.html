@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>#Api Docs# Api Docs Pre-study and Practice in Golang - LotteWong</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+<link rel="alternative" href="./atom.xml" title="#Api Docs# Api Docs Pre-study and Practice in Golang" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.png" alt="#Api Docs# Api Docs Pre-study and Practice in Golang" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Email" href="mailto:lottewong21@gmail.com">
+                        
+                        <i class="far fa-envelope-open"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/swagger.png" alt="#Api Docs# Api Docs Pre-study and Practice in Golang">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-11-18T23:00:21.000Z">2020-11-19</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1330 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                #Api Docs# Api Docs Pre-study and Practice in Golang
+            
+        </h1>
+        <div class="content">
+            <p>If you write code, write docs. <em>– Make up by myself</em></p>
+<hr>
+<a id="more"></a>
+
+
+
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
+
+<hr>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a><strong>背景</strong></h2><blockquote>
+<p>作为一个轻度强迫症候群者，单纯觉得人工写文档也太让人难受了（还有点累。其次是希望自己可以养成先出文档后写代码的好习惯，所以就迫切需要一个提高生产效率的文档生成工具了。</p>
+<p>总的来说，我们希望解决以下问题：</p>
+<ol>
+<li><p>写文档就像填表格，固定的输入规则对应固定的输出格式</p>
+</li>
+<li><p>整体应用文档应有这些内容：</p>
+<ul>
+<li><p>接口目录</p>
+</li>
+<li><p>变更记录</p>
+</li>
+<li><p>其它备注</p>
+</li>
+</ul>
+</li>
+<li><p>具体接口文档应有这些内容：</p>
+<ul>
+<li>功能描述</li>
+<li>请求方法</li>
+<li>请求路径</li>
+<li>请求参数（规格和示例）</li>
+<li>响应状态</li>
+<li>响应参数（规格和示例）</li>
+</ul>
+</li>
+<li><p>最好具备一定的接口测试功能</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a><strong>技术选型</strong></h2><h3 id="编码后写"><a href="#编码后写" class="headerlink" title="编码后写"></a>编码后写</h3><p>手写 <code>markdown</code> 文档：格式和内容容易出错，写完代码后再写文档积极性也不高，不推荐这样做。</p>
+<h3 id="测试时写"><a href="#测试时写" class="headerlink" title="测试时写"></a>测试时写</h3><p><code>postman + docgen</code>：可以实现在线发布接口文档和离线导出接口文档。优点在于无侵入和允许可视化操作，缺点在于请求参数和响应参数无法增加规格描述。</p>
+<h3 id="编码前写"><a href="#编码前写" class="headerlink" title="编码前写"></a>编码前写</h3><p><code>swaggo + swagger-markdown</code>：可以实现在线发布接口文档和离线导出接口文档。优点在于同时满足接口文档格式、内容和测试等方面的要求，缺点在于有侵入即需要改造原有项目。</p>
+<h2 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a><strong>安装工具</strong></h2><p>安装及使用 <code>swaggo</code> 工具：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 安装</span></span><br><span class="line">go get github.com/swaggo/swag/cmd/swag</span><br><span class="line">go get -u github.com/swaggo/gin-swagger <span class="hljs-comment"># 适用于 gin 的工程</span></span><br><span class="line">go get -u github.com/swaggo/gin-swagger/swaggerFiles <span class="hljs-comment"># 适用于 gin 的工程</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 使用</span></span><br><span class="line">swag init <span class="hljs-comment"># 在工程根目录下执行</span></span><br></pre></td></tr></table></figure>
+
+<p>安装及使用 <code>swagger-markdown</code> 工具：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 安装</span></span><br><span class="line">npm install -g swagger-markdown</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 使用</span></span><br><span class="line">swagger-markdown -i <span class="hljs-variable">$&#123;input_yaml&#125;</span> -o <span class="hljs-variable">$&#123;outputMarkdown&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="编写文档"><a href="#编写文档" class="headerlink" title="编写文档"></a><strong>编写文档</strong></h2><h3 id="整体应用"><a href="#整体应用" class="headerlink" title="整体应用"></a>整体应用</h3><h4 id="main-go"><a href="#main-go" class="headerlink" title="main.go"></a>main.go</h4><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> (</span><br><span class="line">	<span class="hljs-string">"go-swagger-sample/router"</span></span><br><span class="line">	<span class="hljs-string">"log"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 注解必须写在入口函数才会生效</span></span><br><span class="line"><span class="hljs-comment">// @title Title For Go-Swagger-Sample Api Docs // 标题</span></span><br><span class="line"><span class="hljs-comment">// @description `Markdown` Description For Go-Swagger-Sample Api Docs // 描述（支持 Markdown 格式）</span></span><br><span class="line"><span class="hljs-comment">// @version 1.0.0 // 版本</span></span><br><span class="line"><span class="hljs-comment">// @host 127.0.0.1:8080 // 测试接口的请求地址</span></span><br><span class="line"><span class="hljs-comment">// @BasePath /api/v1 // 测试接口的请求前缀</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">	route := router.InitRouter()</span><br><span class="line">	<span class="hljs-keyword">if</span> err := route.Run(); err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="hljs-string">"App crashed, err: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="router-router-go"><a href="#router-router-go" class="headerlink" title="router/router.go"></a>router/router.go</h4><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> router</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> (</span><br><span class="line">	<span class="hljs-string">"github.com/gin-gonic/gin"</span></span><br><span class="line">	swaggerFiles <span class="hljs-string">"github.com/swaggo/files"</span></span><br><span class="line">	ginSwagger <span class="hljs-string">"github.com/swaggo/gin-swagger"</span></span><br><span class="line">	<span class="hljs-string">"go-swagger-sample/controller"</span></span><br><span class="line">	<span class="hljs-string">"go-swagger-sample/docs"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">InitRouter</span><span class="hljs-params">()</span> *<span class="hljs-title">gin</span>.<span class="hljs-title">Engine</span></span> &#123;</span><br><span class="line">	router := gin.Default()</span><br><span class="line"></span><br><span class="line">	docs.SwaggerInfo.Schemes = []<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">"http"</span>, <span class="hljs-string">"https"</span>&#125; <span class="hljs-comment">// 测试接口的请求协议</span></span><br><span class="line">	router.GET(<span class="hljs-string">"/swagger/*any"</span>, ginSwagger.WrapHandler(swaggerFiles.Handler)) <span class="hljs-comment">// 路由托管 swagger 静态资源</span></span><br><span class="line"></span><br><span class="line">	userGroup := router.Group(<span class="hljs-string">"/api/v1/users"</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		userGroup.GET(<span class="hljs-string">""</span>, controller.ListUsers)</span><br><span class="line">		userGroup.POST(<span class="hljs-string">""</span>, controller.CreateUser)</span><br><span class="line">		userGroup.GET(<span class="hljs-string">"/:id"</span>, controller.GetUser)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-keyword">return</span> router</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="具体接口"><a href="#具体接口" class="headerlink" title="具体接口"></a>具体接口</h3><h4 id="controller-controller-go"><a href="#controller-controller-go" class="headerlink" title="controller/controller.go"></a>controller/controller.go</h4><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> controller</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> (</span><br><span class="line">	<span class="hljs-string">"github.com/gin-gonic/gin"</span></span><br><span class="line">	<span class="hljs-string">"go-swagger-sample/models"</span></span><br><span class="line">	<span class="hljs-string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// User godoc</span></span><br><span class="line"><span class="hljs-comment">// @Summary 查询用户列表 // 标题</span></span><br><span class="line"><span class="hljs-comment">// @Description 查询用户列表描述 // 描述（支持 Markdown 格式） </span></span><br><span class="line"><span class="hljs-comment">// @Tags 用户接口 // 分类</span></span><br><span class="line"><span class="hljs-comment">// @Id /users</span></span><br><span class="line"><span class="hljs-comment">// @Accept json</span></span><br><span class="line"><span class="hljs-comment">// @Produce json</span></span><br><span class="line"><span class="hljs-comment">// @Param username query string false "登录名称" // 请求参数规格和示例（query）</span></span><br><span class="line"><span class="hljs-comment">// @Success 200 &#123;object&#125; models.Users "success" // 响应参数规格和示例</span></span><br><span class="line"><span class="hljs-comment">// @Router /users [get] // 测试接口的请求路径和请求方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ListUsers</span><span class="hljs-params">(ctx *gin.Context)</span></span> &#123;</span><br><span class="line">	user := &amp;models.User&#123;&#125;</span><br><span class="line">	<span class="hljs-keyword">if</span> err := ctx.ShouldBind(&amp;user); err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">		ctx.JSON(http.StatusInternalServerError, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> list all users</span></span><br><span class="line"></span><br><span class="line">	users := []models.User&#123;*user&#125;</span><br><span class="line">	res := &amp;models.Users&#123;</span><br><span class="line">		TotalCount: <span class="hljs-number">1</span>,</span><br><span class="line">		Items:      users,</span><br><span class="line">	&#125;</span><br><span class="line">	ctx.JSON(http.StatusOK, res)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// User godoc</span></span><br><span class="line"><span class="hljs-comment">// @Summary 创建用户 // 标题</span></span><br><span class="line"><span class="hljs-comment">// @Description 创建用户描述 // 描述（支持 Markdown 格式） </span></span><br><span class="line"><span class="hljs-comment">// @Tags 用户接口 // 分类</span></span><br><span class="line"><span class="hljs-comment">// @Id /users</span></span><br><span class="line"><span class="hljs-comment">// @Accept json</span></span><br><span class="line"><span class="hljs-comment">// @Produce json</span></span><br><span class="line"><span class="hljs-comment">// @Param createBody body models.User true "创建用户请求主体" // 请求参数规格和示例（body）</span></span><br><span class="line"><span class="hljs-comment">// @Success 200 &#123;object&#125; models.User "success" // 响应参数规格和示例</span></span><br><span class="line"><span class="hljs-comment">// @Router /users [post] // 测试接口的请求路径和请求方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">CreateUser</span><span class="hljs-params">(ctx *gin.Context)</span></span> &#123;</span><br><span class="line">	user := &amp;models.User&#123;&#125;</span><br><span class="line">	<span class="hljs-keyword">if</span> err := ctx.ShouldBind(&amp;user); err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">		ctx.JSON(http.StatusInternalServerError, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> create a user</span></span><br><span class="line"></span><br><span class="line">	ctx.JSON(http.StatusOK, user)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// User godoc</span></span><br><span class="line"><span class="hljs-comment">// @Summary 查询用户详情 // 标题</span></span><br><span class="line"><span class="hljs-comment">// @Description 查询用户详情描述 // 描述（支持 Markdown 格式） </span></span><br><span class="line"><span class="hljs-comment">// @Tags 用户接口 // 分类</span></span><br><span class="line"><span class="hljs-comment">// @Id /users/:id</span></span><br><span class="line"><span class="hljs-comment">// @Accept json</span></span><br><span class="line"><span class="hljs-comment">// @Produce json</span></span><br><span class="line"><span class="hljs-comment">// @Param id path string true "用户标识" // 请求参数规格和示例（path）</span></span><br><span class="line"><span class="hljs-comment">// @Success 200 &#123;object&#125; models.User "success" // 响应参数规格和示例</span></span><br><span class="line"><span class="hljs-comment">// @Router /users/&#123;id&#125; [get] // 测试接口的请求路径和请求方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">GetUser</span><span class="hljs-params">(ctx *gin.Context)</span></span> &#123;</span><br><span class="line">	user := &amp;models.User&#123;&#125;</span><br><span class="line">	<span class="hljs-keyword">if</span> err := ctx.ShouldBindUri(&amp;user); err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">		ctx.JSON(http.StatusInternalServerError, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> get a user</span></span><br><span class="line"></span><br><span class="line">	ctx.JSON(http.StatusOK, user)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="model-dto-go"><a href="#model-dto-go" class="headerlink" title="model/dto.go"></a>model/dto.go</h4><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> models</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 请求参数或响应参数规格和示例</span></span><br><span class="line"><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">	Id       <span class="hljs-keyword">string</span> <span class="hljs-string">`json:"id" form:"id" uri:"id" example:"1"`</span>         <span class="hljs-comment">// 用户标识</span></span><br><span class="line">	Username <span class="hljs-keyword">string</span> <span class="hljs-string">`json:"username" form:"username" example:"admin"`</span>  <span class="hljs-comment">// 登录名称</span></span><br><span class="line">	Password <span class="hljs-keyword">string</span> <span class="hljs-string">`json:"password" form:"password" example:"123456"`</span> <span class="hljs-comment">// 登录密码</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 请求参数或响应参数规格和示例</span></span><br><span class="line"><span class="hljs-keyword">type</span> Users <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">	TotalCount <span class="hljs-keyword">int</span>    <span class="hljs-string">`json:"totalcount" form:"totalcount" example:"0"`</span> <span class="hljs-comment">// 共计条数</span></span><br><span class="line">	Items      []User <span class="hljs-string">`json:"items" form:"items" example:""`</span>            <span class="hljs-comment">// 用户列表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="接口测试"><a href="#接口测试" class="headerlink" title="接口测试"></a><strong>接口测试</strong></h2><h3 id="query"><a href="#query" class="headerlink" title="query"></a>query</h3><p><img src="/images/api_test_query.png" alt="api test - query"></p>
+<h3 id="body"><a href="#body" class="headerlink" title="body"></a>body</h3><p><img src="/images/api_test_body.png" alt="api test - body"></p>
+<h3 id="path"><a href="#path" class="headerlink" title="path"></a>path</h3><p><img src="/images/api_test_path.png" alt="api test - path"></p>
+<h2 id="在线查看"><a href="#在线查看" class="headerlink" title="在线查看"></a><strong>在线查看</strong></h2><p>访问 <code>http://${ip}:${port}/swagger/index.html</code> 可阅</p>
+<h2 id="离线导出"><a href="#离线导出" class="headerlink" title="离线导出"></a><strong>离线导出</strong></h2><h3 id="导出-markdown-格式"><a href="#导出-markdown-格式" class="headerlink" title="导出 markdown 格式"></a>导出 markdown 格式</h3><p>使用 <code>swagger-markdown</code> 工具将 <code>swagger.yaml</code> 转换为 <code>docs.md</code></p>
+<h3 id="导出-PDF-Word-HTML-格式"><a href="#导出-PDF-Word-HTML-格式" class="headerlink" title="导出 PDF/Word/HTML 格式"></a>导出 PDF/Word/HTML 格式</h3><p>使用 <code>Typora</code> 工具将 <code>docs.md</code> 转换为 <code>docs.pdf/docs.docx/docs.html</code></p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a><strong>附录</strong></h2><ul>
+<li><p><a href="https://github.com/swaggo" target="_blank" rel="noopener">swaggo</a>/<a href="https://github.com/swaggo/swag" target="_blank" rel="noopener">swag</a></p>
+</li>
+<li><p><a href="https://github.com/syroegkin" target="_blank" rel="noopener">syroegkin</a>/<a href="https://github.com/syroegkin/swagger-markdown" target="_blank" rel="noopener">swagger-markdown</a></p>
+</li>
+</ul>
+<hr>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Swagger/">Swagger</a>, <a class="has-link-grey -link" href="/tags/Swaggo/">Swaggo</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/11/19/Unit Test Pre-study and Practice in Python/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">#Unit Test# Unit Test Pre-study and Practice in Python</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/10/01/Golang Microservice 工程开发踩坑记录/">
+                <span class="level-item">#Golang# Golang Microservice 工程开发踩坑记录</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: 'c6d889164596bde6bceee0e00cb3ed23',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="LotteWong">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        LotteWong
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Tencent, Backend Developer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shenzhen, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        10
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        22
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/LotteWong" target="_blank">
+                Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Organization" href="https://github.com/SCUTMSC">
+                
+                <i class="fas fa-sitemap"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Project" href="https://github.com/scutse-man-month-myth/InkYear">
+                
+                <i class="fas fa-project-diagram"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#目录-Table-of-Contents">
+        <span class="has-mr-6">1</span>
+        <span>目录 Table of Contents</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#背景">
+        <span class="has-mr-6">1.1</span>
+        <span>背景</span>
+        </a></li><li>
+        <a class="is-flex" href="#技术选型">
+        <span class="has-mr-6">1.2</span>
+        <span>技术选型</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#编码后写">
+        <span class="has-mr-6">1.2.1</span>
+        <span>编码后写</span>
+        </a></li><li>
+        <a class="is-flex" href="#测试时写">
+        <span class="has-mr-6">1.2.2</span>
+        <span>测试时写</span>
+        </a></li><li>
+        <a class="is-flex" href="#编码前写">
+        <span class="has-mr-6">1.2.3</span>
+        <span>编码前写</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#安装工具">
+        <span class="has-mr-6">1.3</span>
+        <span>安装工具</span>
+        </a></li><li>
+        <a class="is-flex" href="#编写文档">
+        <span class="has-mr-6">1.4</span>
+        <span>编写文档</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#整体应用">
+        <span class="has-mr-6">1.4.1</span>
+        <span>整体应用</span>
+        </a></li><li>
+        <a class="is-flex" href="#具体接口">
+        <span class="has-mr-6">1.4.2</span>
+        <span>具体接口</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#接口测试">
+        <span class="has-mr-6">1.5</span>
+        <span>接口测试</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#query">
+        <span class="has-mr-6">1.5.1</span>
+        <span>query</span>
+        </a></li><li>
+        <a class="is-flex" href="#body">
+        <span class="has-mr-6">1.5.2</span>
+        <span>body</span>
+        </a></li><li>
+        <a class="is-flex" href="#path">
+        <span class="has-mr-6">1.5.3</span>
+        <span>path</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#在线查看">
+        <span class="has-mr-6">1.6</span>
+        <span>在线查看</span>
+        </a></li><li>
+        <a class="is-flex" href="#离线导出">
+        <span class="has-mr-6">1.7</span>
+        <span>离线导出</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#导出-markdown-格式">
+        <span class="has-mr-6">1.7.1</span>
+        <span>导出 markdown 格式</span>
+        </a></li><li>
+        <a class="is-flex" href="#导出-PDF-Word-HTML-格式">
+        <span class="has-mr-6">1.7.2</span>
+        <span>导出 PDF/Word/HTML 格式</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#附录">
+        <span class="has-mr-6">1.8</span>
+        <span>附录</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Artificial-Intelligence/">
+            <span class="level-start">
+                <span class="level-item">Artificial Intelligence</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Cloud-Computing/">
+            <span class="level-start">
+                <span class="level-item">Cloud Computing</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DevOps/">
+            <span class="level-start">
+                <span class="level-item">DevOps</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Microservice/">
+            <span class="level-start">
+                <span class="level-item">Microservice</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Programming-Language/">
+            <span class="level-start">
+                <span class="level-item">Programming Language</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/QA/">
+            <span class="level-start">
+                <span class="level-item">QA</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Quick-Ref-Guide/">
+            <span class="level-start">
+                <span class="level-item">Quick Ref Guide</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Sucks/">
+            <span class="level-start">
+                <span class="level-item">Sucks</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Testing/">
+            <span class="level-start">
+                <span class="level-item">Testing</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
+        <div class="column-right-shadow  ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2021/03/15/重装系统后的必要软件清单/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microsoft_store.png" alt="#Others# 重装系统后的必要软件清单">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-14T23:00:21.000Z">2021-03-15</time></div>
+                    <a href="/2021/03/15/重装系统后的必要软件清单/" class="has-link-black-ter is-size-6">#Others# 重装系统后的必要软件清单</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/01/01/写在二零二壹/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二壹">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-31T16:00:00.000Z">2021-01-01</time></div>
+                    <a href="/2021/01/01/写在二零二壹/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二壹</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/12/17/Challenge to Mock - Tech Details/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/mock.png" alt="#Mock# Challenge to Mock - Tech Details">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-16T23:00:21.000Z">2020-12-17</time></div>
+                    <a href="/2020/12/17/Challenge to Mock - Tech Details/" class="has-link-black-ter is-size-6">#Mock# Challenge to Mock - Tech Details</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/12/16/Challenge to Mock - Arch Designs/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/mock.png" alt="#Mock# Challenge to Mock - Arch Designs">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-15T23:00:21.000Z">2020-12-16</time></div>
+                    <a href="/2020/12/16/Challenge to Mock - Arch Designs/" class="has-link-black-ter is-size-6">#Mock# Challenge to Mock - Arch Designs</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/11/20/Postman + Newman 最佳实践/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/postman_newman.png" alt="#Api Tests# Postman + Newman 最佳实践">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-11-19T23:00:21.000Z">2020-11-20</time></div>
+                    <a href="/2020/11/20/Postman + Newman 最佳实践/" class="has-link-black-ter is-size-6">#Api Tests# Postman + Newman 最佳实践</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 17.5px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12.5px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 10px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Swaggo/" style="font-size: 10px;">Swaggo</a> <a href="/tags/WSL/" style="font-size: 17.5px;">WSL</a>
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Docker/">
+                        <span class="tag">Docker</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Fiddler/">
+                        <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gin/">
+                        <span class="tag">Gin</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
+                        <span class="tag">GitHub Pages</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Golang/">
+                        <span class="tag">Golang</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gorm/">
+                        <span class="tag">Gorm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Hexo/">
+                        <span class="tag">Hexo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Kubernetes/">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Machine-Learning/">
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mock/">
+                        <span class="tag">Mock</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Newman/">
+                        <span class="tag">Newman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Postman/">
+                        <span class="tag">Postman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
+                        <span class="tag">Programming Paradigm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytest/">
+                        <span class="tag">Pytest</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SQL/">
+                        <span class="tag">SQL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swagger/">
+                        <span class="tag">Swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swaggo/">
+                        <span class="tag">Swaggo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+            
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Bokjan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bokjan.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Kingsley</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kingsleyxie.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">sticnarf</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">sticnarf.me</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">xcw</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">yifanyu123.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Escape</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.cnblogs.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.png" alt="#Api Docs# Api Docs Pre-study and Practice in Golang" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 LotteWong
+                ,&nbsp;<a href="http://www2.scut.edu.cn/sse/" target="_blank">SCUT SE</a> & <a href="https://github.com/SCUTMSC" target="_blank">SCUT MSC</a>
+                
+                <!-- <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+								<br>
+								<span id="busuanzi_container_site_pv">
+                plugin.page-view
+                </span>
+                
+                </p>-->
+								<br>
+								<span id="busuanzi_container_site_uv"> Viewed by <span id="busuanzi_value_site_uv"></span> people </span>
+                <span id="busuanzi_container_site_pv">, at <span id="busuanzi_value_site_pv"></span> times </span>
+            </p></div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/LotteWong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="RSS" href="/atom.xml">
+                        
+                        <i class="fas fa-rss"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

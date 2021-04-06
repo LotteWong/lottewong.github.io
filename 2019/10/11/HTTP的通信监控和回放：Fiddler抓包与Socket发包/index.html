@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>#Fiddler# HTTP的通信监控和回放：Fiddler抓包与Socket发包 - LotteWong</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+<link rel="alternative" href="./atom.xml" title="#Fiddler# HTTP的通信监控和回放：Fiddler抓包与Socket发包" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.png" alt="#Fiddler# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Email" href="mailto:lottewong21@gmail.com">
+                        
+                        <i class="far fa-envelope-open"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/fiddler.png" alt="#Fiddler# HTTP的通信监控和回放：Fiddler抓包与Socket发包">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-10T23:00:21.000Z">2019-10-11</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Testing/">Testing</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 minutes read (About 1604 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                #Fiddler# HTTP的通信监控和回放：Fiddler抓包与Socket发包
+            
+        </h1>
+        <div class="content">
+            <p>利用Fiddler抓包和Socket发包，并用Curl脚本统计响应时间，主要分为以下四个部分：</p>
+<ul>
+<li>工具的配置及工具的使用</li>
+<li><strong>截获、修改、发送数据包</strong></li>
+<li><strong>统计网页和元素的响应时间</strong></li>
+<li>需注意事项及待改进事项</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h1><blockquote>
+<p>部署类似Microsoft PetshopWeb应用基本实例，开发性能测试小工具能截获基于IE浏览器与Web服务器的交互的数据包，修改数据包（比如简化起见，修改要搜索的关键字），再把修改后的内容使用多线程的方式发送到服务器。统计请求每个网页上主要元素（gif,css等）需要的时间，以及请求整个网页的时间。</p>
+<p>提示：</p>
+<ol>
+<li><p>在获取数据包的过程中要根据HTTP请求的特点，从原始的数据包中过滤出HTTP的数据包。找到提交的“搜索的关键字”，将其替换成其它字符。</p>
+</li>
+<li><p>发送数据包使用Socket，可以参考网络编程的资料。</p>
+</li>
+</ol>
+</blockquote>
+<ul>
+<li>方法<ul>
+<li>截获数据包</li>
+<li>修改数据包</li>
+<li>发送数据包</li>
+<li>记响应时间</li>
+</ul>
+</li>
+<li>手段<ul>
+<li>用Fiddler截获</li>
+<li>用Python修改</li>
+<li>用Socket发送</li>
+<li>用Fiddler查看</li>
+</ul>
+</li>
+<li>验证<ul>
+<li>可用性</li>
+<li>易用性</li>
+<li>并发性</li>
+</ul>
+</li>
+</ul>
+<h2 id="工具的配置"><a href="#工具的配置" class="headerlink" title="工具的配置"></a><strong>工具的配置</strong></h2><h3 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a><strong>安装工具</strong></h3><p><a href="https://www.telerik.com/fiddler" target="_blank" rel="noopener">Fiddler下载地址</a></p>
+<h3 id="导入证书"><a href="#导入证书" class="headerlink" title="导入证书"></a><strong>导入证书</strong></h3><p><img src="/images/decrypt_https_1.png" alt="Decrypt to capture Https"></p>
+<p><img src="/images/decrypt_https_2.png" alt="Decrypt to capture Https"></p>
+<h3 id="勾选解码"><a href="#勾选解码" class="headerlink" title="勾选解码"></a><strong>勾选解码</strong></h3><p><img src="/images/encode_decode.png" alt="GZip encoding is default in Fiddler"></p>
+<h3 id="过滤保存"><a href="#过滤保存" class="headerlink" title="过滤保存"></a><strong>过滤保存</strong></h3><h4 id="手动"><a href="#手动" class="headerlink" title="手动"></a><strong>手动</strong></h4><p><img src="/images/filters.png" alt="Set filters"></p>
+<p><img src="/images/save_sessions.png" alt="Save sessions"></p>
+<h4 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a><strong>脚本</strong></h4><p><img src="/images/customize_rules_1.png" alt="Customize Rules"></p>
+<p><img src="/images/customize_rules_2.png" alt="Edit scripts"></p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> (oSession.fullUrl.Contains(<span class="hljs-string">"baidu.com"</span>)) &#123;</span><br><span class="line">    <span class="hljs-comment">// for(var key in oSession.oRequest.headers) &#123;</span></span><br><span class="line">        <span class="hljs-comment">// if('Referer' === key) &#123;</span></span><br><span class="line">            <span class="hljs-keyword">if</span>(oSession.oRequest.headers[<span class="hljs-string">'Referer'</span>].indexOf(<span class="hljs-string">"&amp;wd="</span>) != <span class="hljs-number">-1</span>) &#123;</span><br><span class="line">                <span class="hljs-keyword">var</span> fso;</span><br><span class="line">                <span class="hljs-keyword">var</span> file;</span><br><span class="line">                fso = <span class="hljs-keyword">new</span> ActiveXObject(<span class="hljs-string">"Scripting.FileSystemObject"</span>);</span><br><span class="line">                file = fso.OpenTextFile(<span class="hljs-string">"E:\\MyPrograms\\fiddler_sessions\\Session"</span> + <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime() + <span class="hljs-string">".txt"</span>, <span class="hljs-number">8</span> ,<span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>);</span><br><span class="line">                <span class="hljs-comment">// file.writeLine("Request url: " + oSession.url);</span></span><br><span class="line">                file.writeLine(<span class="hljs-string">"Request header:"</span> + <span class="hljs-string">"\n"</span> + oSession.oRequest.headers);</span><br><span class="line">                <span class="hljs-comment">// file.writeLine("Request body: " + oSession.GetRequestBodyAsString());</span></span><br><span class="line">                file.writeLine(<span class="hljs-string">"\n"</span>);</span><br><span class="line">                file.close();</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="hljs-comment">// &#125;</span></span><br><span class="line">    <span class="hljs-comment">// &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置断点"><a href="#设置断点" class="headerlink" title="设置断点"></a><strong>设置断点</strong></h3><h4 id="手动-1"><a href="#手动-1" class="headerlink" title="手动"></a><strong>手动</strong></h4><p><img src="/images/breakpoints.png" alt="Set Breakpoints"></p>
+<h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a><strong>命令</strong></h4><ul>
+<li>在左下角黑框框中输入命令<ul>
+<li>停止断点：<code>bpu</code></li>
+<li>开始断点：<code>bpu $host</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="工具的使用"><a href="#工具的使用" class="headerlink" title="工具的使用"></a><strong>工具的使用</strong></h2><h3 id="Statistics"><a href="#Statistics" class="headerlink" title="Statistics"></a><strong>Statistics</strong></h3><p><img src="/images/statistics.png" alt="Statistics"></p>
+<h3 id="Filters"><a href="#Filters" class="headerlink" title="Filters"></a><strong>Filters</strong></h3><p><img src="/images/filters.png" alt="Filters"></p>
+<h3 id="Inspectors"><a href="#Inspectors" class="headerlink" title="Inspectors"></a><strong>Inspectors</strong></h3><p><img src="/images/inspectors.png" alt="Inspectors"></p>
+<h3 id="Composer"><a href="#Composer" class="headerlink" title="Composer"></a><strong>Composer</strong></h3><p><img src="/images/composer.png" alt="Composer"></p>
+<h3 id="AutoResponder"><a href="#AutoResponder" class="headerlink" title="AutoResponder"></a><strong>AutoResponder</strong></h3><p><img src="/images/auto_responder.png" alt="AutoResponder"></p>
+<h2 id="截获数据包"><a href="#截获数据包" class="headerlink" title="截获数据包"></a><strong>截获数据包</strong></h2><h3 id="图形界面"><a href="#图形界面" class="headerlink" title="图形界面"></a><strong>图形界面</strong></h3><ul>
+<li>使用图形界面或编程脚本应用过滤</li>
+<li>点击左下角 <code>Capturing或空白处</code> 停止或开始截获数据包</li>
+<li>使用Statistics查看时间，使用Inspectors查看内容</li>
+<li>使用图形界面或编程脚本保存会话</li>
+</ul>
+<h2 id="修改数据包"><a href="#修改数据包" class="headerlink" title="修改数据包"></a><strong>修改数据包</strong></h2><h3 id="程序脚本"><a href="#程序脚本" class="headerlink" title="程序脚本"></a><strong>程序脚本</strong></h3><h4 id="对于手动保存的会话"><a href="#对于手动保存的会话" class="headerlink" title="对于手动保存的会话"></a><strong>对于手动保存的会话</strong></h4>  <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 替换请求中的搜索字段</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_ref</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-8'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                start = line.find(<span class="hljs-string">"&amp;wd="</span>)</span><br><span class="line">                end = line.find(<span class="hljs-string">"&amp;rsv_pq="</span>)</span><br><span class="line">                old_str = line[start+<span class="hljs-number">4</span>:end]</span><br><span class="line">                new_str = parse.quote(cont)</span><br><span class="line">                line = line.replace(old_str, new_str)</span><br><span class="line">                <span class="hljs-keyword">return</span> line</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重新拼装需发送的报文</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_req</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    msg = <span class="hljs-string">''</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-8'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'GET'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = <span class="hljs-string">'GET '</span> + get_ref(file, cont)[<span class="hljs-number">9</span>:<span class="hljs-number">-1</span>] + <span class="hljs-string">' HTTP/1.1'</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = get_ref(file, cont)</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Accept-Encoding'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                <span class="hljs-keyword">continue</span></span><br><span class="line">            line = line.strip(<span class="hljs-string">'\n'</span>) + <span class="hljs-string">'\r\n'</span></span><br><span class="line">            msg += line</span><br><span class="line">        msg = bytes(msg, encoding=<span class="hljs-string">"utf8"</span>)</span><br><span class="line">        <span class="hljs-keyword">return</span> msg</span><br></pre></td></tr></table></figure>
+
+<h4 id="对于自动保存的会话"><a href="#对于自动保存的会话" class="headerlink" title="对于自动保存的会话"></a><strong>对于自动保存的会话</strong></h4>  <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 替换请求中的搜索字段</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_ref</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-16'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                start = line.find(<span class="hljs-string">"&amp;wd="</span>)</span><br><span class="line">                end = line.find(<span class="hljs-string">"&amp;rsv_pq="</span>)</span><br><span class="line">                old_str = line[start+<span class="hljs-number">4</span>:end]</span><br><span class="line">                new_str = parse.quote(cont)</span><br><span class="line">                line = line.replace(old_str, new_str)</span><br><span class="line">                <span class="hljs-keyword">return</span> line</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重新拼装需发送的报文</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_req</span><span class="hljs-params">(file, cont)</span>:</span></span><br><span class="line">    msg = <span class="hljs-string">''</span></span><br><span class="line">    <span class="hljs-keyword">with</span> open(file, encoding=<span class="hljs-string">'utf-16'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Request header:'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                <span class="hljs-keyword">continue</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'GET'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = <span class="hljs-string">'GET '</span> + get_ref(file, cont)[<span class="hljs-number">9</span>:<span class="hljs-number">-1</span>] + <span class="hljs-string">' HTTP/1.1'</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Referer'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                line = get_ref(file, cont)</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-string">'Accept-Encoding'</span> <span class="hljs-keyword">in</span> line:</span><br><span class="line">                <span class="hljs-keyword">continue</span></span><br><span class="line">            line = line.strip(<span class="hljs-string">'\n'</span>) + <span class="hljs-string">'\r\n'</span></span><br><span class="line">            msg += line</span><br><span class="line">        msg = bytes(msg[:<span class="hljs-number">-4</span>], encoding=<span class="hljs-string">"utf8"</span>)</span><br><span class="line">        <span class="hljs-keyword">return</span> msg</span><br></pre></td></tr></table></figure>
+
+<h2 id="发送数据包"><a href="#发送数据包" class="headerlink" title="发送数据包"></a><strong>发送数据包</strong></h2><h3 id="Fiddler"><a href="#Fiddler" class="headerlink" title="Fiddler"></a><strong>Fiddler</strong></h3><h4 id="使用WebForms"><a href="#使用WebForms" class="headerlink" title="使用WebForms"></a><strong>使用WebForms</strong></h4><ul>
+<li>使用图形界面或编程脚本应用过滤</li>
+<li>使用图形界面或运行命令设置断点</li>
+<li>在 <code>对应报文A</code> 的 <code>Request WebForms</code>内修改“搜索关键字”</li>
+<li>点击 <code>Break on Response</code> 将修改后的 <code>对应报文A</code> 发送到Fiddler</li>
+<li>在 <code>对应报文B</code> 的 <code>Request WebForms</code>内查看“搜索关键字”</li>
+<li>点击 <code>Run to Completion</code> 将修改后的 <code>对应报文B</code> 发送到Server</li>
+</ul>
+<h4 id="使用Composer"><a href="#使用Composer" class="headerlink" title="使用Composer"></a><strong>使用Composer</strong></h4><ul>
+<li>保存会话Request请求头部</li>
+<li>在记事本内修改“搜索关键字”</li>
+<li>在Composer内发送请求报文</li>
+</ul>
+<h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a><strong>Socket</strong></h3>  <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:</span><br><span class="line">    <span class="hljs-comment"># 读取信息</span></span><br><span class="line">    file = input(<span class="hljs-string">"file:"</span>)</span><br><span class="line">    cont = input(<span class="hljs-string">"cont:"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 套接字连接服务端</span></span><br><span class="line">    s = ssl.wrap_socket(socket.socket())</span><br><span class="line">    s.connect((<span class="hljs-string">'www.baidu.com'</span>, <span class="hljs-number">443</span>))</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 发送修改后的请求</span></span><br><span class="line">    s.send(get_req(file, cont))</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 缓存服务端的响应</span></span><br><span class="line">    buffer = []</span><br><span class="line">    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:</span><br><span class="line">        d = s.recv(<span class="hljs-number">1024</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> d:</span><br><span class="line">            buffer.append(d)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            <span class="hljs-keyword">break</span></span><br><span class="line">    res = <span class="hljs-string">b''</span>.join(buffer)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 客户端关闭套接字</span></span><br><span class="line">    s.close()</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 保存响应</span></span><br><span class="line">    header, html = res.split(<span class="hljs-string">b'\r\n\r\n'</span>, <span class="hljs-number">1</span>)</span><br><span class="line">    print(header.decode(<span class="hljs-string">'utf-8'</span>))</span><br><span class="line">    <span class="hljs-keyword">with</span> open(cont + <span class="hljs-string">'.html'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">        f.write(html)</span><br></pre></td></tr></table></figure>
+
+<h2 id="记响应时间"><a href="#记响应时间" class="headerlink" title="记响应时间"></a><strong>记响应时间</strong></h2><h3 id="Fiddler-1"><a href="#Fiddler-1" class="headerlink" title="Fiddler"></a>Fiddler</h3><h3 id="PyCurl"><a href="#PyCurl" class="headerlink" title="PyCurl"></a>PyCurl</h3><h3 id="Urllib"><a href="#Urllib" class="headerlink" title="Urllib"></a>Urllib</h3><h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><h2 id="实例的演示"><a href="#实例的演示" class="headerlink" title="实例的演示"></a><strong>实例的演示</strong></h2><p><img src="/images/fiddler_socket.png" alt="Flowchart"></p>
+<ul>
+<li>[仅使用Fiddler抓包、修改、发包](录屏链接To be continue…)</li>
+<li>[Fiddler抓包+Python修改+Socket发包](录屏链接To be continue…)</li>
+</ul>
+<h2 id="需注意事项"><a href="#需注意事项" class="headerlink" title="需注意事项"></a><strong>需注意事项</strong></h2><h3 id="报文格式"><a href="#报文格式" class="headerlink" title="报文格式"></a><strong>报文格式</strong></h3><ul>
+<li>无论使手动还是脚本保存会话的请求报文，都需要注意每个属性是否以 <code>\r\n</code>  结尾，最后属性是否以 <code>\r\n\r\n</code> 结尾</li>
+<li>遇到 <code>HTTP 400 Bad Request</code> 响应仔细检查报文格式是否正确</li>
+</ul>
+<h3 id="编码问题"><a href="#编码问题" class="headerlink" title="编码问题"></a><strong>编码问题</strong></h3><ul>
+<li>注意保存会话的编码格式，手动保存使用编码格式 <code>utf-8</code> ，脚本保存使用编码格式 <code>utf-16</code></li>
+<li>Socket发送报文和接受报文都需要二进制数据</li>
+<li>Fiddler默认使用GZip格式压缩，在发送请求报文时为确保响应主题非乱码，应该去除 <code>Accept-Encoding: gzip, deflate</code> 这行属性</li>
+</ul>
+<h3 id="端口问题"><a href="#端口问题" class="headerlink" title="端口问题"></a><strong>端口问题</strong></h3><ul>
+<li>Socket通信需要知道主机地址及其端口号<ul>
+<li>Fiddler Sessions或Inpectors可知主机地址及其端口号</li>
+<li>保存的TCP报文（使用Wireshark）可知主机地址及其端口号</li>
+<li>保存的HTTP/HTTPS报文（使用Fiddler）仅知主机地址，已知常用端口：HTTP为80/HTTPS为443</li>
+</ul>
+</li>
+</ul>
+<h3 id="请求变化"><a href="#请求变化" class="headerlink" title="请求变化"></a><strong>请求变化</strong></h3><ul>
+<li><code>Break on Response</code> 和 <code>Run to Completion</code> 对应会话并不相同</li>
+</ul>
+<h2 id="待改进事项"><a href="#待改进事项" class="headerlink" title="待改进事项"></a><strong>待改进事项</strong></h2><ul>
+<li>优化过滤会话和替换内容脚本（正则表达式）</li>
+<li>发送响应回浏览器（Socket向其它进程发报文）</li>
+<li>持续化、多线程抓包、修改、发包（多线程编程）</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Fiddler/">Fiddler</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/11/04/SCUT机器学习 (1) 数据与参数/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">#Machine Learning# SCUT Machine Learning(1) 数据与参数</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/18/LinuxOne上的Docker实践/">
+                <span class="level-item">#Docker# LinuxOne上的Docker初体验</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '51350670b5aad80aeaa839285cfa8b57',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="LotteWong">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        LotteWong
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Tencent, Backend Developer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shenzhen, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        10
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        22
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/LotteWong" target="_blank">
+                Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Organization" href="https://github.com/SCUTMSC">
+                
+                <i class="fas fa-sitemap"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Project" href="https://github.com/scutse-man-month-myth/InkYear">
+                
+                <i class="fas fa-project-diagram"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#任务">
+        <span class="has-mr-6">1</span>
+        <span>任务</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#工具的配置">
+        <span class="has-mr-6">1.1</span>
+        <span>工具的配置</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#安装工具">
+        <span class="has-mr-6">1.1.1</span>
+        <span>安装工具</span>
+        </a></li><li>
+        <a class="is-flex" href="#导入证书">
+        <span class="has-mr-6">1.1.2</span>
+        <span>导入证书</span>
+        </a></li><li>
+        <a class="is-flex" href="#勾选解码">
+        <span class="has-mr-6">1.1.3</span>
+        <span>勾选解码</span>
+        </a></li><li>
+        <a class="is-flex" href="#过滤保存">
+        <span class="has-mr-6">1.1.4</span>
+        <span>过滤保存</span>
+        </a></li><li>
+        <a class="is-flex" href="#设置断点">
+        <span class="has-mr-6">1.1.5</span>
+        <span>设置断点</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#工具的使用">
+        <span class="has-mr-6">1.2</span>
+        <span>工具的使用</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Statistics">
+        <span class="has-mr-6">1.2.1</span>
+        <span>Statistics</span>
+        </a></li><li>
+        <a class="is-flex" href="#Filters">
+        <span class="has-mr-6">1.2.2</span>
+        <span>Filters</span>
+        </a></li><li>
+        <a class="is-flex" href="#Inspectors">
+        <span class="has-mr-6">1.2.3</span>
+        <span>Inspectors</span>
+        </a></li><li>
+        <a class="is-flex" href="#Composer">
+        <span class="has-mr-6">1.2.4</span>
+        <span>Composer</span>
+        </a></li><li>
+        <a class="is-flex" href="#AutoResponder">
+        <span class="has-mr-6">1.2.5</span>
+        <span>AutoResponder</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#截获数据包">
+        <span class="has-mr-6">1.3</span>
+        <span>截获数据包</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#图形界面">
+        <span class="has-mr-6">1.3.1</span>
+        <span>图形界面</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#修改数据包">
+        <span class="has-mr-6">1.4</span>
+        <span>修改数据包</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#程序脚本">
+        <span class="has-mr-6">1.4.1</span>
+        <span>程序脚本</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#发送数据包">
+        <span class="has-mr-6">1.5</span>
+        <span>发送数据包</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Fiddler">
+        <span class="has-mr-6">1.5.1</span>
+        <span>Fiddler</span>
+        </a></li><li>
+        <a class="is-flex" href="#Socket">
+        <span class="has-mr-6">1.5.2</span>
+        <span>Socket</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#记响应时间">
+        <span class="has-mr-6">1.6</span>
+        <span>记响应时间</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Fiddler-1">
+        <span class="has-mr-6">1.6.1</span>
+        <span>Fiddler</span>
+        </a></li><li>
+        <a class="is-flex" href="#PyCurl">
+        <span class="has-mr-6">1.6.2</span>
+        <span>PyCurl</span>
+        </a></li><li>
+        <a class="is-flex" href="#Urllib">
+        <span class="has-mr-6">1.6.3</span>
+        <span>Urllib</span>
+        </a></li><li>
+        <a class="is-flex" href="#Request">
+        <span class="has-mr-6">1.6.4</span>
+        <span>Request</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#实例的演示">
+        <span class="has-mr-6">1.7</span>
+        <span>实例的演示</span>
+        </a></li><li>
+        <a class="is-flex" href="#需注意事项">
+        <span class="has-mr-6">1.8</span>
+        <span>需注意事项</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#报文格式">
+        <span class="has-mr-6">1.8.1</span>
+        <span>报文格式</span>
+        </a></li><li>
+        <a class="is-flex" href="#编码问题">
+        <span class="has-mr-6">1.8.2</span>
+        <span>编码问题</span>
+        </a></li><li>
+        <a class="is-flex" href="#端口问题">
+        <span class="has-mr-6">1.8.3</span>
+        <span>端口问题</span>
+        </a></li><li>
+        <a class="is-flex" href="#请求变化">
+        <span class="has-mr-6">1.8.4</span>
+        <span>请求变化</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#待改进事项">
+        <span class="has-mr-6">1.9</span>
+        <span>待改进事项</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Artificial-Intelligence/">
+            <span class="level-start">
+                <span class="level-item">Artificial Intelligence</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Cloud-Computing/">
+            <span class="level-start">
+                <span class="level-item">Cloud Computing</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DevOps/">
+            <span class="level-start">
+                <span class="level-item">DevOps</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Microservice/">
+            <span class="level-start">
+                <span class="level-item">Microservice</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Programming-Language/">
+            <span class="level-start">
+                <span class="level-item">Programming Language</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/QA/">
+            <span class="level-start">
+                <span class="level-item">QA</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Quick-Ref-Guide/">
+            <span class="level-start">
+                <span class="level-item">Quick Ref Guide</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Sucks/">
+            <span class="level-start">
+                <span class="level-item">Sucks</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Testing/">
+            <span class="level-start">
+                <span class="level-item">Testing</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
+        <div class="column-right-shadow  ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2021/03/15/重装系统后的必要软件清单/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microsoft_store.png" alt="#Others# 重装系统后的必要软件清单">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-14T23:00:21.000Z">2021-03-15</time></div>
+                    <a href="/2021/03/15/重装系统后的必要软件清单/" class="has-link-black-ter is-size-6">#Others# 重装系统后的必要软件清单</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/01/01/写在二零二壹/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二壹">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-31T16:00:00.000Z">2021-01-01</time></div>
+                    <a href="/2021/01/01/写在二零二壹/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二壹</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/12/17/Challenge to Mock - Tech Details/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/mock.png" alt="#Mock# Challenge to Mock - Tech Details">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-16T23:00:21.000Z">2020-12-17</time></div>
+                    <a href="/2020/12/17/Challenge to Mock - Tech Details/" class="has-link-black-ter is-size-6">#Mock# Challenge to Mock - Tech Details</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/12/16/Challenge to Mock - Arch Designs/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/mock.png" alt="#Mock# Challenge to Mock - Arch Designs">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-12-15T23:00:21.000Z">2020-12-16</time></div>
+                    <a href="/2020/12/16/Challenge to Mock - Arch Designs/" class="has-link-black-ter is-size-6">#Mock# Challenge to Mock - Arch Designs</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/11/20/Postman + Newman 最佳实践/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/postman_newman.png" alt="#Api Tests# Postman + Newman 最佳实践">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-11-19T23:00:21.000Z">2020-11-20</time></div>
+                    <a href="/2020/11/20/Postman + Newman 最佳实践/" class="has-link-black-ter is-size-6">#Api Tests# Postman + Newman 最佳实践</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 17.5px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12.5px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 10px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Swaggo/" style="font-size: 10px;">Swaggo</a> <a href="/tags/WSL/" style="font-size: 17.5px;">WSL</a>
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Docker/">
+                        <span class="tag">Docker</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Fiddler/">
+                        <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gin/">
+                        <span class="tag">Gin</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
+                        <span class="tag">GitHub Pages</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Golang/">
+                        <span class="tag">Golang</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gorm/">
+                        <span class="tag">Gorm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Hexo/">
+                        <span class="tag">Hexo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Kubernetes/">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Machine-Learning/">
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mock/">
+                        <span class="tag">Mock</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Newman/">
+                        <span class="tag">Newman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Postman/">
+                        <span class="tag">Postman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
+                        <span class="tag">Programming Paradigm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytest/">
+                        <span class="tag">Pytest</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SQL/">
+                        <span class="tag">SQL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swagger/">
+                        <span class="tag">Swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swaggo/">
+                        <span class="tag">Swaggo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+            
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Bokjan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bokjan.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Kingsley</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kingsleyxie.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">sticnarf</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">sticnarf.me</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">xcw</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">yifanyu123.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Escape</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.cnblogs.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.png" alt="#Fiddler# HTTP的通信监控和回放：Fiddler抓包与Socket发包" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 LotteWong
+                ,&nbsp;<a href="http://www2.scut.edu.cn/sse/" target="_blank">SCUT SE</a> & <a href="https://github.com/SCUTMSC" target="_blank">SCUT MSC</a>
+                
+                <!-- <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+								<br>
+								<span id="busuanzi_container_site_pv">
+                plugin.page-view
+                </span>
+                
+                </p>-->
+								<br>
+								<span id="busuanzi_container_site_uv"> Viewed by <span id="busuanzi_value_site_uv"></span> people </span>
+                <span id="busuanzi_container_site_pv">, at <span id="busuanzi_value_site_pv"></span> times </span>
+            </p></div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/LotteWong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="RSS" href="/atom.xml">
+                        
+                        <i class="fas fa-rss"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
