@@ -228,13 +228,6 @@
 
   
   <url>
-    <loc>http://yoursite.com/tags/Mock/</loc>
-    <lastmod>2021-04-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/tags/Swagger/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
@@ -243,6 +236,13 @@
   
   <url>
     <loc>http://yoursite.com/tags/Swaggo/</loc>
+    <lastmod>2021-04-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/Mock/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -305,6 +305,13 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/tags/Docker/</loc>
+    <lastmod>2021-04-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/tags/Git/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
@@ -312,7 +319,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Docker/</loc>
+    <loc>http://yoursite.com/tags/Kubernetes/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -327,13 +334,6 @@
   
   <url>
     <loc>http://yoursite.com/tags/Shell/</loc>
-    <lastmod>2021-04-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/Kubernetes/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -361,6 +361,13 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/tags/Pytest/</loc>
+    <lastmod>2021-04-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/tags/GitHub-Pages/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
@@ -369,13 +376,6 @@
   
   <url>
     <loc>http://yoursite.com/tags/Hexo/</loc>
-    <lastmod>2021-04-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/Pytest/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -426,14 +426,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/Quick-Ref-Guide/</loc>
+    <loc>http://yoursite.com/categories/Others/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/Others/</loc>
+    <loc>http://yoursite.com/categories/Quick-Ref-Guide/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
