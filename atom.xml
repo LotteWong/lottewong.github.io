@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-04-06T15:54:09.065Z</updated>
+  <updated>2021-04-06T15:28:29.140Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,26 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>#Others# 新移动设备的必要软件清单</title>
-    <link href="http://yoursite.com/2021/03/15/%E6%96%B0%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/"/>
-    <id>http://yoursite.com/2021/03/15/%E6%96%B0%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</id>
-    <published>2021-03-14T23:00:21.000Z</published>
-    <updated>2021-04-06T15:54:09.065Z</updated>
-    
-    <content type="html"><![CDATA[<p>备份记录新移动设备的<strong>必要软件清单</strong>：To C / To B</p><hr><a id="more"></a><h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc --><hr><h2 id="To-C"><a href="#To-C" class="headerlink" title="To C"></a><strong>To C</strong></h2><h3 id="社交"><a href="#社交" class="headerlink" title="社交"></a>社交</h3><ul><li>微信：手机/平板</li><li>TIM：手机/平板</li></ul><h3 id="娱乐"><a href="#娱乐" class="headerlink" title="娱乐"></a>娱乐</h3><ul><li>QQ音乐：手机/平板</li><li>微信读书：手机/平板</li><li>豆瓣：手机</li><li>懂球帝：手机</li><li>微博：手机</li><li>哔哩哔哩：平板</li></ul><h3 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h3><ul><li>美团：手机</li><li>腾讯地图：手机</li><li>携程：手机</li><li>Keep：平板</li></ul><h3 id="购物"><a href="#购物" class="headerlink" title="购物"></a>购物</h3><ul><li>京东：手机</li><li>淘宝：平板</li></ul><h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><ul><li>牛客：平板</li><li>超级简历：平板</li><li>力扣：平板</li><li>V2EX：手机</li><li>知乎：手机</li><li>极客时间：平板</li><li>慕课网：平板</li></ul><h3 id="理财"><a href="#理财" class="headerlink" title="理财"></a>理财</h3><ul><li>招商银行：手机</li><li>招商证券：手机</li><li>支付宝：手机</li><li>理财通：手机</li><li>同花顺投资账本：平板</li></ul><h2 id="To-B"><a href="#To-B" class="headerlink" title="To B"></a><strong>To B</strong></h2><h3 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h3><ul><li>企业微信：手机</li><li>腾讯会议：手机</li></ul><h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><ul><li>百度网盘：手机</li><li>OneDrive：平板</li></ul><h3 id="生产"><a href="#生产" class="headerlink" title="生产"></a>生产</h3><ul><li>腾讯文档：手机</li><li>Office 365：平板</li><li>Office Lens：平板</li></ul><h3 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h3><ul><li>OneNote：平板</li><li>MarginNote：平板</li></ul><h3 id="公司"><a href="#公司" class="headerlink" title="公司"></a>公司</h3><ul><li>MOA：手机</li><li>RDM：手机</li><li>乐问：手机</li><li>脉脉：手机</li></ul><h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul><li>To Do：手机/平板</li><li>v2rayNG：手机</li><li>Forest：手机/平板</li></ul><hr>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;备份记录新移动设备的&lt;strong&gt;必要软件清单&lt;/strong&gt;：To C / To B&lt;/p&gt;
-&lt;hr&gt;</summary>
-    
-    
-    
-    <category term="Others" scheme="http://yoursite.com/categories/Others/"/>
-    
-    
-  </entry>
   
   <entry>
     <title>#Others# 重装系统后的必要软件清单</title>
@@ -47,6 +27,26 @@
     
     
     <summary type="html">&lt;p&gt;备份记录重装系统后的&lt;strong&gt;必要软件清单&lt;/strong&gt;：开发 / 办公 / 实用&lt;/p&gt;
+&lt;hr&gt;</summary>
+    
+    
+    
+    <category term="Others" scheme="http://yoursite.com/categories/Others/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>#Others# 新移动设备的必要软件清单</title>
+    <link href="http://yoursite.com/2021/03/15/%E6%96%B0%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/"/>
+    <id>http://yoursite.com/2021/03/15/%E6%96%B0%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</id>
+    <published>2021-03-14T23:00:21.000Z</published>
+    <updated>2021-04-15T06:11:01.782Z</updated>
+    
+    <content type="html"><![CDATA[<p>备份记录新移动设备的<strong>必要软件清单</strong>：To C / To B</p><hr><a id="more"></a><h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc --><hr><h2 id="To-C"><a href="#To-C" class="headerlink" title="To C"></a><strong>To C</strong></h2><h3 id="社交"><a href="#社交" class="headerlink" title="社交"></a>社交</h3><ul><li>微信：手机/平板</li><li>TIM：手机/平板</li></ul><h3 id="娱乐"><a href="#娱乐" class="headerlink" title="娱乐"></a>娱乐</h3><ul><li>QQ音乐：手机/平板</li><li>微信读书：手机/平板</li><li>豆瓣：手机</li><li>懂球帝：手机</li><li>微博：手机</li><li>哔哩哔哩：平板</li></ul><h3 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h3><ul><li>美团：手机</li><li>高德地图：手机</li><li>携程：手机</li><li>Keep：平板</li></ul><h3 id="购物"><a href="#购物" class="headerlink" title="购物"></a>购物</h3><ul><li>京东：手机</li><li>淘宝：平板</li></ul><h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><ul><li>牛客：平板</li><li>超级简历：平板</li><li>力扣：平板</li><li>V2EX：手机</li><li>知乎：手机</li><li>极客时间：平板</li><li>慕课网：平板</li></ul><h3 id="理财"><a href="#理财" class="headerlink" title="理财"></a>理财</h3><ul><li>招商银行：手机</li><li>招商证券：手机</li><li>支付宝：手机</li><li>理财通：手机</li><li>火币：手机</li><li>币安：手机</li><li>同花顺投资账本：平板</li></ul><h2 id="To-B"><a href="#To-B" class="headerlink" title="To B"></a><strong>To B</strong></h2><h3 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h3><ul><li>企业微信：手机</li><li>腾讯会议：手机</li></ul><h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><ul><li>百度网盘：手机</li><li>OneDrive：平板</li></ul><h3 id="生产"><a href="#生产" class="headerlink" title="生产"></a>生产</h3><ul><li>腾讯文档：手机</li><li>Office 365：平板</li><li>Office Lens：平板</li></ul><h3 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h3><ul><li>OneNote：平板</li><li>MarginNote：平板</li></ul><h3 id="公司"><a href="#公司" class="headerlink" title="公司"></a>公司</h3><ul><li>MOA：手机</li><li>RDM：手机</li><li>乐问：手机</li><li>脉脉：手机</li></ul><h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul><li>To Do：手机/平板</li><li>v2rayNG：手机</li><li>Forest：手机/平板</li></ul><hr>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;备份记录新移动设备的&lt;strong&gt;必要软件清单&lt;/strong&gt;：To C / To B&lt;/p&gt;
 &lt;hr&gt;</summary>
     
     
