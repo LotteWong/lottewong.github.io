@@ -156,7 +156,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 minutes read (About 1314 words)
+                    10 minutes read (About 1519 words)
                 </span>
                 
                 
@@ -184,13 +184,14 @@
 
 <hr>
 <p><img src="/images/paper_xmind_1.png" alt="paper mindmap"></p>
-<p>阅读本论文后，<strong>主要讨论以下三点</strong>：</p>
+<p>阅读本论文后，<strong>主要讨论以下四点</strong>：</p>
 <ol>
 <li>应用架构图示及分析</li>
+<li>身份认证令牌选择</li>
 <li>信息加载的热更新解决方案</li>
 <li>分布式的流量控制</li>
 </ol>
-<h2 id="应用架构"><a href="#应用架构" class="headerlink" title="应用架构"></a>应用架构</h2><p><img src="/images/paper_arch_1.png" alt="paper architecture"></p>
+<h2 id="应用架构"><a href="#应用架构" class="headerlink" title="应用架构"></a><strong>应用架构</strong></h2><p><img src="/images/paper_arch_1.png" alt="paper architecture"></p>
 <h3 id="代理服务"><a href="#代理服务" class="headerlink" title="代理服务"></a>代理服务</h3><h4 id="Nginx-接入层"><a href="#Nginx-接入层" class="headerlink" title="Nginx 接入层"></a>Nginx 接入层</h4><ul>
 <li>代理流量的统一入口。</li>
 </ul>
@@ -222,7 +223,11 @@
 <h4 id="MongoDB-集群"><a href="#MongoDB-集群" class="headerlink" title="MongoDB 集群"></a>MongoDB 集群</h4><ul>
 <li>主要用于存储服务配置信息。</li>
 </ul>
-<h2 id="信息加载"><a href="#信息加载" class="headerlink" title="信息加载"></a>信息加载</h2><p><u><strong>本文的</strong></u>处理方式是：先从 Nginx Cache 中读，再从 MongoDB 中读，否则判断为非法的请求。Nginx 是自定义网关技术的常见基石；MongoDB 作为文档型数据库在修改服务配置信息上十分方便。</p>
+<h2 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a><strong>身份认证</strong></h2><p><u><strong>本文将</strong></u>采用 OAuth 2 + JWT 组合。OAuth 2 引入了认证服务器和资源服务器的概念区分，OAuth 2 协议可以携带用户信息和权限信息的特征；JWT 是包含身份信息和过期时间的加密令牌，以减少数据库的访问。两者结合使用可以实现认证和鉴权。</p>
+<p><img src="/images/oauth.png" alt="OAuth Auth"></p>
+<p><u><strong>毕设将</strong></u>采用 JWT 令牌，出于简化的目的去除了 OAuth，更接近原文中所提及的 AppKeys ，也可以基本满足当前的需求。AppKeys 身份认证模式更适合开放服务的场景，它不涉及用户信息和权限信息。</p>
+<p><img src="/images/appkeys.png" alt="AppKeys Auth"></p>
+<h2 id="信息加载"><a href="#信息加载" class="headerlink" title="信息加载"></a><strong>信息加载</strong></h2><p><u><strong>本文的</strong></u>处理方式是：先从 Nginx Cache 中读，再从 MongoDB 中读，否则判断为非法的请求。Nginx 是自定义网关技术的常见基石；MongoDB 作为文档型数据库在修改服务配置信息上十分方便。</p>
 <p><u><strong>毕设的</strong></u>处理方式是：先从 Redis 中读，再从 MySQL 中读，否则判断为非法的请求。Redis 是一个高性能的内存键值数据库，很适合用作为缓存；MySQL 作为关系型数据库，可以更好地抽象和管理服务信息、访问控制、负载均衡和租户信息等实体关系。</p>
 <p>尽管如此，无论哪种方式都亟待去解决以下问题：</p>
 <blockquote>
@@ -230,24 +235,24 @@
 </blockquote>
 <p>事实上，我们可以对这个问题进行抽象化：</p>
 <blockquote>
-<p>已知：A 服务写多读少，流量小；B 服务只读不写，流量大；C 数据由 B 服务写入数据库，由 A 服务或 B 服务读出数据库。</p>
-<p>问题：<strong>如何使 A 服务和 B 服务之间需要保证 C 数据同步且一致（请求不能直接打到底层的数据库）？</strong></p>
+<p>已知：A 服务写多读少，流量小；B 服务只读不写，流量大；C 数据由 A 服务写入数据库，由 A 服务或 B 服务读出数据库。</p>
+<p>问题：<strong>如何使 A 服务和 B 服务之间保证 C 数据同步且一致（请求不能直接打到底层的数据库）呢？</strong></p>
 <p><img src="/images/paper_flowchart_1.png" alt="paper flowchart"></p>
 </blockquote>
 <p>进行头脑风暴之后，解决的思路有：</p>
-<ul>
+<ol>
 <li><strong>管理服务同步更新代理服务</strong>：代理服务提供配置下发接口，管理服务变更时调用该接口，代理服务在内存中重新同步管理服务配置数据。缺点：代理服务和管理服务强耦合；配置下发性能损耗。</li>
 <li><strong>管理服务异步更新代理服务</strong>：代理服务开启异步定时任务，管理服务直接变更，代理服务在内存中周期同步管理服务配置数据。缺点：数据一致性较差。</li>
-<li><strong>MySQL 主从结构</strong>：主库写从库读，主库写时要解锁，从库读时不加锁。缺点：请求直接会打到数据库，并发要求可能被满足，但比内存数据库的请求时间会长。</li>
+<li><strong>MySQL 主从复制实现读写分离</strong>：主库写从库读，主库写时要解锁，从库读时不加锁。缺点：请求直接会打到数据库，并发要求可能被满足，但比内存数据库的请求时间会长。</li>
 <li><strong>从 MySQL 同步数据至 Redis</strong>：增删改 MySQL 时，删除 Redis 对应的记录；查 Redis 时，如果命中立即返回，没有命中查 MySQL 并回写到 Redis。缺点：需要考虑缓存穿透、击穿和雪崩等问题。</li>
 <li><strong>引入 RabbitMQ 解耦</strong>：观察与订阅的模式，生产者的 MySQL 发生改动时通知消费者的 Redis 也发生改动。缺点：又引进新组件，运维成本进一步地增大。</li>
 <li><strong>使用 Consul 作为配置中心</strong>：Consul 既可以作为注册中心又可以作为配置中心，是分布式的键值型数据库。缺点：服务配置信息蕴含实体关系映射，不是配置中心的经典使用场景。</li>
-</ul>
-<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><p><strong><u>本文中</u></strong>使用 Redis 充当计数器来实现限流，适用于分布式的环境。</p>
-<p><strong><u>毕设中</u></strong>可以采用官方原生库 <code>golang.org/x/time/rate</code> 或滴滴开源库 <code>github.com/didip/tollbooth</code>，仅使用单机版的环境。</p>
-<p>显然，考虑到可扩展性，网关会部署在集群当中，分布式限流是更为准确的。</p>
+</ol>
+<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a><strong>流量控制</strong></h2><p><strong><u>本文中</u></strong>使用 Redis 充当计数器来实现限流，适用于分布式的环境。</p>
+<p><strong><u>毕设中</u></strong>可以采用官方原生库 <code>golang.org/x/time/rate</code> 或滴滴开源库 <code>github.com/didip/tollbooth</code>，仅适用单机版的环境。</p>
+<p>显然，考虑到可扩展性，网关会以集群的形式进行部署，分布式限流是更为合理的。</p>
 <hr>
-<p>致谢：<em><a href="https://github.com/yuqi657" target="_blank" rel="noopener">@lyq大佬</a>对本文亦有贡献 :D</em></p>
+<p><em>致谢：<a href="https://github.com/yuqi657" target="_blank" rel="noopener">@lyq大佬</a>和对本文亦有贡献 :D</em></p>
 
         </div>
         
@@ -274,8 +279,8 @@
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2021/03/15/重装系统后的必要软件清单/">
-                <span class="level-item">#Others# 重装系统后的必要软件清单</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2021/03/15/新移动设备的必要软件清单/">
+                <span class="level-item">#Others# 新移动设备的必要软件清单</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -435,12 +440,16 @@
         <span class="has-mr-6">1.1.5</span>
         <span>持久层</span>
         </a></li></ul></li><li>
-        <a class="is-flex" href="#信息加载">
+        <a class="is-flex" href="#身份认证">
         <span class="has-mr-6">1.2</span>
+        <span>身份认证</span>
+        </a></li><li>
+        <a class="is-flex" href="#信息加载">
+        <span class="has-mr-6">1.3</span>
         <span>信息加载</span>
         </a></li><li>
         <a class="is-flex" href="#流量控制">
-        <span class="has-mr-6">1.3</span>
+        <span class="has-mr-6">1.4</span>
         <span>流量控制</span>
         </a></li></ul></li></ul>
         </div>
@@ -749,25 +758,6 @@
         
         <article class="media">
             
-            <a href="/2021/03/15/重装系统后的必要软件清单/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/microsoft_store.png" alt="#Others# 重装系统后的必要软件清单">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-14T23:00:21.000Z">2021-03-15</time></div>
-                    <a href="/2021/03/15/重装系统后的必要软件清单/" class="has-link-black-ter is-size-6">#Others# 重装系统后的必要软件清单</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
             <a href="/2021/03/15/新移动设备的必要软件清单/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/app_store.png" alt="#Others# 新移动设备的必要软件清单">
@@ -778,6 +768,25 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-14T23:00:21.000Z">2021-03-15</time></div>
                     <a href="/2021/03/15/新移动设备的必要软件清单/" class="has-link-black-ter is-size-6">#Others# 新移动设备的必要软件清单</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/03/15/重装系统后的必要软件清单/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microsoft_store.png" alt="#Others# 重装系统后的必要软件清单">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-14T23:00:21.000Z">2021-03-15</time></div>
+                    <a href="/2021/03/15/重装系统后的必要软件清单/" class="has-link-black-ter is-size-6">#Others# 重装系统后的必要软件清单</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Others/">Others</a>
                     </p>
