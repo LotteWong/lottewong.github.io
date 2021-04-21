@@ -191,19 +191,19 @@
 </ol>
 <h2 id="API-网关的架构"><a href="#API-网关的架构" class="headerlink" title="API 网关的架构"></a><strong>API 网关的架构</strong></h2><p><img src="/images/paper_arch_2.png" alt="paper architecture"></p>
 <h3 id="Core"><a href="#Core" class="headerlink" title="Core"></a>Core</h3><ul>
-<li>Core（核心网关）系统的功能主要是对客户请求的接收， 它将请求指向给上层的服务端，并且会把这些处理结果 返回给客户端或下层服务端。</li>
+<li>Core（核心网关）系统的功能主要是对客户请求的接收， 它将请求指向给上层的服务端，并且会把这些处理结果返回给客户端或下层服务端。</li>
 <li>可以以集群的形式部署，需要额外的负载均衡器，反向代理连接业务集群。</li>
-<li>可以实现核心的功能：认证鉴权、限流熔断、负载均衡、反向代理、服务编排、协议转换、日志记录、数据缓存、服务注册/发现和版本/灰度发布等。</li>
+<li><strong>可以实现核心的功能：</strong>认证鉴权、限流熔断、负载均衡、反向代理、服务编排、协议转换、日志记录、数据缓存、服务注册/发现和版本/灰度发布等。</li>
 </ul>
 <h3 id="Admin"><a href="#Admin" class="headerlink" title="Admin"></a>Admin</h3><ul>
 <li>Admin（网关管理）系统负责配置系统的各种策略，如： 限流、缓存以及告警等基础信息。</li>
 <li>可以以集群的形式部署，但是入口是统一的。</li>
-<li>可以实现管理的功能：API 单个管理、API 分组管理、SDK/文档生成、访问配置、流控配置、协议转换配置、数据缓存配置和监控告警配置等。</li>
+<li><strong>可以实现管理的功能：</strong>API 单个管理、API 分组管理、SDK/文档生成、访问配置、流控配置、协议转换配置、数据缓存配置和监控告警配置等。</li>
 </ul>
 <h3 id="Monitor"><a href="#Monitor" class="headerlink" title="Monitor"></a>Monitor</h3><ul>
 <li>Monitor（监控日志） 系统负责生成运维管理报表等。</li>
 <li>可以以集群的形式部署，采集可以多个节点进行。</li>
-<li>可以实现监控的功能：日志处理、生成报表和自动告警等。</li>
+<li><strong>可以实现监控的功能：</strong>日志处理、生成报表和自动告警等。</li>
 </ul>
 <h3 id="持久层"><a href="#持久层" class="headerlink" title="持久层"></a>持久层</h3><ul>
 <li><p>管理库：记录管理信息</p>
