@@ -2,6 +2,125 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/11/19/Api%20Docs%20Pre-study%20and%20Practice%20in%20Golang/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2021/03/15/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2021/03/15/%E6%96%B0%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/10/11/HTTP%E7%9A%84%E9%80%9A%E4%BF%A1%E7%9B%91%E6%8E%A7%E5%92%8C%E5%9B%9E%E6%94%BE%EF%BC%9AFiddler%E6%8A%93%E5%8C%85%E4%B8%8ESocket%E5%8F%91%E5%8C%85/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/09/18/LinuxOne%E4%B8%8A%E7%9A%84Docker%E5%AE%9E%E8%B7%B5/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/03/03/Golang%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B(1)/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/03/04/Golang%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B(2)/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/03/06/Golang%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B(4)/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/03/05/Golang%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B(3)/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/03/01/Golang%E4%B8%8E%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F(1)/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/05/22/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Docker%E5%91%BD%E4%BB%A4/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/05/08/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Git%E5%91%BD%E4%BB%A4/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/05/29/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Kubernetes%E5%91%BD%E4%BB%A4/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/05/15/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Linux&Shell%E5%91%BD%E4%BB%A4/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/05/01/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8SQL%E5%91%BD%E4%BB%A4/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/10/01/Golang%20Microservice%20%E5%B7%A5%E7%A8%8B%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2021/04/04/Management%20of%20API%20Gateway%20Based%20on%20Micro-service%20Architecture/</loc>
+    
+    <lastmod>2021-04-22</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2021/04/05/%E5%9F%BA%E4%BA%8E%20OpenResty%20%E5%B9%B3%E5%8F%B0%E7%9A%84%20API%20%E7%BD%91%E5%85%B3%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</loc>
     
     <lastmod>2021-04-22</lastmod>
@@ -9,37 +128,16 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2021/04/04/%E6%B5%85%E6%9E%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%20API%20%E7%BD%91%E5%85%B3%E7%9A%84%E4%BD%9C%E7%94%A8/</loc>
+    <loc>http://yoursite.com/2021/04/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1API%E7%BD%91%E5%85%B3%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%BA%94%E7%94%A8/</loc>
     
-    <lastmod>2021-04-21</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2021/04/03/Management%20of%20API%20Gateway%20Based%20on%20Micro-service%20Architecture/</loc>
-    
-    <lastmod>2021-04-21</lastmod>
+    <lastmod>2021-04-22</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/05/15/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Linux&Shell%E5%91%BD%E4%BB%A4/</loc>
+    <loc>http://yoursite.com/2021/04/03/%E6%B5%85%E6%9E%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%20API%20%E7%BD%91%E5%85%B3%E7%9A%84%E4%BD%9C%E7%94%A8/</loc>
     
-    <lastmod>2021-04-20</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2021/03/15/%E6%96%B0%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</loc>
-    
-    <lastmod>2021-04-15</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2021/03/15/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</loc>
-    
-    <lastmod>2021-04-06</lastmod>
+    <lastmod>2021-04-22</lastmod>
     
   </url>
   
@@ -47,20 +145,6 @@
     <loc>http://yoursite.com/2019/06/02/%E4%BB%8E%E9%9B%B6%E5%88%B0%E5%A3%B9%EF%BC%9AGitHub%20Pages%20+%20Hexo%20=%20Blog/</loc>
     
     <lastmod>2021-04-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/05/08/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Git%E5%91%BD%E4%BB%A4/</loc>
-    
-    <lastmod>2021-03-30</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/10/01/Golang%20Microservice%20%E5%B7%A5%E7%A8%8B%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</loc>
-    
-    <lastmod>2021-03-15</lastmod>
     
   </url>
   
@@ -75,41 +159,6 @@
     <loc>http://yoursite.com/2020/11/19/Unit%20Test%20Pre-study%20and%20Practice%20in%20Python/</loc>
     
     <lastmod>2021-03-13</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/11/19/Api%20Docs%20Pre-study%20and%20Practice%20in%20Golang/</loc>
-    
-    <lastmod>2021-03-13</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/09/18/LinuxOne%E4%B8%8A%E7%9A%84Docker%E5%AE%9E%E8%B7%B5/</loc>
-    
-    <lastmod>2021-03-09</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/05/29/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Kubernetes%E5%91%BD%E4%BB%A4/</loc>
-    
-    <lastmod>2021-03-09</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/05/22/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Docker%E5%91%BD%E4%BB%A4/</loc>
-    
-    <lastmod>2021-03-09</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/05/01/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8SQL%E5%91%BD%E4%BB%A4/</loc>
-    
-    <lastmod>2021-03-09</lastmod>
     
   </url>
   
@@ -142,13 +191,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/06/Golang%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B(4)/</loc>
-    
-    <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/12/15/WSL%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0...(4)/</loc>
     
     <lastmod>2021-02-23</lastmod>
@@ -177,62 +219,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/04/SCUT%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%20(3)%20%E7%AE%97%E6%B3%95%E4%B8%8E%E5%B7%A5%E7%A8%8B/</loc>
-    
-    <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/04/SCUT%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%20(2)%20%E8%AE%AD%E7%BB%83%E3%80%81%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96/</loc>
-    
-    <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/04/SCUT%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%20(1)%20%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%8F%82%E6%95%B0/</loc>
-    
-    <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/10/11/HTTP%E7%9A%84%E9%80%9A%E4%BF%A1%E7%9B%91%E6%8E%A7%E5%92%8C%E5%9B%9E%E6%94%BE%EF%BC%9AFiddler%E6%8A%93%E5%8C%85%E4%B8%8ESocket%E5%8F%91%E5%8C%85/</loc>
-    
-    <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/04/Golang%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B(2)/</loc>
-    
-    <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/05/Golang%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B(3)/</loc>
-    
-    <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/01/Golang%E4%B8%8E%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F(1)/</loc>
-    
-    <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/03/Golang%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B(1)/</loc>
-    
-    <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2020/01/01/%E5%86%99%E5%9C%A8%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6/</loc>
     
     <lastmod>2021-02-22</lastmod>
@@ -247,6 +233,20 @@
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>http://yoursite.com/tags/Swagger/</loc>
+    <lastmod>2021-04-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/Swaggo/</loc>
+    <lastmod>2021-04-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
   
   <url>
     <loc>http://yoursite.com/tags/Mock/</loc>
@@ -277,28 +277,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Swagger/</loc>
-    <lastmod>2021-04-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/Swaggo/</loc>
-    <lastmod>2021-04-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/tags/Concurrency/</loc>
-    <lastmod>2021-04-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/Machine-Learning/</loc>
     <lastmod>2021-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -319,14 +298,21 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/WSL/</loc>
+    <loc>http://yoursite.com/tags/Microservice/</loc>
     <lastmod>2021-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Microservice/</loc>
+    <loc>http://yoursite.com/tags/Machine-Learning/</loc>
+    <lastmod>2021-04-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/WSL/</loc>
     <lastmod>2021-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -341,6 +327,13 @@
   
   <url>
     <loc>http://yoursite.com/tags/Git/</loc>
+    <lastmod>2021-04-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/Kubernetes/</loc>
     <lastmod>2021-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -362,13 +355,6 @@
   
   <url>
     <loc>http://yoursite.com/tags/SQL/</loc>
-    <lastmod>2021-04-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/Kubernetes/</loc>
     <lastmod>2021-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -433,6 +419,13 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/categories/Paper/</loc>
+    <lastmod>2021-04-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/categories/Artificial-Intelligence/</loc>
     <lastmod>2021-04-22</lastmod>
     <changefreq>daily</changefreq>
@@ -454,7 +447,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/Paper/</loc>
+    <loc>http://yoursite.com/categories/Others/</loc>
     <lastmod>2021-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -462,13 +455,6 @@
   
   <url>
     <loc>http://yoursite.com/categories/Quick-Ref-Guide/</loc>
-    <lastmod>2021-04-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/categories/Others/</loc>
     <lastmod>2021-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -483,6 +469,20 @@
   
   <url>
     <loc>http://yoursite.com/categories/Cloud-Computing/</loc>
+    <lastmod>2021-04-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/categories/Golang/</loc>
+    <lastmod>2021-04-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/categories/Cheat-Sheet/</loc>
     <lastmod>2021-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
