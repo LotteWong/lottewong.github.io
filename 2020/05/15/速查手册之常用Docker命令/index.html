@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>Tag: Pytest - LotteWong</title>
+<title>#Docker# 速查手册：常用 Docker 命令 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="LotteWong" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="#Docker# 速查手册：常用 Docker 命令" type="application/atom+xml">
 
 
 
@@ -79,13 +79,13 @@
 
 <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="is-3-column">
+<body class="is-2-column">
     <nav class="navbar navbar-main">
     <div class="container">
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="#Docker# 速查手册：常用 Docker 命令" height="28">
             
             </a>
         </div>
@@ -117,6 +117,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -130,64 +134,112 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Pytest</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
     
     <div class="card-image">
-        <a href="/2020/11/19/Unit Test Pre-study and Practice in Python/" class="image is-7by1">
-            <img class="thumbnail" src="/images/unittest.png" alt="#Unit Test# Unit Test Pre-study and Practice in Python">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/docker_qrg.png" alt="#Docker# 速查手册：常用 Docker 命令">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-11-18T23:00:21.000Z">2020-11-19</time>
+                <time class="level-item has-text-grey" datetime="2020-05-14T23:00:21.000Z">2020-05-15</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                <a class="has-link-grey -link" href="/categories/Cheat-Sheet/">Cheat Sheet</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    20 minutes read (About 2934 words)
+                    5 minutes read (About 712 words)
                 </span>
                 
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
                 
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/11/19/Unit Test Pre-study and Practice in Python/">#Unit Test# Unit Test Pre-study and Practice in Python</a>
+                #Docker# 速查手册：常用 Docker 命令
             
         </h1>
         <div class="content">
-            <p>If you write code, write tests. <em>– The Way of Testivus</em></p>
+            <p>覆盖在学习和工作中的<strong>常用 Docker 命令</strong>：Image / Container / Storage / Network</p>
 <hr>
+<a id="more"></a>
+
+
+
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
+
+<hr>
+<h2 id="Image"><a href="#Image" class="headerlink" title="Image"></a><strong>Image</strong></h2><h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 查看全部镜像详情</span></span><br><span class="line">docker images</span><br><span class="line">docker images -a</span><br><span class="line"><span class="hljs-comment"># 查看全部镜像标识</span></span><br><span class="line">docker images -aq</span><br><span class="line"><span class="hljs-comment"># 查看指定镜像详情</span></span><br><span class="line">docker inspect <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span></span><br><span class="line">docker inspect <span class="hljs-variable">$&#123;image_id&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="制作"><a href="#制作" class="headerlink" title="制作"></a>制作</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build --network <span class="hljs-variable">$&#123;network_mode&#125;</span> -f /path/to/dockerfile -t <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span> /path/to/data</span><br></pre></td></tr></table></figure>
+
+<h3 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 具备元数据等</span></span><br><span class="line">docker save -o <span class="hljs-variable">$&#123;output&#125;</span>.tar <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span></span><br><span class="line">docker save -o <span class="hljs-variable">$&#123;output&#125;</span>.tar <span class="hljs-variable">$&#123;image_id&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 具备元数据等</span></span><br><span class="line">docker load -i <span class="hljs-variable">$&#123;input&#125;</span>.tar</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag <span class="hljs-variable">$&#123;image_id&#125;</span> <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 删除全部镜像</span></span><br><span class="line">docker rmi -f $(docker images -aq)</span><br><span class="line"><span class="hljs-comment"># 删除指定镜像</span></span><br><span class="line">docker rmi -f <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span></span><br><span class="line">docker rmi -f <span class="hljs-variable">$&#123;image_id&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight dockerfile hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Example: a sample python image</span></span><br><span class="line"><span class="hljs-keyword">FROM</span> ubuntu <span class="hljs-comment"># basic image</span></span><br><span class="line"><span class="hljs-keyword">MAINTAINER</span> lottewong &lt;lottewong21@gmail.com&gt; <span class="hljs-comment"># author info</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># install sqlite3, python3, pip3 and other tools</span></span><br><span class="line"><span class="hljs-keyword">RUN</span><span class="hljs-bash"> apt-get update &amp;&amp; \</span></span><br><span class="line"><span class="hljs-bash">    apt-get install -y python3 \</span></span><br><span class="line"><span class="hljs-bash">                       python3-dev \</span></span><br><span class="line"><span class="hljs-bash">                       python3-pip \</span></span><br><span class="line"><span class="hljs-bash">                       openssl \</span></span><br><span class="line"><span class="hljs-bash">                       libssl-dev \</span></span><br><span class="line"><span class="hljs-bash">                       libffi-dev \</span></span><br><span class="line"><span class="hljs-bash">                       net-tools \</span></span><br><span class="line"><span class="hljs-bash">                       sqlite3 &amp;&amp; \</span></span><br><span class="line"><span class="hljs-bash">    ln -s /usr/bin/python3 /usr/bin/python &amp;&amp; \</span></span><br><span class="line"><span class="hljs-bash">    ln -s /usr/bin/pip3 /usr/bin/pip &amp;&amp; \</span></span><br><span class="line"><span class="hljs-bash">    apt install -y vim lsof curl</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># make data and log directories</span></span><br><span class="line"><span class="hljs-keyword">RUN</span><span class="hljs-bash"> mkdir -p /data/<span class="hljs-built_in">test</span>-proj/dependencies &amp;&amp; \</span></span><br><span class="line"><span class="hljs-bash">    mkdir -p /var/<span class="hljs-built_in">log</span>/<span class="hljs-built_in">test</span>-proj</span></span><br><span class="line"><span class="hljs-keyword">WORKDIR</span><span class="hljs-bash"> /data/<span class="hljs-built_in">test</span>-proj <span class="hljs-comment"># fix work directory</span></span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># install test-proj depending packages</span></span><br><span class="line"><span class="hljs-keyword">COPY</span><span class="hljs-bash"> dependencies dependencies <span class="hljs-comment"># copy files from host to container</span></span></span><br><span class="line"><span class="hljs-keyword">RUN</span><span class="hljs-bash"> <span class="hljs-built_in">cd</span> dependencies &amp;&amp; \</span></span><br><span class="line"><span class="hljs-bash">    pip install -r requirements.txt &amp;&amp; \</span></span><br><span class="line"><span class="hljs-bash">    tar -zvxf some-package.tar.gz &amp;&amp; \</span></span><br><span class="line"><span class="hljs-bash">    rm -rf some-package.tar.gz &amp;&amp; \</span></span><br><span class="line"><span class="hljs-bash">    <span class="hljs-built_in">cd</span> /data/<span class="hljs-built_in">test</span>-proj/dependencies/some-package &amp;&amp; python setup.py install</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># start init script (mount file when running container)</span></span><br><span class="line"><span class="hljs-comment"># CMD ["sh", "start.sh"]</span></span><br><span class="line"><span class="hljs-comment"># ENTRYPOINT ["sh", "start.sh"]</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># RUN: 镜像层命令，应用于 docker build 时</span></span><br><span class="line"><span class="hljs-comment"># CMD: 容器层命令，应用于 docker run 时（当指定命令时会被忽略）</span></span><br><span class="line"><span class="hljs-comment"># ENTRYPOINT: 容器层命令，应用于 docker run 时（无论何种情况都被执行）</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Shell形式执行命令: &lt;instruction&gt; &lt;command&gt;</span></span><br><span class="line"><span class="hljs-comment"># Exec形式执行命令: &lt;instruction&gt; ["executable", "param1", "param2", "param3", ...]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Container"><a href="#Container" class="headerlink" title="Container"></a><strong>Container</strong></h2><h3 id="查看-1"><a href="#查看-1" class="headerlink" title="查看"></a>查看</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 查看全部容器详情</span></span><br><span class="line">docker ps</span><br><span class="line">docker ps -a</span><br><span class="line"><span class="hljs-comment"># 查看全部容器标识</span></span><br><span class="line">docker ps -aq</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># -p 可以映射多个端口</span></span><br><span class="line"><span class="hljs-comment"># -v 可以挂载多个目录</span></span><br><span class="line"><span class="hljs-comment"># -d 后台运行</span></span><br><span class="line"><span class="hljs-comment"># -it 交互运行</span></span><br><span class="line">docker run --name=<span class="hljs-variable">$&#123;container_name&#125;</span> -d -p <span class="hljs-variable">$&#123;host_port&#125;</span>:<span class="hljs-variable">$&#123;ctnr_port&#125;</span> -v /path/to/host:/path/to/ctnr <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span> (<span class="hljs-variable">$&#123;command&#125;</span>)</span><br><span class="line">docker run --name=<span class="hljs-variable">$&#123;container_name&#125;</span> -it -p <span class="hljs-variable">$&#123;host_port&#125;</span>:<span class="hljs-variable">$&#123;ctnr_port&#125;</span> -v /path/to/host:/path/to/ctnr <span class="hljs-variable">$&#123;image_id&#125;</span> (<span class="hljs-variable">$&#123;command&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># --rm 运行后就删除</span></span><br><span class="line"><span class="hljs-comment"># Example: docker run --rm busybox nslookup baidu.com</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Example: docker exec -it test /bin/bash</span></span><br><span class="line">docker <span class="hljs-built_in">exec</span> -it <span class="hljs-variable">$&#123;container_name&#125;</span> <span class="hljs-variable">$&#123;command&#125;</span></span><br><span class="line">docker <span class="hljs-built_in">exec</span> -it <span class="hljs-variable">$&#123;container_id&#125;</span> <span class="hljs-variable">$&#123;command&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker start <span class="hljs-variable">$&#123;container_name&#125;</span></span><br><span class="line">docker start <span class="hljs-variable">$&#123;container_id&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="暂停"><a href="#暂停" class="headerlink" title="暂停"></a>暂停</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker stop <span class="hljs-variable">$&#123;container_name&#125;</span></span><br><span class="line">docker stop <span class="hljs-variable">$&#123;container_id&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker restart <span class="hljs-variable">$&#123;container_name&#125;</span></span><br><span class="line">docker restart <span class="hljs-variable">$&#123;container_id&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 删除全部容器</span></span><br><span class="line">docker rm -f $(docker ps -aq)</span><br><span class="line"><span class="hljs-comment"># 删除指定容器</span></span><br><span class="line">docker rm -f <span class="hljs-variable">$&#123;container_name&#125;</span></span><br><span class="line">docker rm -f <span class="hljs-variable">$&#123;container_id&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker commit -a <span class="hljs-string">"<span class="hljs-variable">$&#123;author&#125;</span>"</span> -m <span class="hljs-string">"<span class="hljs-variable">$&#123;message&#125;</span>"</span> <span class="hljs-variable">$&#123;container_name&#125;</span> <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span></span><br><span class="line">docker commit -a <span class="hljs-string">"<span class="hljs-variable">$&#123;author&#125;</span>"</span> -m <span class="hljs-string">"<span class="hljs-variable">$&#123;message&#125;</span>"</span> <span class="hljs-variable">$&#123;container_id&#125;</span> <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 没有元数据等</span></span><br><span class="line">docker <span class="hljs-built_in">export</span> <span class="hljs-variable">$&#123;container_name&#125;</span> &gt; <span class="hljs-variable">$&#123;export&#125;</span>.tar</span><br><span class="line">docker <span class="hljs-built_in">export</span> <span class="hljs-variable">$&#123;container_id&#125;</span> &gt; <span class="hljs-variable">$&#123;export&#125;</span>.tar</span><br></pre></td></tr></table></figure>
+
+<h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 没有元数据等</span></span><br><span class="line">cat <span class="hljs-variable">$&#123;import&#125;</span>.tar | docker import - <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="传输"><a href="#传输" class="headerlink" title="传输"></a>传输</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 从容器到主机</span></span><br><span class="line">docker cp <span class="hljs-variable">$&#123;container&#125;</span>:/path/to/ctnr /path/to/host</span><br><span class="line"><span class="hljs-comment"># 从主机到容器</span></span><br><span class="line">docker cp /path/to/host <span class="hljs-variable">$&#123;container&#125;</span>:/path/to/ctnr</span><br></pre></td></tr></table></figure>
+
+<h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker logs <span class="hljs-variable">$&#123;container_name&#125;</span></span><br><span class="line">docker logs <span class="hljs-variable">$&#123;container_id&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Storage"><a href="#Storage" class="headerlink" title="Storage"></a><strong>Storage</strong></h2><ul>
+<li><em>To be continued…</em></li>
+</ul>
+<h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a><strong>Network</strong></h2><ul>
+<li><em>To be continued…</em></li>
+</ul>
+<hr>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/11/19/Unit Test Pre-study and Practice in Python/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Docker/">Docker</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -197,16 +249,57 @@
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/10/01/Golang Microservice 工程开发踩坑记录/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">#Golang# Golang Microservice 工程开发踩坑记录</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/05/15/速查手册之常用Kubernetes命令/">
+                <span class="level-item">#Kubernetes# 速查手册：常用 Kubernetes 命令</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '18380beafd117ca2ea19e8296360580d',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
 </div>
                 
 
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
     
         
 <div class="card widget">
@@ -294,6 +387,113 @@
 </div>
     
         
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#目录-Table-of-Contents">
+        <span class="has-mr-6">1</span>
+        <span>目录 Table of Contents</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Image">
+        <span class="has-mr-6">1.1</span>
+        <span>Image</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#查看">
+        <span class="has-mr-6">1.1.1</span>
+        <span>查看</span>
+        </a></li><li>
+        <a class="is-flex" href="#制作">
+        <span class="has-mr-6">1.1.2</span>
+        <span>制作</span>
+        </a></li><li>
+        <a class="is-flex" href="#保存">
+        <span class="has-mr-6">1.1.3</span>
+        <span>保存</span>
+        </a></li><li>
+        <a class="is-flex" href="#加载">
+        <span class="has-mr-6">1.1.4</span>
+        <span>加载</span>
+        </a></li><li>
+        <a class="is-flex" href="#修改">
+        <span class="has-mr-6">1.1.5</span>
+        <span>修改</span>
+        </a></li><li>
+        <a class="is-flex" href="#删除">
+        <span class="has-mr-6">1.1.6</span>
+        <span>删除</span>
+        </a></li><li>
+        <a class="is-flex" href="#Dockerfile">
+        <span class="has-mr-6">1.1.7</span>
+        <span>Dockerfile</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Container">
+        <span class="has-mr-6">1.2</span>
+        <span>Container</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#查看-1">
+        <span class="has-mr-6">1.2.1</span>
+        <span>查看</span>
+        </a></li><li>
+        <a class="is-flex" href="#运行">
+        <span class="has-mr-6">1.2.2</span>
+        <span>运行</span>
+        </a></li><li>
+        <a class="is-flex" href="#执行">
+        <span class="has-mr-6">1.2.3</span>
+        <span>执行</span>
+        </a></li><li>
+        <a class="is-flex" href="#启动">
+        <span class="has-mr-6">1.2.4</span>
+        <span>启动</span>
+        </a></li><li>
+        <a class="is-flex" href="#暂停">
+        <span class="has-mr-6">1.2.5</span>
+        <span>暂停</span>
+        </a></li><li>
+        <a class="is-flex" href="#重启">
+        <span class="has-mr-6">1.2.6</span>
+        <span>重启</span>
+        </a></li><li>
+        <a class="is-flex" href="#删除-1">
+        <span class="has-mr-6">1.2.7</span>
+        <span>删除</span>
+        </a></li><li>
+        <a class="is-flex" href="#提交">
+        <span class="has-mr-6">1.2.8</span>
+        <span>提交</span>
+        </a></li><li>
+        <a class="is-flex" href="#导出">
+        <span class="has-mr-6">1.2.9</span>
+        <span>导出</span>
+        </a></li><li>
+        <a class="is-flex" href="#导入">
+        <span class="has-mr-6">1.2.10</span>
+        <span>导入</span>
+        </a></li><li>
+        <a class="is-flex" href="#传输">
+        <span class="has-mr-6">1.2.11</span>
+        <span>传输</span>
+        </a></li><li>
+        <a class="is-flex" href="#日志">
+        <span class="has-mr-6">1.2.12</span>
+        <span>日志</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Storage">
+        <span class="has-mr-6">1.3</span>
+        <span>Storage</span>
+        </a></li><li>
+        <a class="is-flex" href="#Network">
+        <span class="has-mr-6">1.4</span>
+        <span>Network</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
     
         
 <div class="card widget">
@@ -523,7 +723,7 @@
     
     
         <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
-        <div class="column-right-shadow is-hidden-widescreen ">
+        <div class="column-right-shadow  ">
         
             
 <div class="card widget">
@@ -886,373 +1086,6 @@
 </div>
 
                 
-                
-
-
-
-
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Recent
-        </h3>
-        
-        <article class="media">
-            
-            <a href="/2021/04/07/恒丰银行分布式核心系统 - API 网关技术原型落地实践/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_5.png" alt="#Microservice# 阅读《恒丰银行分布式核心系统 - API 网关 技术原型落地实践》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-06T23:00:21.000Z">2021-04-07</time></div>
-                    <a href="/2021/04/07/恒丰银行分布式核心系统 - API 网关技术原型落地实践/" class="has-link-black-ter is-size-6">#Microservice# 阅读《恒丰银行分布式核心系统 - API 网关 技术原型落地实践》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/04/06/微服务API网关的设计及应用/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_4.png" alt="#Microservice# 阅读《微服务API网关的设计及应用》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-05T23:00:21.000Z">2021-04-06</time></div>
-                    <a href="/2021/04/06/微服务API网关的设计及应用/" class="has-link-black-ter is-size-6">#Microservice# 阅读《微服务API网关的设计及应用》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/04/05/基于 OpenResty 平台的 API 网关系统的设计与实现/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_3.png" alt="#Microservice# 阅读《基于 OpenResty 平台的 API 网关系统的设计与实现》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-04T23:00:21.000Z">2021-04-05</time></div>
-                    <a href="/2021/04/05/基于 OpenResty 平台的 API 网关系统的设计与实现/" class="has-link-black-ter is-size-6">#Microservice# 阅读《基于 OpenResty 平台的 API 网关系统的设计与实现》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/04/04/Management of API Gateway Based on Micro-service Architecture/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_1.png" alt="#Microservice# 阅读《Management of API Gateway Based on Micro-service Architecture》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-03T23:00:21.000Z">2021-04-04</time></div>
-                    <a href="/2021/04/04/Management of API Gateway Based on Micro-service Architecture/" class="has-link-black-ter is-size-6">#Microservice# 阅读《Management of API Gateway Based on Micro-service Architecture》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/04/03/浅析微服务架构 API 网关的作用/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_2.png" alt="#Microservice# 阅读《浅析微服务架构 API 网关的作用》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-02T23:00:21.000Z">2021-04-03</time></div>
-                    <a href="/2021/04/03/浅析微服务架构 API 网关的作用/" class="has-link-black-ter is-size-6">#Microservice# 阅读《浅析微服务架构 API 网关的作用》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-    </div>
-</div>
-
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Tag Cloud
-        </h3>
-        <a href="/tags/Concurrency/" style="font-size: 17.5px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12.5px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 10px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 20px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/WSL/" style="font-size: 17.5px;">WSL</a>
-    </div>
-</div>
-
-    
-        <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                Tags
-            </h3>
-            <div class="field is-grouped is-grouped-multiline">
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Concurrency/">
-                        <span class="tag">Concurrency</span>
-                        <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Docker/">
-                        <span class="tag">Docker</span>
-                        <span class="tag is-grey">2</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Fiddler/">
-                        <span class="tag">Fiddler</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Gin/">
-                        <span class="tag">Gin</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Git/">
-                        <span class="tag">Git</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
-                        <span class="tag">GitHub Pages</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Golang/">
-                        <span class="tag">Golang</span>
-                        <span class="tag is-grey">6</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Gorm/">
-                        <span class="tag">Gorm</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Hexo/">
-                        <span class="tag">Hexo</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Kubernetes/">
-                        <span class="tag">Kubernetes</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Linux/">
-                        <span class="tag">Linux</span>
-                        <span class="tag is-grey">2</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Microservice/">
-                        <span class="tag">Microservice</span>
-                        <span class="tag is-grey">6</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Mock/">
-                        <span class="tag">Mock</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Newman/">
-                        <span class="tag">Newman</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Postman/">
-                        <span class="tag">Postman</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
-                        <span class="tag">Programming Paradigm</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Pytest/">
-                        <span class="tag">Pytest</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Redis/">
-                        <span class="tag">Redis</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/SQL/">
-                        <span class="tag">SQL</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Shell/">
-                        <span class="tag">Shell</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Swagger/">
-                        <span class="tag">Swagger</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/WSL/">
-                        <span class="tag">WSL</span>
-                        <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</div>
-    
-        
-
-<div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            Links
-        </h3>
-        <ul class="menu-list">
-        
-            <li>
-                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Bokjan</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">bokjan.com</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Kingsley</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">kingsleyxie.cn</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">sticnarf</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">sticnarf.me</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">xcw</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">yifanyu123.github.io</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Escape</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">www.cnblogs.com</span>
-                    </span>
-                </a>
-            </li>
-        
-        </ul>
-        </div>
-    </div>
-</div>
-
-
-    
-    
-</div>
-
-                
             </div>
         </div>
     </section>
@@ -1262,7 +1095,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="#Docker# 速查手册：常用 Docker 命令" height="28">
                 
                 </a>
                 <p class="is-size-7">
