@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>Tag: Kubernetes - LotteWong</title>
+<title>#Kubernetes# QCloud上的Kubernetes初体验 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="LotteWong" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="#Kubernetes# QCloud上的Kubernetes初体验" type="application/atom+xml">
 
 
 
@@ -79,13 +79,13 @@
 
 <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="is-3-column">
+<body class="is-2-column">
     <nav class="navbar navbar-main">
     <div class="container">
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="#Kubernetes# QCloud上的Kubernetes初体验" height="28">
             
             </a>
         </div>
@@ -117,6 +117,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -130,23 +134,12 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Kubernetes</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
     
     <div class="card-image">
-        <a href="/2021/05/21/QCloud上的Kubernetes实践/" class="image is-7by1">
+        <span class="image is-7by1">
             <img class="thumbnail" src="/images/kubernetes_qrg.png" alt="#Kubernetes# QCloud上的Kubernetes初体验">
-        </a>
+        </span>
     </div>
     
     <div class="card-content article ">
@@ -167,12 +160,17 @@
                 </span>
                 
                 
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2021/05/21/QCloud上的Kubernetes实践/">#Kubernetes# QCloud上的Kubernetes初体验</a>
+                #Kubernetes# QCloud上的Kubernetes初体验
             
         </h1>
         <div class="content">
@@ -184,75 +182,74 @@
 <li>参考文献 References</li>
 </ul>
 <hr>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2021/05/21/QCloud上的Kubernetes实践/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
+<a id="more"></a>
 
 
 
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
 
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/05/15/速查手册之常用Kubernetes命令/" class="image is-7by1">
-            <img class="thumbnail" src="/images/kubernetes.png" alt="#Kubernetes# 速查手册：常用 Kubernetes 命令">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-05-14T23:00:21.000Z">2020-05-15</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Cheat-Sheet/">Cheat Sheet</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 192 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/05/15/速查手册之常用Kubernetes命令/">#Kubernetes# 速查手册：常用 Kubernetes 命令</a>
-            
-        </h1>
-        <div class="content">
-            <p>覆盖在学习和工作中的<strong>常用 Kubernetes 命令</strong>：Node / Pod / Deployment / Service / Configmap / Storage / Network</p>
 <hr>
+<h2 id="环境准备-Environment"><a href="#环境准备-Environment" class="headerlink" title="环境准备 Environment"></a><strong>环境准备 Environment</strong></h2><h3 id="更新系统源和软件包"><a href="#更新系统源和软件包" class="headerlink" title="更新系统源和软件包"></a>更新系统源和软件包</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get upgrade</span><br><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改Docker配置"><a href="#修改Docker配置" class="headerlink" title="修改Docker配置"></a>修改Docker配置</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 编辑docker配置</span></span><br><span class="line">vim /etc/docker/daemon.json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="hljs-string">"exe-opts"</span>: [<span class="hljs-string">"native.cgroupdriver=systemd"</span>], <span class="hljs-comment"># 修改cgroup driver选项，使docker和k8s一致</span></span><br><span class="line">  <span class="hljs-string">"registry-mirrors"</span>: [<span class="hljs-string">"https://registry.docker-cn.com"</span>] <span class="hljs-comment"># 替换成国内镜像源</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重启docker服务</span></span><br><span class="line">service docker restart 或 systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装Kubernetes工具"><a href="#安装Kubernetes工具" class="headerlink" title="安装Kubernetes工具"></a>安装Kubernetes工具</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 安装依赖工具</span></span><br><span class="line">apt-get install -y apt-transport-https</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 获取阿里云镜像源密钥</span></span><br><span class="line">curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -</span><br><span class="line"><span class="hljs-built_in">echo</span> <span class="hljs-string">"deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main"</span> &gt; /etc/apt/sources.list.d/kubernetes.list</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 安装k8s工具</span></span><br><span class="line">apt-get install -y kubelet kubeadm kubectl</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载Kubernetes镜像"><a href="#下载Kubernetes镜像" class="headerlink" title="下载Kubernetes镜像"></a>下载Kubernetes镜像</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 查看所需镜像列表</span></span><br><span class="line">kubeadm config images list</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 编辑下载镜像文件</span></span><br><span class="line">vim pull_k8s_images.sh</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 从国内镜像源中下载镜像并替换标签</span></span><br><span class="line"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span>  `kubeadm config images list`;  <span class="hljs-keyword">do</span></span><br><span class="line">    imageName=<span class="hljs-variable">$&#123;i#k8s.gcr.io/&#125;</span></span><br><span class="line">    <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$imageName</span> != <span class="hljs-string">"coredns/coredns:v1.8.0"</span> ]</span><br><span class="line">    <span class="hljs-keyword">then</span></span><br><span class="line">        docker pull registry.aliyuncs.com/google_containers/<span class="hljs-variable">$imageName</span></span><br><span class="line">        docker tag registry.aliyuncs.com/google_containers/<span class="hljs-variable">$imageName</span> k8s.gcr.io/<span class="hljs-variable">$imageName</span></span><br><span class="line">        docker rmi registry.aliyuncs.com/google_containers/<span class="hljs-variable">$imageName</span></span><br><span class="line">    <span class="hljs-keyword">else</span></span><br><span class="line">        docker pull coredns/coredns:1.8.0</span><br><span class="line">        docker tag coredns/coredns:1.8.0 k8s.gcr.io/<span class="hljs-variable">$imageName</span></span><br><span class="line">        docker rmi coredns/coredns:1.8.0</span><br><span class="line">    <span class="hljs-keyword">fi</span></span><br><span class="line"><span class="hljs-keyword">done</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化Kubernetes主节点"><a href="#初始化Kubernetes主节点" class="headerlink" title="初始化Kubernetes主节点"></a>初始化Kubernetes主节点</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init \</span><br><span class="line">--service-cidr=10.1.0.0/16 --pod-network-cidr=10.244.0.0/16 <span class="hljs-comment"># 设置网络信息</span></span><br><span class="line">--ignore-preflight-errors=NumCPU <span class="hljs-comment"># 允许单核运行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="应用Kubernetes配置"><a href="#应用Kubernetes配置" class="headerlink" title="应用Kubernetes配置"></a>应用Kubernetes配置</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="hljs-variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="hljs-variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="hljs-variable">$HOME</span>/.kube/config</span><br><span class="line"><span class="hljs-built_in">export</span> KUBECONFIG=/etc/kubernetes/admin.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载Kubernetes网络插件"><a href="#下载Kubernetes网络插件" class="headerlink" title="下载Kubernetes网络插件"></a>下载Kubernetes网络插件</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+
+<h3 id="允许主节点部署"><a href="#允许主节点部署" class="headerlink" title="允许主节点部署"></a>允许主节点部署</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes --all node-role.kubernetes.io/master-</span><br></pre></td></tr></table></figure>
+
+<h3 id="允许命令行补全"><a href="#允许命令行补全" class="headerlink" title="允许命令行补全"></a>允许命令行补全</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install bash-completion</span><br><span class="line"><span class="hljs-built_in">echo</span> <span class="hljs-string">"source &lt;(kubectl completion bash)"</span> &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看是否部署成功"><a href="#查看是否部署成功" class="headerlink" title="查看是否部署成功"></a>查看是否部署成功</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br><span class="line">kubectl get pods -n kube-system</span><br></pre></td></tr></table></figure>
+
+<h2 id="疑难解决-FAQ"><a href="#疑难解决-FAQ" class="headerlink" title="疑难解决 FAQ"></a><strong>疑难解决 FAQ</strong></h2><h3 id="Docker重启服务出现异常"><a href="#Docker重启服务出现异常" class="headerlink" title="Docker重启服务出现异常"></a>Docker重启服务出现异常</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 查看日志定位原因</span></span><br><span class="line">service docker status 或 systemctl status docker</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 是因为/var/run/docker.sock出错了</span></span><br><span class="line">level=fatal msg=<span class="hljs-string">"can't create unix socket /var/run/docker.sock: is a directory"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 删除/var/run/docker.sock文件</span></span><br><span class="line">rm -rf /var/run/docker.sock</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重启docker服务</span></span><br><span class="line">service docker restart 或 systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="Kubernetes忘记加入集群命令"><a href="#Kubernetes忘记加入集群命令" class="headerlink" title="Kubernetes忘记加入集群命令"></a>Kubernetes忘记加入集群命令</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 提示的命令</span></span><br><span class="line">kubeadm join <span class="hljs-variable">$&#123;ip&#125;</span> --token <span class="hljs-variable">$&#123;token&#125;</span> --discovery-token-ca-cert-hash <span class="hljs-variable">$&#123;discovery-token-ca-cert-hash&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 找回的命令</span></span><br><span class="line">kubeadm token create --<span class="hljs-built_in">print</span>-join-command</span><br></pre></td></tr></table></figure>
+
+<h3 id="x509-certificate-signed-by-unknown-authority"><a href="#x509-certificate-signed-by-unknown-authority" class="headerlink" title="x509: certificate signed by unknown authority"></a>x509: certificate signed by unknown authority</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 重装后.kube/config变化了，重新应用配置</span></span><br><span class="line">mkdir -p <span class="hljs-variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="hljs-variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="hljs-variable">$HOME</span>/.kube/config</span><br><span class="line"><span class="hljs-built_in">export</span> KUBECONFIG=/etc/kubernetes/admin.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="Docker容器连接本机MySQL-Redis"><a href="#Docker容器连接本机MySQL-Redis" class="headerlink" title="Docker容器连接本机MySQL/Redis"></a>Docker容器连接本机MySQL/Redis</h3><h4 id="Bridge模式"><a href="#Bridge模式" class="headerlink" title="Bridge模式"></a>Bridge模式</h4><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 查看docker容器网络模式</span></span><br><span class="line">docker inspect <span class="hljs-variable">$&#123;container_id&#125;</span> | grep -i <span class="hljs-string">"network"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 默认为bridge的模式</span></span><br><span class="line"><span class="hljs-string">"NetworkMode"</span>: <span class="hljs-string">"bridge"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 此时localhost仅仅指的是容器自身地址，应使用主机的内网地址</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Host模式"><a href="#Host模式" class="headerlink" title="Host模式"></a>Host模式</h4><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 以host的模式启动docker容器</span></span><br><span class="line">docker run -d --network=host <span class="hljs-variable">$&#123;registry&#125;</span>:<span class="hljs-variable">$&#123;tag&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 此时localhost同时代表了容器和主机的地址</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Xshell外网远程访问MySQL-Redis"><a href="#Xshell外网远程访问MySQL-Redis" class="headerlink" title="Xshell外网远程访问MySQL/Redis"></a>Xshell外网远程访问MySQL/Redis</h3><h4 id="修改-MySQL-Redis-配置"><a href="#修改-MySQL-Redis-配置" class="headerlink" title="修改 MySQL/Redis 配置"></a>修改 MySQL/Redis 配置</h4><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 编辑mysql配置</span></span><br><span class="line">vim /etc/mysql/my.cnf</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 监听所有网段</span></span><br><span class="line">[mysqld]</span><br><span class="line"><span class="hljs-built_in">bind</span>-address=0.0.0.0</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 修改远程登录权限</span></span><br><span class="line">mysql -u root -p</span><br><span class="line">mysql&gt; use mysql;</span><br><span class="line">mysql&gt; update user <span class="hljs-built_in">set</span> host=<span class="hljs-string">'%'</span> <span class="hljs-built_in">where</span> user=<span class="hljs-string">'root'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重启mysql服务使其重新生效</span></span><br><span class="line">mysqld --defaults-file=/etc/mysql/my.cnf</span><br><span class="line">service mysql restart 或 systemctl restart mysql</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 编辑redis配置</span></span><br><span class="line">vim /etc/redis/redis.conf</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 监听所有网段</span></span><br><span class="line"><span class="hljs-built_in">bind</span> 0.0.0.0</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 重启redis-server服务使其重新生效</span></span><br><span class="line">redis-server /etc/redis/redis.conf</span><br><span class="line">service redis-server restart 或 systemctl restart redis-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改腾讯云服务器安全组规则"><a href="#修改腾讯云服务器安全组规则" class="headerlink" title="修改腾讯云服务器安全组规则"></a>修改腾讯云服务器安全组规则</h4><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 允许所有网段访问3306和6379这两个端口</span></span><br><span class="line">0.0.0.0/0 TCP:3306,6379 Allow <span class="hljs-comment"># ipv4放行</span></span><br><span class="line">::/0 TCP:3306,6379 Allow <span class="hljs-comment"># ipv6放行</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="具体案例-Cases"><a href="#具体案例-Cases" class="headerlink" title="具体案例 Cases"></a><strong>具体案例 Cases</strong></h2><h3 id="交叉编译与镜像构建"><a href="#交叉编译与镜像构建" class="headerlink" title="交叉编译与镜像构建"></a>交叉编译与镜像构建</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># set go env</span></span><br><span class="line"><span class="hljs-built_in">export</span> GO111MODULE=auto</span><br><span class="line"><span class="hljs-built_in">export</span> GOPROXY=https://goproxy.io,direct</span><br><span class="line">go mod tidy</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># build binary executable</span></span><br><span class="line">mkdir -p ./bin</span><br><span class="line">GOOS=linux GOARCH=amd64 go build -o ./bin/giotto_gateway_core</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Dockerfile</span></span><br><span class="line">FROM golang</span><br><span class="line">MAINTAINER LotteWong &lt;lottewong21@gmail.com&gt;</span><br><span class="line"></span><br><span class="line">WORKDIR /go/src/app</span><br><span class="line">COPY . .</span><br><span class="line"></span><br><span class="line">CMD ./bin/giotto_gateway_core -config ./configs/prod/</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># docker build</span></span><br><span class="line">commit=`git rev-parse --short HEAD`</span><br><span class="line">docker build -f ./ci/docker/Dockerfile -t giotto-gateway-core:<span class="hljs-variable">$commit</span> .</span><br></pre></td></tr></table></figure>
+
+<h3 id="容器部署与容器编排"><a href="#容器部署与容器编排" class="headerlink" title="容器部署与容器编排"></a>容器部署与容器编排</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># deploy config</span></span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: giotto-gateway-core</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      name: giotto-gateway-core</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        name: giotto-gateway-core</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: giotto-gateway-core</span><br><span class="line">          image: giotto-gateway-core:d1785da</span><br><span class="line">          imagePullPolicy: Never</span><br><span class="line">          ports:</span><br><span class="line">            - containerPort: 80</span><br><span class="line">            - containerPort: 443</span><br><span class="line">---</span><br><span class="line"><span class="hljs-comment"># service config</span></span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: giotto-gateway-core</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">    - port: 80</span><br><span class="line">      name: <span class="hljs-string">"http-proxy"</span></span><br><span class="line">      targetPort: 80</span><br><span class="line">      protocol: TCP</span><br><span class="line">      nodePort: 30080</span><br><span class="line">    - port: 443</span><br><span class="line">      name: <span class="hljs-string">"https-proxy"</span></span><br><span class="line">      targetPort: 443</span><br><span class="line">      protocol: TCP</span><br><span class="line">      nodePort: 30443</span><br><span class="line">  <span class="hljs-built_in">type</span>: NodePort</span><br><span class="line">  selector:</span><br><span class="line">    name: giotto-gateway-core</span><br><span class="line">    </span><br><span class="line"><span class="hljs-comment"># kubectl create</span></span><br><span class="line">kubectl create -f ./ci/k8s/core.yaml</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料-References"><a href="#参考资料-References" class="headerlink" title="参考资料 References"></a><strong>参考资料 References</strong></h2><ol>
+<li><a href="https://cloud.tencent.com/developer/article/1817826" target="_blank" rel="noopener">在 Ubuntu 上安装 K8S 教程</a></li>
+<li><a href="https://my.oschina.net/u/4409146/blog/3306898" target="_blank" rel="noopener">ubuntu k8s 单节点快速安装</a></li>
+<li><a href="https://blog.csdn.net/u012891504/article/details/52857682" target="_blank" rel="noopener">docker服务启动失败</a></li>
+<li><a href="https://blog.csdn.net/weixin_44130081/article/details/103563392" target="_blank" rel="noopener">K8S在kubeadm init以后查询kubeadm join</a></li>
+<li><a href="https://stackoverflow.com/questions/36939381/x509-certificate-signed-by-unknown-authority-kubernetes" target="_blank" rel="noopener">x509 certificate signed by unknown authority- Kubernetes</a></li>
+<li><a href="https://blog.csdn.net/suchahaerkang/article/details/84570488" target="_blank" rel="noopener">Docker的四种网络模式Bridge模式</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1153843" target="_blank" rel="noopener">mysql 远程连接数据库的二种方法</a></li>
+<li><a href="https://blog.csdn.net/Light_Breeze/article/details/82070222" target="_blank" rel="noopener">解决mysql不用密码也能登录</a></li>
+</ol>
+<hr>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/05/15/速查手册之常用Kubernetes命令/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Kubernetes/">Kubernetes</a>, <a class="has-link-grey -link" href="/tags/Linux/">Linux</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -262,16 +259,50 @@
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2021/04/07/恒丰银行分布式核心系统 - API 网关技术原型落地实践/">
+                <span class="level-item">#Microservice# 阅读《恒丰银行分布式核心系统 - API 网关 技术原型落地实践》笔记</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '8d9b1bc5ffb82eb3afbec1b9234008b0',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
 </div>
                 
 
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
     
         
 <div class="card widget">
@@ -359,6 +390,105 @@
 </div>
     
         
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#目录-Table-of-Contents">
+        <span class="has-mr-6">1</span>
+        <span>目录 Table of Contents</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#环境准备-Environment">
+        <span class="has-mr-6">1.1</span>
+        <span>环境准备 Environment</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#更新系统源和软件包">
+        <span class="has-mr-6">1.1.1</span>
+        <span>更新系统源和软件包</span>
+        </a></li><li>
+        <a class="is-flex" href="#修改Docker配置">
+        <span class="has-mr-6">1.1.2</span>
+        <span>修改Docker配置</span>
+        </a></li><li>
+        <a class="is-flex" href="#安装Kubernetes工具">
+        <span class="has-mr-6">1.1.3</span>
+        <span>安装Kubernetes工具</span>
+        </a></li><li>
+        <a class="is-flex" href="#下载Kubernetes镜像">
+        <span class="has-mr-6">1.1.4</span>
+        <span>下载Kubernetes镜像</span>
+        </a></li><li>
+        <a class="is-flex" href="#初始化Kubernetes主节点">
+        <span class="has-mr-6">1.1.5</span>
+        <span>初始化Kubernetes主节点</span>
+        </a></li><li>
+        <a class="is-flex" href="#应用Kubernetes配置">
+        <span class="has-mr-6">1.1.6</span>
+        <span>应用Kubernetes配置</span>
+        </a></li><li>
+        <a class="is-flex" href="#下载Kubernetes网络插件">
+        <span class="has-mr-6">1.1.7</span>
+        <span>下载Kubernetes网络插件</span>
+        </a></li><li>
+        <a class="is-flex" href="#允许主节点部署">
+        <span class="has-mr-6">1.1.8</span>
+        <span>允许主节点部署</span>
+        </a></li><li>
+        <a class="is-flex" href="#允许命令行补全">
+        <span class="has-mr-6">1.1.9</span>
+        <span>允许命令行补全</span>
+        </a></li><li>
+        <a class="is-flex" href="#查看是否部署成功">
+        <span class="has-mr-6">1.1.10</span>
+        <span>查看是否部署成功</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#疑难解决-FAQ">
+        <span class="has-mr-6">1.2</span>
+        <span>疑难解决 FAQ</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Docker重启服务出现异常">
+        <span class="has-mr-6">1.2.1</span>
+        <span>Docker重启服务出现异常</span>
+        </a></li><li>
+        <a class="is-flex" href="#Kubernetes忘记加入集群命令">
+        <span class="has-mr-6">1.2.2</span>
+        <span>Kubernetes忘记加入集群命令</span>
+        </a></li><li>
+        <a class="is-flex" href="#x509-certificate-signed-by-unknown-authority">
+        <span class="has-mr-6">1.2.3</span>
+        <span>x509: certificate signed by unknown authority</span>
+        </a></li><li>
+        <a class="is-flex" href="#Docker容器连接本机MySQL-Redis">
+        <span class="has-mr-6">1.2.4</span>
+        <span>Docker容器连接本机MySQL/Redis</span>
+        </a></li><li>
+        <a class="is-flex" href="#Xshell外网远程访问MySQL-Redis">
+        <span class="has-mr-6">1.2.5</span>
+        <span>Xshell外网远程访问MySQL/Redis</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#具体案例-Cases">
+        <span class="has-mr-6">1.3</span>
+        <span>具体案例 Cases</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#交叉编译与镜像构建">
+        <span class="has-mr-6">1.3.1</span>
+        <span>交叉编译与镜像构建</span>
+        </a></li><li>
+        <a class="is-flex" href="#容器部署与容器编排">
+        <span class="has-mr-6">1.3.2</span>
+        <span>容器部署与容器编排</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#参考资料-References">
+        <span class="has-mr-6">1.4</span>
+        <span>参考资料 References</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
     
         
 <div class="card widget">
@@ -599,7 +729,7 @@
     
     
         <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
-        <div class="column-right-shadow is-hidden-widescreen ">
+        <div class="column-right-shadow  ">
         
             
 <div class="card widget">
@@ -962,373 +1092,6 @@
 </div>
 
                 
-                
-
-
-
-
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Recent
-        </h3>
-        
-        <article class="media">
-            
-            <a href="/2021/05/21/QCloud上的Kubernetes实践/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/kubernetes_qrg.png" alt="#Kubernetes# QCloud上的Kubernetes初体验">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-05-20T23:00:21.000Z">2021-05-21</time></div>
-                    <a href="/2021/05/21/QCloud上的Kubernetes实践/" class="has-link-black-ter is-size-6">#Kubernetes# QCloud上的Kubernetes初体验</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/04/07/恒丰银行分布式核心系统 - API 网关技术原型落地实践/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_5.png" alt="#Microservice# 阅读《恒丰银行分布式核心系统 - API 网关 技术原型落地实践》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-06T23:00:21.000Z">2021-04-07</time></div>
-                    <a href="/2021/04/07/恒丰银行分布式核心系统 - API 网关技术原型落地实践/" class="has-link-black-ter is-size-6">#Microservice# 阅读《恒丰银行分布式核心系统 - API 网关 技术原型落地实践》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/04/06/微服务API网关的设计及应用/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_4.png" alt="#Microservice# 阅读《微服务API网关的设计及应用》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-05T23:00:21.000Z">2021-04-06</time></div>
-                    <a href="/2021/04/06/微服务API网关的设计及应用/" class="has-link-black-ter is-size-6">#Microservice# 阅读《微服务API网关的设计及应用》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/04/05/基于 OpenResty 平台的 API 网关系统的设计与实现/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_3.png" alt="#Microservice# 阅读《基于 OpenResty 平台的 API 网关系统的设计与实现》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-04T23:00:21.000Z">2021-04-05</time></div>
-                    <a href="/2021/04/05/基于 OpenResty 平台的 API 网关系统的设计与实现/" class="has-link-black-ter is-size-6">#Microservice# 阅读《基于 OpenResty 平台的 API 网关系统的设计与实现》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/04/04/Management of API Gateway Based on Micro-service Architecture/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_1.png" alt="#Microservice# 阅读《Management of API Gateway Based on Micro-service Architecture》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-03T23:00:21.000Z">2021-04-04</time></div>
-                    <a href="/2021/04/04/Management of API Gateway Based on Micro-service Architecture/" class="has-link-black-ter is-size-6">#Microservice# 阅读《Management of API Gateway Based on Micro-service Architecture》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-    </div>
-</div>
-
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Tag Cloud
-        </h3>
-        <a href="/tags/Concurrency/" style="font-size: 17.5px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12.5px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 12.5px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 20px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/WSL/" style="font-size: 17.5px;">WSL</a>
-    </div>
-</div>
-
-    
-        <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                Tags
-            </h3>
-            <div class="field is-grouped is-grouped-multiline">
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Concurrency/">
-                        <span class="tag">Concurrency</span>
-                        <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Docker/">
-                        <span class="tag">Docker</span>
-                        <span class="tag is-grey">2</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Fiddler/">
-                        <span class="tag">Fiddler</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Gin/">
-                        <span class="tag">Gin</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Git/">
-                        <span class="tag">Git</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
-                        <span class="tag">GitHub Pages</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Golang/">
-                        <span class="tag">Golang</span>
-                        <span class="tag is-grey">6</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Gorm/">
-                        <span class="tag">Gorm</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Hexo/">
-                        <span class="tag">Hexo</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Kubernetes/">
-                        <span class="tag">Kubernetes</span>
-                        <span class="tag is-grey">2</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Linux/">
-                        <span class="tag">Linux</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Microservice/">
-                        <span class="tag">Microservice</span>
-                        <span class="tag is-grey">6</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Mock/">
-                        <span class="tag">Mock</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Newman/">
-                        <span class="tag">Newman</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Postman/">
-                        <span class="tag">Postman</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
-                        <span class="tag">Programming Paradigm</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Pytest/">
-                        <span class="tag">Pytest</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Redis/">
-                        <span class="tag">Redis</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/SQL/">
-                        <span class="tag">SQL</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Shell/">
-                        <span class="tag">Shell</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Swagger/">
-                        <span class="tag">Swagger</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/WSL/">
-                        <span class="tag">WSL</span>
-                        <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</div>
-    
-        
-
-<div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            Links
-        </h3>
-        <ul class="menu-list">
-        
-            <li>
-                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Bokjan</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">bokjan.com</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Kingsley</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">kingsleyxie.cn</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">sticnarf</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">sticnarf.me</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">xcw</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">yifanyu123.github.io</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Escape</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">www.cnblogs.com</span>
-                    </span>
-                </a>
-            </li>
-        
-        </ul>
-        </div>
-    </div>
-</div>
-
-
-    
-    
-</div>
-
-                
             </div>
         </div>
     </section>
@@ -1338,7 +1101,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="#Kubernetes# QCloud上的Kubernetes初体验" height="28">
                 
                 </a>
                 <p class="is-size-7">
