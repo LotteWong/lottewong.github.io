@@ -188,7 +188,8 @@
 
 <hr>
 <h2 id="逻辑架构"><a href="#逻辑架构" class="headerlink" title="逻辑架构"></a><strong>逻辑架构</strong></h2><ul>
-<li><p>下图是<u>微服务API网关的整体逻辑架构图</u>，展示了微服务API网关的组成部分和逻辑功能。微服务API网关由<strong>管理模块</strong>和<strong>核心模块</strong>两个微服务提供主要功能，同时还依赖<strong>服务注册与服务发现中心</strong>提供服务的注册和发现，以及<strong>数据库层</strong>提供数据的缓存和持久化。</p>
+<li>下图是<u>微服务API网关的整体逻辑架构图</u>，展示了微服务API网关的组成部分和逻辑功能。微服务API网关由<strong>管理模块</strong>和<strong>核心模块</strong>两个微服务提供主要功能，同时还依赖<strong>服务注册与服务发现中心</strong>提供服务的注册和发现，以及<strong>数据库层</strong>提供数据的缓存和持久化。</li>
+</ul>
 <p><img src="/images/microservice_api_gateway_arch.png" alt="微服务API网关逻辑架构图"></p>
 <ol>
 <li><strong>微服务API网关管理模块</strong>，内置了UI界面层提供可视化的管理平台，请求经由API接口层可以访问用户登录、用户登出、管理服务、管理应用、管理用户和数据统计等功能，实现一站式的网关配置管理。</li>
@@ -196,10 +197,9 @@
 <li><strong>服务注册与服务发现中心</strong>，技术选型为开箱即用的 <code>Consul</code>，主要提供服务注册和服务发现的功能。对服务端服务而言，提供服务注册的统一存储位置，保存服务的名称、地址、端口和标签等元数据信息，还可以对已注册的服务进行自定义的周期性健康检查。对于微服务API网关而言，负载均衡中间件可以根据服务名发现可用的服务实例地址，并动态监听这些地址的可用情况和状态变化，及时更新负载均衡的地址列表。</li>
 <li><strong>数据库层</strong>，包括 <code>MySQL</code> 关系型数据库和 <code>Redis</code> 非关系型数据库。<code>MySQL</code> 用于持久化用户、服务和应用的信息，是业务数据存放的位置和缓存数据同步的来源。<code>Redis</code> 用作缓存和计数器，加快微服务API网关处理客户端应用请求的速度，实现系统流量的统计和监控，并根据策略控制流量的进出。</li>
 </ol>
-</li>
-</ul>
 <h2 id="调用关系"><a href="#调用关系" class="headerlink" title="调用关系"></a><strong>调用关系</strong></h2><ul>
-<li><p>下图是<u>微服务API网关的整体调用关系图</u>，展示了微服务API网关各模块及其依赖作为一个整体如何与客户端和服务端进行交互的过程。其中<strong>客户端</strong>由管理员用户、<code>Web/App</code> 应用组成，<strong>微服务API网关</strong>由管理模块、核心模块、<code>MySQL</code>、<code>Redis</code> 和 <code>Consul</code> 组成，<strong>服务端</strong>由微服务组成。</p>
+<li>下图是<u>微服务API网关的整体调用关系图</u>，展示了微服务API网关各模块及其依赖作为一个整体如何与客户端和服务端进行交互的过程。其中<strong>客户端</strong>由管理员用户、<code>Web/App</code> 应用组成，<strong>微服务API网关</strong>由管理模块、核心模块、<code>MySQL</code>、<code>Redis</code> 和 <code>Consul</code> 组成，<strong>服务端</strong>由微服务组成。</li>
+</ul>
 <p><img src="/images/microservice_api_gateway_call.png" alt="微服务API网关调用关系图"></p>
 <ol>
 <li><strong>第1步</strong>，服务端的微服务先在服务注册与服务发现中心 <code>Consul</code> 中注册该微服务的名称和地址。</li>
@@ -210,8 +210,6 @@
 <li><strong>第6步</strong>，核心模块在服务注册与服务发现中心 <code>Consul</code> 中获取可用的地址列表。</li>
 <li><strong>第7步</strong>，经过核心模块的一系列公共业务逻辑中间件处理后，请求被反向代理到已注册的微服务，服务端的微服务接收到请求并处理后返回响应给核心模块，核心模块再返回响应给客户端的应用。</li>
 </ol>
-</li>
-</ul>
 <hr>
 
         </div>
@@ -236,6 +234,13 @@
 
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2021/06/03/微服务API网关的设计与实现(3)/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">#Microservice# 微服务API网关的设计与实现(3) 微服务设计</span>
+            </a>
+        </div>
         
         
         <div class="level-end">
@@ -314,7 +319,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        36
+                        37
                     </p>
                 </div>
             </div>
@@ -427,7 +432,7 @@
                 <span class="level-item">Microservice</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">8</span>
+                <span class="level-item tag">9</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Others/">
@@ -473,7 +478,7 @@
                     <span class="level-item">June 2021</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -650,6 +655,25 @@
         
         <article class="media">
             
+            <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(3) 微服务设计">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
+                    <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(3) 微服务设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2021/06/02/微服务API网关的设计与实现(2)/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(2) 整体设计">
@@ -717,25 +741,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-06T23:00:21.000Z">2021-04-07</time></div>
                     <a href="/2021/04/07/恒丰银行分布式核心系统 - API 网关技术原型落地实践/" class="has-link-black-ter is-size-6">#Microservice# 阅读《恒丰银行分布式核心系统 - API 网关 技术原型落地实践》笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/04/06/微服务API网关的设计及应用/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/paper_thumbnail_4.png" alt="#Microservice# 阅读《微服务API网关的设计及应用》笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-05T23:00:21.000Z">2021-04-06</time></div>
-                    <a href="/2021/04/06/微服务API网关的设计及应用/" class="has-link-black-ter is-size-6">#Microservice# 阅读《微服务API网关的设计及应用》笔记</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
                     </p>
@@ -846,7 +851,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Microservice/">
                         <span class="tag">Microservice</span>
-                        <span class="tag is-grey">8</span>
+                        <span class="tag is-grey">9</span>
                     </a>
                 </div>
                 
