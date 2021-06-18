@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>Tag: Redis - LotteWong</title>
+<title>#Microservice# 微服务API网关的设计与实现(4) 数据库设计 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="LotteWong" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="#Microservice# 微服务API网关的设计与实现(4) 数据库设计" type="application/atom+xml">
 
 
 
@@ -79,13 +79,13 @@
 
 <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="is-3-column">
+<body class="is-2-column">
     <nav class="navbar navbar-main">
     <div class="container">
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计" height="28">
             
             </a>
         </div>
@@ -117,6 +117,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -130,64 +134,271 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Redis</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
     
     <div class="card-image">
-        <a href="/2020/05/01/速查手册之常用Redis命令/" class="image is-7by1">
-            <img class="thumbnail" src="/images/redis.png" alt="#Redis# 速查手册：常用 Redis 命令">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-30T23:00:21.000Z">2020-05-01</time>
+                <time class="level-item has-text-grey" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Cheat-Sheet/">Cheat Sheet</a>
+                <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 minutes read (About 281 words)
+                    13 minutes read (About 1937 words)
                 </span>
                 
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
                 
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/05/01/速查手册之常用Redis命令/">#Redis# 速查手册：常用 Redis 命令</a>
+                #Microservice# 微服务API网关的设计与实现(4) 数据库设计
             
         </h1>
         <div class="content">
-            <p>覆盖在学习和工作中的<strong>常用 Redis 命令</strong>：Server / Client / Database / String / Hash / List / Set / Sorted Set</p>
+            <p>本文主要介绍<u>微服务API网关</u>的<strong>数据库设计</strong>，分为<strong>两个</strong>方面：</p>
+<ul>
+<li><code>MySQL</code> 数据库表设计 - <strong>E-R图及关系模式</strong></li>
+<li><code>Redis</code> 键值设计</li>
+</ul>
 <hr>
+<a id="more"></a>
+
+
+
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
+
+<hr>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a><strong>数据库</strong></h2><h3 id="数据库三范式"><a href="#数据库三范式" class="headerlink" title="数据库三范式"></a>数据库三范式</h3><ul>
+<li>1NF是对属性的<strong>原子性</strong>，要求<strong>属性不可再分解</strong>。</li>
+<li>2NF是对记录的<strong>唯一性</strong>，要求记录有唯一标识，即<strong>不存在部分依赖</strong>。</li>
+<li>3NF是对字段的<strong>冗余性</strong>，要求任何字段不能由其他字段中派生出来，即<strong>不存在传递依赖</strong>。</li>
+</ul>
+<h3 id="绘制E-R图例"><a href="#绘制E-R图例" class="headerlink" title="绘制E-R图例"></a>绘制E-R图例</h3><ol>
+<li>确定所有的实体（矩形框）</li>
+<li>确定实体的联系（连线）</li>
+<li>确定实体和联系的属性（椭圆框）</li>
+<li>确定实体的键（下划线）</li>
+</ol>
+<h3 id="转换关系模式"><a href="#转换关系模式" class="headerlink" title="转换关系模式"></a>转换关系模式</h3><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">映射方法</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">一元联系</td>
+<td align="center">直接映射</td>
+<td align="center">实体的属性→关系模式的属性；实体的主键→关系模式的主键</td>
+</tr>
+<tr>
+<td align="center">二元联系 - 一对一</td>
+<td align="center">合并关系模式</td>
+<td align="center">合成一个关系模式 <strong>R</strong>；任一实体的全部主键→关系模式的主键</td>
+</tr>
+<tr>
+<td align="center">二元联系 - 一对多</td>
+<td align="center">引入外键</td>
+<td align="center">一方实体的主键→多方实体的外键；联系的属性→多方实体的属性</td>
+</tr>
+<tr>
+<td align="center">二元联系 - 多对多</td>
+<td align="center">增加关系模式</td>
+<td align="center">增加一个关系模式 <strong>R</strong>；两个实体的主键并集→关系模式的主键；联系的属性→关系模式的属性</td>
+</tr>
+<tr>
+<td align="center">超类子类</td>
+<td align="center">分化关系模式</td>
+<td align="center">分化两个关系模式 <strong>R1 和 R2</strong>；R1是父关系模式，包括R1主键和R1非主键；R2是子关系模式，包括R1主键和R2非主键；若概括是全部的，不用创建父关系模式，子关系模式包括所有</td>
+</tr>
+<tr>
+<td align="center">复合属性</td>
+<td align="center">由子属性代替</td>
+<td align="center">复合属性 A → 多个子属性代替 A1, A2, A3, …</td>
+</tr>
+<tr>
+<td align="center">多值属性</td>
+<td align="center">拆分关系模式</td>
+<td align="center">拆成两个关系模式 <strong>R1 和 R2</strong>；R1包括R的主键和M的本身；R2包括R的主键和除多值属性外的属性；注意设置级联操作</td>
+</tr>
+</tbody></table>
+<h2 id="MySQL-数据库表设计"><a href="#MySQL-数据库表设计" class="headerlink" title="MySQL 数据库表设计"></a><strong>MySQL 数据库表设计</strong></h2><h3 id="用户的数据库表设计"><a href="#用户的数据库表设计" class="headerlink" title="用户的数据库表设计"></a>用户的数据库表设计</h3><p><img src="/images/user_er.png" alt="用户的E-R图"></p>
+<h4 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h4><ul>
+<li><u>用户实体</u>拥有<strong>用户ID、用户名称、加密密码和加密盐值</strong>四种属性，其中出于安全性的考虑，密码需要经过盐值加密后存储在数据库而非直接明文存储。</li>
+</ul>
+<h4 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h4><ul>
+<li>没有联系可以分析。</li>
+</ul>
+<h4 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h4><ul>
+<li>对用户的E-R图进行一元联系类型转换，得出关系模式：<strong>用户实体的属性为独立的一张表</strong>。</li>
+</ul>
+<h3 id="服务的数据库表设计"><a href="#服务的数据库表设计" class="headerlink" title="服务的数据库表设计"></a>服务的数据库表设计</h3><p><img src="/images/service_er.png" alt="服务的E-R图"></p>
+<h4 id="实体-1"><a href="#实体-1" class="headerlink" title="实体"></a>实体</h4><ul>
+<li><u>服务实体</u>拥有<strong>服务ID、服务名称、服务描述和协议类型</strong>四种属性，其中协议类型是多值属性，用于扩展和适配接入不同协议的服务，目前可支持 <code>HTTP</code>、<code>HTTPS</code> 和 <code>WebSocket</code> 协议。</li>
+<li><u>协议接入与请求重写配置实体</u>固定具有<strong>地址和重写规则</strong>属性，从协议接入与请求重写配置中可以泛化出各种类型的协议配置，不同协议的配置内容不尽相同。</li>
+<li><u>权限认证配置实体</u>包含<strong>ip黑白名单</strong>的属性，用于鉴别请求来源。</li>
+<li><u>流量控制配置实体</u>是相对服务而言的，具有<strong>限流间隔和限流次数</strong>属性，可以支持周期灵活的限流策略。</li>
+<li><u>负载均衡配置实体</u>有三大属性，分别为<strong>ip列表、weight列表和算法类型</strong>，其中算法类型是多值属性，标识了负载均衡使用的算法，目前支持随机负载均衡、轮询负载均衡、加权轮询负载均衡和一致性哈希负载均衡四种算法。</li>
+</ul>
+<h4 id="联系-1"><a href="#联系-1" class="headerlink" title="联系"></a>联系</h4><ul>
+<li>服务实体与协议接入与请求重写配置实体、权限认证配置实体、流量控制配置实体、负载均衡配置实体和反向代理配置实体的关系都是<strong>一对一的拥有关系</strong>。特别地，协议接入配置实体存在<strong>泛化</strong>，可以衍生出不同类型的协议接入与请求重写配置。</li>
+</ul>
+<h4 id="转换-1"><a href="#转换-1" class="headerlink" title="转换"></a>转换</h4><ul>
+<li>对服务的E-R图进行二元联系类型转换，得出关系模式：<strong>服务实体与权限认证配置实体、流量控制配置实体、负载均衡配置实体和反向代理配置实体合并为一张数据库表，为了考虑后续对其他协议进行扩展，故每种协议配置都建议新建一张数据库表</strong>。</li>
+</ul>
+<h3 id="应用的数据库表设计"><a href="#应用的数据库表设计" class="headerlink" title="应用的数据库表设计"></a>应用的数据库表设计</h3><p><img src="/images/app_er.png" alt="应用的E-R图"></p>
+<h4 id="实体-2"><a href="#实体-2" class="headerlink" title="实体"></a>实体</h4><ul>
+<li><u>应用实体</u>拥有<strong>应用ID、应用标识、应用名称和应用密钥</strong>四种属性，其中出于安全性的考虑密钥应该存储加密后的密文而非明文。</li>
+<li><u>权限认证配置实体</u>包含<strong>ip黑白名单</strong>的属性，用于鉴别请求来源。</li>
+<li><u>流量控制配置实体</u>是相对应用而言的，具有<strong>QPD（每日请求量）限制和QPS（每秒请求量）限制</strong>两种属性。</li>
+</ul>
+<h4 id="联系-2"><a href="#联系-2" class="headerlink" title="联系"></a>联系</h4><ul>
+<li>应用实体与权限控制配置实体和流量控制配置实体的关系都是<strong>一对一的拥有关系</strong>。</li>
+</ul>
+<h4 id="转换-2"><a href="#转换-2" class="headerlink" title="转换"></a>转换</h4><ul>
+<li>对应用的E-R图进行二元联系类型转换，得出关系模式：<strong>服务实体与权限认证配置实体和流量控制配置实体合并为一张数据库表</strong>。</li>
+</ul>
+<h2 id="Redis-键值设计"><a href="#Redis-键值设计" class="headerlink" title="Redis 键值设计"></a><strong>Redis 键值设计</strong></h2><h3 id="会话的键值设计"><a href="#会话的键值设计" class="headerlink" title="会话的键值设计"></a>会话的键值设计</h3><table>
+<thead>
+<tr>
+<th align="center">键</th>
+<th align="center">值类型</th>
+<th align="center">值内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">session_<code>{session_id}</code></td>
+<td align="center">Binary</td>
+<td align="center">会话信息</td>
+</tr>
+</tbody></table>
+<h3 id="配置的键值设计"><a href="#配置的键值设计" class="headerlink" title="配置的键值设计"></a>配置的键值设计</h3><table>
+<thead>
+<tr>
+<th align="center">键</th>
+<th align="center">值类型</th>
+<th align="center">值内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">app_<code>{app_id}</code></td>
+<td align="center">String</td>
+<td align="center">app po as json</td>
+</tr>
+<tr>
+<td align="center">service_<code>{service_id}</code></td>
+<td align="center">String</td>
+<td align="center">service po as json</td>
+</tr>
+<tr>
+<td align="center">lb_<code>{lb_id}</code></td>
+<td align="center">String</td>
+<td align="center">load balance po as json</td>
+</tr>
+<tr>
+<td align="center">ac_<code>{ac_id}</code></td>
+<td align="center">String</td>
+<td align="center">access control po as json</td>
+</tr>
+</tbody></table>
+<h3 id="计数器的键值设计"><a href="#计数器的键值设计" class="headerlink" title="计数器的键值设计"></a>计数器的键值设计</h3><table>
+<thead>
+<tr>
+<th align="center">键</th>
+<th align="center">值类型</th>
+<th align="center">值内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">flow_day_count_<code>{day_format}</code>_flow_total_count</td>
+<td align="center">String</td>
+<td align="center">总计每一天的流量统计数</td>
+</tr>
+<tr>
+<td align="center">flow_hour_count_<code>{hour_format}</code>_flow_total_count</td>
+<td align="center">String</td>
+<td align="center">总计每小时的流量统计数</td>
+</tr>
+<tr>
+<td align="center">flow_day_count_<code>{day_format}</code>_flow_service_count_<code>{service_name}</code></td>
+<td align="center">String</td>
+<td align="center">单个服务每一天的流量统计数</td>
+</tr>
+<tr>
+<td align="center">flow_hour_count_<code>{hour_format}</code>_flow_service_count_<code>{service_name}</code></td>
+<td align="center">String</td>
+<td align="center">单个服务每小时的流量统计数</td>
+</tr>
+<tr>
+<td align="center">flow_day_count_<code>{day_format}</code>_flow_app_count_<code>{app_id}</code></td>
+<td align="center">String</td>
+<td align="center">单个应用每一天的流量统计数</td>
+</tr>
+<tr>
+<td align="center">flow_hour_count_<code>{hour_format}</code>_flow_app_count_<code>{app_id}</code></td>
+<td align="center">String</td>
+<td align="center">单个应用每小时的流量统计数</td>
+</tr>
+</tbody></table>
+<h3 id="限流器的键值设计"><a href="#限流器的键值设计" class="headerlink" title="限流器的键值设计"></a>限流器的键值设计</h3><table>
+<thead>
+<tr>
+<th align="center">键</th>
+<th align="center">值类型</th>
+<th align="center">值内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">rate_flow_service_count_<code>{service_name}</code></td>
+<td align="center">String</td>
+<td align="center">单个服务调用结束的时间点</td>
+</tr>
+<tr>
+<td align="center">rate_flow_app_count_<code>{app_id}</code></td>
+<td align="center">String</td>
+<td align="center">单个应用调用结束的时间点</td>
+</tr>
+</tbody></table>
+<h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a><strong>Refs</strong></h2><ul>
+<li><a href="https://segmentfault.com/a/1190000013695030" target="_blank" rel="noopener">数据库逻辑设计之三大范式通俗理解</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/29029129#:~:text=er%E5%9B%BE%E7%9A%84%E5%B1%9E%E6%80%A7%E8%BF%98,%E5%92%8C%E5%90%8D%E5%AD%97%E5%B1%9E%E6%80%A7%EF%BC%8C%E5%A6%82%E4%B8%8B%E5%9B%BE%EF%BC%9A&text=%E6%B4%BE%E7%94%9F%E5%B1%9E%E6%80%A7(derivers%20attribute)%EF%BC%9A,%E5%AD%98%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%B1%9E%E6%80%A7%E3%80%82" target="_blank" rel="noopener">数据库ER图基础概念整理</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/74394591" target="_blank" rel="noopener">如何画好ER图</a></li>
+<li><a href="https://www.pianshen.com/article/1262363338/" target="_blank" rel="noopener">将E-R图转换成关系模式</a></li>
+<li><a href="https://lanlan2017.github.io/ReadingNotes/ef76614/" target="_blank" rel="noopener">数据库设计过程</a></li>
+</ul>
+<hr>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/05/01/速查手册之常用Redis命令/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Microservice/">Microservice</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -197,16 +408,50 @@
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2021/06/03/微服务API网关的设计与实现(3)/">
+                <span class="level-item">#Microservice# 微服务API网关的设计与实现(3) 微服务设计</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '732ab3c575817af6b66db606fcac88d0',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
 </div>
                 
 
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
     
         
 <div class="card widget">
@@ -294,6 +539,77 @@
 </div>
     
         
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#目录-Table-of-Contents">
+        <span class="has-mr-6">1</span>
+        <span>目录 Table of Contents</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#数据库">
+        <span class="has-mr-6">1.1</span>
+        <span>数据库</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#数据库三范式">
+        <span class="has-mr-6">1.1.1</span>
+        <span>数据库三范式</span>
+        </a></li><li>
+        <a class="is-flex" href="#绘制E-R图例">
+        <span class="has-mr-6">1.1.2</span>
+        <span>绘制E-R图例</span>
+        </a></li><li>
+        <a class="is-flex" href="#转换关系模式">
+        <span class="has-mr-6">1.1.3</span>
+        <span>转换关系模式</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#MySQL-数据库表设计">
+        <span class="has-mr-6">1.2</span>
+        <span>MySQL 数据库表设计</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#用户的数据库表设计">
+        <span class="has-mr-6">1.2.1</span>
+        <span>用户的数据库表设计</span>
+        </a></li><li>
+        <a class="is-flex" href="#服务的数据库表设计">
+        <span class="has-mr-6">1.2.2</span>
+        <span>服务的数据库表设计</span>
+        </a></li><li>
+        <a class="is-flex" href="#应用的数据库表设计">
+        <span class="has-mr-6">1.2.3</span>
+        <span>应用的数据库表设计</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Redis-键值设计">
+        <span class="has-mr-6">1.3</span>
+        <span>Redis 键值设计</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#会话的键值设计">
+        <span class="has-mr-6">1.3.1</span>
+        <span>会话的键值设计</span>
+        </a></li><li>
+        <a class="is-flex" href="#配置的键值设计">
+        <span class="has-mr-6">1.3.2</span>
+        <span>配置的键值设计</span>
+        </a></li><li>
+        <a class="is-flex" href="#计数器的键值设计">
+        <span class="has-mr-6">1.3.3</span>
+        <span>计数器的键值设计</span>
+        </a></li><li>
+        <a class="is-flex" href="#限流器的键值设计">
+        <span class="has-mr-6">1.3.4</span>
+        <span>限流器的键值设计</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Refs">
+        <span class="has-mr-6">1.4</span>
+        <span>Refs</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
     
         
 <div class="card widget">
@@ -545,7 +861,7 @@
     
     
         <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
-        <div class="column-right-shadow is-hidden-widescreen ">
+        <div class="column-right-shadow  ">
         
             
 <div class="card widget">
@@ -908,373 +1224,6 @@
 </div>
 
                 
-                
-
-
-
-
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Recent
-        </h3>
-        
-        <article class="media">
-            
-            <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
-                    <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(4) 数据库设计</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(3) 微服务设计">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
-                    <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(3) 微服务设计</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/06/02/微服务API网关的设计与实现(2)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(2) 整体设计">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-01T23:00:21.000Z">2021-06-02</time></div>
-                    <a href="/2021/06/02/微服务API网关的设计与实现(2)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(2) 整体设计</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/06/01/微服务API网关的设计与实现(1)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(1) 需求分析">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-05-31T23:00:21.000Z">2021-06-01</time></div>
-                    <a href="/2021/06/01/微服务API网关的设计与实现(1)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(1) 需求分析</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/05/21/QCloud上的Kubernetes实践/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/kubernetes_qrg.png" alt="#Kubernetes# QCloud上的Kubernetes初体验">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-05-20T23:00:21.000Z">2021-05-21</time></div>
-                    <a href="/2021/05/21/QCloud上的Kubernetes实践/" class="has-link-black-ter is-size-6">#Kubernetes# QCloud上的Kubernetes初体验</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-    </div>
-</div>
-
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Tag Cloud
-        </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 18px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 12px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 20px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 14px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 10px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/WSL/" style="font-size: 16px;">WSL</a>
-    </div>
-</div>
-
-    
-        <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                Tags
-            </h3>
-            <div class="field is-grouped is-grouped-multiline">
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Concurrency/">
-                        <span class="tag">Concurrency</span>
-                        <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Docker/">
-                        <span class="tag">Docker</span>
-                        <span class="tag is-grey">2</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Fiddler/">
-                        <span class="tag">Fiddler</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Gin/">
-                        <span class="tag">Gin</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Git/">
-                        <span class="tag">Git</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
-                        <span class="tag">GitHub Pages</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Golang/">
-                        <span class="tag">Golang</span>
-                        <span class="tag is-grey">6</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Gorm/">
-                        <span class="tag">Gorm</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Hexo/">
-                        <span class="tag">Hexo</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Kubernetes/">
-                        <span class="tag">Kubernetes</span>
-                        <span class="tag is-grey">2</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Linux/">
-                        <span class="tag">Linux</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Microservice/">
-                        <span class="tag">Microservice</span>
-                        <span class="tag is-grey">10</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Mock/">
-                        <span class="tag">Mock</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Newman/">
-                        <span class="tag">Newman</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Postman/">
-                        <span class="tag">Postman</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
-                        <span class="tag">Programming Paradigm</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Pytest/">
-                        <span class="tag">Pytest</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Redis/">
-                        <span class="tag">Redis</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/SQL/">
-                        <span class="tag">SQL</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Shell/">
-                        <span class="tag">Shell</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Swagger/">
-                        <span class="tag">Swagger</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/WSL/">
-                        <span class="tag">WSL</span>
-                        <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</div>
-    
-        
-
-<div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            Links
-        </h3>
-        <ul class="menu-list">
-        
-            <li>
-                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Bokjan</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">bokjan.com</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Kingsley</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">kingsleyxie.cn</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">sticnarf</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">sticnarf.me</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">xcw</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">yifanyu123.github.io</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Escape</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">www.cnblogs.com</span>
-                    </span>
-                </a>
-            </li>
-        
-        </ul>
-        </div>
-    </div>
-</div>
-
-
-    
-    
-</div>
-
-                
             </div>
         </div>
     </section>
@@ -1284,7 +1233,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计" height="28">
                 
                 </a>
                 <p class="is-size-7">
