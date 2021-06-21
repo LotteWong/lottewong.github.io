@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>#Unit Test# Unit Test Pre-study and Practice in Python - LotteWong</title>
+<title>LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="#Unit Test# Unit Test Pre-study and Practice in Python" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="LotteWong" type="application/atom+xml">
 
 
 
@@ -79,13 +79,13 @@
 
 <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="is-2-column">
+<body class="is-3-column">
     <nav class="navbar navbar-main">
     <div class="container">
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="#Unit Test# Unit Test Pre-study and Practice in Python" height="28">
+                <img src="/images/logo.png" alt="LotteWong" height="28">
             
             </a>
         </div>
@@ -117,10 +117,6 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
-                    <i class="fas fa-list-ul"></i>
-                </a>
-                
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -134,253 +130,63 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+    <div class="card">
     
     <div class="card-image">
-        <span class="image is-7by1">
-            <img class="thumbnail" src="/images/unittest.png" alt="#Unit Test# Unit Test Pre-study and Practice in Python">
-        </span>
+        <a href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/" class="image is-7by1">
+            <img class="thumbnail" src="/images/hexo-github.png" alt="#Blog# 从零到壹：GitHub Pages + Hexo = Blog">
+        </a>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-11-18T23:00:21.000Z">2020-11-19</time>
+                <time class="level-item has-text-grey" datetime="2019-06-01T23:00:21.000Z">2019-06-02</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                <a class="has-link-grey -link" href="/categories/Others/">Others</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    20 minutes read (About 2934 words)
+                    12 minutes read (About 1869 words)
                 </span>
                 
-                
-                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-                    <i class="far fa-eye"></i>
-                    <span id="busuanzi_value_page_pv">0</span> visits
-                </span>
                 
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                #Unit Test# Unit Test Pre-study and Practice in Python
+                <a class="has-link-black-ter" href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/">#Blog# 从零到壹：GitHub Pages + Hexo = Blog</a>
             
         </h1>
         <div class="content">
-            <p>If you write code, write tests. <em>– The Way of Testivus</em></p>
-<hr>
-<a id="more"></a>
-
-
-
-<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
-
-<hr>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a><strong>背景</strong></h2><blockquote>
-<p>近期由于工作需要，遂矛头瞄准了单元测试这片“无人之地”（bushi。单元测试的对比及意义将不会在本文赘述，一些概念的辨析也不会深究，但我个人认为最理想的观感至少应该满足两点：① 可以快速并重复地验证结果是否符合预期（毕竟不会有人写完代码不自测吧，汗.jpg）；② 将来某一天面临重构时不至于心慌慌。</p>
-<p>提出的这两点要求看似简单明了实则十分模糊，所以单元测试是没有固定套路的，需要在方法论的指导下和团队的实践中不断完善。值得注意的是，在很多情况下我们都会”先上车后补票“（which 不是一种好习惯，因此我们也会面临额外的难题。</p>
-<p>本文将以 Python 工程为例，预研单元测试的可行方案（仍有很大的进步空间，to be continued… 主要讨论以下内容：</p>
+            <p>利用<strong>GitHub Pages+Hexo</strong>打造一个个人博客，主要分为以下<strong>六个部分</strong>：</p>
 <ul>
-<li><strong>测试流程</strong>：3A 原则；使用 Stub 和 Mock</li>
-<li><strong>测试用例</strong>：测试哪些内容；如何设计测试用例；如何管理测试数据；用例的规范性</li>
-<li><strong>技术选型</strong>：pytest、mock 及第三方的插件</li>
-<li><strong>工程实践</strong>：如何设计脚手架；脱敏案例实践与分析</li>
-<li><strong>常见问题</strong>：被测单元具有不可测性怎么办；单元测试如何保证质量</li>
+<li>环境准备 Environment</li>
+<li><strong>文件配置 Configuration</strong></li>
+<li>个性化 Customization</li>
+<li><strong>博客写作 Writing</strong></li>
+<li>双备份 Backup</li>
+<li>主机迁移 Migration</li>
 </ul>
-</blockquote>
-<hr>
-<h2 id="测试流程"><a href="#测试流程" class="headerlink" title="测试流程"></a><strong>测试流程</strong></h2><h3 id="遵循-3A-原则"><a href="#遵循-3A-原则" class="headerlink" title="遵循 3A 原则"></a>遵循 3A 原则</h3><p>编写单元测试用例，流程遵循 3A 原则：</p>
-<ul>
-<li><strong>Arrange</strong>：准备测试数据</li>
-<li><strong>Action</strong>：调用被测单元</li>
-<li><strong>Assert</strong>：判断测试结果</li>
-</ul>
-<h3 id="Stub-和-Mock"><a href="#Stub-和-Mock" class="headerlink" title="Stub 和 Mock"></a>Stub 和 Mock</h3><p>我们的工程很可能涉及到数据库的操作或外部服务调用等情况，如果我们认为单元测试应当是尽可能独立的（不同的声音见：<a href="https://gitbook.cn/books/58fa1af500a2684bf77511bc/index.html" target="_blank" rel="noopener">Mock 七宗罪</a>），那么我们就需要替换它们：</p>
-<ul>
-<li><strong>Stub</strong>：一般指数据上的模拟</li>
-<li><strong>Mock</strong>：一般指数据上和行为上的模拟</li>
-</ul>
-<p><img src="https://miro.medium.com/max/1024/0*AtEcgjYzyuEmkWiv.png" alt="Fake、Mock和Stub的区别"></p>
-<h2 id="测试用例"><a href="#测试用例" class="headerlink" title="测试用例"></a><strong>测试用例</strong></h2><h3 id="测试粒度和优先级"><a href="#测试粒度和优先级" class="headerlink" title="测试粒度和优先级"></a>测试粒度和优先级</h3><ul>
-<li><p>优先测试<strong>业务层</strong>，而不是接口层，也不是持久层<em>（牺牲了覆盖率，但最具性价比）</em></p>
-</li>
-<li><p>优先测试<strong>正在被频繁使用</strong>的函数</p>
-</li>
-<li><p>优先测试<strong>重要程度要更高</strong>的函数</p>
-</li>
-<li><p>优先测试<strong>代码逻辑更复杂</strong>的函数</p>
-</li>
-<li><p>优先测试<strong>经常会发生变更</strong>的函数</p>
-</li>
-</ul>
-<h3 id="设计测试用例"><a href="#设计测试用例" class="headerlink" title="设计测试用例"></a>设计测试用例</h3><p>首先我们应该明确，单元测试本质上是一种<strong>白盒测试</strong>，所以代码分支的分析是必要的。</p>
-<p>其次感谢来自测试同事的技术分享，帮助回顾了在软件测试课程中学习到的几种常见方法，还引入了正交试验的概念。下面主要关注其中三种：</p>
-<ul>
-<li><strong>等价类/边界值</strong>：适用于参数化</li>
-<li><strong>正交试验</strong>：多分支情况下，如何选出最优用例组合</li>
-<li><strong>流程分析</strong>：处理异常情况</li>
-</ul>
-<h3 id="管理测试数据"><a href="#管理测试数据" class="headerlink" title="管理测试数据"></a>管理测试数据</h3><p>需要管理的测试数据大致可以分为两类：</p>
-<ul>
-<li><strong>全局通用</strong>：作为全局常量写入统一的文件中</li>
-<li><strong>局部可用</strong>：在单元测试类中定义，可使用装饰器组织输入、输出和模拟的数据</li>
-</ul>
-<h3 id="用例的规范性"><a href="#用例的规范性" class="headerlink" title="用例的规范性"></a>用例的规范性</h3><h4 id="存放位置"><a href="#存放位置" class="headerlink" title="存放位置"></a>存放位置</h4><ul>
-<li><strong>功能测试类代码</strong>：放在主要测试的代码目录的 <code>/tests/functional</code> 中</li>
-<li><strong>单元测试类代码</strong>：放在主要测试的代码目录的 <code>/tests/unit</code> 中</li>
-</ul>
-<h4 id="用例命名"><a href="#用例命名" class="headerlink" title="用例命名"></a>用例命名</h4><ul>
-<li><strong>测试文件命名</strong>：以 <code>test_</code> 开头或以 <code>_test</code> 结尾（遵循下划线命名法）</li>
-<li><strong>测试类命名</strong>：以 <code>Test</code> 开头（遵循驼峰命名法）</li>
-<li><strong>测试方法命名</strong>：以 <code>test_</code> 开头（遵循下划线命名法）</li>
-<li><strong>命名格式建议</strong>：为提高测试用例的可读性，测试方法可参考 <code>test_[测试单元名称]_[测试场景]_[测试期望结果]</code> 来命名，如 <code>test_create_user_in_openstack_success</code><ul>
-<li><code>create_user</code> 为测试单元名称</li>
-<li><code>in_openstack</code> 为测试场景</li>
-<li><code>success</code> 为测试期望结果</li>
-</ul>
-</li>
-</ul>
-<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a><strong>技术选型</strong></h2><h3 id="单测框架"><a href="#单测框架" class="headerlink" title="单测框架"></a>单测框架</h3><p>通过以下对比，<strong>Python工程项目建议选用使用更简洁、功能更丰富且兼容性更好的 <code>pytest</code> 测试框架。</strong></p>
-<h4 id="unittest"><a href="#unittest" class="headerlink" title="unittest"></a>unittest</h4><ul>
-<li>Python语言的标准单元测试框架</li>
-<li>提供了 test cases、test suites、test fixtures、test runner 等功能</li>
-</ul>
-<h4 id="nose"><a href="#nose" class="headerlink" title="nose"></a>nose</h4><ul>
-<li>基于 <code>unittest</code> 扩展插件</li>
-<li>兼容 <code>unittest</code> 的测试集</li>
-</ul>
-<h4 id="pytest"><a href="#pytest" class="headerlink" title="pytest"></a>pytest</h4><ul>
-<li>支持比 <code>unittest</code> 更简单的断言和众多的装饰器</li>
-<li>支持测试用例分类标记和运行</li>
-<li>支持测试数据输入的参数化</li>
-<li>兼容 <code>unittest</code> 和 <code>nose</code> 的测试集</li>
-<li>丰富的插件和活跃的社区</li>
-</ul>
-<blockquote>
-<p>此处补充如何让 PyCharm 支持 pytest 的使用，至此 pytest 已经可以同时使用 IDE 或 CLI 来运行测试用例。</p>
-<p>具体方法：修改 PyCharm 设置，file -&gt; Setting -&gt; Tools-&gt; Python Integrated Tools -&gt; ${ProjectName} -&gt; Default test runner -&gt; Choose <code>pytest</code> <em>(<code>unittest</code> by default)</em></p>
-</blockquote>
-<h3 id="模拟框架"><a href="#模拟框架" class="headerlink" title="模拟框架"></a>模拟框架</h3><p>在单元测试的过程中，需要对数据库访问和使用的外部服务进行 mock，我们希望可以实现：</p>
-<ul>
-<li>模拟期望的返回数据</li>
-<li>模拟期望的调用行为</li>
-<li>模拟出错时抛出异常</li>
-</ul>
-<p>由于 Python 作为一门动态语言，在运行时替换函数方法和成员变量是很容易实现的，即我们相对而言可以在不改动原有代码的情况下就实现单元测试的编写；<strong>为了更方便和更规范地使用mock功能，我们可以选用 Python 的 <code>mock</code> 库。</strong></p>
-<h4 id="mock"><a href="#mock" class="headerlink" title="mock"></a>mock</h4><ul>
-<li>Python 最广泛被使用的 <code>mock</code> 第三方库，Python 3.3 后被列入标准库中</li>
-<li>支持模拟返回值和副作用，以及进行调用的断言</li>
-</ul>
-<h3 id="其它工具"><a href="#其它工具" class="headerlink" title="其它工具"></a>其它工具</h3><p>控制台打印的测试日志既不直观也不能持久地保存，我们需要一个可以帮助输出测试报告的工具。<strong>由于测试框架已选用 <code>pytest</code>，测试报告工具可使用 <code>pytest</code> 的插件 <code>pytest-html</code>。</strong></p>
-<h4 id="pytest-html"><a href="#pytest-html" class="headerlink" title="pytest-html"></a>pytest-html</h4><ul>
-<li>可输出多种文件格式的测试报告</li>
-<li>可作为插件集成到 <code>pytest</code> 使用</li>
-</ul>
-<p>统计代码覆盖率有助于反推被测代码和单元测试设计的合理性。代码覆盖率高不能说明代码质量高，但是代码覆盖率低那么代码质量一般都不高。<strong>由于测试框架已选用 <code>pytest</code>，覆盖统计工具可使用 <code>pytest</code> 的插件 <code>pytest-cov</code>。</strong></p>
-<h4 id="pytest-cov"><a href="#pytest-cov" class="headerlink" title="pytest-cov"></a>pytest-cov</h4><ul>
-<li>兼容 <code>coverage</code> 库</li>
-<li>可作为插件集成到 <code>pytest</code> 使用</li>
-</ul>
-<h2 id="工程实践"><a href="#工程实践" class="headerlink" title="工程实践"></a><strong>工程实践</strong></h2><h3 id="脚手架设计"><a href="#脚手架设计" class="headerlink" title="脚手架设计"></a>脚手架设计</h3><p>单元测试脚手架可以封装一些公共行为，提供以下功能：</p>
-<ul>
-<li>管理公共和临时的测试数据</li>
-<li>封装正常调用和异常调用的流程</li>
-<li>完备的报错提醒和日志记录</li>
-<li>…</li>
-</ul>
-<h3 id="某案例分析"><a href="#某案例分析" class="headerlink" title="某案例分析"></a>某案例分析</h3><h4 id="Step-1：源码分析"><a href="#Step-1：源码分析" class="headerlink" title="Step 1：源码分析"></a>Step 1：源码分析</h4><p>阅读源码，整理出代码流程图</p>
-<p><img src="https://www.pngkit.com/png/detail/411-4111170_convert-my-puesdo-code-to-flow-chart-inspirational.png" alt="示例代码流程分支"></p>
-<h4 id="Step-2：用例设计"><a href="#Step-2：用例设计" class="headerlink" title="Step 2：用例设计"></a>Step 2：用例设计</h4><p>根据前述的设计建议，分别采取等价类/边界值、正交试验和流程分析等方法合理设计测试用例。应当记录（必要时可以进行合并的操作）：</p>
-<ul>
-<li>输入数据</li>
-<li>输出期望</li>
-<li>场景总数</li>
-<li>异常分支</li>
-</ul>
-<h4 id="Step-3：运行用例"><a href="#Step-3：运行用例" class="headerlink" title="Step 3：运行用例"></a>Step 3：运行用例</h4><p>PyCharm 内置支持运行测试或 Terminal 输入命令运行测试</p>
-<blockquote>
-<p><strong>pytest 常用命令</strong>：pytest [options] [file_or_dir] [file_or_dir] […]</p>
-<ul>
-<li>-s：控制台输出被测单元print的数据</li>
-<li>-k：运行包含关键字的用例</li>
-<li>-m：运行包含分类标记的用例</li>
-<li>-v：打印用例执行的详细过程</li>
-<li>-q：打印用例执行的简略过程</li>
-</ul>
-</blockquote>
-<h4 id="Step-4：分析结果"><a href="#Step-4：分析结果" class="headerlink" title="Step 4：分析结果"></a>Step 4：分析结果</h4><p>获得测试结果报告（pytest-html）</p>
-<p><img src="https://blog.j-labs.pl/uploads/pytest_j-labs_01.png?1549445915564" alt="pytest-html sample"></p>
-<blockquote>
-<ol>
-<li>安装 pytest-html 插件：pip install pytest-html</li>
-<li><strong>执行 pytest 命令</strong>：pytest [options] [test_file_or_dir] [test_file_or_dir] […] <strong>–html=[file]</strong>，如 pytest ./venus –html=./venus/tests/unit/htmlrept.html</li>
-<li>测试结果以更美观和持久化的形式被保存下来</li>
-</ol>
-</blockquote>
-<p>获取覆盖情况报告（pytest-cov）</p>
-<p><img src="https://i.stack.imgur.com/bA2fO.png" alt="pytest-cov sample"></p>
-<blockquote>
-<ol>
-<li>安装 pytest-cov 插件：pip install pytest-cov</li>
-<li><strong>执行 pytest 命令</strong>：pytest [options] [test_file_or_dir] [test_file_or_dir] […] <strong>–cov=[src_dir_or_module] –cov-report=html</strong>，如 pytest ./venus –cov=venus.cloud.node_network –cov-report=html</li>
-<li>白色为被单元测试覆盖到的代码，红色表示未被单元测试覆盖的代码</li>
-</ol>
-</blockquote>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a><strong>常见问题</strong></h2><h3 id="不可测性"><a href="#不可测性" class="headerlink" title="不可测性"></a>不可测性</h3><p>单元测试的工作量比开发程序的工作量要大几乎是肯定的，但是如果你发现在掌握了一定的科学方法之后仍觉得写的十分痛苦，那么你该思考是不是因为这个被测单元本身就不具备可测性。</p>
-<p>对现有的项目进行单元测试补充，常常会遇到这样的问题：函数代码逻辑冗杂、架构层次设计不够合理导致无法注入替换等等。<strong>这时，我想我们不得不对其进行重构了</strong>（本文对此不展开讨论，感兴趣可以阅读宝典<a href="https://book.douban.com/subject/33400354/" target="_blank" rel="noopener">《重构：改善既有代码的设计》</a>）。</p>
-<h3 id="单测质量"><a href="#单测质量" class="headerlink" title="单测质量"></a>单测质量</h3><p>只要是代码都将面临质量的考验，单元测试也不例外。</p>
-<p><strong>从程序本身而言</strong>，我们所能做的可以是遵循一些实用的原则：</p>
-<ul>
-<li>单元测试不要掺杂逻辑</li>
-<li>每个用例针对单一情景</li>
-<li>使用经得起考验的脚手架和工具</li>
-<li>…</li>
-</ul>
-<p><strong>对开发人员来说</strong>，一些必要的意识是应该培养的：</p>
-<ul>
-<li>单元测试重视起来，条件允许的话考虑 TDD 开发</li>
-<li>单元测试也应该和业务代码一样接受代码评审</li>
-<li>循序渐进，先会写，再写好，最后优化</li>
-<li>…</li>
-</ul>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><blockquote>
-<p>以下文章对本文亦有贡献 :)</p>
-</blockquote>
-<ul>
-<li><a href="https://mp.weixin.qq.com/s/okmWMOeBm7cCIZ1zzFr4KQ?st=F68672AD77D50E581751130E5B429071B1F9239E03C2214284F86E66F63F9BC25FCE34F1935B13E6AAACFC359362A1CA1D021CC9434D23F01612D9E9979D0E3996DC79ECBE9DDEDD14B049CE05CF28463E4B6E81D023C38F0C2DBAC19B4E567E16E744C5FEFDDEB407306FFCDE4F730EAC7F5CF821E4BD40F8E63A0C00BE89080D36A102758604B82553B9614CB6532B&vid=1688850542851245&cst=D5B50A506E3FC936F5F864A3F82938A62C3B0C7B80A7DE37D79F24AAFCE12C4491C7FCB68819166B1EFEFA8E96756324&deviceid=300bdcc7-201e-45fd-bdbd-cac1529c0f97&version=3.0.31.2998&platform=win" target="_blank" rel="noopener">从头到脚说单测——谈有效的单元测试</a></li>
-<li><a href="https://mp.weixin.qq.com/s?__biz=MzA5MTAzNjU1OQ==&mid=2454779818&idx=1&sn=0c91a9b637a7a7ecf1c2d30e94d521b1&chksm=87a6d94ab0d1505c90c8f3f495402aa76f50fe42df3c4660e775670be8833c10c377956cccae&mpshare=1&scene=21&srcid=&rd2werd=1#wechat_redirect" target="_blank" rel="noopener">测试扁平化之必备神器：好的单元测试</a></li>
-</ul>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a><strong>附录</strong></h2><blockquote>
-<p>使用文档和最佳实践 :)</p>
-</blockquote>
-<ul>
-<li><a href="https://docs.pytest.org/en/stable/contents.html" target="_blank" rel="noopener">pytest 官方文档</a></li>
-<li><a href="https://docs.python.org/3/library/unittest.mock.html" target="_blank" rel="noopener">mock 官方文档</a></li>
-<li><a href="https://docs.pytest.org/en/2.7.3/plugins_index/index.html" target="_blank" rel="noopener">pytest 插件列表</a></li>
-<li><a href="https://github.com/openstack/nova/tree/master/nova/tests/unit" target="_blank" rel="noopener">OpenStack Nova 单元测试源码</a></li>
-</ul>
-<hr>
-
         </div>
         
-        <div class="level is-size-7 is-uppercase">
+        
+        <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Mock/">Mock</a>, <a class="has-link-grey -link" href="/tags/Pytest/">Pytest</a>
+                <a class="button is-size-7 is-light" href="/2019/06/02/从零到壹：GitHub Pages + Hexo = Blog/#more">Read More</a>
                 </div>
             </div>
         </div>
         
         
-        
     </div>
 </div>
 
@@ -388,50 +194,31 @@
 
 
 
+
+
+
+
+    
 <div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/11/19/Api Docs Pre-study and Practice in Golang/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">#Api Docs# Api Docs Pre-study and Practice in Golang</span>
-            </a>
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous">
+            <a class="is-flex-grow has-text-black-ter" href="/page/4/">Previous</a>
         </div>
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/10/01/Golang Microservice 工程开发踩坑记录/">
-                <span class="level-item">#Microservice# Golang Microservice 工程开发踩坑记录</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
+        <div class="pagination-next is-invisible is-hidden-mobile">
+            <a class="is-flex-grow has-text-black-ter" href="/page/6/">Next</a>
         </div>
-        
-    </div>
-</div>
-
-
-
-<div class="card">
-    <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
-        
-<div id="comment-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
-<script>
-    var gitalk = new Gitalk({
-        clientID: '31cfc7a3a72e1e062ccd',
-        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
-        id: 'a467f38fd9188627f1b33c90d8de5e55',
-        repo: 'lottewong.github.io',
-        owner: 'LotteWong',
-        admin: "LotteWong",
-        proxy: 'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'
-    })
-    gitalk.render('comment-container')
-</script>
-
-    </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link has-text-black-ter" href="/">1</a></li>
+            
+            <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/4/">4</a></li>
+            
+            <li><a class="pagination-link is-current" href="/page/5/">5</a></li>
+            
+        </ul>
+    </nav>
 </div>
 </div>
                 
@@ -439,7 +226,7 @@
 
 
 
-<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
     
         
 <div class="card widget">
@@ -527,105 +314,6 @@
 </div>
     
         
-<div class="card widget" id="toc">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                Catalogue
-            </h3>
-            <ul class="menu-list"><li>
-        <a class="is-flex" href="#目录-Table-of-Contents">
-        <span class="has-mr-6">1</span>
-        <span>目录 Table of Contents</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#背景">
-        <span class="has-mr-6">1.1</span>
-        <span>背景</span>
-        </a></li><li>
-        <a class="is-flex" href="#测试流程">
-        <span class="has-mr-6">1.2</span>
-        <span>测试流程</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#遵循-3A-原则">
-        <span class="has-mr-6">1.2.1</span>
-        <span>遵循 3A 原则</span>
-        </a></li><li>
-        <a class="is-flex" href="#Stub-和-Mock">
-        <span class="has-mr-6">1.2.2</span>
-        <span>Stub 和 Mock</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#测试用例">
-        <span class="has-mr-6">1.3</span>
-        <span>测试用例</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#测试粒度和优先级">
-        <span class="has-mr-6">1.3.1</span>
-        <span>测试粒度和优先级</span>
-        </a></li><li>
-        <a class="is-flex" href="#设计测试用例">
-        <span class="has-mr-6">1.3.2</span>
-        <span>设计测试用例</span>
-        </a></li><li>
-        <a class="is-flex" href="#管理测试数据">
-        <span class="has-mr-6">1.3.3</span>
-        <span>管理测试数据</span>
-        </a></li><li>
-        <a class="is-flex" href="#用例的规范性">
-        <span class="has-mr-6">1.3.4</span>
-        <span>用例的规范性</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#技术选型">
-        <span class="has-mr-6">1.4</span>
-        <span>技术选型</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#单测框架">
-        <span class="has-mr-6">1.4.1</span>
-        <span>单测框架</span>
-        </a></li><li>
-        <a class="is-flex" href="#模拟框架">
-        <span class="has-mr-6">1.4.2</span>
-        <span>模拟框架</span>
-        </a></li><li>
-        <a class="is-flex" href="#其它工具">
-        <span class="has-mr-6">1.4.3</span>
-        <span>其它工具</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#工程实践">
-        <span class="has-mr-6">1.5</span>
-        <span>工程实践</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#脚手架设计">
-        <span class="has-mr-6">1.5.1</span>
-        <span>脚手架设计</span>
-        </a></li><li>
-        <a class="is-flex" href="#某案例分析">
-        <span class="has-mr-6">1.5.2</span>
-        <span>某案例分析</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#常见问题">
-        <span class="has-mr-6">1.6</span>
-        <span>常见问题</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#不可测性">
-        <span class="has-mr-6">1.6.1</span>
-        <span>不可测性</span>
-        </a></li><li>
-        <a class="is-flex" href="#单测质量">
-        <span class="has-mr-6">1.6.2</span>
-        <span>单测质量</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#参考链接">
-        <span class="has-mr-6">1.7</span>
-        <span>参考链接</span>
-        </a></li><li>
-        <a class="is-flex" href="#附录">
-        <span class="has-mr-6">1.8</span>
-        <span>附录</span>
-        </a></li></ul></li></ul>
-        </div>
-    </div>
-</div>
-
     
         
 <div class="card widget">
@@ -877,7 +565,7 @@
     
     
         <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
-        <div class="column-right-shadow  ">
+        <div class="column-right-shadow is-hidden-widescreen ">
         
             
 <div class="card widget">
@@ -1240,6 +928,373 @@
 </div>
 
                 
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2021/06/05/微服务API网关的设计与实现(6)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(6) 系统测试">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-04T23:00:21.000Z">2021-06-05</time></div>
+                    <a href="/2021/06/05/微服务API网关的设计与实现(6)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(6) 系统测试</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/06/04/微服务API网关的设计与实现(5)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(5) 容器部署">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-03T23:00:21.000Z">2021-06-04</time></div>
+                    <a href="/2021/06/04/微服务API网关的设计与实现(5)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(5) 容器部署</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
+                    <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(4) 数据库设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(3) 微服务设计">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
+                    <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(3) 微服务设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/06/02/微服务API网关的设计与实现(2)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(2) 整体设计">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-01T23:00:21.000Z">2021-06-02</time></div>
+                    <a href="/2021/06/02/微服务API网关的设计与实现(2)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(2) 整体设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 16px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 14px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 18px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 14px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 20px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 14px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 12px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/WSL/" style="font-size: 16px;">WSL</a>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Docker/">
+                        <span class="tag">Docker</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Fiddler/">
+                        <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gin/">
+                        <span class="tag">Gin</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
+                        <span class="tag">GitHub Pages</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Golang/">
+                        <span class="tag">Golang</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gorm/">
+                        <span class="tag">Gorm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Hexo/">
+                        <span class="tag">Hexo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Kubernetes/">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Microservice/">
+                        <span class="tag">Microservice</span>
+                        <span class="tag is-grey">12</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mock/">
+                        <span class="tag">Mock</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Newman/">
+                        <span class="tag">Newman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Postman/">
+                        <span class="tag">Postman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
+                        <span class="tag">Programming Paradigm</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytest/">
+                        <span class="tag">Pytest</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SQL/">
+                        <span class="tag">SQL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swagger/">
+                        <span class="tag">Swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Bokjan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bokjan.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Kingsley</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kingsleyxie.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">sticnarf</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">sticnarf.me</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">xcw</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">yifanyu123.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Escape</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.cnblogs.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+    
+</div>
+
+                
             </div>
         </div>
     </section>
@@ -1249,7 +1304,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="#Unit Test# Unit Test Pre-study and Practice in Python" height="28">
+                    <img src="/images/logo.png" alt="LotteWong" height="28">
                 
                 </a>
                 <p class="is-size-7">

@@ -320,26 +320,6 @@
   </entry>
   
   <entry>
-    <title>#Others# 重装系统后的必要软件清单</title>
-    <link href="http://yoursite.com/2021/03/15/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/"/>
-    <id>http://yoursite.com/2021/03/15/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</id>
-    <published>2021-03-14T23:00:21.000Z</published>
-    <updated>2021-05-09T07:06:51.677Z</updated>
-    
-    <content type="html"><![CDATA[<p>备份记录重装系统后的<strong>必要软件清单</strong>：开发 / 办公 / 实用</p><hr><a id="more"></a><h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc --><hr><h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a><strong>开发</strong></h2><h3 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h3><ul><li>Notepad++：查看文本文件</li><li>Typora：查看 Markdown 文件</li><li>VSCode：查看代码文件</li></ul><h3 id="开发语言"><a href="#开发语言" class="headerlink" title="开发语言"></a>开发语言</h3><ul><li>Golang</li><li>Flutter</li><li>Node.js</li><li>Python</li></ul><h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3><h4 id="JetBrains"><a href="#JetBrains" class="headerlink" title="JetBrains"></a>JetBrains</h4><ul><li>JetBrains GoLand</li><li>JetBrains PyCharm</li><li>JetBrains 插件<ul><li>Git Tool Box：查看Git提交的记录</li><li>PreCI：本地扫描腾讯代码规范</li></ul></li></ul><h4 id="VSCode"><a href="#VSCode" class="headerlink" title="VSCode"></a>VSCode</h4><ul><li><p>Flutter 支持和检查</p></li><li><p>Node.js 支持和检查</p></li><li><p>VSCode 插件</p><ul><li>GitLens：查看Git提交的记录</li><li>PreCI：本地扫描腾讯代码规范</li><li>Chinese (Simplified) Language Pack for Visual Studio Code：中文显示</li><li>GBKtoUTF8：中文编码</li><li>Open In Browser：在浏览器打开 HTML 文件</li><li>Debugger for Chrome：在 Chrome 浏览器进行调试</li><li>Document This：支持快捷注释</li><li>Todo Tree：查看待办事项列表</li><li>Markdown All in One &amp; Markdown Lint &amp; Markdown Preview Github Styling &amp; Markdown TOC：Markdown支持&amp;检查&amp;渲染&amp;目录</li><li>PlantUML：绘制 UML 图表</li><li>Docker：管理 docker 镜像和容器等</li><li>Remote - WSL：远程连接 WSL 进行开发</li></ul></li></ul><h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><ul><li>MySQL</li><li>Redis</li><li>SQLite</li></ul><h3 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h3><ul><li>XShell：连接远程服务器</li><li>HeidiSQL：连接远程 MySQL 数据库</li><li>RDM：连接远程 Redis 数据库</li></ul><h3 id="虚拟系统"><a href="#虚拟系统" class="headerlink" title="虚拟系统"></a>虚拟系统</h3><ul><li>Ubuntu WSL</li><li>Alpine WSL</li></ul><h3 id="其它工具"><a href="#其它工具" class="headerlink" title="其它工具"></a>其它工具</h3><ul><li><p>Git：版本控制</p></li><li><p>swaggo：接口文档</p></li><li><p>Postman &amp; Newman：接口测试</p></li></ul><h3 id="公司使用"><a href="#公司使用" class="headerlink" title="公司使用"></a>公司使用</h3><ul><li>iOA</li><li>WeTERM</li><li>iFit</li><li>腾讯电脑管家</li></ul><h2 id="办公"><a href="#办公" class="headerlink" title="办公"></a><strong>办公</strong></h2><h3 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h3><ul><li>微信</li><li>企业微信</li><li>TIM</li><li>Telegram</li><li>腾讯会议</li></ul><h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><ul><li>企业云盘</li><li>OneDrive</li><li>百度网盘</li></ul><h3 id="生产"><a href="#生产" class="headerlink" title="生产"></a>生产</h3><ul><li>Office 365</li><li>Office Lens</li><li>Drawboard PDF</li></ul><h3 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h3><ul><li>OneNote</li><li>XMind</li></ul><h3 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h3><ul><li>StarUML</li><li>MockPlus</li></ul><h2 id="实用"><a href="#实用" class="headerlink" title="实用"></a><strong>实用</strong></h2><h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><ul><li>Bing壁纸：更换桌面和锁屏壁纸</li><li>Edge：微软浏览器</li><li>Chrome：谷歌浏览器</li><li>WinRar：解压/压缩工具，主要格式：.zip/.rar</li><li>7-Zip：解压/压缩工具，主要格式：.tar</li><li>FormatFactory：转换各种格式</li></ul><h3 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h3><ul><li>To Do：待办事项</li><li>Sticks：桌面便签</li></ul><h3 id="便捷"><a href="#便捷" class="headerlink" title="便捷"></a>便捷</h3><ul><li>Everything：搜索工具</li><li>TreeSize：查空间工具</li><li>Snipaste：截图工具</li><li>Ditto：剪切板工具</li></ul><hr>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;备份记录重装系统后的&lt;strong&gt;必要软件清单&lt;/strong&gt;：开发 / 办公 / 实用&lt;/p&gt;
-&lt;hr&gt;</summary>
-    
-    
-    
-    <category term="Others" scheme="http://yoursite.com/categories/Others/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>#Others# 新移动设备的必要软件清单</title>
     <link href="http://yoursite.com/2021/03/15/%E6%96%B0%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/"/>
     <id>http://yoursite.com/2021/03/15/%E6%96%B0%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</id>
@@ -350,6 +330,26 @@
     
     
     <summary type="html">&lt;p&gt;备份记录新移动设备的&lt;strong&gt;必要软件清单&lt;/strong&gt;：To C / To B&lt;/p&gt;
+&lt;hr&gt;</summary>
+    
+    
+    
+    <category term="Others" scheme="http://yoursite.com/categories/Others/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>#Others# 重装系统后的必要软件清单</title>
+    <link href="http://yoursite.com/2021/03/15/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/"/>
+    <id>http://yoursite.com/2021/03/15/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E7%9A%84%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</id>
+    <published>2021-03-14T23:00:21.000Z</published>
+    <updated>2021-05-09T07:06:51.677Z</updated>
+    
+    <content type="html"><![CDATA[<p>备份记录重装系统后的<strong>必要软件清单</strong>：开发 / 办公 / 实用</p><hr><a id="more"></a><h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc --><hr><h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a><strong>开发</strong></h2><h3 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h3><ul><li>Notepad++：查看文本文件</li><li>Typora：查看 Markdown 文件</li><li>VSCode：查看代码文件</li></ul><h3 id="开发语言"><a href="#开发语言" class="headerlink" title="开发语言"></a>开发语言</h3><ul><li>Golang</li><li>Flutter</li><li>Node.js</li><li>Python</li></ul><h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3><h4 id="JetBrains"><a href="#JetBrains" class="headerlink" title="JetBrains"></a>JetBrains</h4><ul><li>JetBrains GoLand</li><li>JetBrains PyCharm</li><li>JetBrains 插件<ul><li>Git Tool Box：查看Git提交的记录</li><li>PreCI：本地扫描腾讯代码规范</li></ul></li></ul><h4 id="VSCode"><a href="#VSCode" class="headerlink" title="VSCode"></a>VSCode</h4><ul><li><p>Flutter 支持和检查</p></li><li><p>Node.js 支持和检查</p></li><li><p>VSCode 插件</p><ul><li>GitLens：查看Git提交的记录</li><li>PreCI：本地扫描腾讯代码规范</li><li>Chinese (Simplified) Language Pack for Visual Studio Code：中文显示</li><li>GBKtoUTF8：中文编码</li><li>Open In Browser：在浏览器打开 HTML 文件</li><li>Debugger for Chrome：在 Chrome 浏览器进行调试</li><li>Document This：支持快捷注释</li><li>Todo Tree：查看待办事项列表</li><li>Markdown All in One &amp; Markdown Lint &amp; Markdown Preview Github Styling &amp; Markdown TOC：Markdown支持&amp;检查&amp;渲染&amp;目录</li><li>PlantUML：绘制 UML 图表</li><li>Docker：管理 docker 镜像和容器等</li><li>Remote - WSL：远程连接 WSL 进行开发</li></ul></li></ul><h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><ul><li>MySQL</li><li>Redis</li><li>SQLite</li></ul><h3 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h3><ul><li>XShell：连接远程服务器</li><li>HeidiSQL：连接远程 MySQL 数据库</li><li>RDM：连接远程 Redis 数据库</li></ul><h3 id="虚拟系统"><a href="#虚拟系统" class="headerlink" title="虚拟系统"></a>虚拟系统</h3><ul><li>Ubuntu WSL</li><li>Alpine WSL</li></ul><h3 id="其它工具"><a href="#其它工具" class="headerlink" title="其它工具"></a>其它工具</h3><ul><li><p>Git：版本控制</p></li><li><p>swaggo：接口文档</p></li><li><p>Postman &amp; Newman：接口测试</p></li></ul><h3 id="公司使用"><a href="#公司使用" class="headerlink" title="公司使用"></a>公司使用</h3><ul><li>iOA</li><li>WeTERM</li><li>iFit</li><li>腾讯电脑管家</li></ul><h2 id="办公"><a href="#办公" class="headerlink" title="办公"></a><strong>办公</strong></h2><h3 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h3><ul><li>微信</li><li>企业微信</li><li>TIM</li><li>Telegram</li><li>腾讯会议</li></ul><h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><ul><li>企业云盘</li><li>OneDrive</li><li>百度网盘</li></ul><h3 id="生产"><a href="#生产" class="headerlink" title="生产"></a>生产</h3><ul><li>Office 365</li><li>Office Lens</li><li>Drawboard PDF</li></ul><h3 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h3><ul><li>OneNote</li><li>XMind</li></ul><h3 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h3><ul><li>StarUML</li><li>MockPlus</li></ul><h2 id="实用"><a href="#实用" class="headerlink" title="实用"></a><strong>实用</strong></h2><h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><ul><li>Bing壁纸：更换桌面和锁屏壁纸</li><li>Edge：微软浏览器</li><li>Chrome：谷歌浏览器</li><li>WinRar：解压/压缩工具，主要格式：.zip/.rar</li><li>7-Zip：解压/压缩工具，主要格式：.tar</li><li>FormatFactory：转换各种格式</li></ul><h3 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h3><ul><li>To Do：待办事项</li><li>Sticks：桌面便签</li></ul><h3 id="便捷"><a href="#便捷" class="headerlink" title="便捷"></a>便捷</h3><ul><li>Everything：搜索工具</li><li>TreeSize：查空间工具</li><li>Snipaste：截图工具</li><li>Ditto：剪切板工具</li></ul><hr>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;备份记录重装系统后的&lt;strong&gt;必要软件清单&lt;/strong&gt;：开发 / 办公 / 实用&lt;/p&gt;
 &lt;hr&gt;</summary>
     
     
