@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>#Golang# Golang与并发编程(5) Channel底层 - LotteWong</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+<link rel="alternative" href="./atom.xml" title="#Golang# Golang与并发编程(5) Channel底层" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.png" alt="#Golang# Golang与并发编程(5) Channel底层" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Email" href="mailto:lottewong21@gmail.com">
+                        
+                        <i class="far fa-envelope-open"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/channel_thumbnail.png" alt="#Golang# Golang与并发编程(5) Channel底层">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-06T23:00:21.000Z">2020-03-07</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Golang/">Golang</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 minutes read (About 1441 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                #Golang# Golang与并发编程(5) Channel底层
+            
+        </h1>
+        <div class="content">
+            <p>本文主要讨论 <strong><code>channel</code> 底层</strong>的相关内容。</p>
+<hr>
+<a id="more"></a>
+
+
+
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
+
+<hr>
+<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a><strong>前情提要</strong></h2><blockquote>
+<p>为了<strong>实现 <code>goroutine</code> 通信</strong>，有两种常见并发模型：</p>
+<ul>
+<li><strong>共享内存：</strong>使用共享内存方式，<code>Go</code> 中 <code>sync</code> 库包提供了多种同步的机制。</li>
+<li><strong>消息队列：</strong>使用类似管道和消息队列的方式，各个并发单元数据相互独立，通过消息进行数据交换，<code>Go</code> 中 <code>channel</code> 类型模拟了这种同步的模式。</li>
+</ul>
+<p>让我们再一次来复读 <code>Go</code> 社区的并发口号——<strong>“不要通过共享内存来通信，而应该通过通信来共享内存”</strong>。</p>
+<p>本文将讨论 <strong><code>Go</code> 并发编程中的通信桥梁 <code>channel</code>的底层</strong>，如有错漏，欢迎指出 ;P</p>
+</blockquote>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a><strong>数据结构</strong></h2><p><img src="/images/channel_struct.png" alt="channel data structure"></p>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> hchan <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    buf      unsafe.Pointer <span class="hljs-comment">// 信道数据缓冲队列（循环链表）</span></span><br><span class="line">    qcount   <span class="hljs-keyword">uint</span> <span class="hljs-comment">// 信道数据元素个数</span></span><br><span class="line">    dataqsiz <span class="hljs-keyword">uint</span> <span class="hljs-comment">// 信道数据总计大小</span></span><br><span class="line">    elemsize <span class="hljs-keyword">uint16</span> <span class="hljs-comment">// 信道数据元素大小</span></span><br><span class="line">    elemtype *_type <span class="hljs-comment">// 信道数据元素类型</span></span><br><span class="line">    sendx    <span class="hljs-keyword">uint</span> <span class="hljs-comment">// 信道数据待发送的索引，即循环链表的队头指针 front</span></span><br><span class="line">    recvx    <span class="hljs-keyword">uint</span> <span class="hljs-comment">// 信道数据待接收的索引，即循环队列的队尾指针 rear</span></span><br><span class="line">	</span><br><span class="line">    sendq    waitq <span class="hljs-comment">// 协程发送等待队列（双向链表）</span></span><br><span class="line">    recvq    waitq <span class="hljs-comment">// 协程接收等待队列（双向链表）</span></span><br><span class="line"></span><br><span class="line">    closed   <span class="hljs-keyword">uint32</span> <span class="hljs-comment">// 通道关闭标志</span></span><br><span class="line">    lock     mutex <span class="hljs-comment">// 互斥锁</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">type</span> waitq <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    first *sudog <span class="hljs-comment">// 指向协程等待队列的头部</span></span><br><span class="line">    last  *sudog <span class="hljs-comment">// 指向协程等待队列的尾部</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">type</span> sudog <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    g        *g <span class="hljs-comment">// 阻塞协程的指针（包含状态）</span></span><br><span class="line">    elem     unsafe.Pointer <span class="hljs-comment">// 阻塞协程的数据（包含数据）</span></span><br><span class="line">    ...</span><br><span class="line">    prev     *sudog <span class="hljs-comment">// 指向协程等待队列的前驱节点</span></span><br><span class="line">    next     *sudog <span class="hljs-comment">// 指向协程等待队列的后驱节点</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Why-Lock-is-Mutex？"><a href="#Why-Lock-is-Mutex？" class="headerlink" title="Why Lock is Mutex？"></a>Why <code>Lock</code> is <code>Mutex</code>？</h3><blockquote>
+<ul>
+<li><code>channel</code> 的应用虽然体现了<strong>“通过通信来共享内存”</strong>的思想，但是 <code>channel</code> 的实现则遵循<strong>“通过锁作悲观并发控制”</strong>的做法。</li>
+<li>由于 <code>buf</code> 和 <code>waitq</code> 均先进先出 (First In First Out)，当 <code>goroutine</code> 并发地读写 <code>channel</code> 时，<strong>需要保证并发安全</strong>，使用互斥锁是很好理解的。</li>
+</ul>
+</blockquote>
+<h3 id="Why-buf-is-Circylar-Linked-List？"><a href="#Why-buf-is-Circylar-Linked-List？" class="headerlink" title="Why buf is Circylar Linked List？"></a>Why <code>buf</code> is <code>Circylar Linked List</code>？</h3><blockquote>
+<ul>
+<li>任何节点可以作头节点开始遍历，只需要维护一个尾指针。</li>
+<li>简化了 <code>sendx</code> 和 <code>recvx</code> 的变化。</li>
+<li>使用 <code>qcount</code> 而非 <code>空余单元</code> 消除<strong>循环链表的二义性</strong>，减少额外数据结构开销，可以直接返回 <code>buf</code> 链表长度。</li>
+</ul>
+</blockquote>
+<h3 id="Why-waitq-is-Double-Linked-List？"><a href="#Why-waitq-is-Double-Linked-List？" class="headerlink" title="Why waitq is Double Linked List？"></a>Why <code>waitq</code> is <code>Double Linked List</code>？</h3><blockquote>
+<ul>
+<li>既可以访问前驱节点，也可以访问后驱节点。</li>
+</ul>
+</blockquote>
+<h2 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a><strong>操作流程</strong></h2><h3 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h3><p><img src="/images/channel_flow.gif" alt="channel communication flow"></p>
+<blockquote>
+<ul>
+<li><p><strong>“不要通过共享内存来通信”</strong>：不要把数据放在共享区，通过限制同一时间的来访者，达到数据通信和并发安全的目的。</p>
+</li>
+<li><p><strong>“应该通过通信来共享内存”</strong>：应该用信道作为中间者，通过读写该并发安全的第三方数据结构，实现数据通信和并发安全。</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="发送"><a href="#发送" class="headerlink" title="发送"></a>发送</h3><p><img src="/images/channel_send_flow.png" alt="channel send flow"></p>
+<h4 id="channel-未满"><a href="#channel-未满" class="headerlink" title="channel 未满"></a><code>channel</code> 未满</h4><p><img src="/images/channel_send_empty.gif" alt="send data to channel"></p>
+<p><img src="/images/channel_send_lock.gif" alt="send data to channel"></p>
+<blockquote>
+<ol>
+<li>加锁</li>
+<li>拷贝 <code>goroutine</code> 数据到 <code>channel</code> 中</li>
+<li>解锁</li>
+</ol>
+</blockquote>
+<h4 id="channel-已满"><a href="#channel-已满" class="headerlink" title="channel 已满"></a><code>channel</code> 已满</h4><p><img src="/images/goroutine_send_full.gif" alt="schedule goroutine to wait"></p>
+<p><img src="/images/channel_send_full.gif" alt="enqueue channel"></p>
+<blockquote>
+<ol>
+<li><code>goroutine</code> 执行语句 <code>ch &lt;- data</code>，向 <code>channel</code> 的信道数据缓冲队列 <code>buf</code> 中写入拷贝数据（此时 <code>buf</code> 已满），触发 <code>goroutine scheduler</code> 执行操作 <code>gopark</code></li>
+<li><code>G</code> 让出所占用的 <code>M</code>，进入 <code>waiting</code> 状态，协程阻塞</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>已阻塞的 <code>goroutine</code> 被抽象为 <code>sudog</code>，入队 <code>channel</code> 的协程发送等待队列 <code>sendq</code></li>
+</ol>
+</blockquote>
+<p><img src="/images/channel_send_full_recv_one.gif" alt="dequeue channel and schedule goroutine to ready"></p>
+<blockquote>
+<ol>
+<li><p><code>goroutine</code> 执行语句 <code>&lt;- ch</code>，从 <code>channel</code> 的信道数据缓冲队列 <code>buf</code> 中读取拷贝数据（此时 <code>buf</code> 非满），触发  <code>goroutine scheduler</code> 执行操作 <code>goready</code></p>
+</li>
+<li><p><code>sudog</code> 出队 <code>channel</code> 的协程发送等待队列 <code>sendq</code>，<code>elem</code> 进入 <code>buf</code>，<code>g</code> 更改 <code>status</code></p>
+</li>
+<li><p><code>G</code> 放入 <code>P</code> 队列中，进入 <code>ready</code> 状态，协程可运行</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="接收"><a href="#接收" class="headerlink" title="接收"></a>接收</h3><p><img src="/images/channel_recv_flow.png" alt="channel receive flow"></p>
+<h4 id="channel-未空"><a href="#channel-未空" class="headerlink" title="channel 未空"></a><code>channel</code> 未空</h4><p><img src="/images/channel_recv_full.gif" alt="receive data from channel"></p>
+<p><img src="/images/channel_recv_lock.gif" alt="receive data from channel"></p>
+<blockquote>
+<ol>
+<li>加锁</li>
+<li>拷贝 <code>channel</code> 数据到 <code>goroutine</code> 中</li>
+<li>解锁</li>
+</ol>
+</blockquote>
+<h4 id="channel-已空"><a href="#channel-已空" class="headerlink" title="channel 已空"></a><code>channel</code> 已空</h4><p><img src="/images/goroutine_recv_empty.gif" alt="schedule goroutine to wait"></p>
+<p><img src="/images/channel_recv_empty.gif" alt="receive data from channel"></p>
+<blockquote>
+<ol>
+<li><p><code>goroutine</code> 执行语句 <code>&lt;- ch</code>，向 <code>channel</code> 的信道数据缓冲队列 <code>buf</code> 中读取拷贝数据（此时 <code>buf</code> 已空），触发 <code>goroutine scheduler</code> 执行操作 <code>gopark</code></p>
+</li>
+<li><p><code>G</code> 让出所占用的 <code>M</code>，进入 <code>waiting</code> 状态，协程阻塞</p>
+</li>
+<li><p>已阻塞的 <code>goroutine</code> 被抽象为 <code>sudog</code>，入队 <code>channel</code> 的协程发送等待队列 <code>recvq</code></p>
+</li>
+</ol>
+</blockquote>
+<p><img src="/images/channel_recv_empty_send_one.gif" alt="dequeue channel and schedule goroutine to ready"></p>
+<blockquote>
+<ol>
+<li><code>goroutine</code> 执行语句 <code>ch &lt;- data</code>，直接由 <code>g1</code> 拷贝数据到 <code>g2</code>（不经过 <code>buf</code>，不使用 <code>lock</code>），触发  <code>goroutine scheduler</code> 执行操作 <code>goready</code></li>
+<li><code>sudog</code> 出队 <code>channel</code> 的协程发送等待队列 <code>recvq</code>，<code>elem</code> 进入 <code>g2</code>，<code>g1</code> 更改 <code>status</code></li>
+<li><code>G</code> 放入 <code>P</code> 队列中，进入 <code>ready</code> 状态，协程可运行</li>
+</ol>
+</blockquote>
+<h3 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h3><p><img src="/images/channel_close_flow.png" alt="channel close flow"></p>
+<blockquote>
+<ol>
+<li>排除 <code>panic</code> 情况，如关闭空的信道和重复关闭信道</li>
+<li>遍历 <code>sendq</code> 和 <code>recvq</code> 并出队，<code>sudog</code> 中的 <code>g</code> 加入 <code>gList</code> 等待唤醒，<code>sudog</code> 中的 <code>elem</code> 置为 <code>nil</code> 将被清除</li>
+<li>遍历 <code>gList</code> 并出栈，触发 <code>goready</code> 调度</li>
+</ol>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><ul>
+<li><a href="https://juejin.cn/post/6898132039812431885" target="_blank" rel="noopener">Golang源码分析系列之Channel底层实现</a></li>
+<li><a href="https://juejin.cn/post/6844903821349502990" target="_blank" rel="noopener">图解Golang的channel底层原理</a></li>
+<li><a href="https://segmentfault.com/a/1190000019172554" target="_blank" rel="noopener">Go channel 实现原理分析</a></li>
+<li><a href="https://draveness.me/golang-channel/" target="_blank" rel="noopener">Go 语言Channel 实现原理精要| Go 语言设计与实现</a></li>
+</ul>
+<hr>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Concurrency/">Concurrency</a>, <a class="has-link-grey -link" href="/tags/Golang/">Golang</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/01/速查手册之常用Redis命令/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">#Redis# 速查手册：常用 Redis 命令</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/06/Golang与并发编程(4)/">
+                <span class="level-item">#Golang# Golang与并发编程(4) Channel使用</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '20fda126594d83a16cc1ef00b11a626d',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong",
+        proxy: 'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="LotteWong">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        LotteWong
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Tencent, Backend Developer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shenzhen, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        42
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        7
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        22
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/LotteWong" target="_blank">
+                Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Organization" href="https://github.com/SCUTMSC">
+                
+                <i class="fas fa-sitemap"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Project" href="https://github.com/scutse-man-month-myth/InkYear">
+                
+                <i class="fas fa-project-diagram"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#目录-Table-of-Contents">
+        <span class="has-mr-6">1</span>
+        <span>目录 Table of Contents</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#前情提要">
+        <span class="has-mr-6">1.1</span>
+        <span>前情提要</span>
+        </a></li><li>
+        <a class="is-flex" href="#数据结构">
+        <span class="has-mr-6">1.2</span>
+        <span>数据结构</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Why-Lock-is-Mutex？">
+        <span class="has-mr-6">1.2.1</span>
+        <span>Why Lock is Mutex？</span>
+        </a></li><li>
+        <a class="is-flex" href="#Why-buf-is-Circylar-Linked-List？">
+        <span class="has-mr-6">1.2.2</span>
+        <span>Why buf is Circylar Linked List？</span>
+        </a></li><li>
+        <a class="is-flex" href="#Why-waitq-is-Double-Linked-List？">
+        <span class="has-mr-6">1.2.3</span>
+        <span>Why waitq is Double Linked List？</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#操作流程">
+        <span class="has-mr-6">1.3</span>
+        <span>操作流程</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#总览">
+        <span class="has-mr-6">1.3.1</span>
+        <span>总览</span>
+        </a></li><li>
+        <a class="is-flex" href="#发送">
+        <span class="has-mr-6">1.3.2</span>
+        <span>发送</span>
+        </a></li><li>
+        <a class="is-flex" href="#接收">
+        <span class="has-mr-6">1.3.3</span>
+        <span>接收</span>
+        </a></li><li>
+        <a class="is-flex" href="#关闭">
+        <span class="has-mr-6">1.3.4</span>
+        <span>关闭</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#参考链接">
+        <span class="has-mr-6">1.4</span>
+        <span>参考链接</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Cheat-Sheet/">
+            <span class="level-start">
+                <span class="level-item">Cheat Sheet</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DevOps/">
+            <span class="level-start">
+                <span class="level-item">DevOps</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Golang/">
+            <span class="level-start">
+                <span class="level-item">Golang</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Microservice/">
+            <span class="level-start">
+                <span class="level-item">Microservice</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">12</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/QA/">
+            <span class="level-start">
+                <span class="level-item">QA</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Sucks/">
+            <span class="level-start">
+                <span class="level-item">Sucks</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
+        <div class="column-right-shadow  ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2021/06/05/微服务API网关的设计与实现(6)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(6) 系统测试">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-04T23:00:21.000Z">2021-06-05</time></div>
+                    <a href="/2021/06/05/微服务API网关的设计与实现(6)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(6) 系统测试</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/06/04/微服务API网关的设计与实现(5)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(5) 容器部署">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-03T23:00:21.000Z">2021-06-04</time></div>
+                    <a href="/2021/06/04/微服务API网关的设计与实现(5)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(5) 容器部署</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
+                    <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(4) 数据库设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(3) 微服务设计">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
+                    <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(3) 微服务设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/06/02/微服务API网关的设计与实现(2)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(2) 整体设计">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-01T23:00:21.000Z">2021-06-02</time></div>
+                    <a href="/2021/06/02/微服务API网关的设计与实现(2)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(2) 整体设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 13.33px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 18.33px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 13.33px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 20px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 13.33px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.67px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a>
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Docker/">
+                        <span class="tag">Docker</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Fiddler/">
+                        <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gin/">
+                        <span class="tag">Gin</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
+                        <span class="tag">GitHub Pages</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Golang/">
+                        <span class="tag">Golang</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gorm/">
+                        <span class="tag">Gorm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Hexo/">
+                        <span class="tag">Hexo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Kubernetes/">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Microservice/">
+                        <span class="tag">Microservice</span>
+                        <span class="tag is-grey">12</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mock/">
+                        <span class="tag">Mock</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Newman/">
+                        <span class="tag">Newman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Postman/">
+                        <span class="tag">Postman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
+                        <span class="tag">Programming Paradigm</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytest/">
+                        <span class="tag">Pytest</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SQL/">
+                        <span class="tag">SQL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swagger/">
+                        <span class="tag">Swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+            
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Bokjan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bokjan.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Kingsley</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kingsleyxie.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">sticnarf</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">sticnarf.me</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">xcw</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">yifanyu123.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Escape</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.cnblogs.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.png" alt="#Golang# Golang与并发编程(5) Channel底层" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 LotteWong
+                ,&nbsp;<a href="http://www2.scut.edu.cn/sse/" target="_blank">SCUT SE</a> & <a href="https://github.com/SCUTMSC" target="_blank">SCUT MSC</a>
+                
+                <!-- <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+								<br>
+								<span id="busuanzi_container_site_pv">
+                plugin.page-view
+                </span>
+                
+                </p>-->
+								<br>
+								<span id="busuanzi_container_site_uv"> Viewed by <span id="busuanzi_value_site_uv"></span> people </span>
+                <span id="busuanzi_container_site_pv">, at <span id="busuanzi_value_site_pv"></span> times </span>
+            </p></div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/LotteWong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="RSS" href="/atom.xml">
+                        
+                        <i class="fas fa-rss"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
