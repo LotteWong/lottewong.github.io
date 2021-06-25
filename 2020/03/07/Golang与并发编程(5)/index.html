@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>#Golang# Golang与并发编程(5) Channel底层 - LotteWong</title>
+<title>#Golang# Golang与并发编程(5) channel底层 - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="#Golang# Golang与并发编程(5) Channel底层" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="#Golang# Golang与并发编程(5) channel底层" type="application/atom+xml">
 
 
 
@@ -85,7 +85,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="#Golang# Golang与并发编程(5) Channel底层" height="28">
+                <img src="/images/logo.png" alt="#Golang# Golang与并发编程(5) channel底层" height="28">
             
             </a>
         </div>
@@ -138,7 +138,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/images/channel_thumbnail.png" alt="#Golang# Golang与并发编程(5) Channel底层">
+            <img class="thumbnail" src="/images/channel_thumbnail.png" alt="#Golang# Golang与并发编程(5) channel底层">
         </span>
     </div>
     
@@ -156,7 +156,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    10 minutes read (About 1441 words)
+                    10 minutes read (About 1442 words)
                 </span>
                 
                 
@@ -170,7 +170,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                #Golang# Golang与并发编程(5) Channel底层
+                #Golang# Golang与并发编程(5) channel底层
             
         </h1>
         <div class="content">
@@ -213,7 +213,7 @@
 <li>既可以访问前驱节点，也可以访问后驱节点。</li>
 </ul>
 </blockquote>
-<h2 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a><strong>操作流程</strong></h2><h3 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h3><p><img src="/images/channel_flow.gif" alt="channel communication flow"></p>
+<h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a><strong>算法流程</strong></h2><h3 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h3><p><img src="/images/channel_flow.gif" alt="channel communication flow"></p>
 <blockquote>
 <ul>
 <li><p><strong>“不要通过共享内存来通信”</strong>：不要把数据放在共享区，通过限制同一时间的来访者，达到数据通信和并发安全的目的。</p>
@@ -236,23 +236,19 @@
 <p><img src="/images/channel_send_full.gif" alt="enqueue channel"></p>
 <blockquote>
 <ol>
-<li><code>goroutine</code> 执行语句 <code>ch &lt;- data</code>，向 <code>channel</code> 的信道数据缓冲队列 <code>buf</code> 中写入拷贝数据（此时 <code>buf</code> 已满），触发 <code>goroutine scheduler</code> 执行操作 <code>gopark</code></li>
-<li><code>G</code> 让出所占用的 <code>M</code>，进入 <code>waiting</code> 状态，协程阻塞</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="3">
-<li>已阻塞的 <code>goroutine</code> 被抽象为 <code>sudog</code>，入队 <code>channel</code> 的协程发送等待队列 <code>sendq</code></li>
+<li><code>goroutine</code> 执行语句 <code>ch &lt;- data</code>，向 <code>channel</code> 的信道数据缓冲队列 <code>buf</code> 中写入拷贝数据（此时 <code>buf</code> 已满），<strong>触发 <code>goroutine scheduler</code> 执行操作 <code>gopark</code></strong></li>
+<li><strong><code>G</code> 让出所占用的 <code>M</code></strong>，<strong>进入 <code>waiting</code> 状态</strong>，协程阻塞</li>
+<li><strong>已阻塞的 <code>goroutine</code> 被抽象为 <code>sudog</code></strong>，入队 <code>channel</code> 的协程发送等待队列 <code>sendq</code></li>
 </ol>
 </blockquote>
 <p><img src="/images/channel_send_full_recv_one.gif" alt="dequeue channel and schedule goroutine to ready"></p>
 <blockquote>
 <ol>
-<li><p><code>goroutine</code> 执行语句 <code>&lt;- ch</code>，从 <code>channel</code> 的信道数据缓冲队列 <code>buf</code> 中读取拷贝数据（此时 <code>buf</code> 非满），触发  <code>goroutine scheduler</code> 执行操作 <code>goready</code></p>
+<li><p><code>goroutine</code> 执行语句 <code>&lt;- ch</code>，从 <code>channel</code> 的信道数据缓冲队列 <code>buf</code> 中读取拷贝数据（此时 <code>buf</code> 非满），<strong>触发  <code>goroutine scheduler</code> 执行操作 <code>goready</code></strong></p>
 </li>
-<li><p><code>sudog</code> 出队 <code>channel</code> 的协程发送等待队列 <code>sendq</code>，<code>elem</code> 进入 <code>buf</code>，<code>g</code> 更改 <code>status</code></p>
+<li><p><code>sudog</code> 出队 <code>channel</code> 的协程发送等待队列 <code>sendq</code>，<strong><code>elem</code> 进入 <code>buf</code>，<code>g</code> 更改 <code>status</code></strong></p>
 </li>
-<li><p><code>G</code> 放入 <code>P</code> 队列中，进入 <code>ready</code> 状态，协程可运行</p>
+<li><p><strong><code>G</code> 放入 <code>P</code> 队列中</strong>，<strong>进入 <code>ready</code> 状态</strong>，协程可运行</p>
 </li>
 </ol>
 </blockquote>
@@ -262,7 +258,7 @@
 <blockquote>
 <ol>
 <li>加锁</li>
-<li>拷贝 <code>channel</code> 数据到 <code>goroutine</code> 中</li>
+<li><strong>拷贝 <code>channel</code> 数据到 <code>goroutine</code> 中</strong></li>
 <li>解锁</li>
 </ol>
 </blockquote>
@@ -270,28 +266,28 @@
 <p><img src="/images/channel_recv_empty.gif" alt="receive data from channel"></p>
 <blockquote>
 <ol>
-<li><p><code>goroutine</code> 执行语句 <code>&lt;- ch</code>，向 <code>channel</code> 的信道数据缓冲队列 <code>buf</code> 中读取拷贝数据（此时 <code>buf</code> 已空），触发 <code>goroutine scheduler</code> 执行操作 <code>gopark</code></p>
+<li><p><code>goroutine</code> 执行语句 <code>&lt;- ch</code>，向 <code>channel</code> 的信道数据缓冲队列 <code>buf</code> 中读取拷贝数据（此时 <code>buf</code> 已空），<strong>触发 <code>goroutine scheduler</code> 执行操作 <code>gopark</code></strong></p>
 </li>
-<li><p><code>G</code> 让出所占用的 <code>M</code>，进入 <code>waiting</code> 状态，协程阻塞</p>
+<li><p><strong><code>G</code> 让出所占用的 <code>M</code></strong>，<strong>进入 <code>waiting</code> 状态</strong>，协程阻塞</p>
 </li>
-<li><p>已阻塞的 <code>goroutine</code> 被抽象为 <code>sudog</code>，入队 <code>channel</code> 的协程发送等待队列 <code>recvq</code></p>
+<li><p><strong>已阻塞的 <code>goroutine</code> 被抽象为 <code>sudog</code></strong>，入队 <code>channel</code> 的协程发送等待队列 <code>recvq</code></p>
 </li>
 </ol>
 </blockquote>
 <p><img src="/images/channel_recv_empty_send_one.gif" alt="dequeue channel and schedule goroutine to ready"></p>
 <blockquote>
 <ol>
-<li><code>goroutine</code> 执行语句 <code>ch &lt;- data</code>，直接由 <code>g1</code> 拷贝数据到 <code>g2</code>（不经过 <code>buf</code>，不使用 <code>lock</code>），触发  <code>goroutine scheduler</code> 执行操作 <code>goready</code></li>
-<li><code>sudog</code> 出队 <code>channel</code> 的协程发送等待队列 <code>recvq</code>，<code>elem</code> 进入 <code>g2</code>，<code>g1</code> 更改 <code>status</code></li>
-<li><code>G</code> 放入 <code>P</code> 队列中，进入 <code>ready</code> 状态，协程可运行</li>
+<li><code>goroutine</code> 执行语句 <code>ch &lt;- data</code>，直接由 <code>g1</code> 拷贝数据到 <code>g2</code>（不经过 <code>buf</code>，不使用 <code>lock</code>），<strong>触发  <code>goroutine scheduler</code> 执行操作 <code>goready</code></strong></li>
+<li><code>sudog</code> 出队 <code>channel</code> 的协程发送等待队列 <code>recvq</code>，<strong><code>elem</code> 进入 <code>g2</code>，<code>g1</code> 更改 <code>status</code></strong></li>
+<li><strong><code>G</code> 放入 <code>P</code> 队列中</strong>，<strong>进入 <code>ready</code> 状态</strong>，协程可运行</li>
 </ol>
 </blockquote>
 <h3 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h3><p><img src="/images/channel_close_flow.png" alt="channel close flow"></p>
 <blockquote>
 <ol>
-<li>排除 <code>panic</code> 情况，如关闭空的信道和重复关闭信道</li>
-<li>遍历 <code>sendq</code> 和 <code>recvq</code> 并出队，<code>sudog</code> 中的 <code>g</code> 加入 <code>gList</code> 等待唤醒，<code>sudog</code> 中的 <code>elem</code> 置为 <code>nil</code> 将被清除</li>
-<li>遍历 <code>gList</code> 并出栈，触发 <code>goready</code> 调度</li>
+<li>排除 <code>panic</code> 情况，亦即<strong>关闭空的信道和重复关闭信道</strong></li>
+<li>遍历 <code>sendq</code> 和 <code>recvq</code> 并出队，<strong><code>sudog</code> 中的 <code>g</code> 加入 <code>gList</code> 等待唤醒，<code>sudog</code> 中的 <code>elem</code> 置为 <code>nil</code> 将被清除</strong></li>
+<li>遍历 <code>gList</code> 并出栈，<strong>触发 <code>goready</code> 调度</strong></li>
 </ol>
 </blockquote>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><ul>
@@ -326,16 +322,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/01/速查手册之常用Redis命令/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/01/速查手册之常用SQL命令/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">#Redis# 速查手册：常用 Redis 命令</span>
+                <span class="level-item">#SQL# 速查手册：常用 SQL 命令</span>
             </a>
         </div>
         
         
         <div class="level-end">
             <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/06/Golang与并发编程(4)/">
-                <span class="level-item">#Golang# Golang与并发编程(4) Channel使用</span>
+                <span class="level-item">#Golang# Golang与并发编程(4) channel使用</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -410,7 +406,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        42
+                        44
                     </p>
                 </div>
             </div>
@@ -420,7 +416,7 @@
                         Categories
                     </p>
                     <p class="title has-text-weight-normal">
-                        7
+                        8
                     </p>
                 </div>
             </div>
@@ -492,9 +488,9 @@
         <span class="has-mr-6">1.2.3</span>
         <span>Why waitq is Double Linked List？</span>
         </a></li></ul></li><li>
-        <a class="is-flex" href="#操作流程">
+        <a class="is-flex" href="#算法流程">
         <span class="has-mr-6">1.3</span>
-        <span>操作流程</span>
+        <span>算法流程</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#总览">
         <span class="has-mr-6">1.3.1</span>
@@ -562,6 +558,14 @@
                 <span class="level-item tag">12</span>
             </span>
         </a></li><li>
+        <a class="level is-marginless" href="/categories/Mind-Map/">
+            <span class="level-start">
+                <span class="level-item">Mind Map</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Others/">
             <span class="level-start">
                 <span class="level-item">Others</span>
@@ -605,7 +609,7 @@
                     <span class="level-item">June 2021</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -616,7 +620,7 @@
                     <span class="level-item">May 2021</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -782,6 +786,25 @@
         
         <article class="media">
             
+            <a href="/2021/06/20/QCloud上的Kubernetes实践/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/kubernetes_qrg.png" alt="#Kubernetes# QCloud上的Kubernetes初体验">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-19T23:00:21.000Z">2021-06-20</time></div>
+                    <a href="/2021/06/20/QCloud上的Kubernetes实践/" class="has-link-black-ter is-size-6">#Kubernetes# QCloud上的Kubernetes初体验</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2021/06/05/微服务API网关的设计与实现(6)/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(6) 系统测试">
@@ -820,25 +843,6 @@
         
         <article class="media">
             
-            <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
-                    <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(4) 数据库设计</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
             <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(3) 微服务设计">
@@ -858,16 +862,16 @@
         
         <article class="media">
             
-            <a href="/2021/06/02/微服务API网关的设计与实现(2)/" class="media-left">
+            <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(2) 整体设计">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-01T23:00:21.000Z">2021-06-02</time></div>
-                    <a href="/2021/06/02/微服务API网关的设计与实现(2)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(2) 整体设计</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
+                    <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(4) 数据库设计</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
                     </p>
@@ -885,7 +889,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 13.33px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 18.33px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 13.33px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 20px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 13.33px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.67px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a>
+        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 13.33px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 13.33px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 18.33px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 13.33px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 20px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 13.33px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.67px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a>
     </div>
 </div>
 
@@ -922,7 +926,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Gin/">
                         <span class="tag">Gin</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -943,7 +947,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Golang/">
                         <span class="tag">Golang</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
@@ -1143,7 +1147,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="#Golang# Golang与并发编程(5) Channel底层" height="28">
+                    <img src="/images/logo.png" alt="#Golang# Golang与并发编程(5) channel底层" height="28">
                 
                 </a>
                 <p class="is-size-7">
