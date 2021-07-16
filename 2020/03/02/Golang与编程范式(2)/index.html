@@ -156,7 +156,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 minutes read (About 1394 words)
+                    11 minutes read (About 1694 words)
                 </span>
                 
                 
@@ -174,10 +174,11 @@
             
         </h1>
         <div class="content">
-            <p>介绍 <code>Golang</code> 中的<strong>函数式</strong>思想实践，主要讨论以下<strong>两个部分</strong>：</p>
+            <p>介绍 <code>Golang</code> 中的<strong>函数式</strong>思想实践，主要讨论以下<strong>三个部分</strong>：</p>
 <ul>
 <li><strong>函数基础概念</strong></li>
 <li><strong>闭包</strong></li>
+<li><strong>装饰器模式</strong></li>
 </ul>
 <hr>
 <a id="more"></a>
@@ -240,9 +241,27 @@
 <li><strong>闭包是附有数据的行为</strong>，闭包中的数据没有显式地集中声明。</li>
 </ul>
 <p><em>PS：闭包的<u>目的是</u>用共享局部变量来减少全局变量，<u>代价是</u>不够清晰和不够直接。</em></p>
+<h2 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a><strong>装饰器模式</strong></h2><br>
+
+<blockquote>
+<p>类继承 (Class Inheritance) 在编译时增加行为，装饰器模式 (Decorator Pattern) 在运行时增加行为。<strong>装饰器的实现和闭包是分不开的。</strong></p>
+</blockquote>
+<h3 id="Python-装饰器"><a href="#Python-装饰器" class="headerlink" title="Python 装饰器"></a>Python 装饰器</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">some_decorator_without_params</span><span class="hljs-params">(fn)</span>:</span></span><br><span class="line"><span class="hljs-meta">    @functools.wraps(fn)</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(*args, **kwargs)</span>:</span></span><br><span class="line">        <span class="hljs-comment"># do something before function</span></span><br><span class="line">        </span><br><span class="line">        fn(*args, **kwargs)</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-comment"># do something after function</span></span><br><span class="line">    <span class="hljs-keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">some_decorator_with_params</span><span class="hljs-params">(params)</span>:</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decorator</span><span class="hljs-params">(fn)</span>:</span></span><br><span class="line"><span class="hljs-meta">        @functools.wraps(fn)</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(*args, **kwargs)</span>:</span></span><br><span class="line">        	<span class="hljs-comment"># do something before function using params</span></span><br><span class="line">        </span><br><span class="line">        	fn(*args, **kwargs)</span><br><span class="line">        </span><br><span class="line">        	<span class="hljs-comment"># do something after function using params</span></span><br><span class="line">        <span class="hljs-keyword">return</span> wrapper</span><br><span class="line">    <span class="hljs-keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@some_decorator_without_params</span></span><br><span class="line"><span class="hljs-meta">@some_decorator_with_params(params)</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">HelloWorld</span><span class="hljs-params">(who, when=<span class="hljs-string">"now"</span>)</span>:</span></span><br><span class="line">    print(<span class="hljs-string">"Hello World to %s at %s!"</span> % (who, when))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>闭包 (<code>some_decorator</code>) = 函数 (<code>wrapper</code>) + 引用环境 (<code>fn</code>)</li>
+<li>装饰器 → 中间件 = <code>@</code> 语法糖 + 洋葱顺序</li>
+</ul>
+<h3 id="Golang-装饰器"><a href="#Golang-装饰器" class="headerlink" title="Golang 装饰器"></a>Golang 装饰器</h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Decorator <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(http.HandlerFunc)</span> <span class="hljs-title">http</span>.<span class="hljs-title">HandlerFunc</span></span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">SomeDecorator</span><span class="hljs-params">(h http.HandlerFunc)</span> <span class="hljs-title">http</span>.<span class="hljs-title">HandlerFunc</span></span> &#123;</span><br><span class="line">	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">		<span class="hljs-comment">// do something before handler</span></span><br><span class="line">        </span><br><span class="line">        h(w,r)</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-comment">// do something after handler</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Middlewares</span><span class="hljs-params">(h http.HandlerFunc, decos ...Decorator)</span> <span class="hljs-title">http</span>.<span class="hljs-title">HandlerFunc</span></span> &#123;</span><br><span class="line">	<span class="hljs-keyword">for</span> deco := <span class="hljs-keyword">range</span> decos &#123;</span><br><span class="line">  		d := decos[<span class="hljs-built_in">len</span>(decos)<span class="hljs-number">-1</span>-deco]</span><br><span class="line">  		h = d(h)</span><br><span class="line"> 	&#125;</span><br><span class="line">	<span class="hljs-keyword">return</span> h</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">HelloWorldHandler</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	fmt.Fprintf(<span class="hljs-string">"Hello World!"</span>)</span><br><span class="line">	<span class="hljs-keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">    closure := SomeDecorator(HelloWorldHandler)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>闭包 (<code>closure</code>) = 函数 (<code>anonymous func</code>) + 引用环境 (<code>h</code>)</li>
+<li>装饰器 → 中间件 = 闭包集合 + 洋葱顺序</li>
+</ul>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><ul>
 <li><a href="https://studygolang.com/articles/26505/comment/38656" target="_blank" rel="noopener">《Go语言核心编程》</a></li>
 <li><a href="https://studygolang.com/articles/26505/comment/38656" target="_blank" rel="noopener">《Go语言高级编程》</a></li>
+<li><a href="https://mp.weixin.qq.com/s/B_VYr3I525-vjHgzfW3Jhg" target="_blank" rel="noopener">编程模式之Go如何实现装饰器</a></li>
 </ul>
 <h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a><strong>致谢</strong></h2><blockquote>
 <p>实际上再写这篇博客时，小王与我的关系已经发生微妙的变化。如你所知，世界是物质的，物质是运动的，人也难免发生变化，我们就是在这样那样的变化中忘掉自我而寻找无双的。有小王的一路陪伴，我当然要说我庆幸，并且希望可以一直幸运下去 :)</p>
@@ -357,7 +376,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        45
+                        46
                     </p>
                 </div>
             </div>
@@ -377,7 +396,7 @@
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        22
+                        23
                     </p>
                 </div>
             </div>
@@ -451,12 +470,24 @@
         <span class="has-mr-6">1.3.3</span>
         <span>一些说明</span>
         </a></li></ul></li><li>
-        <a class="is-flex" href="#参考链接">
+        <a class="is-flex" href="#装饰器模式">
         <span class="has-mr-6">1.4</span>
+        <span>装饰器模式</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Python-装饰器">
+        <span class="has-mr-6">1.4.1</span>
+        <span>Python 装饰器</span>
+        </a></li><li>
+        <a class="is-flex" href="#Golang-装饰器">
+        <span class="has-mr-6">1.4.2</span>
+        <span>Golang 装饰器</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#参考链接">
+        <span class="has-mr-6">1.5</span>
         <span>参考链接</span>
         </a></li><li>
         <a class="is-flex" href="#致谢">
-        <span class="has-mr-6">1.5</span>
+        <span class="has-mr-6">1.6</span>
         <span>致谢</span>
         </a></li></ul></li></ul>
         </div>
@@ -478,7 +509,7 @@
                 <span class="level-item">Cheat Sheet</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/DevOps/">
@@ -644,7 +675,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -790,25 +821,6 @@
         
         <article class="media">
             
-            <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
-                    <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(4) 数据库设计</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
             <a href="/2021/06/03/微服务API网关的设计与实现(3)/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(3) 微服务设计">
@@ -826,6 +838,25 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/microservice_api_gateway.png" alt="#Microservice# 微服务API网关的设计与实现(4) 数据库设计">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-02T23:00:21.000Z">2021-06-03</time></div>
+                    <a href="/2021/06/03/微服务API网关的设计与实现(4)/" class="has-link-black-ter is-size-6">#Microservice# 微服务API网关的设计与实现(4) 数据库设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Microservice/">Microservice</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -836,7 +867,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 18px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 14px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 14px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 14px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 20px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 14px;">Mock</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 12px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/WSL/" style="font-size: 16px;">WSL</a>
+        <a href="/tags/Concurrency/" style="font-size: 18px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 14px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 14px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 14px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 20px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 14px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 12px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/WSL/" style="font-size: 16px;">WSL</a>
     </div>
 </div>
 
@@ -937,6 +968,13 @@
                     <a class="tags has-addons" href="/tags/Mock/">
                         <span class="tag">Mock</span>
                         <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MongoDB/">
+                        <span class="tag">MongoDB</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
