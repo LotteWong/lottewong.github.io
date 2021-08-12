@@ -156,7 +156,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 minutes read (About 1374 words)
+                    10 minutes read (About 1437 words)
                 </span>
                 
                 
@@ -186,6 +186,8 @@
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a><strong>配置</strong></h2><h3 id="账号"><a href="#账号" class="headerlink" title="账号"></a>账号</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 配置多个本地用户的账号</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 全局级</span></span><br><span class="line">git config --global user.name <span class="hljs-string">"<span class="hljs-variable">$&#123;user_name&#125;</span>"</span></span><br><span class="line">git config --global user.email <span class="hljs-string">"<span class="hljs-variable">$&#123;user_email&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 仓库级</span></span><br><span class="line"><span class="hljs-comment"># git config --global --unset user.name "$&#123;user_name&#125;"</span></span><br><span class="line"><span class="hljs-comment"># git config --global --unset user.name "$&#123;user_email&#125;"</span></span><br><span class="line">git config --<span class="hljs-built_in">local</span> user.name <span class="hljs-string">"<span class="hljs-variable">$&#123;user_name&#125;</span>"</span></span><br><span class="line">git config --<span class="hljs-built_in">local</span> user.email <span class="hljs-string">"<span class="hljs-variable">$&#123;user_email&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 提交级</span></span><br><span class="line">git commit --amend --author=<span class="hljs-string">"<span class="hljs-variable">$&#123;user_name&#125;</span> &lt;<span class="hljs-variable">$&#123;user_email&#125;</span>&gt;"</span></span><br><span class="line">git commit --amend --reset-author</span><br></pre></td></tr></table></figure>
 
 <h3 id="密钥"><a href="#密钥" class="headerlink" title="密钥"></a>密钥</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 配置多个远程仓库的密钥</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 生成密钥</span></span><br><span class="line">ssh-keygen -t rsa_github</span><br><span class="line">ssh-keygen -t rsa_gitlab</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 配置密钥</span></span><br><span class="line">vim ~/.ssh/config</span><br><span class="line"></span><br><span class="line">Host github.com</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/rsa_github</span><br><span class="line"> </span><br><span class="line">Host gitlab.com</span><br><span class="line">HostName gitlab.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/rsa_gitlab</span><br><span class="line"></span><br><span class="line">:wq</span><br></pre></td></tr></table></figure>
+
+<h3 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 提交时转换为LF，检出时转换为CRLF</span></span><br><span class="line">git config --global core.autocrlf <span class="hljs-literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 提交时转换为LF，检出时不转换</span></span><br><span class="line">git config --global core.autocrlf input</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 提交时不转换，检出时不转换</span></span><br><span class="line">git config --global core.autocrlf <span class="hljs-literal">false</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a><strong>仓库</strong></h2><h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
 
@@ -297,16 +299,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/15/速查手册之常用Docker命令/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/08/速查手册之常用Linux&Shell命令/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">#Docker# 速查手册：常用 Docker 命令</span>
+                <span class="level-item">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/05/08/速查手册之常用Linux&Shell命令/">
-                <span class="level-item">#Linux&amp;Shell# 速查手册：常用 Linux&amp;Shell 命令</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/05/01/速查手册之常用MongoDB命令/">
+                <span class="level-item">#MongoDB# 速查手册：常用 MongoDB 命令</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -381,7 +383,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        52
+                        53
                     </p>
                 </div>
             </div>
@@ -454,6 +456,10 @@
         <a class="is-flex" href="#密钥">
         <span class="has-mr-6">1.1.2</span>
         <span>密钥</span>
+        </a></li><li>
+        <a class="is-flex" href="#换行">
+        <span class="has-mr-6">1.1.3</span>
+        <span>换行</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#仓库">
         <span class="has-mr-6">1.2</span>
@@ -702,7 +708,7 @@
                 <span class="level-item">Others</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/QA/">
@@ -733,6 +739,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2021/07/">
@@ -928,6 +945,25 @@
         
         <article class="media">
             
+            <a href="/2021/08/12/GoLand + DevCloud 的远程开发与调试/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/goland.png" alt="#Others# GoLand + DevCloud 的远程开发与调试">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-08-11T23:21:00.000Z">2021-08-12</time></div>
+                    <a href="/2021/08/12/GoLand + DevCloud 的远程开发与调试/" class="has-link-black-ter is-size-6">#Others# GoLand + DevCloud 的远程开发与调试</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2021/07/24/和新项目相爱相杀/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/ctosd.png" alt="#Others# 和新项目相爱相杀">
@@ -1002,25 +1038,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2021/06/20/QCloud上的Kubernetes实践/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/kubernetes_qrg.png" alt="#Kubernetes# QCloud上的Kubernetes初体验">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-06-19T23:00:21.000Z">2021-06-20</time></div>
-                    <a href="/2021/06/20/QCloud上的Kubernetes实践/" class="has-link-black-ter is-size-6">#Kubernetes# QCloud上的Kubernetes初体验</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1031,7 +1048,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16.67px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 13.33px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 13.33px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Go-Micro/" style="font-size: 10px;">Go-Micro</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Grpc/" style="font-size: 10px;">Grpc</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 13.33px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 18.33px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 13.33px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.67px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 13.33px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a>
+        <a href="/tags/Concurrency/" style="font-size: 15.71px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12.86px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 12.86px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Go-Micro/" style="font-size: 10px;">Go-Micro</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Grpc/" style="font-size: 10px;">Grpc</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 12.86px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 17.14px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 18.57px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 12.86px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.43px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 12.86px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/WSL/" style="font-size: 14.29px;">WSL</a>
     </div>
 </div>
 
@@ -1096,7 +1113,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Golang/">
                         <span class="tag">Golang</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 
@@ -1131,7 +1148,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Linux/">
                         <span class="tag">Linux</span>
-                        <span class="tag is-grey">6</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
