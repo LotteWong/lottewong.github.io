@@ -156,7 +156,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    6 minutes read (About 854 words)
+                    6 minutes read (About 835 words)
                 </span>
                 
                 
@@ -174,7 +174,10 @@
             
         </h1>
         <div class="content">
-            <p><code>GoLand</code> as <code>IDE</code>，<code>DevCloud</code> as <code>go run / go build / dlv debug</code> environment.</p>
+            <ul>
+<li><code>GoLand</code> as <code>IDE</code></li>
+<li><code>DevCloud</code> as <code>go run/go build/dlv debug</code> environment</li>
+</ul>
 <hr>
 <a id="more"></a>
 
@@ -183,7 +186,7 @@
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h1><blockquote>
 <p>缘起一个 <code>EOF</code> 错误，由于网络策略原因，本地开发机无法连接某个内网服务，遂转向在办公网内的远程服务器。<del>本人作为 Linux 小菜</del>，由此产生了一个新诉求：<strong>在 Windows 上远程开发和调试服务器的代码，充分地发挥 IDE 的强大作用。</strong> </p>
 </blockquote>
-<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><h2 id="本地环境"><a href="#本地环境" class="headerlink" title="本地环境"></a>本地环境</h2><ol>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a><strong>环境准备</strong></h1><h2 id="本地环境"><a href="#本地环境" class="headerlink" title="本地环境"></a>本地环境</h2><ol>
 <li>GoLand 2020.2.3</li>
 </ol>
 <h2 id="远程环境"><a href="#远程环境" class="headerlink" title="远程环境"></a>远程环境</h2><ol>
@@ -226,7 +229,7 @@
 </li>
 </ul>
 </blockquote>
-<p><img src="F:%5CTencent%5C%E5%B7%A5%E5%85%B7%E4%BA%BA%E5%B0%8F%E9%BB%84%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%5C%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD%5C%E5%85%B6%E5%AE%83%E8%AE%B0%E5%BD%95%5Cconfig_go_remote_option.png" alt="配置 Go Remote 选项"></p>
+<p><img src="/images/config_go_remote_option.png" alt="配置 Go Remote 选项"></p>
 <h1 id="登录、查看和同步"><a href="#登录、查看和同步" class="headerlink" title="登录、查看和同步"></a><strong>登录、查看和同步</strong></h1><h2 id="登录远程服务器"><a href="#登录远程服务器" class="headerlink" title="登录远程服务器"></a>登录远程服务器</h2><blockquote>
 <p><code>Tool</code> -&gt; <code>Start SSH Session</code></p>
 </blockquote>
@@ -240,7 +243,7 @@
 <p><strong>自动</strong>：<code>Tools</code> -&gt; <code>Deployment</code> -&gt; <code>Automatic Upload (on explicit save)</code></p>
 </blockquote>
 <p><img src="/images/sync_to_or_automatic_upload.png" alt="手动 or 自动 Sync"></p>
-<h1 id="部署与调试"><a href="#部署与调试" class="headerlink" title="部署与调试"></a>部署与调试</h1><h2 id="远程执行部署脚本"><a href="#远程执行部署脚本" class="headerlink" title="远程执行部署脚本"></a>远程执行部署脚本</h2><h3 id="编译调试一起"><a href="#编译调试一起" class="headerlink" title="编译调试一起"></a>编译调试一起</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dlv debug cmd/server/main.go --headless --listen=:2345 --api-version=2</span><br></pre></td></tr></table></figure>
+<h1 id="部署与调试"><a href="#部署与调试" class="headerlink" title="部署与调试"></a><strong>部署与调试</strong></h1><h2 id="远程执行部署脚本"><a href="#远程执行部署脚本" class="headerlink" title="远程执行部署脚本"></a>远程执行部署脚本</h2><h3 id="编译调试一起"><a href="#编译调试一起" class="headerlink" title="编译调试一起"></a>编译调试一起</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dlv debug cmd/server/main.go --headless --listen=:2345 --api-version=2</span><br></pre></td></tr></table></figure>
 
 <h3 id="先编译再调试"><a href="#先编译再调试" class="headerlink" title="先编译再调试"></a>先编译再调试</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go build -o cmd/server/demo.exe cmd/server/main.go</span><br><span class="line">dlv --listen=:2345 --headless=<span class="hljs-literal">true</span> --api-version=2 <span class="hljs-built_in">exec</span> cmd/server/demo.exe</span><br></pre></td></tr></table></figure>
 
@@ -265,7 +268,7 @@
 <li>登录远程服务器，一键执行部署脚本</li>
 <li>本地打好断点，开启调试模式</li>
 </ol>
-<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="GoLand-Debug"><a href="#GoLand-Debug" class="headerlink" title="GoLand Debug"></a>GoLand Debug</h2><ol>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a><strong>附录</strong></h1><h2 id="GoLand-Debug"><a href="#GoLand-Debug" class="headerlink" title="GoLand Debug"></a>GoLand Debug</h2><ol>
 <li><strong>开启调试模式</strong>：<code>Shift + F9</code></li>
 <li><strong>打下断点</strong>：点击 Code 左侧</li>
 <li><strong>查看变量</strong>：查看 Debug 面板</li>

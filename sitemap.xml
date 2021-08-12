@@ -396,6 +396,13 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/tags/Mock/</loc>
+    <lastmod>2021-08-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/tags/Golang/</loc>
     <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
@@ -410,7 +417,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Mock/</loc>
+    <loc>http://yoursite.com/tags/Concurrency/</loc>
     <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -432,13 +439,6 @@
   
   <url>
     <loc>http://yoursite.com/tags/Microservice/</loc>
-    <lastmod>2021-08-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/Concurrency/</loc>
     <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -515,13 +515,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Redis/</loc>
-    <lastmod>2021-08-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/tags/MongoDB/</loc>
     <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
@@ -530,6 +523,13 @@
   
   <url>
     <loc>http://yoursite.com/tags/SQL/</loc>
+    <lastmod>2021-08-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/Redis/</loc>
     <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -587,14 +587,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/Microservice/</loc>
+    <loc>http://yoursite.com/categories/Golang/</loc>
     <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/Golang/</loc>
+    <loc>http://yoursite.com/categories/Microservice/</loc>
     <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
