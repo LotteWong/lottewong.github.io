@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>#Unit Test# Unit Test Pre-study and Practice in Golang - LotteWong</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+<link rel="alternative" href="./atom.xml" title="#Unit Test# Unit Test Pre-study and Practice in Golang" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.png" alt="#Unit Test# Unit Test Pre-study and Practice in Golang" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Email" href="mailto:lottewong21@gmail.com">
+                        
+                        <i class="far fa-envelope-open"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/unittest.png" alt="#Unit Test# Unit Test Pre-study and Practice in Golang">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2021-08-15T23:00:21.000Z">2021-08-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 950 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                #Unit Test# Unit Test Pre-study and Practice in Golang
+            
+        </h1>
+        <div class="content">
+            <p>If you write code, write tests. <em>– The Way of Testivus</em></p>
+<hr>
+<a id="more"></a>
+
+
+
+<h1 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录 Table of Contents"></a><strong>目录 Table of Contents</strong></h1><!-- toc -->
+
+<hr>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a><strong>背景</strong></h2><blockquote>
+<p>单元测试的重要性无需多言，但是由于业务迭代得超快，就很难再分出时间和精力投入到质量保障中去。<strong>尽管如此，等待接口联调的过程中既漫长无比又压力山大（毕竟谁想被挂 Tapd Bug 单呢 <em>_(:з」∠)_</em></strong></p>
+<p>在之前的 <a href="https://lottewong.github.io/2020/11/19/Unit%20Test%20Pre-study%20and%20Practice%20in%20Python/" target="_blank" rel="noopener">Unit Test Pre-study and Practice in Python</a> 文章中，已经简要地介绍了测试流程和测试用例的核心理念，本文将沿用这些方法论以及结合各位大神的博客和日常工作的体验，着重讨论以下内容：</p>
+<ul>
+<li><strong>技术选型</strong>：<code>Golang</code> 作为一门静态和强类型语言，相比于 <code>Python</code> 的动态和弱类型特性，带来了一些新的挑战。</li>
+<li><strong>工程实践</strong>：业务逻辑快速验证的最佳实践，暂时不涉及脚手架设计。</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a><strong>技术选型</strong></h2><h3 id="单测框架"><a href="#单测框架" class="headerlink" title="单测框架"></a>单测框架</h3><h4 id="testing"><a href="#testing" class="headerlink" title="testing"></a>testing</h4><blockquote>
+<p>官方原生库，无断言机制，编写较繁琐。</p>
+</blockquote>
+<ol>
+<li><p><strong>编写</strong></p>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">DoSomething</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestDoSomething</span><span class="hljs-params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// Arrange</span></span><br><span class="line">   	<span class="hljs-comment">// ...</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// Act</span></span><br><span class="line">    err := DoSomething()</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// Assert</span></span><br><span class="line">    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">        t.Errorf(err.Error())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>运行</strong></p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go <span class="hljs-built_in">test</span> -v</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="GoConvey"><a href="#GoConvey" class="headerlink" title="GoConvey"></a>GoConvey</h4><blockquote>
+<p>兼容官方原生库和模拟框架，有断言机制，编写较简洁。</p>
+</blockquote>
+<ol>
+<li><p><strong>编写</strong></p>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">DoSomething</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span> &#123;</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestDoSomething</span><span class="hljs-params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    Convey(<span class="hljs-string">"TestDoSomething"</span>, t, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">        Convey(<span class="hljs-string">"Condition 1"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">            <span class="hljs-comment">// Arrange</span></span><br><span class="line">            <span class="hljs-comment">// ...</span></span><br><span class="line">            </span><br><span class="line">            <span class="hljs-comment">// Act</span></span><br><span class="line">            err := DoSomething()</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-comment">// Assert</span></span><br><span class="line">            So(err, ShouldBeNil)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>运行</strong></p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Cmd</span></span><br><span class="line">go <span class="hljs-built_in">test</span> -v</span><br><span class="line"><span class="hljs-comment"># Web</span></span><br><span class="line"><span class="hljs-variable">$GOPATH</span>/bin/goconvey</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="模拟框架"><a href="#模拟框架" class="headerlink" title="模拟框架"></a>模拟框架</h3><h4 id="GoMonkey"><a href="#GoMonkey" class="headerlink" title="GoMonkey"></a>GoMonkey</h4><blockquote>
+<p>Mock 全局变量 &amp; 函数方法</p>
+</blockquote>
+<ol>
+<li><p><strong>全局变量</strong></p>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">patches := ApplyFuncVar(&amp;funcVar, mockVar)</span><br><span class="line"><span class="hljs-keyword">defer</span> patches.Reset()</span><br><span class="line"></span><br><span class="line">patches := ApplyGlobalVar(&amp;funcVar, mockVar)</span><br><span class="line"><span class="hljs-keyword">defer</span> patches.Reset()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>函数方法</strong></p>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">patches := ApplyFunc(funcName, mockFunc)</span><br><span class="line"><span class="hljs-keyword">defer</span> patches.Reset()</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> ptr *SomeClass</span><br><span class="line">patches := ApplyMethod(reflect.TypeOf(ptr), <span class="hljs-string">"methodName"</span>, mockMethod)</span><br><span class="line"><span class="hljs-keyword">defer</span> patches.Reset()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="GoMock"><a href="#GoMock" class="headerlink" title="GoMock"></a>GoMock</h4><blockquote>
+<p>Mock 接口</p>
+</blockquote>
+<ol>
+<li><p><strong>生成</strong></p>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// repository.go</span></span><br><span class="line"><span class="hljs-comment">// Repository is the interface to be mocked</span></span><br><span class="line"><span class="hljs-keyword">type</span> Repository <span class="hljs-keyword">interface</span> &#123;</span><br><span class="line">    Create(val <span class="hljs-keyword">interface</span>&#123;&#125;) error</span><br><span class="line">    Get(key <span class="hljs-keyword">string</span>) (<span class="hljs-keyword">interface</span>&#123;&#125;, error)</span><br><span class="line">    Update(key <span class="hljs-keyword">string</span>, val <span class="hljs-keyword">interface</span>&#123;&#125;) error</span><br><span class="line">    Delete(key <span class="hljs-keyword">string</span>) error</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// mockgen -source=$&#123;file&#125;</span></span><br><span class="line"><span class="hljs-comment">// mockgen $&#123;package&#125; $&#123;interface1&#125;, ... , $&#123;interfaceN&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// mock_repository.go</span></span><br><span class="line"><span class="hljs-comment">// MockRepository is a mock of Repository interface</span></span><br><span class="line"><span class="hljs-keyword">type</span> MockRepository <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    ctrl     *gomock.Controller</span><br><span class="line">    recorder *MockRepositoryMockRecorder</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// MockRepositoryMockRecorder is the mock recorder for MockRepository</span></span><br><span class="line"><span class="hljs-keyword">type</span> MockRepositoryMockRecorder <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">    mock *MockRepository</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// NewMockRepository creates a new mock instance</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewMockRepository</span><span class="hljs-params">(ctrl *gomock.Controller)</span> *<span class="hljs-title">MockRepository</span></span> &#123;</span><br><span class="line">    mock := &amp;MockRepository&#123;ctrl: ctrl&#125;</span><br><span class="line">    mock.recorder = &amp;MockRepositoryMockRecorder&#123;mock&#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> mock</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// EXPECT returns an object that allows the caller to indicate expected use</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(_m *MockRepository)</span> <span class="hljs-title">EXPECT</span><span class="hljs-params">()</span> *<span class="hljs-title">MockRepositoryMockRecorder</span></span> &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> _m.recorder</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Create mocks base method</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(_m *MockRepository)</span> <span class="hljs-title">Create</span><span class="hljs-params">(_param0 []<span class="hljs-keyword">byte</span>)</span> <span class="hljs-title">error</span></span> &#123;</span><br><span class="line">	<span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Get mocks base method</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(_m *MockRepository)</span> <span class="hljs-title">Get</span><span class="hljs-params">(_param0 <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">interface</span>&#123;&#125;, error)</span></span> &#123;</span><br><span class="line">	<span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Update mocks base method</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(_m *MockRepository)</span> <span class="hljs-title">Update</span><span class="hljs-params">(_param0 <span class="hljs-keyword">string</span>, _param1 <span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">error</span></span> &#123;</span><br><span class="line">	<span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Delete mocks base method</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(_m *MockRepository)</span> <span class="hljs-title">Delete</span><span class="hljs-params">(_param0 <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">error</span></span> &#123;</span><br><span class="line">	<span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用</strong></p>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ctrl := gomock.NewController(t)</span><br><span class="line"><span class="hljs-keyword">defer</span> ctrl.Finish()</span><br><span class="line">mockRepo := mock_repo.NewMockRepository(ctrl)</span><br><span class="line"></span><br><span class="line">InOrder (</span><br><span class="line">	createCall := mockRepo.EXPECT().Create(mockVal).Return(mockErr)</span><br><span class="line">    getCall := mockRepo.EXPECT().Get(mockKey).Return(mockVal, mockErr).Times(<span class="hljs-number">7</span>)</span><br><span class="line">	updateCall := mockRepo.EXPECT().Update(mockKey, mockVal).Return(mockErr)</span><br><span class="line">	deleteCall := mockRepo.EXPECT().Create(mockKey).Return(mockErr)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="sqlmock"><a href="#sqlmock" class="headerlink" title="sqlmock"></a>sqlmock</h4><blockquote>
+<p>Mock 数据库</p>
+</blockquote>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// Arrange</span></span><br><span class="line">db, mock, err := sqlmock.New()</span><br><span class="line"><span class="hljs-keyword">defer</span> db.Close()</span><br><span class="line"></span><br><span class="line">rows := sqlmock.NewRows(colKeys).AddRow(colVals)</span><br><span class="line">mock.ExpectQuery(sqlStatement).WillReturnRows(rows)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Act</span></span><br><span class="line">res, err := db.Query(sqlStatement)</span><br><span class="line"><span class="hljs-keyword">defer</span> res.Close()</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Assert</span></span><br><span class="line"><span class="hljs-keyword">for</span> res.Next() &#123;</span><br><span class="line">    res.Scan(&amp;fileds)</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="httptest"><a href="#httptest" class="headerlink" title="httptest"></a>httptest</h4><blockquote>
+<p>Mock 服务器</p>
+</blockquote>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// Arrange</span></span><br><span class="line">r := httptest.NewRequest(method, url, <span class="hljs-literal">nil</span>)</span><br><span class="line">w := httptest.NewRecorder()</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Act</span></span><br><span class="line">handler(w, r)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Assert</span></span><br><span class="line">res := w.Result()</span><br><span class="line"><span class="hljs-comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="工程实践"><a href="#工程实践" class="headerlink" title="工程实践"></a><strong>工程实践</strong></h2><ul>
+<li><em>to be continued…</em></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><ul>
+<li><p><strong>单测框架</strong>用于<strong>断言</strong>：使用 <code>GoConvey</code> 框架。</p>
+</li>
+<li><p><strong>模拟框架</strong>用于<strong>替换</strong>：对于全局变量和函数方法使用 <code>GoMonkey</code> 框架，对于接口使用 <code>GoMock</code> 框架，对于数据库使用 <code>sqlmock</code> 框架，对于服务器使用 <code>httptest</code> 框架。</p>
+</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h2><blockquote>
+<p>以下文章对本文亦有贡献 :)</p>
+</blockquote>
+<ul>
+<li><a href="http://no_permission_for_oa_article" target="_blank" rel="noopener">单元测试成神之路——Golang篇</a></li>
+<li><a href="http://no_permission_for_oa_article" target="_blank" rel="noopener">Golang单元测试调研和实践</a></li>
+</ul>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a><strong>附录</strong></h2><blockquote>
+<p>使用文档和最佳实践 :)</p>
+</blockquote>
+<ul>
+<li><a href="https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter09/09.1.html" target="_blank" rel="noopener">testing的更多用法</a></li>
+<li><a href="https://www.jianshu.com/p/e3b2b1194830" target="_blank" rel="noopener">GoConvey的更多用法</a></li>
+<li><a href="https://blog.csdn.net/u013276277/article/details/104993370" target="_blank" rel="noopener">GoMonkey的更多用法</a></li>
+<li><a href="https://www.jianshu.com/p/f4e773a1b11f" target="_blank" rel="noopener">GoMock的更多用法</a></li>
+<li><a href="https://studygolang.com/articles/27670" target="_blank" rel="noopener">sqlmock的更多用法</a></li>
+<li><a href="https://tkstorm.com/posts-list/programming/go/refs/go-httptest/" target="_blank" rel="noopener">httptest的更多用法</a></li>
+</ul>
+<hr>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/GoConvey/">GoConvey</a>, <a class="has-link-grey -link" href="/tags/GoMock/">GoMock</a>, <a class="has-link-grey -link" href="/tags/GoMonkey/">GoMonkey</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2021/08/12/GoLand + DevCloud 的远程开发与调试/">
+                <span class="level-item">#Others# GoLand + DevCloud 的远程开发与调试</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '2422d098e6b0fec439e767d1ecf7817d',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong",
+        proxy: 'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="LotteWong">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        LotteWong
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Tencent, Backend Developer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shenzhen, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        54
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        8
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/LotteWong" target="_blank">
+                Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Organization" href="https://github.com/SCUTMSC">
+                
+                <i class="fas fa-sitemap"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Project" href="https://github.com/scutse-man-month-myth/InkYear">
+                
+                <i class="fas fa-project-diagram"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#目录-Table-of-Contents">
+        <span class="has-mr-6">1</span>
+        <span>目录 Table of Contents</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#背景">
+        <span class="has-mr-6">1.1</span>
+        <span>背景</span>
+        </a></li><li>
+        <a class="is-flex" href="#技术选型">
+        <span class="has-mr-6">1.2</span>
+        <span>技术选型</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#单测框架">
+        <span class="has-mr-6">1.2.1</span>
+        <span>单测框架</span>
+        </a></li><li>
+        <a class="is-flex" href="#模拟框架">
+        <span class="has-mr-6">1.2.2</span>
+        <span>模拟框架</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#工程实践">
+        <span class="has-mr-6">1.3</span>
+        <span>工程实践</span>
+        </a></li><li>
+        <a class="is-flex" href="#总结">
+        <span class="has-mr-6">1.4</span>
+        <span>总结</span>
+        </a></li><li>
+        <a class="is-flex" href="#参考链接">
+        <span class="has-mr-6">1.5</span>
+        <span>参考链接</span>
+        </a></li><li>
+        <a class="is-flex" href="#附录">
+        <span class="has-mr-6">1.6</span>
+        <span>附录</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Cheat-Sheet/">
+            <span class="level-start">
+                <span class="level-item">Cheat Sheet</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DevOps/">
+            <span class="level-start">
+                <span class="level-item">DevOps</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Golang/">
+            <span class="level-start">
+                <span class="level-item">Golang</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Microservice/">
+            <span class="level-start">
+                <span class="level-item">Microservice</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">12</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Mind-Map/">
+            <span class="level-start">
+                <span class="level-item">Mind Map</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/QA/">
+            <span class="level-start">
+                <span class="level-item">QA</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Sucks/">
+            <span class="level-start">
+                <span class="level-item">Sucks</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
+        <div class="column-right-shadow  ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2021/08/16/Unit Test Pre-study and Practice in Golang/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/unittest.png" alt="#Unit Test# Unit Test Pre-study and Practice in Golang">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-08-15T23:00:21.000Z">2021-08-16</time></div>
+                    <a href="/2021/08/16/Unit Test Pre-study and Practice in Golang/" class="has-link-black-ter is-size-6">#Unit Test# Unit Test Pre-study and Practice in Golang</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/08/12/GoLand + DevCloud 的远程开发与调试/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/goland.png" alt="#Others# GoLand + DevCloud 的远程开发与调试">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-08-11T23:21:00.000Z">2021-08-12</time></div>
+                    <a href="/2021/08/12/GoLand + DevCloud 的远程开发与调试/" class="has-link-black-ter is-size-6">#Others# GoLand + DevCloud 的远程开发与调试</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/07/24/和新项目相爱相杀/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/ctosd.png" alt="#Others# 和新项目相爱相杀">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-07-23T23:21:00.000Z">2021-07-24</time></div>
+                    <a href="/2021/07/24/和新项目相爱相杀/" class="has-link-black-ter is-size-6">#Others# 和新项目相爱相杀</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/07/21/思维导图之Shell Script/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/shell_script_thumbnail.png" alt="#Shell Script# 思维导图：Shell Script">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-07-20T23:00:21.000Z">2021-07-21</time></div>
+                    <a href="/2021/07/21/思维导图之Shell Script/" class="has-link-black-ter is-size-6">#Shell Script# 思维导图：Shell Script</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Mind-Map/">Mind Map</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/07/20/思维导图之Bash/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/bash_thumbnail.png" alt="#Bash# 思维导图：Bash 命令行">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-07-19T23:00:21.000Z">2021-07-20</time></div>
+                    <a href="/2021/07/20/思维导图之Bash/" class="has-link-black-ter is-size-6">#Bash# 思维导图：Bash 命令行</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Mind-Map/">Mind Map</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 15.71px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12.86px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 12.86px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Go-Micro/" style="font-size: 10px;">Go-Micro</a> <a href="/tags/GoConvey/" style="font-size: 10px;">GoConvey</a> <a href="/tags/GoMock/" style="font-size: 10px;">GoMock</a> <a href="/tags/GoMonkey/" style="font-size: 10px;">GoMonkey</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Grpc/" style="font-size: 10px;">Grpc</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 12.86px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 17.14px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 18.57px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 12.86px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.43px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 12.86px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/WSL/" style="font-size: 14.29px;">WSL</a>
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Docker/">
+                        <span class="tag">Docker</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Fiddler/">
+                        <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gin/">
+                        <span class="tag">Gin</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
+                        <span class="tag">GitHub Pages</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Go-Micro/">
+                        <span class="tag">Go-Micro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GoConvey/">
+                        <span class="tag">GoConvey</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GoMock/">
+                        <span class="tag">GoMock</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GoMonkey/">
+                        <span class="tag">GoMonkey</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Golang/">
+                        <span class="tag">Golang</span>
+                        <span class="tag is-grey">15</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gorm/">
+                        <span class="tag">Gorm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Grpc/">
+                        <span class="tag">Grpc</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Hexo/">
+                        <span class="tag">Hexo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Kubernetes/">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Microservice/">
+                        <span class="tag">Microservice</span>
+                        <span class="tag is-grey">12</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mock/">
+                        <span class="tag">Mock</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MongoDB/">
+                        <span class="tag">MongoDB</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Newman/">
+                        <span class="tag">Newman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Postman/">
+                        <span class="tag">Postman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
+                        <span class="tag">Programming Paradigm</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytest/">
+                        <span class="tag">Pytest</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SQL/">
+                        <span class="tag">SQL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swagger/">
+                        <span class="tag">Swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Vim/">
+                        <span class="tag">Vim</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+            
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Bokjan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bokjan.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Kingsley</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kingsleyxie.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">sticnarf</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">sticnarf.me</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">xcw</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">yifanyu123.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Escape</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.cnblogs.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.png" alt="#Unit Test# Unit Test Pre-study and Practice in Golang" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 LotteWong
+                ,&nbsp;<a href="http://www2.scut.edu.cn/sse/" target="_blank">SCUT SE</a> & <a href="https://github.com/SCUTMSC" target="_blank">SCUT MSC</a>
+                
+                <!-- <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+								<br>
+								<span id="busuanzi_container_site_pv">
+                plugin.page-view
+                </span>
+                
+                </p>-->
+								<br>
+								<span id="busuanzi_container_site_uv"> Viewed by <span id="busuanzi_value_site_uv"></span> people </span>
+                <span id="busuanzi_container_site_pv">, at <span id="busuanzi_value_site_pv"></span> times </span>
+            </p></div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/LotteWong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="RSS" href="/atom.xml">
+                        
+                        <i class="fas fa-rss"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
