@@ -156,7 +156,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    13 minutes read (About 1984 words)
+                    10 minutes read (About 1552 words)
                 </span>
                 
                 
@@ -240,26 +240,6 @@
 <li><strong>方法一</strong>：<u>接收和处理的逻辑分离</u>，亦即同步接收异步处理。这里需要注意的点：错误处理不能再以直接返回的方式做，需要写进日志，必要时还可以消息通知用户。这是一种<u>积极</u>避免重试的手段（防患于未然）。</li>
 <li><strong>方法二</strong>：<u>消息 <code>id</code> 去重</u>，使用缓存记录一定周期内的所有消息编号，并且设置过期时间，对重复的消息直接忽略不做处理。这是一种<u>悲观</u>避免重试的手段（来之则安之）。</li>
 </ol>
-<h1 id="部署应用"><a href="#部署应用" class="headerlink" title="部署应用"></a><strong>部署应用</strong></h1><blockquote>
-<p>可以采用 <code>systemctl</code> 或者 <code>nohup</code> 两种方式后台运行，前者比后者相对来说更方便更新和管理。更云原生的做法是跑在 <code>docker</code> 容器，但是由于 <code>wework-service</code> 依赖较少，追求快速部署的话此举非必需的。<strong>在综合考虑下采用 <code>systemctl</code> 部署。</strong></p>
-</blockquote>
-<h2 id="注册服务"><a href="#注册服务" class="headerlink" title="注册服务"></a>注册服务</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/lib/systemd/system/wework-service.service</span><br><span class="line"></span><br><span class="line">[Unit]</span><br><span class="line">Description=wework-service</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User=root</span><br><span class="line">Group=root</span><br><span class="line">PermissionsStartOnly=<span class="hljs-literal">true</span></span><br><span class="line">ExecStart=/usr/bin/wework-service --config=/etc/wework-service/config.yaml</span><br><span class="line">Restart=always</span><br><span class="line">LimitNOFILE=65535</span><br><span class="line">WorkingDirectory=/usr/share/wework-service</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"></span><br><span class="line">:wq</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p><strong>保证 <code>WorkingDirectory</code> 必须存在</strong>，否则抛出错误，解决方法如下：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Failed at step CHDIR spawning /xxx: No such file or directory</span></span><br><span class="line">mkdir -p /usr/share/wework-service</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>保证 <code>ExecStart</code> 可以执行</strong>，交叉编译二进制可执行文件，设置权限为可执行，具体命令：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 交叉编译</span></span><br><span class="line"><span class="hljs-built_in">set</span> CGO_ENBALED=0</span><br><span class="line"><span class="hljs-built_in">set</span> GOOS=linux</span><br><span class="line"><span class="hljs-built_in">set</span> GOARCH=amd64</span><br><span class="line">go build -o cmd/server/wework-service cmd/server/main.go</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 设置权限</span></span><br><span class="line">chmod 755 /usr/bin/wework-service</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload <span class="hljs-comment"># 重新加载配置文件</span></span><br><span class="line">sudo systemctl <span class="hljs-built_in">enable</span> wework-service.service <span class="hljs-comment"># 录入服务</span></span><br><span class="line">sudo systemctl start wework-service.service <span class="hljs-comment"># 启动服务</span></span><br><span class="line">sudo systemctl status wework-service.service <span class="hljs-comment"># 查看服务</span></span><br><span class="line">journalctl -u wework-service.service <span class="hljs-comment"># 查看服务运行日志</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="更新服务"><a href="#更新服务" class="headerlink" title="更新服务"></a>更新服务</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Step 1: 重新交叉编译</span></span><br><span class="line"><span class="hljs-comment"># Step 2: 上传二进制可执行文件（若配置文件也更新，同步上传配置文件）</span></span><br><span class="line"><span class="hljs-comment"># Step 3: 重新设置权限</span></span><br><span class="line"></span><br><span class="line">sudo systemctl restart wework-service.service <span class="hljs-comment"># 重启服务</span></span><br><span class="line">sudo systemctl status wework-service.service <span class="hljs-comment"># 查看服务</span></span><br><span class="line">journalctl -u wework-service.service <span class="hljs-comment"># 查看服务运行日志</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="停止服务"><a href="#停止服务" class="headerlink" title="停止服务"></a>停止服务</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop wework-service.service <span class="hljs-comment"># 停止服务</span></span><br><span class="line">sudo systemctl status wework-service.service <span class="hljs-comment"># 查看服务</span></span><br><span class="line">journalctl -u wework-service.service <span class="hljs-comment"># 查看服务运行日志</span></span><br></pre></td></tr></table></figure>
-
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
 <li><a href="https://km" target="_blank" rel="noopener">企业微信内部服务号CI助手开发总结</a></li>
 <li><a href="https://km" target="_blank" rel="noopener">企业微信客服服务号开发小记</a></li>
@@ -290,6 +270,13 @@
 
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2021/10/22/部署服务的N种姿势/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">#DevOps# 部署服务的N种姿势</span>
+            </a>
+        </div>
         
         
         <div class="level-end">
@@ -369,7 +356,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        55
+                        56
                     </p>
                 </div>
             </div>
@@ -491,28 +478,8 @@
         <span class="has-mr-6">4.2</span>
         <span>避免重试</span>
         </a></li></ul></li><li>
-        <a class="is-flex" href="#部署应用">
-        <span class="has-mr-6">5</span>
-        <span>部署应用</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#注册服务">
-        <span class="has-mr-6">5.1</span>
-        <span>注册服务</span>
-        </a></li><li>
-        <a class="is-flex" href="#启动服务">
-        <span class="has-mr-6">5.2</span>
-        <span>启动服务</span>
-        </a></li><li>
-        <a class="is-flex" href="#更新服务">
-        <span class="has-mr-6">5.3</span>
-        <span>更新服务</span>
-        </a></li><li>
-        <a class="is-flex" href="#停止服务">
-        <span class="has-mr-6">5.4</span>
-        <span>停止服务</span>
-        </a></li></ul></li><li>
         <a class="is-flex" href="#参考文献">
-        <span class="has-mr-6">6</span>
+        <span class="has-mr-6">5</span>
         <span>参考文献</span>
         </a></li></ul>
         </div>
@@ -550,7 +517,7 @@
                 <span class="level-item">DevOps</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Golang/">
@@ -613,6 +580,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2021/08/">
@@ -819,6 +797,25 @@
         
         <article class="media">
             
+            <a href="/2021/10/22/部署服务的N种姿势/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/ci_cd.png" alt="#DevOps# 部署服务的N种姿势">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-10-21T23:00:21.000Z">2021-10-22</time></div>
+                    <a href="/2021/10/22/部署服务的N种姿势/" class="has-link-black-ter is-size-6">#DevOps# 部署服务的N种姿势</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2021/08/28/企微客服号后台开发小结/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/wework.png" alt="#Arch# 企微客服号后台开发小结">
@@ -893,25 +890,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2021/07/21/思维导图之Shell Script/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/shell_script_thumbnail.png" alt="#Shell Script# 思维导图：Shell Script">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-07-20T23:00:21.000Z">2021-07-21</time></div>
-                    <a href="/2021/07/21/思维导图之Shell Script/" class="has-link-black-ter is-size-6">#Shell Script# 思维导图：Shell Script</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Mind-Map/">Mind Map</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -922,7 +900,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 15.71px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 12.86px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 12.86px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Go-Micro/" style="font-size: 10px;">Go-Micro</a> <a href="/tags/GoConvey/" style="font-size: 10px;">GoConvey</a> <a href="/tags/GoMock/" style="font-size: 10px;">GoMock</a> <a href="/tags/GoMonkey/" style="font-size: 10px;">GoMonkey</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Grpc/" style="font-size: 10px;">Grpc</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 12.86px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 17.14px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 18.57px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 12.86px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.43px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 12.86px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/WSL/" style="font-size: 14.29px;">WSL</a>
+        <a href="/tags/Concurrency/" style="font-size: 15.71px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 14.29px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 12.86px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Go-Micro/" style="font-size: 10px;">Go-Micro</a> <a href="/tags/GoConvey/" style="font-size: 10px;">GoConvey</a> <a href="/tags/GoMock/" style="font-size: 10px;">GoMock</a> <a href="/tags/GoMonkey/" style="font-size: 10px;">GoMonkey</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Grpc/" style="font-size: 10px;">Grpc</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 14.29px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 17.14px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 18.57px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 12.86px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.43px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 12.86px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/WSL/" style="font-size: 14.29px;">WSL</a>
     </div>
 </div>
 
@@ -945,7 +923,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Docker/">
                         <span class="tag">Docker</span>
-                        <span class="tag is-grey">3</span>
+                        <span class="tag is-grey">4</span>
                     </a>
                 </div>
                 
@@ -1036,14 +1014,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Kubernetes/">
                         <span class="tag">Kubernetes</span>
-                        <span class="tag is-grey">3</span>
+                        <span class="tag is-grey">4</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Linux/">
                         <span class="tag">Linux</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
