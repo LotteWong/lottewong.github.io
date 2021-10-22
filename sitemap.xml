@@ -9,14 +9,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/05/08/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Linux&Shell%E5%91%BD%E4%BB%A4/</loc>
+    <loc>http://yoursite.com/2021/08/28/%E4%BC%81%E5%BE%AE%E5%AE%A2%E6%9C%8D%E5%8F%B7%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%B0%8F%E7%BB%93/</loc>
     
     <lastmod>2021-10-22</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2021/08/28/%E4%BC%81%E5%BE%AE%E5%AE%A2%E6%9C%8D%E5%8F%B7%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%B0%8F%E7%BB%93/</loc>
+    <loc>http://yoursite.com/2020/05/08/%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C%E4%B9%8B%E5%B8%B8%E7%94%A8Linux&Shell%E5%91%BD%E4%BB%A4/</loc>
     
     <lastmod>2021-10-22</lastmod>
     
@@ -466,6 +466,13 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/tags/Kubernetes/</loc>
+    <lastmod>2021-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/tags/Postman/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
@@ -474,13 +481,6 @@
   
   <url>
     <loc>http://yoursite.com/tags/Newman/</loc>
-    <lastmod>2021-10-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/Kubernetes/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -522,13 +522,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Shell/</loc>
-    <lastmod>2021-10-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/tags/Go-Micro/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
@@ -537,6 +530,13 @@
   
   <url>
     <loc>http://yoursite.com/tags/Grpc/</loc>
+    <lastmod>2021-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/Shell/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -557,14 +557,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/MongoDB/</loc>
+    <loc>http://yoursite.com/tags/Redis/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Redis/</loc>
+    <loc>http://yoursite.com/tags/MongoDB/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -592,6 +592,13 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/tags/Pytest/</loc>
+    <lastmod>2021-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/tags/GitHub-Pages/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
@@ -600,13 +607,6 @@
   
   <url>
     <loc>http://yoursite.com/tags/Hexo/</loc>
-    <lastmod>2021-10-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/Pytest/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -650,14 +650,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/Sucks/</loc>
+    <loc>http://yoursite.com/categories/Arch/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/Arch/</loc>
+    <loc>http://yoursite.com/categories/Sucks/</loc>
     <lastmod>2021-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

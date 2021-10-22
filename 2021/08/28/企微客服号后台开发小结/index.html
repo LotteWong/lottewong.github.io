@@ -240,7 +240,7 @@
 <li><strong>方法一</strong>：<u>接收和处理的逻辑分离</u>，亦即同步接收异步处理。这里需要注意的点：错误处理不能再以直接返回的方式做，需要写进日志，必要时还可以消息通知用户。这是一种<u>积极</u>避免重试的手段（防患于未然）。</li>
 <li><strong>方法二</strong>：<u>消息 <code>id</code> 去重</u>，使用缓存记录一定周期内的所有消息编号，并且设置过期时间，对重复的消息直接忽略不做处理。这是一种<u>悲观</u>避免重试的手段（来之则安之）。</li>
 </ol>
-<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a><strong>参考文献</strong></h1><ol>
 <li><a href="https://km" target="_blank" rel="noopener">企业微信内部服务号CI助手开发总结</a></li>
 <li><a href="https://km" target="_blank" rel="noopener">企业微信客服服务号开发小记</a></li>
 <li><a href="https://km" target="_blank" rel="noopener">企业微信内部客服号开发小结</a></li>
