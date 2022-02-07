@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>Tag: Concurrency - LotteWong</title>
+<title>#Issue# 联表多字段的模糊查询tricks - LotteWong</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 
 
 
-<link rel="alternative" href="./atom.xml" title="LotteWong" type="application/atom+xml">
+<link rel="alternative" href="./atom.xml" title="#Issue# 联表多字段的模糊查询tricks" type="application/atom+xml">
 
 
 
@@ -79,13 +79,13 @@
 
 <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="is-3-column">
+<body class="is-2-column">
     <nav class="navbar navbar-main">
     <div class="container">
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="LotteWong" height="28">
+                <img src="/images/logo.png" alt="#Issue# 联表多字段的模糊查询tricks" height="28">
             
             </a>
         </div>
@@ -117,6 +117,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -130,383 +134,140 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/fuzzy_search_thumbnail.png" alt="#Issue# 联表多字段的模糊查询tricks">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2022-01-29T23:00:21.000Z">2022-01-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Issue/">Issue</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 689 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                #Issue# 联表多字段的模糊查询tricks
+            
+        </h1>
+        <div class="content">
+            <p>本文讨论<strong>联表多字段模糊查询的可能性</strong>，分为两种思路：</p>
+<ol>
+<li>交给 <code>dao layer</code> 处理</li>
+<li>交给 <code>service layer</code> 处理</li>
+</ol>
+<hr>
+<a id="more"></a>
+
+
+
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
+<p>今天讨论一下看似简单实则繁琐的小需求——<strong>联表多字段的模糊查询</strong>。举个🌰：现在我要对<strong>超级管理员</strong>列表进行<strong>名字或描述</strong>的模糊查询，怎么实现？这里阻碍我们短平快地实现功能的点在于，超级管理员涉及三个表（用户表、角色表、用户-角色表），每个表还可能对多字段进行精确或模糊匹配，如果不先想清楚就开始动工，非常容易出现<strong>功能缺陷</strong>和<strong>性能瓶颈</strong>🤦‍。</p>
+</blockquote>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a><strong>实现</strong></h1><h2 id="交给-dao-layer-处理"><a href="#交给-dao-layer-处理" class="headerlink" title="交给 dao layer 处理"></a>交给 <code>dao layer</code> 处理</h2><h3 id="MySQL-Rational"><a href="#MySQL-Rational" class="headerlink" title="MySQL (Rational)"></a>MySQL (<u>Rational</u>)</h3><h4 id="联表查询"><a href="#联表查询" class="headerlink" title="联表查询"></a>联表查询</h4><figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-string">`user_role`</span> <span class="hljs-keyword">AS</span> <span class="hljs-string">`ur`</span> </span><br><span class="line"><span class="hljs-keyword">FULL</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-string">`users`</span> <span class="hljs-keyword">on</span> ur.user_id = users.user_id</span><br><span class="line"><span class="hljs-keyword">FULL</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-string">`roles`</span> <span class="hljs-keyword">on</span> ur.role_id = roles.role_id</span><br></pre></td></tr></table></figure>
+
+<h4 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h4><figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-string">`users`</span> <span class="hljs-keyword">CONCAT</span>(<span class="hljs-keyword">IFNULL</span>(<span class="hljs-string">`user_name`</span>,<span class="hljs-string">''</span>),<span class="hljs-keyword">IFNULL</span>(<span class="hljs-string">`user_desc`</span>,<span class="hljs-string">''</span>)) <span class="hljs-keyword">LIKE</span> <span class="hljs-string">'%keyword%'</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="联表多字段的模糊查询"><a href="#联表多字段的模糊查询" class="headerlink" title="联表多字段的模糊查询"></a>联表多字段的模糊查询</h4><figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># tips：满足关系型的数据使用联表多字段的模糊查询可做到 SQL or ORM 一把梭</span></span><br><span class="line"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-string">`user_role`</span> <span class="hljs-keyword">AS</span> <span class="hljs-string">`ur`</span> </span><br><span class="line"><span class="hljs-keyword">FULL</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-string">`users`</span> <span class="hljs-keyword">on</span> ur.user_id = users.user_id</span><br><span class="line"><span class="hljs-keyword">FULL</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-string">`roles`</span> <span class="hljs-keyword">on</span> ur.role_id = roles.role_id</span><br><span class="line"><span class="hljs-keyword">WHERE</span> role_name=<span class="hljs-keyword">admin</span></span><br><span class="line"><span class="hljs-keyword">CONCAT</span>(<span class="hljs-keyword">IFNULL</span>(<span class="hljs-string">`user_name`</span>,<span class="hljs-string">''</span>),<span class="hljs-keyword">IFNULL</span>(<span class="hljs-string">`user_desc`</span>,<span class="hljs-string">''</span>)) <span class="hljs-keyword">LIKE</span> ‘%keyword%’</span><br></pre></td></tr></table></figure>
+
+<h3 id="MongoDB-Irrational"><a href="#MongoDB-Irrational" class="headerlink" title="MongoDB (Irrational)"></a>MongoDB (<u>Irrational</u>)</h3><h4 id="联表查询-1"><a href="#联表查询-1" class="headerlink" title="联表查询"></a>联表查询</h4><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.users.aggregate(&#123;</span><br><span class="line">    <span class="hljs-string">"$lookup"</span>: &#123;</span><br><span class="line">        <span class="hljs-keyword">from</span>:<span class="hljs-string">'roles'</span>,</span><br><span class="line">        localField: <span class="hljs-string">'role_id'</span>,</span><br><span class="line">        foreignField: <span class="hljs-string">'_id'</span>,</span><br><span class="line">        <span class="hljs-keyword">as</span>: <span class="hljs-string">'user_role'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="模糊查询-1"><a href="#模糊查询-1" class="headerlink" title="模糊查询"></a>模糊查询</h4><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.users.find(&#123;</span><br><span class="line">    <span class="hljs-string">"$or"</span>: [</span><br><span class="line">        <span class="hljs-string">"user_name"</span>: &#123;</span><br><span class="line">    		<span class="hljs-string">"$regex"</span>: <span class="hljs-string">"keyword"</span></span><br><span class="line">		&#125;,</span><br><span class="line">        <span class="hljs-string">"user_desc"</span>: &#123;</span><br><span class="line">        	<span class="hljs-string">"$regex"</span>: <span class="hljs-string">"keyword"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="联表多字段的模糊查询-1"><a href="#联表多字段的模糊查询-1" class="headerlink" title="联表多字段的模糊查询"></a>联表多字段的模糊查询</h4><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// tips：不推荐非关系型用联表方法因为性能十分堪忧，更应该关注合理的数据结构设计</span></span><br><span class="line">db.users.aggregate(&#123;</span><br><span class="line">    <span class="hljs-string">"$lookup"</span>: &#123;</span><br><span class="line">        <span class="hljs-keyword">from</span>:<span class="hljs-string">'roles'</span>,</span><br><span class="line">        localField: <span class="hljs-string">'role_id'</span>,</span><br><span class="line">        foreignField: <span class="hljs-string">'_id'</span>,</span><br><span class="line">        <span class="hljs-keyword">as</span>: <span class="hljs-string">'user_role'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">    <span class="hljs-string">"$match"</span>: &#123;</span><br><span class="line">        <span class="hljs-string">"$or"</span>: [</span><br><span class="line">            <span class="hljs-string">"user_name"</span>: &#123;</span><br><span class="line">                <span class="hljs-string">"$regex"</span>: <span class="hljs-string">"keyword"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="hljs-string">"user_desc"</span>: &#123;</span><br><span class="line">                <span class="hljs-string">"$regex"</span>: <span class="hljs-string">"keyword"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;             </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="交给-service-layer-处理"><a href="#交给-service-layer-处理" class="headerlink" title="交给 service layer 处理"></a>交给 <code>service layer</code> 处理</h2><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 数据库 I/O：3 times</span></span><br><span class="line"><span class="hljs-comment">// 空间复杂度：O(k)</span></span><br><span class="line"><span class="hljs-comment">// 时间复杂度：O(k × f)</span></span><br><span class="line"><span class="hljs-comment">// 其中，k 代表模糊搜索后的记录数量，f 代表条件过滤后的记录数量，k 和 f 在一般情况下是很小的</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">FuzzySearch</span><span class="hljs-params">(keyword <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">([]rbac.User, error)</span></span> &#123;</span><br><span class="line">    <span class="hljs-keyword">var</span> result []rbac.User</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 模糊搜索</span></span><br><span class="line">    <span class="hljs-comment">// 空间复杂度↓，数据库 I/O ++</span></span><br><span class="line">    users, err := rbac.GetUserList(keyword)</span><br><span class="line">    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">// 时间复杂度↑，O(k)</span></span><br><span class="line">    <span class="hljs-keyword">var</span> userIds []<span class="hljs-keyword">string</span></span><br><span class="line">    <span class="hljs-keyword">for</span> _, user := <span class="hljs-keyword">range</span> users &#123;</span><br><span class="line">        userIds = <span class="hljs-built_in">append</span>(userIds, user.UserId)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// 精准匹配</span></span><br><span class="line">    <span class="hljs-comment">// 空间复杂度=，数据库 I/O ++</span></span><br><span class="line">    role, err := rbac.GetRoleDetail(RoleNameAdmin)</span><br><span class="line">    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">// 时间复杂度↑，O(1)</span></span><br><span class="line">    <span class="hljs-keyword">var</span> roleIds []<span class="hljs-keyword">string</span></span><br><span class="line">    roleIds = <span class="hljs-built_in">append</span>(roleIds, role.RoleId)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 条件过滤</span></span><br><span class="line">    <span class="hljs-comment">// 空间复杂度↓，数据库 I/O ++</span></span><br><span class="line">    urs, err := rbac.GetUserRoleList(userIds, roleIds)</span><br><span class="line">    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">// 时间复杂度↑，O(k × f)</span></span><br><span class="line">    <span class="hljs-keyword">for</span> _, user := <span class="hljs-keyword">range</span> users &#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> _, ur := <span class="hljs-keyword">range</span> urs &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> user.UserId == ur.UserId &#123;</span><br><span class="line">                result = <span class="hljs-built_in">append</span>(result, user)</span><br><span class="line">                <span class="hljs-keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> result, <span class="hljs-literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Golang/">Golang</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2022/01/23/Best Practice on Token-Refresh Implementation/">
+                <span class="level-item">#Issue# Best Practice on Token-Refresh Implementation</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
     <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Concurrency</a></li>
-        </ul>
-        </nav>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '1e553126fd8ed0c799ca620237895896',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong",
+        proxy: 'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
     </div>
 </div>
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/08/Golang与并发编程(6)/" class="image is-7by1">
-            <img class="thumbnail" src="/images/sync.png" alt="#Golang# Golang与并发编程(6) 同步机制">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-07T23:00:21.000Z">2020-03-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Golang/">Golang</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    13 minutes read (About 1952 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/08/Golang与并发编程(6)/">#Golang# Golang与并发编程(6) 同步机制</a>
-            
-        </h1>
-        <div class="content">
-            <p>本文主要讨论<strong>同步机制</strong>的相关内容。</p>
-<hr>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/08/Golang与并发编程(6)/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/07/Golang与并发编程(5)/" class="image is-7by1">
-            <img class="thumbnail" src="/images/channel_thumbnail.png" alt="#Golang# Golang与并发编程(5) channel底层">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-06T23:00:21.000Z">2020-03-07</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Golang/">Golang</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    10 minutes read (About 1442 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/07/Golang与并发编程(5)/">#Golang# Golang与并发编程(5) channel底层</a>
-            
-        </h1>
-        <div class="content">
-            <p>本文主要讨论 <strong><code>channel</code> 底层</strong>的相关内容。</p>
-<hr>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/07/Golang与并发编程(5)/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/06/Golang与并发编程(4)/" class="image is-7by1">
-            <img class="thumbnail" src="/images/channel_thumbnail.png" alt="#Golang# Golang与并发编程(4) channel使用">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-05T23:00:21.000Z">2020-03-06</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Golang/">Golang</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    12 minutes read (About 1813 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/06/Golang与并发编程(4)/">#Golang# Golang与并发编程(4) channel使用</a>
-            
-        </h1>
-        <div class="content">
-            <p>本文主要讨论 <strong><code>channel</code> 使用</strong>的相关内容。</p>
-<hr>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/06/Golang与并发编程(4)/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/05/Golang与并发编程(3)/" class="image is-7by1">
-            <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(3) goroutine泄漏">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-04T23:00:21.000Z">2020-03-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Golang/">Golang</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    10 minutes read (About 1546 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/05/Golang与并发编程(3)/">#Golang# Golang与并发编程(3) goroutine泄漏</a>
-            
-        </h1>
-        <div class="content">
-            <p>介绍 <strong><code>goroutine</code> 泄漏</strong>的相关内容，主要讨论以下<strong>三个部分</strong>：</p>
-<ul>
-<li><strong><code>goroutine</code> 泄漏判断</strong></li>
-<li><strong><code>goroutine</code> 泄漏分类</strong></li>
-<li><strong><code>goroutine</code> 泄漏预防</strong></li>
-</ul>
-<hr>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/05/Golang与并发编程(3)/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/04/Golang与并发编程(2)/" class="image is-7by1">
-            <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(2) goroutine调度">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-03T23:00:21.000Z">2020-03-04</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Golang/">Golang</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    12 minutes read (About 1752 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/04/Golang与并发编程(2)/">#Golang# Golang与并发编程(2) goroutine调度</a>
-            
-        </h1>
-        <div class="content">
-            <p>本文主要讨论 <strong><code>goroutine</code> 调度</strong>的相关内容。</p>
-<hr>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/04/Golang与并发编程(2)/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/03/Golang与并发编程(1)/" class="image is-7by1">
-            <img class="thumbnail" src="/images/goroutine.png" alt="#Golang# Golang与并发编程(1) goroutine使用">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-02T23:00:21.000Z">2020-03-03</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Golang/">Golang</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 minutes read (About 1140 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/03/Golang与并发编程(1)/">#Golang# Golang与并发编程(1) goroutine使用</a>
-            
-        </h1>
-        <div class="content">
-            <p>本文主要讨论 <strong><code>goroutine</code> 使用</strong>的相关内容。</p>
-<hr>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/03/Golang与并发编程(1)/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 </div>
                 
 
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
     
         
 <div class="card widget">
@@ -594,6 +355,41 @@
 </div>
     
         
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#需求">
+        <span class="has-mr-6">1</span>
+        <span>需求</span>
+        </a></li><li>
+        <a class="is-flex" href="#实现">
+        <span class="has-mr-6">2</span>
+        <span>实现</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#交给-dao-layer-处理">
+        <span class="has-mr-6">2.1</span>
+        <span>交给 dao layer 处理</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#MySQL-Rational">
+        <span class="has-mr-6">2.1.1</span>
+        <span>MySQL (Rational)</span>
+        </a></li><li>
+        <a class="is-flex" href="#MongoDB-Irrational">
+        <span class="has-mr-6">2.1.2</span>
+        <span>MongoDB (Irrational)</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#交给-service-layer-处理">
+        <span class="has-mr-6">2.2</span>
+        <span>交给 service layer 处理</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
     
         
 <div class="card widget">
@@ -905,7 +701,7 @@
     
     
         <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
-        <div class="column-right-shadow is-hidden-widescreen ">
+        <div class="column-right-shadow  ">
         
             
 <div class="card widget">
@@ -1317,422 +1113,6 @@
 </div>
 
                 
-                
-
-
-
-
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Recent
-        </h3>
-        
-        <article class="media">
-            
-            <a href="/2022/01/30/联表多字段的模糊查询tricks/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/fuzzy_search_thumbnail.png" alt="#Issue# 联表多字段的模糊查询tricks">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2022-01-29T23:00:21.000Z">2022-01-30</time></div>
-                    <a href="/2022/01/30/联表多字段的模糊查询tricks/" class="has-link-black-ter is-size-6">#Issue# 联表多字段的模糊查询tricks</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Issue/">Issue</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2022/01/23/Best Practice on Token-Refresh Implementation/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/token_thumbnail.png" alt="#Issue# Best Practice on Token-Refresh Implementation">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2022-01-22T23:00:21.000Z">2022-01-23</time></div>
-                    <a href="/2022/01/23/Best Practice on Token-Refresh Implementation/" class="has-link-black-ter is-size-6">#Issue# Best Practice on Token-Refresh Implementation</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Issue/">Issue</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2022/01/16/流的关闭——踩坑之我见/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/defer_thumbnail.png" alt="#Issue# 流的关闭——踩坑之我见">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2022-01-15T23:00:21.000Z">2022-01-16</time></div>
-                    <a href="/2022/01/16/流的关闭——踩坑之我见/" class="has-link-black-ter is-size-6">#Issue# 流的关闭——踩坑之我见</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Issue/">Issue</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2022/01/01/写在二零二贰/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二贰">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-12-31T16:00:00.000Z">2022-01-01</time></div>
-                    <a href="/2022/01/01/写在二零二贰/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二贰</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/10/22/部署服务的N种姿势/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/ci_cd.png" alt="#DevOps# 部署服务的N种姿势">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-10-21T23:00:21.000Z">2021-10-22</time></div>
-                    <a href="/2021/10/22/部署服务的N种姿势/" class="has-link-black-ter is-size-6">#DevOps# 部署服务的N种姿势</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-    </div>
-</div>
-
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Tag Cloud
-        </h3>
-        <a href="/tags/Concurrency/" style="font-size: 16.25px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 13.75px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 12.5px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Go-Micro/" style="font-size: 10px;">Go-Micro</a> <a href="/tags/GoConvey/" style="font-size: 10px;">GoConvey</a> <a href="/tags/GoMock/" style="font-size: 10px;">GoMock</a> <a href="/tags/GoMonkey/" style="font-size: 10px;">GoMonkey</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Grpc/" style="font-size: 10px;">Grpc</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 13.75px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 18.75px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 12.5px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.25px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 12.5px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a>
-    </div>
-</div>
-
-    
-        <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                Tags
-            </h3>
-            <div class="field is-grouped is-grouped-multiline">
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Concurrency/">
-                        <span class="tag">Concurrency</span>
-                        <span class="tag is-grey">6</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Docker/">
-                        <span class="tag">Docker</span>
-                        <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Fiddler/">
-                        <span class="tag">Fiddler</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Gin/">
-                        <span class="tag">Gin</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Git/">
-                        <span class="tag">Git</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
-                        <span class="tag">GitHub Pages</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Go-Micro/">
-                        <span class="tag">Go-Micro</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/GoConvey/">
-                        <span class="tag">GoConvey</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/GoMock/">
-                        <span class="tag">GoMock</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/GoMonkey/">
-                        <span class="tag">GoMonkey</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Golang/">
-                        <span class="tag">Golang</span>
-                        <span class="tag is-grey">19</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Gorm/">
-                        <span class="tag">Gorm</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Grpc/">
-                        <span class="tag">Grpc</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Hexo/">
-                        <span class="tag">Hexo</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Kubernetes/">
-                        <span class="tag">Kubernetes</span>
-                        <span class="tag is-grey">4</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Linux/">
-                        <span class="tag">Linux</span>
-                        <span class="tag is-grey">8</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Microservice/">
-                        <span class="tag">Microservice</span>
-                        <span class="tag is-grey">12</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Mock/">
-                        <span class="tag">Mock</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/MongoDB/">
-                        <span class="tag">MongoDB</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Newman/">
-                        <span class="tag">Newman</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Postman/">
-                        <span class="tag">Postman</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
-                        <span class="tag">Programming Paradigm</span>
-                        <span class="tag is-grey">2</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Pytest/">
-                        <span class="tag">Pytest</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Redis/">
-                        <span class="tag">Redis</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/SQL/">
-                        <span class="tag">SQL</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Shell/">
-                        <span class="tag">Shell</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Swagger/">
-                        <span class="tag">Swagger</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/Vim/">
-                        <span class="tag">Vim</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/WSL/">
-                        <span class="tag">WSL</span>
-                        <span class="tag is-grey">5</span>
-                    </a>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</div>
-    
-        
-
-<div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            Links
-        </h3>
-        <ul class="menu-list">
-        
-            <li>
-                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Bokjan</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">bokjan.com</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Kingsley</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">kingsleyxie.cn</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">sticnarf</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">sticnarf.me</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">xcw</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">yifanyu123.github.io</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Escape</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">www.cnblogs.com</span>
-                    </span>
-                </a>
-            </li>
-        
-        </ul>
-        </div>
-    </div>
-</div>
-
-
-    
-    
-</div>
-
-                
             </div>
         </div>
     </section>
@@ -1742,7 +1122,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="LotteWong" height="28">
+                    <img src="/images/logo.png" alt="#Issue# 联表多字段的模糊查询tricks" height="28">
                 
                 </a>
                 <p class="is-size-7">
