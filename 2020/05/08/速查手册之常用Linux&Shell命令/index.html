@@ -156,7 +156,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 minutes read (About 717 words)
+                    5 minutes read (About 746 words)
                 </span>
                 
                 
@@ -203,6 +203,10 @@
 
 <h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h <span class="hljs-variable">$&#123;host&#125;</span> -P <span class="hljs-variable">$&#123;port&#125;</span> -u <span class="hljs-variable">$&#123;username&#125;</span> -p</span><br></pre></td></tr></table></figure>
 
+<h3 id="mongo"><a href="#mongo" class="headerlink" title="mongo"></a>mongo</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo -u <span class="hljs-variable">$&#123;username&#125;</span> -p <span class="hljs-variable">$&#123;password&#125;</span> <span class="hljs-variable">$&#123;host&#125;</span>:<span class="hljs-variable">$&#123;port&#125;</span>/<span class="hljs-variable">$&#123;database&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h <span class="hljs-variable">$&#123;host&#125;</span> -p <span class="hljs-variable">$&#123;port&#125;</span> -a <span class="hljs-variable">$&#123;password&#125;</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a><strong>网络</strong></h2><h3 id="查看-ip"><a href="#查看-ip" class="headerlink" title="查看 ip"></a>查看 ip</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip a |grep eth</span><br></pre></td></tr></table></figure>
 
 <h3 id="查看-dns"><a href="#查看-dns" class="headerlink" title="查看 dns"></a>查看 dns</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/resolv.conf |grep nameserver</span><br></pre></td></tr></table></figure>
@@ -228,10 +232,10 @@
 <figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf <span class="hljs-variable">$&#123;pkg_to_untar&#125;</span> <span class="hljs-comment"># 解压 tar 包</span></span><br><span class="line">tar -zxvf <span class="hljs-variable">$&#123;pkg_to_untar&#125;</span> <span class="hljs-comment"># 解压 tar.gz 包</span></span><br><span class="line">tar -jxvf <span class="hljs-variable">$&#123;pkg_to_untar&#125;</span> <span class="hljs-comment"># 解压 tar.bz2 包</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="加压"><a href="#加压" class="headerlink" title="加压"></a>加压</h3><p>zip</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zip -r /path/to/unzip <span class="hljs-variable">$&#123;pkg_to_zip&#125;</span></span><br><span class="line">zip -d /path/to/zip <span class="hljs-variable">$&#123;file_to_delete&#125;</span> <span class="hljs-comment"># 从压缩包中删除文件</span></span><br><span class="line">zip -m /path/to/zip <span class="hljs-variable">$&#123;file_to_append&#125;</span> <span class="hljs-comment"># 向压缩包中添加文件</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zip -r /path/to/zip <span class="hljs-variable">$&#123;pkg_to_zip&#125;</span></span><br><span class="line">zip -d /path/to/zip <span class="hljs-variable">$&#123;file_to_delete&#125;</span> <span class="hljs-comment"># 从压缩包中删除文件</span></span><br><span class="line">zip -m /path/to/zip <span class="hljs-variable">$&#123;file_to_append&#125;</span> <span class="hljs-comment"># 向压缩包中添加文件</span></span><br></pre></td></tr></table></figure>
 
 <p>tar</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -cvf <span class="hljs-variable">$&#123;pkg_to_tar&#125;</span> <span class="hljs-comment"># 加压 tar 包</span></span><br><span class="line">tar -zcvf <span class="hljs-variable">$&#123;pkg_to_tar&#125;</span> <span class="hljs-comment"># 加压 tar.gz 包</span></span><br><span class="line">tar -zjvf <span class="hljs-variable">$&#123;pkg_to_tar&#125;</span> <span class="hljs-comment"># 加压 tar.bz2 包</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -cvf <span class="hljs-variable">$&#123;pkg_to_tar&#125;</span> /path/to/tar <span class="hljs-comment"># 加压 tar 包</span></span><br><span class="line">tar -zcvf <span class="hljs-variable">$&#123;pkg_to_tar&#125;</span> /path/to/tar <span class="hljs-comment"># 加压 tar.gz 包</span></span><br><span class="line">tar -zjvf <span class="hljs-variable">$&#123;pkg_to_tar&#125;</span> /path/to/tar <span class="hljs-comment"># 加压 tar.bz2 包</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="文本"><a href="#文本" class="headerlink" title="文本"></a><strong>文本</strong></h2><h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><p>json</p>
 <figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat <span class="hljs-variable">$&#123;file&#125;</span> | python -m json.tool</span><br></pre></td></tr></table></figure>
@@ -303,8 +307,8 @@
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/05/01/速查手册之常用MongoDB命令/">
-                <span class="level-item">#MongoDB# 速查手册：常用 MongoDB 命令</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/05/01/速查手册之常用SQL命令/">
+                <span class="level-item">#SQL# 速查手册：常用 SQL 命令</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -379,7 +383,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        56
+                        59
                     </p>
                 </div>
             </div>
@@ -389,7 +393,7 @@
                         Categories
                     </p>
                     <p class="title has-text-weight-normal">
-                        8
+                        9
                     </p>
                 </div>
             </div>
@@ -488,6 +492,14 @@
         <a class="is-flex" href="#mysql">
         <span class="has-mr-6">1.2.6</span>
         <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#mongo">
+        <span class="has-mr-6">1.2.7</span>
+        <span>mongo</span>
+        </a></li><li>
+        <a class="is-flex" href="#redis">
+        <span class="has-mr-6">1.2.8</span>
+        <span>redis</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#网络">
         <span class="has-mr-6">1.3</span>
@@ -615,6 +627,14 @@
                 <span class="level-item tag">8</span>
             </span>
         </a></li><li>
+        <a class="level is-marginless" href="/categories/Issue/">
+            <span class="level-start">
+                <span class="level-item">Issue</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Microservice/">
             <span class="level-start">
                 <span class="level-item">Microservice</span>
@@ -636,7 +656,7 @@
                 <span class="level-item">Others</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/QA/">
@@ -674,7 +694,7 @@
                     <span class="level-item">January 2022</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -696,7 +716,7 @@
                     <span class="level-item">August 2021</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -895,6 +915,44 @@
         
         <article class="media">
             
+            <a href="/2022/01/23/Best Practice on Token-Refresh Implementation/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/token_thumbnail.png" alt="#Issue# Best Practice on Token-Refresh Implementation">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2022-01-22T23:00:21.000Z">2022-01-23</time></div>
+                    <a href="/2022/01/23/Best Practice on Token-Refresh Implementation/" class="has-link-black-ter is-size-6">#Issue# Best Practice on Token-Refresh Implementation</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Issue/">Issue</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2022/01/16/流的关闭——踩坑之我见/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/defer_thumbnail.png" alt="#Issue# 流的关闭——踩坑之我见">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2022-01-15T23:00:21.000Z">2022-01-16</time></div>
+                    <a href="/2022/01/16/流的关闭——踩坑之我见/" class="has-link-black-ter is-size-6">#Issue# 流的关闭——踩坑之我见</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Issue/">Issue</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2022/01/01/写在二零二贰/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二贰">
@@ -950,44 +1008,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2021/08/12/GoLand + DevCloud 的远程开发与调试/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/goland.png" alt="#Others# GoLand + DevCloud 的远程开发与调试">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-08-11T23:21:00.000Z">2021-08-12</time></div>
-                    <a href="/2021/08/12/GoLand + DevCloud 的远程开发与调试/" class="has-link-black-ter is-size-6">#Others# GoLand + DevCloud 的远程开发与调试</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2021/07/24/和新项目相爱相杀/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/ctosd.png" alt="#Others# 和新项目相爱相杀">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-07-23T23:21:00.000Z">2021-07-24</time></div>
-                    <a href="/2021/07/24/和新项目相爱相杀/" class="has-link-black-ter is-size-6">#Others# 和新项目相爱相杀</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Others/">Others</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -998,7 +1018,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Concurrency/" style="font-size: 15.71px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 14.29px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 12.86px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Go-Micro/" style="font-size: 10px;">Go-Micro</a> <a href="/tags/GoConvey/" style="font-size: 10px;">GoConvey</a> <a href="/tags/GoMock/" style="font-size: 10px;">GoMock</a> <a href="/tags/GoMonkey/" style="font-size: 10px;">GoMonkey</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Grpc/" style="font-size: 10px;">Grpc</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 14.29px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 17.14px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 18.57px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 12.86px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.43px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 12.86px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/WSL/" style="font-size: 14.29px;">WSL</a>
+        <a href="/tags/Concurrency/" style="font-size: 16.25px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 13.75px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 12.5px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Go-Micro/" style="font-size: 10px;">Go-Micro</a> <a href="/tags/GoConvey/" style="font-size: 10px;">GoConvey</a> <a href="/tags/GoMock/" style="font-size: 10px;">GoMock</a> <a href="/tags/GoMonkey/" style="font-size: 10px;">GoMonkey</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Grpc/" style="font-size: 10px;">Grpc</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 13.75px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 18.75px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 12.5px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.25px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 12.5px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a>
     </div>
 </div>
 
@@ -1084,7 +1104,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Golang/">
                         <span class="tag">Golang</span>
-                        <span class="tag is-grey">15</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 
@@ -1210,7 +1230,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/WSL/">
                         <span class="tag">WSL</span>
-                        <span class="tag is-grey">4</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 

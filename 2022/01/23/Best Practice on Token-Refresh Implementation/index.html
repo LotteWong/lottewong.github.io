@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>#Issue# Best Practice on Token-Refresh Implementation - LotteWong</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+<link rel="alternative" href="./atom.xml" title="#Issue# Best Practice on Token-Refresh Implementation" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.png" alt="#Issue# Best Practice on Token-Refresh Implementation" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Email" href="mailto:lottewong21@gmail.com">
+                        
+                        <i class="far fa-envelope-open"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/token_thumbnail.png" alt="#Issue# Best Practice on Token-Refresh Implementation">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2022-01-22T23:00:21.000Z">2022-01-23</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Issue/">Issue</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1301 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                #Issue# Best Practice on Token-Refresh Implementation
+            
+        </h1>
+        <div class="content">
+            <p>本文讨论<strong>服务端自动刷新令牌过期时间的</strong>最佳实践。</p>
+<hr>
+<a id="more"></a>
+
+
+
+<h1 id="场景引入"><a href="#场景引入" class="headerlink" title="场景引入"></a><strong>场景引入</strong></h1><blockquote>
+<p>在使用 <code>Token</code> 机制进行 <code>Auth</code> 时，出于<strong>安全性的考虑</strong>我们很容易想到需要为令牌设置过期时间，然而小菜如我往往也忽略了<strong>体验性的问题</strong>即“自动延长过期时间”以保持活跃用户在线，引用 <a href="https://docs.auth0.com/refresh-token" target="_blank" rel="noopener">Auth0</a> 的一段话意会一哈——</p>
+<p><em>“一个好的模式是在它过期之前刷新令牌。将令牌过期时间设置为一周，并在每次用户打开Web应用程序并每隔一小时刷新令牌。如果用户超过一周没有打开过应用程序，那他们就需要再次登录，这是可接受的Web应用程序UX(用户体验)。要刷新令牌，API需要一个新的端点，它接收一个有效的，没有过期的JWT，并返回与新的到期字段相同的签名的JWT。然后Web应用程序会将令牌存储在某处。”</em></p>
+<p>我们把问题拆分为<u>两个维度</u>：</p>
+<ol>
+<li><strong>单点登录</strong>：单点登录 (Single Sign On, SSO)，在应用场景上分为<strong>同域单点登录</strong>和<strong>跨域单点登录</strong>，在实现方案上分为 <code>OAuth</code> 和 <code>CAS</code>，etc…单点登录也是一个很有趣的需求场景，以后有机会考虑开专栏讨论下个人的一些浅见，现在假设我们已经站在巨人的肩膀上，<strong><code>Token</code> 加密内容的生成和验证将作为先验知识不会在本文中过多地解释</strong>。</li>
+<li><strong>令牌刷新</strong>：<strong>本文重点在于思考“如何优雅地设置 <code>Token</code> 有效时间”。</strong>在真正动手前需要考量几个问题，并且要十分注意实际生产中容易踩到的坑，回到算法本身而言寻求从静态到动态的优化与提升。</li>
+</ol>
+</blockquote>
+<h1 id="灵魂三问"><a href="#灵魂三问" class="headerlink" title="灵魂三问"></a><strong>灵魂三问</strong></h1><h2 id="主体是谁？"><a href="#主体是谁？" class="headerlink" title="主体是谁？"></a>主体是谁？</h2><blockquote>
+<p>令牌刷新的主体，可以是<u>服务端</u>，可以是<u>客户端</u>，怎么做选择题Ⅰ？</p>
+</blockquote>
+<ul>
+<li><strong>服务端</strong>：控制令牌信息更灵活，实现较简单</li>
+<li><strong>客户端</strong>：控制交互体验更灵活，实现较繁琐</li>
+</ul>
+<h2 id="客体是谁？"><a href="#客体是谁？" class="headerlink" title="客体是谁？"></a>客体是谁？</h2><blockquote>
+<p>令牌刷新的客体，可以是<u>加密内容</u>，可以是<u>过期时间</u>，怎么做选择题Ⅱ？</p>
+</blockquote>
+<ul>
+<li><strong>加密内容</strong>：优点是可以使用 <code>JWT</code> 而无需存储；缺点是频繁生成新的令牌浪费空间，维护多个令牌容易出现安全问题和并发问题，常见解决方案有 <a href="https://www.zhihu.com/question/309815576/answer/579255324" target="_blank" rel="noopener"><code>refresh token</code> 方案</a>和 <a href="https://www.v2ex.com/t/306017" target="_blank" rel="noopener"><code>middleware</code> 方案</a>。</li>
+<li><strong>过期时间</strong>：优点是可以使用 <code>Random Ticket</code> 类似于“单例”而没有空间、安全、并发等的问题；缺点是需要维护额外的数据库存储，一般来说考虑到令牌将被热点访问和定期删除，<code>Redis</code> 是最佳的实践，使用 <code>MySQL / MongoDB</code> 在单机和低并发的情况下也是可行的。</li>
+</ul>
+<h2 id="在什么条件下？"><a href="#在什么条件下？" class="headerlink" title="在什么条件下？"></a>在什么条件下？</h2><ul>
+<li><strong>&lt; 临界过期时间</strong>：无需登录，令牌不会刷新</li>
+<li><strong>临界过期时间 ~ 预设过期时间</strong>：无需登录，令牌自动刷新</li>
+<li><strong>&gt; 预设过期时间</strong>：需要登录，新的令牌周期</li>
+</ul>
+<h1 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a><strong>具体实现</strong></h1><blockquote>
+<p>综合以上，下面提供<strong>服务端</strong>自动刷新令牌<strong>过期时间</strong>的简要解决方案。</p>
+</blockquote>
+<h2 id="静态刷新"><a href="#静态刷新" class="headerlink" title="静态刷新"></a>静态刷新</h2><p><img src="/images/statically_refresh.png" alt="statically refresh"></p>
+<ul>
+<li><strong>优点</strong>：实现方式简单粗暴，每验证一次就更新一次。</li>
+<li><strong>缺点</strong>：更新太过频繁，性能受损，令牌可能出现“几乎不会过期”有悖设计初衷。</li>
+</ul>
+<h2 id="动态刷新"><a href="#动态刷新" class="headerlink" title="动态刷新"></a>动态刷新</h2><p><img src="/images/dynamically_refresh.png" alt="dynamically refresh"></p>
+<ul>
+<li><strong>优点</strong>：设置过期临界，对更新的条件做了限制，提升性能，使用合理。</li>
+<li><strong>缺点</strong>：维护两个过期时间——临界过期时间和预设过期时间。</li>
+</ul>
+<h1 id="踩坑警告"><a href="#踩坑警告" class="headerlink" title="踩坑警告"></a><strong>踩坑警告</strong></h1><ol>
+<li>注意<strong>重置密码时同步地处理令牌</strong>。</li>
+<li>注意<strong>浏览器多选项卡并发操作的影响</strong>。</li>
+<li>注意<strong>过期令牌妥善处理</strong>，可以放着不管 or 定期删除，但是不能直接覆盖（👉<a href="https://lottewong.github.io/2020/10/01/Golang%20Microservice%20%E5%B7%A5%E7%A8%8B%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1" target="_blank" rel="noopener">#Microservice# Golang Microservice 工程开发踩坑记录</a>👈）</li>
+</ol>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><strong>参考链接</strong></h1><ol>
+<li><a href="https://vimsky.com/article/3601.html" target="_blank" rel="noopener">JWT(JSON Web Token)自动延长到期时间</a></li>
+<li><a href="https://www.zhihu.com/question/309815576/answer/579255324" target="_blank" rel="noopener">对于token的认证，如何保证token的及时刷新？</a></li>
+<li><a href="https://www.sundayfine.com/shiro-jwt/" target="_blank" rel="noopener">Shiro整合JWT+Token过期刷新，全都帮你整好了</a></li>
+<li><a href="https://www.sundayfine.com/jwt-refresh-token/" target="_blank" rel="noopener">采用JWT有效期内刷新Token方案，解决并发请求问题</a></li>
+<li><a href="https://www.v2ex.com/t/306017" target="_blank" rel="noopener">Token 过期的问题</a></li>
+</ol>
+<hr>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Golang/">Golang</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2022/01/16/流的关闭——踩坑之我见/">
+                <span class="level-item">#Issue# 流的关闭——踩坑之我见</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '31cfc7a3a72e1e062ccd',
+        clientSecret: '2bbe6fbc0ec688642d56254b2b72a87b555ec76d',
+        id: '3584c0406fc6b8c4c2d5b64c3dded438',
+        repo: 'lottewong.github.io',
+        owner: 'LotteWong',
+        admin: "LotteWong",
+        proxy: 'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="LotteWong">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        LotteWong
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Tencent, Backend Developer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shenzhen, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        59
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        9
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/LotteWong" target="_blank">
+                Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Organization" href="https://github.com/SCUTMSC">
+                
+                <i class="fas fa-sitemap"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Project" href="https://github.com/scutse-man-month-myth/InkYear">
+                
+                <i class="fas fa-project-diagram"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#场景引入">
+        <span class="has-mr-6">1</span>
+        <span>场景引入</span>
+        </a></li><li>
+        <a class="is-flex" href="#灵魂三问">
+        <span class="has-mr-6">2</span>
+        <span>灵魂三问</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#主体是谁？">
+        <span class="has-mr-6">2.1</span>
+        <span>主体是谁？</span>
+        </a></li><li>
+        <a class="is-flex" href="#客体是谁？">
+        <span class="has-mr-6">2.2</span>
+        <span>客体是谁？</span>
+        </a></li><li>
+        <a class="is-flex" href="#在什么条件下？">
+        <span class="has-mr-6">2.3</span>
+        <span>在什么条件下？</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#具体实现">
+        <span class="has-mr-6">3</span>
+        <span>具体实现</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#静态刷新">
+        <span class="has-mr-6">3.1</span>
+        <span>静态刷新</span>
+        </a></li><li>
+        <a class="is-flex" href="#动态刷新">
+        <span class="has-mr-6">3.2</span>
+        <span>动态刷新</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#踩坑警告">
+        <span class="has-mr-6">4</span>
+        <span>踩坑警告</span>
+        </a></li><li>
+        <a class="is-flex" href="#参考链接">
+        <span class="has-mr-6">5</span>
+        <span>参考链接</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Cheat-Sheet/">
+            <span class="level-start">
+                <span class="level-item">Cheat Sheet</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DevOps/">
+            <span class="level-start">
+                <span class="level-item">DevOps</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Golang/">
+            <span class="level-start">
+                <span class="level-item">Golang</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Issue/">
+            <span class="level-start">
+                <span class="level-item">Issue</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Microservice/">
+            <span class="level-start">
+                <span class="level-item">Microservice</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">12</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Mind-Map/">
+            <span class="level-start">
+                <span class="level-item">Mind Map</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Others/">
+            <span class="level-start">
+                <span class="level-item">Others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/QA/">
+            <span class="level-start">
+                <span class="level-item">QA</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Sucks/">
+            <span class="level-start">
+                <span class="level-item">Sucks</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2022/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2022</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <!-- <div class="column-right-shadow is-hidden-widescreen "> -->
+        <div class="column-right-shadow  ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2022/01/23/Best Practice on Token-Refresh Implementation/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/token_thumbnail.png" alt="#Issue# Best Practice on Token-Refresh Implementation">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2022-01-22T23:00:21.000Z">2022-01-23</time></div>
+                    <a href="/2022/01/23/Best Practice on Token-Refresh Implementation/" class="has-link-black-ter is-size-6">#Issue# Best Practice on Token-Refresh Implementation</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Issue/">Issue</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2022/01/16/流的关闭——踩坑之我见/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/defer_thumbnail.png" alt="#Issue# 流的关闭——踩坑之我见">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2022-01-15T23:00:21.000Z">2022-01-16</time></div>
+                    <a href="/2022/01/16/流的关闭——踩坑之我见/" class="has-link-black-ter is-size-6">#Issue# 流的关闭——踩坑之我见</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Issue/">Issue</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2022/01/01/写在二零二贰/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/teach_yourself_programming_in_ten_years.png" alt="#Sucks# 写在二零二贰">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-12-31T16:00:00.000Z">2022-01-01</time></div>
+                    <a href="/2022/01/01/写在二零二贰/" class="has-link-black-ter is-size-6">#Sucks# 写在二零二贰</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Sucks/">Sucks</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/10/22/部署服务的N种姿势/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/ci_cd.png" alt="#DevOps# 部署服务的N种姿势">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-10-21T23:00:21.000Z">2021-10-22</time></div>
+                    <a href="/2021/10/22/部署服务的N种姿势/" class="has-link-black-ter is-size-6">#DevOps# 部署服务的N种姿势</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/DevOps/">DevOps</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2021/08/16/Unit Test Pre-study and Practice in Golang/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/unittest.png" alt="#Unit Test# Unit Test Pre-study and Practice in Golang">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-08-15T23:00:21.000Z">2021-08-16</time></div>
+                    <a href="/2021/08/16/Unit Test Pre-study and Practice in Golang/" class="has-link-black-ter is-size-6">#Unit Test# Unit Test Pre-study and Practice in Golang</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/QA/">QA</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Concurrency/" style="font-size: 16.25px;">Concurrency</a> <a href="/tags/Docker/" style="font-size: 13.75px;">Docker</a> <a href="/tags/Fiddler/" style="font-size: 10px;">Fiddler</a> <a href="/tags/Gin/" style="font-size: 12.5px;">Gin</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/tags/Go-Micro/" style="font-size: 10px;">Go-Micro</a> <a href="/tags/GoConvey/" style="font-size: 10px;">GoConvey</a> <a href="/tags/GoMock/" style="font-size: 10px;">GoMock</a> <a href="/tags/GoMonkey/" style="font-size: 10px;">GoMonkey</a> <a href="/tags/Golang/" style="font-size: 20px;">Golang</a> <a href="/tags/Gorm/" style="font-size: 10px;">Gorm</a> <a href="/tags/Grpc/" style="font-size: 10px;">Grpc</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Kubernetes/" style="font-size: 13.75px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Microservice/" style="font-size: 18.75px;">Microservice</a> <a href="/tags/Mock/" style="font-size: 12.5px;">Mock</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Newman/" style="font-size: 10px;">Newman</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Programming-Paradigm/" style="font-size: 11.25px;">Programming Paradigm</a> <a href="/tags/Pytest/" style="font-size: 10px;">Pytest</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Shell/" style="font-size: 12.5px;">Shell</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a>
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Concurrency/">
+                        <span class="tag">Concurrency</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Docker/">
+                        <span class="tag">Docker</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Fiddler/">
+                        <span class="tag">Fiddler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gin/">
+                        <span class="tag">Gin</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GitHub-Pages/">
+                        <span class="tag">GitHub Pages</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Go-Micro/">
+                        <span class="tag">Go-Micro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GoConvey/">
+                        <span class="tag">GoConvey</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GoMock/">
+                        <span class="tag">GoMock</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/GoMonkey/">
+                        <span class="tag">GoMonkey</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Golang/">
+                        <span class="tag">Golang</span>
+                        <span class="tag is-grey">18</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Gorm/">
+                        <span class="tag">Gorm</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Grpc/">
+                        <span class="tag">Grpc</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Hexo/">
+                        <span class="tag">Hexo</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Kubernetes/">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Microservice/">
+                        <span class="tag">Microservice</span>
+                        <span class="tag is-grey">12</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mock/">
+                        <span class="tag">Mock</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MongoDB/">
+                        <span class="tag">MongoDB</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Newman/">
+                        <span class="tag">Newman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Postman/">
+                        <span class="tag">Postman</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Programming-Paradigm/">
+                        <span class="tag">Programming Paradigm</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytest/">
+                        <span class="tag">Pytest</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SQL/">
+                        <span class="tag">SQL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swagger/">
+                        <span class="tag">Swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Vim/">
+                        <span class="tag">Vim</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WSL/">
+                        <span class="tag">WSL</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+            
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://bokjan.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Bokjan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bokjan.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kingsleyxie.cn/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Kingsley</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kingsleyxie.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://sticnarf.me/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">sticnarf</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">sticnarf.me</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://yifanyu123.github.io/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">xcw</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">yifanyu123.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.cnblogs.com/escape-w/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Escape</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.cnblogs.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.png" alt="#Issue# Best Practice on Token-Refresh Implementation" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2022 LotteWong
+                ,&nbsp;<a href="http://www2.scut.edu.cn/sse/" target="_blank">SCUT SE</a> & <a href="https://github.com/SCUTMSC" target="_blank">SCUT MSC</a>
+                
+                <!-- <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+								<br>
+								<span id="busuanzi_container_site_pv">
+                plugin.page-view
+                </span>
+                
+                </p>-->
+								<br>
+								<span id="busuanzi_container_site_uv"> Viewed by <span id="busuanzi_value_site_uv"></span> people </span>
+                <span id="busuanzi_container_site_pv">, at <span id="busuanzi_value_site_pv"></span> times </span>
+            </p></div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/LotteWong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="RSS" href="/atom.xml">
+                        
+                        <i class="fas fa-rss"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
