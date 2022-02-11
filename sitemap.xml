@@ -459,14 +459,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Golang/</loc>
+    <loc>http://yoursite.com/tags/Mock/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Mock/</loc>
+    <loc>http://yoursite.com/tags/Golang/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -508,20 +508,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Kubernetes/</loc>
-    <lastmod>2022-02-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/WSL/</loc>
-    <lastmod>2022-02-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/tags/Postman/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
@@ -530,6 +516,13 @@
   
   <url>
     <loc>http://yoursite.com/tags/Newman/</loc>
+    <lastmod>2022-02-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/Kubernetes/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -557,7 +550,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Shell/</loc>
+    <loc>http://yoursite.com/tags/WSL/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -565,6 +558,13 @@
   
   <url>
     <loc>http://yoursite.com/tags/Docker/</loc>
+    <lastmod>2022-02-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/Shell/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -620,14 +620,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/PromQL/</loc>
+    <loc>http://yoursite.com/tags/Redis/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Redis/</loc>
+    <loc>http://yoursite.com/tags/PromQL/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -706,14 +706,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/DevOps/</loc>
+    <loc>http://yoursite.com/categories/Microservice/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/Microservice/</loc>
+    <loc>http://yoursite.com/categories/DevOps/</loc>
     <lastmod>2022-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
